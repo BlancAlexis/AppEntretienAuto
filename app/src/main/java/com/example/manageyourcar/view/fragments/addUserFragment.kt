@@ -1,7 +1,7 @@
 package com.example.manageyourcar.view.fragments
 
+import android.content.Intent
 import android.os.Bundle
-import android.telephony.SmsManager
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.example.manageyourcar.R
 import com.example.manageyourcar.databinding.FragmentAddUserBinding
+import com.example.manageyourcar.view.activities.HomeActivity
 import com.example.manageyourcar.viewmodel.UserViewModel
-import com.google.android.material.textfield.TextInputLayout
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,28 +34,58 @@ class addUserFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentAddUserBinding.inflate(layoutInflater)
-        val view = binding.root
-        userViewModel.liveDataConnect.observe(viewLifecycleOwner, {
-            it.
-        })
-        binding.mailUser
+        return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        userViewModel.liveDataConnect.observe(viewLifecycleOwner) {
+            if(it){
+                //Si le bool reçu est à true alors on lance l'activité suivante
+                startActivity(Intent(activity,HomeActivity::class.java))
+            }
+        }
+        binding.mailUser.setOnFocusChangeListener { view,hasFocus ->
+            if (!hasFocus) {
+                if(!areTextInputLayoutsValid(binding.nameUser.text.toString(), "ccc" )){
+                     binding.layoutNameUser.setBoxBackgroundColorResource(R.color.red_error)
+                }} }
         binding.passwordUser
         binding.confPassword
         binding.layoutMailUser
         binding.layoutConfPassword
         binding.layoutPasswordUser
-        binding.layoutNameUser
+        binding.layoutNameUser //"^[a-zA-Z\\- ]+$"
         binding.nameUser
-        binding.buttonConf.setOnClickListener { println("f") }
 
-        return view
+        // Check des entrées dans variable, si oui envoie des infos au VM qui répond via liveData
+        binding.buttonConf.setOnClickListener {
+            if(areTextInputLayoutsValid(binding.nameUser.text.toString(), "\"^[a-zA-Z\\\\- ]+\$\"" )){
+                return@setOnClickListener;}
+            areTextInputLayoutsValid(binding.mailUser.text.toString(), "ccc" )
+            areTextInputLayoutsValid(binding.passwordUser.text.toString(), " /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/")
+            if(binding.passwordUser.toString().equals(binding.confPassword.toString()))
+            userViewModel.addNewUser(binding.mailUser.toString(),binding.passwordUser.toString(),binding.nameUser.toString())
+            }
+
     }
 
     companion object {
-        fun newInstance() {}
+        fun newInstance(): addUserFragment {
+            return addUserFragment()
+        }
 
     }
+    fun areTextInputLayoutsValid(text :String, regexPattern :String) : Boolean{
+        if (!text.isNullOrEmpty()){
+            return Regex(regexPattern).matches(text)
+        }
+        return false
+    }
 
+    fun firstCheck(){
+
+    }
     // fun sendConfSMS(){ Faire si le temps
 //       val smsManager= activity?.getSystemService(SmsManager::class.java)
 //       smsManager?.sendTextMessage()

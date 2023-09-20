@@ -1,0 +1,21 @@
+
+D
+app/build.gradle.kts,d\2\d2a4383452aad84a18429a5844d31330a012a9e6
+{
+Kapp/src/main/java/com/example/manageyourcar/view/fragments/LoginFragment.kt,9\4\944f36a0bcd309498973226c73e9f26c40f2b0e0
+{
+Kapp/src/main/java/com/example/manageyourcar/view/activities/HomeActivity.kt,c\c\cc4e5bddae284cb1707de7ce4e24c132256be855
+9
+	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
+@
+build.gradle.kts,d\b\dbcff70658daf80b53ce624f6adcaa529df5ed8d
+P
+ app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
+w
+Gapp/src/main/java/com/example/manageyourcar/viewmodel/LoginViewModel.kt,b\d\bddb733f5b2680044b9080262d2127c17f51719d
+v
+Fapp/src/main/java/com/example/manageyourcar/viewmodel/UserViewModel.kt,d\9\d9ed2bd9353fcdbe4b274a75095560a92a157419
+}
+Mapp/src/main/java/com/example/manageyourcar/view/fragments/addUserFragment.kt,8\2\8291316622c3b25494906eba3741866ae2a1584a
+|
+Lapp/src/main/java/com/example/manageyourcar/view/activities/LoginActivity.kt,0\3\035f3fb0d82a1c7b1b57f4573fb9ca2b774140d7
