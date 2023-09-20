@@ -3,6 +3,7 @@ package com.example.manageyourcar.view.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.manageyourcar.R
+import com.example.manageyourcar.view.fragments.addCarFragment
 import com.example.manageyourcar.view.fragments.addUserFragment
 
 class LoginActivity : AppCompatActivity() {
@@ -12,7 +13,7 @@ class LoginActivity : AppCompatActivity() {
 
         supportFragmentManager
             .beginTransaction()
-            .add(R.id.fragContainerView,addUserFragment.newInstance())
+            .add(R.id.fragContainerView,addCarFragment.newInstance())
             .commit()
     }
 }

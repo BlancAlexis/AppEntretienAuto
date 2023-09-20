@@ -12,13 +12,7 @@ import com.example.manageyourcar.databinding.FragmentAddUserBinding
 import com.example.manageyourcar.view.activities.HomeActivity
 import com.example.manageyourcar.viewmodel.UserViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-/**
- * A simple [Fragment] subclass.
- * Use the [addUserFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class addUserFragment : Fragment() {
 
     private lateinit var binding: FragmentAddUserBinding
