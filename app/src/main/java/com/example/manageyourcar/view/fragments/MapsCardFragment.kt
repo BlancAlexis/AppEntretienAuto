@@ -15,6 +15,8 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
 
 class MapsCardFragment : Fragment() {
 
@@ -38,7 +40,26 @@ class MapsCardFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.i("", "onCreateView: ")
+       /* val a=Places.createClient(context)
+        Log.i("", "onCreateView: ")*/
+    /*    Find
+        val request = FindNearbyPlacesRequest.Builder()
+            .setLocation(LatLng(48.85837, 2.34889))
+            .setRadius(1000)
+            .setTypeFilter(listOf(Place.Type.CAR_REPAIR))
+            .build()
+
+// Exécutez la requête et traitez les résultats
+        placesClient.findNearbyPlaces(request) { response, status ->
+            if (status.isSuccess) {
+                val results = response.results
+                for (result in results) {
+                    // A faire avec le résultat
+                }
+            } else {
+                // Gérer l'erreur
+            }
+        }*/
         return inflater.inflate(R.layout.fragment_maps_card, container, false)
     }
 
