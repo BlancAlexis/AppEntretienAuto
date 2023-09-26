@@ -10,7 +10,6 @@ import kotlinx.coroutines.runBlocking
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.GlobalContext.startKoin
-import kotlin.coroutines.coroutineContext
 
 class AppApplication : Application() {
 
@@ -24,7 +23,7 @@ class AppApplication : Application() {
         runBlocking {
             coroutineScope {
                 launch {
-                    api.getAllPokemon().collect { result ->
+                    api.getVehiculeBySIV().collect { result ->
                         when (result) {
                             is Ressource.Error ->
                                 print(result.message)
