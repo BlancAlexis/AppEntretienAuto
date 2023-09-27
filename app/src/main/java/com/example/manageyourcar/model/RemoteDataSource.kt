@@ -8,7 +8,7 @@ import org.koin.core.component.inject
 class RemoteDataSource(): KoinComponent {
     val api by inject<requestApi>()
 
-    fun getVehiculeBySIV(SIV : String) = flow {
+    suspend fun getVehiculeBySIV(SIV : String) = flow {
         emit(Ressource.Loading())
         val vehicule = api.getVehiculeBySIV(SIV).body()
         emit(Ressource.Success(vehicule))

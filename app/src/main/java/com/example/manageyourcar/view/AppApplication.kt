@@ -28,13 +28,13 @@ class AppApplication : Application() {
                 launch {
                     getVehiculeBySivUseCase.getVehiculeBySiv("ZPBUA1ZL9KLA00848").collect { result ->
                         when (result) {
-                            is Ressource.Loading ->
-                                print("yoti")
+                            is Ressource.Loading->
+                                 println("load")
                             is Ressource.Error ->
-                                print("yota"+result.data)
+                                println("yota"+result.data)
 
                             is Ressource.Success ->
-                                    print("yoto"+result.data)
+                                    println("yoto"+result.data)
                         }
                     }
                 }
