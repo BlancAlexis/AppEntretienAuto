@@ -31,3 +31,5 @@ u
 Eapp/src/main/java/com/example/manageyourcar/model/RemoteDataSource.kt,c\4\c43a2c69258186c157761aeda9c674c645a227dd
 u
 Eapp/src/main/java/com/example/manageyourcar/model/MyRepositoryImpl.kt,c\b\cb84ac408a5d75cef9fc791a308e8523cba0decc
+h
+8app/src/main/java/com/example/manageyourcar/model/Car.kt,3\c\3c1e89ae411b17292cbad77d202b0c95b994cae4

@@ -8,8 +8,8 @@ import org.koin.java.KoinJavaComponent.inject
 class MyRepositoryImpl (): MyRepository, KoinComponent{
     private val remoteDataSource by inject<RemoteDataSource>()
 
-    override suspend fun getVehiculeBySiv(siv: String): Flow<Ressource<D>> {
-        remoteDataSource.getVehiculeBySIV(siv)
+    override suspend fun getVehiculeBySiv(siv: String): Flow<Ressource<Car>> {
+        return remoteDataSource.getVehiculeBySIV(siv)
     }
 
 }

@@ -9,9 +9,8 @@ import retrofit2.http.Query
 
 interface requestApi {
     @GET("vin/{siv}")
-
     suspend fun getVehiculeBySIV(
         @Path("siv") siv : String,
-        @Query("apikey") apikey : String = "ZrQEPSkKbmFydXRvLmJsYW5jQGdtYWlsLmNvbQ=="
-    ): Response<Unit>
+        @Query("apikey", encoded = false) apikey : String = "ZrQEPSkKbmFydXRvLmJsYW5jQGdtYWlsLmNvbQ=="
+    ): Response<Car>
 }

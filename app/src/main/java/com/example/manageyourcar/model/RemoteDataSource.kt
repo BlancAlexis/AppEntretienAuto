@@ -9,9 +9,11 @@ class RemoteDataSource(): KoinComponent {
     val api by inject<requestApi>()
 
     fun getVehiculeBySIV(SIV : String) = flow {
+        emit(Ressource.Loading())
         val vehicule = api.getVehiculeBySIV(SIV).body()
         emit(Ressource.Success(vehicule))
     }.catch { cause ->
-        emit(Ressource.Error("d",null)) }
+        emit(Ressource.Error(cause.toString(),null))
+    }
 
 }

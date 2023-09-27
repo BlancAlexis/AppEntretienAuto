@@ -2,6 +2,7 @@ package com.example.manageyourcar.view
 
 import android.app.Application
 import com.example.manageyourcar.di.appModule
+import com.example.manageyourcar.model.GetVehiculeBySivUseCase
 import com.example.manageyourcar.model.Ressource
 import com.example.manageyourcar.model.requestApi
 import kotlinx.coroutines.coroutineScope
@@ -13,6 +14,8 @@ import org.koin.core.context.GlobalContext.startKoin
 
 class AppApplication : Application() {
 
+    val getVehiculeBySivUseCase by inject<GetVehiculeBySivUseCase>()
+
     val api by inject<requestApi>()
     override fun onCreate() {
         super.onCreate()
@@ -23,13 +26,15 @@ class AppApplication : Application() {
         runBlocking {
             coroutineScope {
                 launch {
-                    api.getVehiculeBySIV().collect { result ->
+                    getVehiculeBySivUseCase.getVehiculeBySiv("ZPBUA1ZL9KLA00848").collect { result ->
                         when (result) {
+                            is Ressource.Loading ->
+                                print("yoti")
                             is Ressource.Error ->
-                                print(result.message)
+                                print("yota"+result.data)
 
                             is Ressource.Success ->
-                                    print(result.data)
+                                    print("yoto"+result.data)
                         }
                     }
                 }
