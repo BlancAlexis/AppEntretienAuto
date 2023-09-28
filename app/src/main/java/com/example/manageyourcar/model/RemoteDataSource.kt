@@ -15,5 +15,4 @@ class RemoteDataSource(): KoinComponent {
     }.catch { cause ->
         emit(Ressource.Error(cause.toString(),null))
     }
-
 }

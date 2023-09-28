@@ -11,6 +11,6 @@ interface requestApi {
     @GET("vin/{siv}")
     suspend fun getVehiculeBySIV(
         @Path("siv") siv : String,
-        @Query("apikey", encoded = false) apikey : String = "ZrQEPSkKbmFydXRvLmJsYW5jQGdtYWlsLmNvbQ=="
+        @Query("apikey") apikey : String = "ZrQEPSkKbmFydXRvLmJsYW5jQGdtYWlsLmNvbQ=="
     ): Response<Car>
 }

@@ -1,10 +1,12 @@
 package com.example.manageyourcar.view
 
 import android.app.Application
+import android.widget.Toast
 import com.example.manageyourcar.di.appModule
 import com.example.manageyourcar.model.GetVehiculeBySivUseCase
 import com.example.manageyourcar.model.Ressource
 import com.example.manageyourcar.model.requestApi
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -28,13 +30,15 @@ class AppApplication : Application() {
                 launch {
                     getVehiculeBySivUseCase.getVehiculeBySiv("ZPBUA1ZL9KLA00848").collect { result ->
                         when (result) {
-                            is Ressource.Loading->
-                                 println("load")
-                            is Ressource.Error ->
-                                println("yota"+result.data)
-
-                            is Ressource.Success ->
-                                    println("yoto"+result.data)
+                            is Ressource.Loading-> {
+                                println("load")
+                            }
+                            is Ressource.Error -> {
+                                println("Ressource.Error"+result.message)
+                            }
+                            is Ressource.Success -> {
+                                println("Ressource.Success"+result.data)
+                            }
                         }
                     }
                 }

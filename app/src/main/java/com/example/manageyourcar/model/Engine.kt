@@ -38,4 +38,6 @@ data class Engine(
     val totalValves: Int,
     @SerializedName("type")
     val type: String,
+    @SerializedName("valve")
+    val valve: ValveX,
 )
