@@ -10,10 +10,13 @@ import android.widget.ArrayAdapter
 import com.example.manageyourcar.R
 import com.example.manageyourcar.databinding.FragmentAddCarBinding
 import com.example.manageyourcar.databinding.FragmentAddUserBinding
+import com.example.manageyourcar.viewmodel.UserViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class addCarFragment : Fragment() {
 
+    val userViewModel: UserViewModel by viewModel()
     private lateinit var binding: FragmentAddCarBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

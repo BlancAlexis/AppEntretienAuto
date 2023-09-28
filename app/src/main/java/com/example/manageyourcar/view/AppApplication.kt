@@ -21,20 +21,5 @@ class AppApplication : Application() {
             androidContext(this@AppApplication)
             modules(appModule)
         }
-        runBlocking {
-            coroutineScope {
-                launch {
-                    api.getAllPokemon().collect { result ->
-                        when (result) {
-                            is Ressource.Error ->
-                                print(result.message)
-
-                            is Ressource.Success ->
-                                    print(result.data)
-                        }
-                    }
-                }
-            }
-        }
     }
 }
