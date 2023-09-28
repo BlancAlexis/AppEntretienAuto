@@ -1,5 +1,6 @@
 package com.example.manageyourcar.view.fragments
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -27,7 +28,7 @@ class addCarFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding= FragmentAddCarBinding.inflate(layoutInflater)
+        binding = FragmentAddCarBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -37,7 +38,6 @@ class addCarFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-       // binding.spiMake.onItemSelectedListener = object : Adap
     }
 
     companion object {
@@ -49,39 +49,48 @@ class addCarFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val spinnerData = arrayOf("Option 1", "Option 2", "Option 3")
+        binding.buttonFindCar.setOnClickListener {
+            if (binding.InputNumberPlate.hasFocus()) {
+                if (!binding.InputSIV.text.isNullOrEmpty()) {
+                    userViewModel.addNewCarBySIV(binding.InputSIV.text.toString())
+                }
 
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, spinnerData)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.spiModel.adapter = adapter
-
-        val spinnerDatas = arrayOf("Option 1", "Option 2", "Option 3")
-
-        val adapterA = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, spinnerDatas)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.spiMake.adapter = adapterA
-
-
-        binding.spiMake.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                println(binding.spiMake.selectedItem.toString())
             }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
+            if (binding.textInputLayout.hasFocus()) {
+                if (!binding.InputNumberPlate.text.isNullOrEmpty()) {
+                    userViewModel.addNewCarByImmat(binding.InputNumberPlate.text.toString())
+                }
             }
         }
 
-            binding.spiModel.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    println(binding.spiModel.selectedItem.toString())
-                }
+        binding.InputNumberPlate.setOnFocusChangeListener { view, hasFocus ->
+            if (!hasFocus) {
+                if(!checkPlate(binding.InputNumberPlate.toString()))
+                    binding.InputSIV.error="Numéro de plaque d'immatriculation invalide"
+                binding.InputNumberPlate.setBackgroundColor(Color.RED)
+            }
+        }
 
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                }
-    }}
+        binding.InputSIV.setOnFocusChangeListener { view, hasFocus ->
+            if (!hasFocus) {
+                if(!checkSIV(binding.InputSIV.toString()))
+                binding.InputSIV.error="Numéro SIV non-valide"
+                binding.InputSIV.setBackgroundColor(Color.RED)
+            }
+        }
+    }
+
+    private fun checkPlate(plate: String?): Boolean {
+          if(plate?.length==7){
+              return true
+          }
+        return false
+    }
+
+    fun checkSIV(SIV : String?) : Boolean {
+        if (SIV?.length==17){
+            return true
+        }
+        return false
+    }
 }
