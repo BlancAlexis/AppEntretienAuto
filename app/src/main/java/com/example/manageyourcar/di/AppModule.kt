@@ -15,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 val appModule = module {
     single<requestApi> {
             Retrofit.Builder()
-                .baseUrl("https://auto.dev/")
+                .baseUrl("https://auto.dev/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(requestApi::class.java)
