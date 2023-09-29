@@ -11,10 +11,15 @@ import okhttp3.OkHttpClient
 import com.example.manageyourcar.UIlayer.viewmodel.UserViewModel
 import com.example.manageyourcar.dataLayer.dataSource.room.CarDao
 import com.example.manageyourcar.dataLayer.dataSource.room.Database
+import com.example.manageyourcar.dataLayer.repository.room.car.CarRepository
+import com.example.manageyourcar.dataLayer.repository.room.car.CarRepositoryImpl
+import com.example.manageyourcar.dataLayer.service.room.car.CarDatabaseService
+import com.example.manageyourcar.dataLayer.service.room.car.CarDatabaseServiceImpl
 import com.example.manageyourcar.domainLayer.useCaseRoom.AddCarToRoomUseCase
-import com.example.manageyourcar.domainLayer.useCaseRoom.GetCarFromRoom
+import com.example.manageyourcar.domainLayer.useCaseRoom.GetCarFromRoomUseCase
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModelOf
+import org.koin.core.scope.get
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -34,9 +39,10 @@ val appModule = module {
         val database = get<Database>()
         database.getCarDAO()
     }
-
+single<CarRepository> { CarRepositoryImpl() }
     single { AddCarToRoomUseCase() }
-    single { GetCarFromRoom() }
+    single { GetCarFromRoomUseCase() }
+    factory<CarDatabaseService> { CarDatabaseServiceImpl() }
 
     single<requestApi> {
         val okHttpClient = OkHttpClient.Builder()

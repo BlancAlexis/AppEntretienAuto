@@ -6,9 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.manageyourcar.dataLayer.util.Ressource
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.AddCarToRoomUseCase
-import com.example.manageyourcar.domainLayer.useCaseRoom.GetCarFromRoom
+import com.example.manageyourcar.domainLayer.useCaseRoom.GetCarFromRoomUseCase
 import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -17,7 +16,7 @@ class UserViewModel : ViewModel(), KoinComponent {
     val liveDataIsCarAdd = MutableLiveData<Boolean>()
     val getVehiculeByNetworkUseCase by inject<GetVehiculeByNetworkUseCase>()
     val addCarToRoomUseCase by inject<AddCarToRoomUseCase>()
-    val getCarToRoomUseCase by inject<GetCarFromRoom>()
+    val getCarToRoomUseCase by inject<GetCarFromRoomUseCase>()
 
 
     fun addNewUser(name: String, password: String, mail: String) {
