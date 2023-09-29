@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.manageyourcar.dataLayer.util.Ressource
+import com.example.manageyourcar.domainLayer.useCase.GetVehiculeByImmatUseCase
 import com.example.manageyourcar.domainLayer.useCase.GetVehiculeByNetworkUseCase
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
@@ -13,6 +14,7 @@ class UserViewModel : ViewModel(), KoinComponent {
     val liveDataConnect = MutableLiveData<Boolean>()
     val liveDataIsCarAdd = MutableLiveData<Boolean>()
     val getVehiculeByNetworkUseCase by inject<GetVehiculeByNetworkUseCase>()
+    val getVehiculeByImmatUseCase by inject<GetVehiculeByImmatUseCase>()
 
 
 
@@ -43,7 +45,7 @@ class UserViewModel : ViewModel(), KoinComponent {
     }
         fun addNewCarByImmat(immat: String) {
             viewModelScope.launch {
-                getVehiculeByNetworkUseCase.getVehiculeByImmat("CP-370-YK").collect { result ->
+                getVehiculeByImmatUseCase.getVehiculeByImmat("CP-370-YK").collect { result ->
                     when (result) {
                         is Ressource.Loading-> {
                             println("load")
