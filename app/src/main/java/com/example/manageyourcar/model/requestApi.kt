@@ -1,6 +1,6 @@
 package com.example.manageyourcar.model
 
-import kotlinx.coroutines.flow.Flow
+import com.example.manageyourcar.model.dataClass.Car
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

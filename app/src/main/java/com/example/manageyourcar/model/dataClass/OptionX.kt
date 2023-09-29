@@ -1,11 +1,11 @@
-package com.example.manageyourcar.model
+package com.example.manageyourcar.model.dataClass
 
 
 import com.google.gson.annotations.SerializedName
 
-data class Color(
+data class OptionX(
     @SerializedName("category")
     val category: String,
     @SerializedName("options")
-    val options: List<Option>
+    val options: List<OptionXX>
 )

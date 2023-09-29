@@ -22,7 +22,7 @@ val appModule = module {
     single<requestApi> {
 
         val okHttpClient = OkHttpClient.Builder()
-            .addInterceptor(RequestLoggingInterceptor()) // Ajoutez l'intercepteur de journalisation
+            .addInterceptor(RequestLoggingInterceptor())
             .build()
 
         Retrofit.Builder()

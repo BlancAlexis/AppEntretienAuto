@@ -1,5 +1,6 @@
 package com.example.manageyourcar.model
 
+import com.example.manageyourcar.model.dataClass.Car
 import kotlinx.coroutines.flow.Flow
 
 interface MyRepository {
