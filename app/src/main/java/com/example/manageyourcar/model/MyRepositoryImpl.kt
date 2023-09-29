@@ -12,4 +12,8 @@ class MyRepositoryImpl (): MyRepository, KoinComponent{
         return remoteDataSource.getVehiculeBySIV(siv)
     }
 
+    override suspend fun getVehiculeByImmat(immat: String): Flow<Ressource<Car>> {
+        return remoteDataSource.getVehiculeByImmat(immat)
+    }
+
 }

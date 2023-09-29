@@ -10,7 +10,12 @@ import retrofit2.http.Query
 interface requestApi {
     @GET("vin/{siv}")
     suspend fun getVehiculeBySIV(
-        @Path("siv") siv : String,
-        @Query("apikey") apikey : String = "ZrQEPSkKbmFydXRvLmJsYW5jQGdtYWlsLmNvbQ=="
+        @Path("siv") siv: String,
+        @Query("apikey") apikey: String = "ZrQEPSkKbmFydXRvLmJsYW5jQGdtYWlsLmNvbQ=="
     ): Response<Car>
+
+@GET("/getallcar")
+suspend fun getVehiculeByImmat(
+@Query("immat") immat : String
+): Response<Car>
 }

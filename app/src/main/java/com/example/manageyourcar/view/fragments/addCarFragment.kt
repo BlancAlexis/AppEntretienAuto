@@ -50,7 +50,8 @@ class addCarFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.buttonFindCar.setOnClickListener {
-            if (binding.InputNumberPlate.hasFocus()) {
+            userViewModel.addNewCarByImmat("dd")
+            /* if (binding.InputNumberPlate.hasFocus()) {
                 if (!binding.InputSIV.text.isNullOrEmpty()) {
                     userViewModel.addNewCarBySIV(binding.InputSIV.text.toString())
                 }
@@ -74,9 +75,11 @@ class addCarFragment : Fragment() {
         binding.InputSIV.setOnFocusChangeListener { view, hasFocus ->
             if (!hasFocus) {
                 if(!checkSIV(binding.InputSIV.toString()))
-                binding.InputSIV.error="Numéro SIV non-valide"
-                binding.InputSIV.setBackgroundColor(Color.RED)
+                    binding.InputSIV.error="Numéro SIV non-valide"
+                    binding.InputSIV.setBackgroundColor(Color.RED)
             }
+        }
+    }*/
         }
     }
 
