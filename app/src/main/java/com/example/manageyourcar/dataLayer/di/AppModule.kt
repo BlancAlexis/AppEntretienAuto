@@ -8,6 +8,7 @@ import com.example.manageyourcar.dataLayer.util.RequestLoggingInterceptor
 import com.example.manageyourcar.domainLayer.useCase.GetVehiculeByNetworkUseCase
 import okhttp3.OkHttpClient
 import com.example.manageyourcar.UIlayer.viewmodel.UserViewModel
+import com.example.manageyourcar.dataLayer.dataSource.room.CarDao
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.dsl.module
 import retrofit2.Retrofit
