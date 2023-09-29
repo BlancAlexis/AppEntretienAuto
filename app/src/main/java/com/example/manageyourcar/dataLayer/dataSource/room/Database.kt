@@ -5,6 +5,6 @@ import androidx.room.RoomDatabase
 
 @Database(entities = [UserEntity::class,CarEntity::class], version = 1)
 abstract class Database: RoomDatabase() {
-    abstract fun UserDao(): UserDao
-    abstract fun CarDao(): CarDao
+    abstract fun getUserDAO(): UserDao
+    abstract fun getCarDAO(): CarDao
 }

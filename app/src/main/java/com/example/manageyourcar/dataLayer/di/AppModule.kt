@@ -1,14 +1,19 @@
 package com.example.manageyourcar.dataLayer.di
 
+import androidx.room.Room
 import com.example.manageyourcar.dataLayer.dataSource.RemoteDataSource
 import com.example.manageyourcar.dataLayer.repository.MyRepository
 import com.example.manageyourcar.dataLayer.repository.MyRepositoryImpl
 import com.example.manageyourcar.dataLayer.requestApi
 import com.example.manageyourcar.dataLayer.util.RequestLoggingInterceptor
-import com.example.manageyourcar.domainLayer.useCase.GetVehiculeByNetworkUseCase
+import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkUseCase
 import okhttp3.OkHttpClient
 import com.example.manageyourcar.UIlayer.viewmodel.UserViewModel
 import com.example.manageyourcar.dataLayer.dataSource.room.CarDao
+import com.example.manageyourcar.dataLayer.dataSource.room.Database
+import com.example.manageyourcar.domainLayer.useCaseRoom.AddCarToRoomUseCase
+import com.example.manageyourcar.domainLayer.useCaseRoom.GetCarFromRoom
+import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -17,8 +22,23 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 val appModule = module {
-    single<requestApi> {
+    //Database
+    single {
+        Room.databaseBuilder(
+            androidApplication(),
+            Database::class.java,
+            "Database_Manage"
+        ).build()
+    }
+    single<CarDao> {
+        val database = get<Database>()
+        database.getCarDAO()
+    }
 
+    single { AddCarToRoomUseCase() }
+    single { GetCarFromRoom() }
+
+    single<requestApi> {
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(RequestLoggingInterceptor())
             .build()

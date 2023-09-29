@@ -3,11 +3,11 @@ package com.example.manageyourcar.dataLayer.service.room.car
 import com.example.manageyourcar.dataLayer.dataSource.room.CarDao
 import com.example.manageyourcar.dataLayer.dataSource.room.CarEntity
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class CarDatabaseServiceImpl @Inject constructor(
-    private val carDao: CarDao
-): CarDatabaseService {
+class CarDatabaseServiceImpl : CarDatabaseService, KoinComponent {
+   val carDao by inject<CarDao>()
     override fun addNewCar(carEntity: CarEntity) = carDao.addNewCar(carEntity)
 
     override fun getCar(): Flow<List<CarEntity>> = carDao.getCar()

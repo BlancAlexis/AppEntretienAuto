@@ -13,10 +13,9 @@ import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class CarRepositoryImpl @Inject constructor(
-    private val carDatabaseService: CarDatabaseService
-) : CarRepository {
-    override fun addNewCar(car: Car) {
+class CarRepositoryImpl : CarRepository,KoinComponent {
+    val carDatabaseService by inject<CarDatabaseService>()
+    override suspend fun addNewCar(car: Car) {
         val carEntity = CarEntity(
             marque = car.marque,
             model = car.model,
@@ -24,7 +23,7 @@ class CarRepositoryImpl @Inject constructor(
         carDatabaseService.addNewCar(carEntity)
     }
 
-    override fun getCar(): Flow<List<Car>> =
+    override suspend fun getCar(): Flow<List<Car>> =
         carDatabaseService.getCar().map { entities ->
             entities.map {
                 Car(
@@ -35,7 +34,7 @@ class CarRepositoryImpl @Inject constructor(
             }
         }.flowOn(Dispatchers.IO)
 
-    override fun updateCar(car: Car) {
+    override suspend fun updateCar(car: Car) {
         val carEntity = CarEntity(
             id = car.id,
             marque = car.marque,
@@ -45,23 +44,7 @@ class CarRepositoryImpl @Inject constructor(
         carDatabaseService.updateCar(carEntity)
     }
 
-    override fun deleteCar(idCar: Long) {
+    override suspend fun deleteCar(idCar: Long) {
         carDatabaseService.deleteCar(idCar)
     }
-}
-
-class CarRepositoryImpl (): CarRepository, KoinComponent {
-    private val remoteDataSource by inject<RemoteDataSource>()
-
-    override fun deleteCar(idCar: Long) {
-        carDatabaseService.deleteCar(idCar)
-    }
-    override suspend fun getVehiculeBySiv(siv: String): Flow<Ressource<com.example.manageyourcar.dataLayer.model.dataClass.Car>> {
-        return remoteDataSource.getVehiculeBySIV(siv)
-    }
-
-    override suspend fun getVehiculeByImmat(immat: String): Flow<Ressource<com.example.manageyourcar.dataLayer.model.dataClass.Car>> {
-        return remoteDataSource.getVehiculeByImmat(immat)
-    }
-
 }

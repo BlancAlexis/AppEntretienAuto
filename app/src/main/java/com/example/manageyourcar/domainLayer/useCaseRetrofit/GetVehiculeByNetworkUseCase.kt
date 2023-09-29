@@ -1,4 +1,4 @@
-package com.example.manageyourcar.domainLayer.useCase
+package com.example.manageyourcar.domainLayer.useCaseRetrofit
 
 import com.example.manageyourcar.dataLayer.model.dataClass.Car
 import com.example.manageyourcar.dataLayer.repository.MyRepository

@@ -4,8 +4,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.manageyourcar.dataLayer.util.Ressource
-import com.example.manageyourcar.domainLayer.useCase.GetVehiculeByNetworkUseCase
+import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkUseCase
+import com.example.manageyourcar.domainLayer.useCaseRoom.AddCarToRoomUseCase
+import com.example.manageyourcar.domainLayer.useCaseRoom.GetCarFromRoom
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -13,7 +16,8 @@ class UserViewModel : ViewModel(), KoinComponent {
     val liveDataConnect = MutableLiveData<Boolean>()
     val liveDataIsCarAdd = MutableLiveData<Boolean>()
     val getVehiculeByNetworkUseCase by inject<GetVehiculeByNetworkUseCase>()
-
+    val addCarToRoomUseCase by inject<AddCarToRoomUseCase>()
+    val getCarToRoomUseCase by inject<GetCarFromRoom>()
 
 
     fun addNewUser(name: String, password: String, mail: String) {
@@ -25,15 +29,17 @@ class UserViewModel : ViewModel(), KoinComponent {
         viewModelScope.launch {
             getVehiculeByNetworkUseCase.getVehiculeBySiv(SIV).collect { result ->
                 when (result) {
-                    is Ressource.Loading-> {
+                    is Ressource.Loading -> {
                         println("load")
                     }
+
                     is Ressource.Error -> {
-                        println("Ressource.Error"+result.message)
+                        println("Ressource.Error" + result.message)
                         // Faire une classe gestion erreur
                     }
+
                     is Ressource.Success -> {
-                        println("Ressource.Success"+result.data)
+                        println("Ressource.Success" + result.data)
                         // Requete pour vérif si voiture existe puis enregistrement room
 
                     }
@@ -41,28 +47,38 @@ class UserViewModel : ViewModel(), KoinComponent {
             }
         }
     }
-        fun addNewCarByImmat(immat: String) {
-            viewModelScope.launch {
-                getVehiculeByNetworkUseCase.getVehiculeByImmat("CP-370-YK").collect { result ->
-                    when (result) {
-                        is Ressource.Loading-> {
-                            println("load")
-                        }
-                        is Ressource.Error -> {
-                            println("Ressource.Error"+result.message)
-                            // Faire une classe gestion erreur
-                        }
-                        is Ressource.Success -> {
-                            println("Ressource.Success"+result.data)
-                            // Requete pour vérif si voiture existe puis enregistrement room
 
-                        }
+    fun addNewCarByImmat(immat: String) {
+        viewModelScope.launch {
+            getVehiculeByNetworkUseCase.getVehiculeByImmat("CP-370-YK").collect { result ->
+                when (result) {
+                    is Ressource.Loading -> {
+                        println("load")
+                    }
+
+                    is Ressource.Error -> {
+                        println("Ressource.Error" + result.message)
+                        // Faire une classe gestion erreur
+                    }
+
+                    is Ressource.Success -> {
+                        println("Ressource.Success" + result.data)
+                        // Requete pour vérif si voiture existe puis enregistrement room
+
                     }
                 }
-                // Requete pour vérif si voiture existe puis enregistrement room
-
             }
+            // Requete pour vérif si voiture existe puis enregistrement room
 
+        }
+    }
+
+    fun addCarToRoom() {
+        viewModelScope.launch {
+            addCarToRoomUseCase.addCarToRoom(1, "d", "e")
+            println(getCarToRoomUseCase.getCarFromRoom().toString() + "Jules le bozo");
+
+        }
     }
 }
 

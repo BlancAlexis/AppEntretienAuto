@@ -1,6 +1,5 @@
 package com.example.manageyourcar.UIlayer.view.fragments
 
-import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,13 +11,17 @@ import com.example.manageyourcar.R
 import com.example.manageyourcar.databinding.FragmentAddCarBinding
 import com.example.manageyourcar.databinding.FragmentAddUserBinding
 import com.example.manageyourcar.UIlayer.viewmodel.UserViewModel
+import com.example.manageyourcar.domainLayer.useCaseRoom.AddCarToRoomUseCase
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.java.KoinJavaComponent.inject
 
 
 class addCarFragment : Fragment() {
 
     val userViewModel: UserViewModel by viewModel()
     private lateinit var binding: FragmentAddCarBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -34,6 +37,8 @@ class addCarFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        userViewModel.addCarToRoom()
+
     }
 
     override fun onResume() {
@@ -48,7 +53,6 @@ class addCarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.buttonFindCar.setOnClickListener {
             userViewModel.addNewCarByImmat("dd")
             /* if (binding.InputNumberPlate.hasFocus()) {
@@ -96,4 +100,6 @@ class addCarFragment : Fragment() {
         }
         return false
     }
+
+
 }
