@@ -16,6 +16,6 @@ interface requestApi {
 
 @GET("/getallcar")
 suspend fun getVehiculeByImmat(
-@Query("immat") immat : String
+@Query("plaqueimmat") immat : String
 ): Response<Car>
 }

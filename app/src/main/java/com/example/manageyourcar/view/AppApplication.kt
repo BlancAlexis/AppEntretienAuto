@@ -16,7 +16,6 @@ import kotlin.coroutines.coroutineContext
 class AppApplication : Application() {
 
 
-    val api by inject<requestApi>()
     override fun onCreate() {
         super.onCreate()
         startKoin {
