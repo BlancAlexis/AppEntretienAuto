@@ -8,6 +8,6 @@ class GetCarFromRoomUseCase : KoinComponent {
     val roomRepository by inject<CarRepository>()
 
     suspend fun getCarFromRoom() {
-        roomRepository.getCar()
+      //  roomRepository.getCar()
     }
 }
