@@ -1,6 +1,5 @@
 package com.example.manageyourcar.UIlayer.view.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,7 +8,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.example.manageyourcar.R
 import com.example.manageyourcar.databinding.FragmentAddUserBinding
-import com.example.manageyourcar.UIlayer.view.activities.HomeActivity
 import com.example.manageyourcar.UIlayer.viewmodel.UserViewModel
 
 
@@ -36,7 +34,6 @@ class addUserFragment : Fragment() {
         userViewModel.liveDataConnect.observe(viewLifecycleOwner) {
             if (it) {
                 //Si le bool reçu est à true alors on lance l'activité suivante
-                startActivity(Intent(activity, HomeActivity::class.java))
             }
         }
         binding.mailUser.setOnFocusChangeListener { view, hasFocus ->

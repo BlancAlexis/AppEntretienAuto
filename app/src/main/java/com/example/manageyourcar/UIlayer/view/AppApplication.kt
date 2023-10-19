@@ -5,7 +5,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
 import android.util.Log
-import com.example.manageyourcar.dataLayer.di.injectFeature
+import com.example.manageyourcar.dataApi.di.injectFeature
 
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.GlobalContext.startKoin

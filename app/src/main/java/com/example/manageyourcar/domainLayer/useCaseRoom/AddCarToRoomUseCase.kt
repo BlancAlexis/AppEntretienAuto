@@ -1,7 +1,7 @@
 package com.example.manageyourcar.domainLayer.useCaseRoom
 
-import com.example.manageyourcar.domain.model.Car
-import com.example.manageyourcar.domain.repository.CarRepository
+import com.example.manageyourcar.dataRoom.model.Car
+import com.example.manageyourcar.dataRoom.repository.CarRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 

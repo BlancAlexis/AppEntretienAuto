@@ -3,7 +3,7 @@ package com.example.manageyourcar.UIlayer.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.manageyourcar.dataLayer.util.Ressource
+import com.example.manageyourcar.dataApi.util.Ressource
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.AddCarToRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.GetCarFromRoomUseCase

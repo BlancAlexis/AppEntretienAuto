@@ -1,8 +1,8 @@
 package com.example.manageyourcar.domainLayer.useCaseRetrofit
 
-import com.example.manageyourcar.dataLayer.model.dataClass.Car
-import com.example.manageyourcar.dataLayer.repository.ApiCarSIVRepository
-import com.example.manageyourcar.dataLayer.util.Ressource
+import com.example.manageyourcar.dataApi.model.dataClass.Car
+import com.example.manageyourcar.dataApi.repositoryRetrofit.ApiCarSIVRepository
+import com.example.manageyourcar.dataApi.util.Ressource
 import kotlinx.coroutines.flow.Flow
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
