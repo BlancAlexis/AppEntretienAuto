@@ -6,11 +6,14 @@ import com.example.manageyourcar.dataApi.util.RequestLoggingInterceptor
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkUseCase
 import okhttp3.OkHttpClient
 import com.example.manageyourcar.UIlayer.viewmodel.UserViewModel
+import com.example.manageyourcar.dataApi.repositoryRetrofit.ApiCarImmatRepository
+import com.example.manageyourcar.dataApi.repositoryRetrofit.ApiCarImmatRepositoryImpl
 import com.example.manageyourcar.dataRoom.database.Database
 import com.example.manageyourcar.dataRoom.repository.CarRepository
 import com.example.manageyourcar.dataRoom.repositoryImpl.CarRepositoryImpl
 import com.example.manageyourcar.dataApi.repositoryRetrofit.ApiCarSIVRepository
 import com.example.manageyourcar.dataApi.repositoryRetrofit.ApiCarSIVRepositoryImpl
+import com.example.manageyourcar.dataApi.requestApiImmat
 import com.example.manageyourcar.dataApi.requestApiSIV
 
 import com.example.manageyourcar.domainLayer.useCaseRoom.AddCarToRoomUseCase
@@ -69,7 +72,7 @@ val retrofitModule = module {
             .build()
 
         Retrofit.Builder()
-            .baseUrl("https://apimobile.onrender.com/")
+            .baseUrl("https://auto.dev/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()
@@ -79,6 +82,21 @@ val retrofitModule = module {
     factory<RequestLoggingInterceptor> { RequestLoggingInterceptor() }
     factory<ApiCarSIVRepository> { ApiCarSIVRepositoryImpl() }
     factory<RemoteDataSource> { RemoteDataSource() }
+
+    single<requestApiImmat> {
+        val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(RequestLoggingInterceptor())
+            .build()
+
+        Retrofit.Builder()
+            .baseUrl("https://apimobile.onrender.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .build()
+            .create(requestApiImmat::class.java)
+    }
+
+    factory<ApiCarImmatRepository> { ApiCarImmatRepositoryImpl() }
 }
 
   val viewModelModule = module {
