@@ -1,4 +1,4 @@
-package com.example.manageyourcar.dataRoom.database
+package com.example.manageyourcar.dataRoom.dao
 
 import androidx.room.Dao
 import androidx.room.Insert

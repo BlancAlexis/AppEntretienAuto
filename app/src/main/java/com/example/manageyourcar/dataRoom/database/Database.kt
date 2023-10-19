@@ -2,6 +2,7 @@ package com.example.manageyourcar.dataRoom.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.example.manageyourcar.dataRoom.dao.CarDao
 import com.example.manageyourcar.dataRoom.entities.CarEntity
 
 @Database(entities =[CarEntity::class], version = 1)
