@@ -9,17 +9,14 @@ import com.example.manageyourcar.dataLayer.util.RequestLoggingInterceptor
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkUseCase
 import okhttp3.OkHttpClient
 import com.example.manageyourcar.UIlayer.viewmodel.UserViewModel
-import com.example.manageyourcar.dataLayer.dataSource.room.CarDao
-import com.example.manageyourcar.dataLayer.dataSource.room.Database
-import com.example.manageyourcar.dataLayer.repository.room.car.CarRepository
-import com.example.manageyourcar.dataLayer.repository.room.car.CarRepositoryImpl
+import com.example.manageyourcar.data.database.Database
+import com.example.manageyourcar.domain.repository.CarRepository
+import com.example.manageyourcar.data.repository.CarRepositoryImpl
 
 import com.example.manageyourcar.domainLayer.useCaseRoom.AddCarToRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.GetCarFromRoomUseCase
-import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.context.loadKoinModules
-import org.koin.core.scope.get
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

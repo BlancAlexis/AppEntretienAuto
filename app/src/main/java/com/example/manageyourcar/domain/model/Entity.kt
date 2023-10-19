@@ -1,4 +1,4 @@
-package com.example.manageyourcar.dataLayer.dataSource.room
+package com.example.manageyourcar.domain.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

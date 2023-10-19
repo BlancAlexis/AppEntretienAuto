@@ -1,9 +1,10 @@
-package com.example.manageyourcar.dataLayer.dataSource.room
+package com.example.manageyourcar.data.database
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
+import com.example.manageyourcar.domain.model.CarEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
