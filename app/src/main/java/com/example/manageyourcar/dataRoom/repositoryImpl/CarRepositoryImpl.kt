@@ -16,10 +16,17 @@ class CarRepositoryImpl(private val carDao: CarDao) : CarRepository,KoinComponen
         carDao.addNewCar(carEntity)
     }
 
- /*   override fun getCar(): Flow<List<Car>> {
-        TODO("Not yet implemented")
+    override fun getCar(): List<Car> {
+        val brutResult = carDao.getCar();
+        val resultCar: MutableList<Car> = arrayListOf();
+
+        for(element in brutResult){
+            resultCar.add(Car(0, element.marque, element.model))
+        }
+
+        return resultCar;
     }
-*/
+
     override fun updateCar(car: Car) {
         val carEntity = CarEntity(
             id = car.id,

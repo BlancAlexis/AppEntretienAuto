@@ -7,6 +7,7 @@ import com.example.manageyourcar.dataApi.util.Ressource
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.AddCarToRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.GetCarFromRoomUseCase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -72,11 +73,17 @@ class UserViewModel : ViewModel(), KoinComponent {
 //        }
 
         fun addCarToRoom() {
-           viewModelScope.launch {
+           viewModelScope.launch(Dispatchers.IO) {
                addCarToRoomUseCase.addCarToRoom(1, "d", "e")
                println(getCarToRoomUseCase.getCarFromRoom().toString() + "Jules le bozo");
 
             }
         }
-}
 
+        fun getCarToRoom() {
+            viewModelScope.launch(Dispatchers.IO) {
+                println(getCarToRoomUseCase.getCarFromRoom()[0].toString() + "Jules le bozo");
+
+            }
+        }
+}

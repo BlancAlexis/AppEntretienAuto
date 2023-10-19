@@ -13,7 +13,7 @@ interface CarDao {
     fun addNewCar(contactEntity: CarEntity)
 
     @Query("SELECT * FROM cars")
-    fun getCar() : Flow<List<CarEntity>>
+    fun getCar() : List<CarEntity>
 
     @Update
     fun updateCar(carEntity: CarEntity)
