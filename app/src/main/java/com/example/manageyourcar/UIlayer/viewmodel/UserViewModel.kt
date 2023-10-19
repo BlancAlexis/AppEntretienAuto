@@ -72,11 +72,11 @@ class UserViewModel : ViewModel(), KoinComponent {
 //        }
 
         fun addCarToRoom() {
-//            viewModelScope.launch {
-//                addCarToRoomUseCase.addCarToRoom(1, "d", "e")
-//                println(getCarToRoomUseCase.getCarFromRoom().toString() + "Jules le bozo");
-//
-//            }
+           viewModelScope.launch {
+               addCarToRoomUseCase.addCarToRoom(1, "d", "e")
+               println(getCarToRoomUseCase.getCarFromRoom().toString() + "Jules le bozo");
+
+            }
         }
 }
 
