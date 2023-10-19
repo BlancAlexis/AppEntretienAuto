@@ -1,7 +1,7 @@
 package com.example.manageyourcar.dataRoom.repositoryImpl
 
 import com.example.manageyourcar.dataRoom.database.CarDao
-import com.example.manageyourcar.dataRoom.Entity.CarEntity
+import com.example.manageyourcar.dataRoom.entities.CarEntity
 import com.example.manageyourcar.dataRoom.model.Car
 import com.example.manageyourcar.dataRoom.repository.CarRepository
 import org.koin.core.component.KoinComponent

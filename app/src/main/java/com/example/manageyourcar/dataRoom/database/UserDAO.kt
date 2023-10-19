@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.example.manageyourcar.dataRoom.Entity.UserEntity
+import com.example.manageyourcar.dataRoom.entities.UserEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
