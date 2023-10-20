@@ -17,7 +17,7 @@
         android:theme="@style/Theme.ManageYourCar"
         tools:targetApi="31" >
         <activity
-            android:name=".UIlayer.view.activities.MainActivity"
+            android:name=".UIlayer.view.activities.testRoomActivity"
             android:exported="true"
             android:label="@string/title_activity_main"
             android:theme="@style/Theme.ManageYourCar" >

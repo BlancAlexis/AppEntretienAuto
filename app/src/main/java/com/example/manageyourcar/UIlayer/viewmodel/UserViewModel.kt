@@ -8,6 +8,8 @@ import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetwor
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.AddCarToRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.GetCarFromRoomUseCase
+import com.example.manageyourcar.domainLayer.useCaseRoom.user.AddUserToRoomUseCase
+import com.example.manageyourcar.domainLayer.useCaseRoom.user.GetUserFromRoomUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
@@ -20,6 +22,8 @@ class UserViewModel : ViewModel(), KoinComponent {
     val getVehiculeByImmatNetworkUseCase by inject<GetVehiculeByNetworkImmatUseCase>()
     val addCarToRoomUseCase by inject<AddCarToRoomUseCase>()
     val getCarToRoomUseCase by inject<GetCarFromRoomUseCase>()
+    val addUserToRoomUseCase by inject<AddUserToRoomUseCase>()
+    val getUserFromRoomUseCase by inject<GetUserFromRoomUseCase>()
 
 
     fun addNewUser(name: String, password: String, mail: String) {
@@ -87,4 +91,21 @@ class UserViewModel : ViewModel(), KoinComponent {
 
             }
         }
+
+    fun addUserToRoom(id: Int, name: String, password: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            addUserToRoomUseCase.addUserToRoom(id, name, password)
+            println("TEST JULES : " + getUserFromRoomUseCase.getUserFromRoom().toString());
+
+        }
+    }
+
+    fun getUserToRoom() {
+        viewModelScope.launch(Dispatchers.IO) {
+            println(getUserFromRoomUseCase.getUserFromRoom()[0].toString() + "Jules le bozo");
+
+        }
+    }
+
+
 }
