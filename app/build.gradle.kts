@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.example.manageyourcar"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.manageyourcar"
@@ -66,6 +66,9 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.ui:ui-graphics-android:1.5.4")
+    implementation("androidx.compose.ui:ui-text-android:1.5.4")
+    implementation("androidx.compose.foundation:foundation-android:1.5.4")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
