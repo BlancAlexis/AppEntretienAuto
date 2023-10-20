@@ -33,23 +33,14 @@ import androidx.compose.ui.unit.sp
 import com.example.manageyourcar.composeView.common.CustomTextField
 
 @Composable
-fun login_ui_compose() {
+fun new_user_ui(
+    onButtonClick : () -> Unit = {}
+) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Text(
-                textAlign = TextAlign.Center,
-                text = "Connexion",
-                fontSize = 30.sp
-            )
-        }
-        Spacer(modifier = Modifier.height(20.dp))
         CustomTextField(
             label = "Identifiant",
             readOnly = false,
@@ -59,8 +50,18 @@ fun login_ui_compose() {
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             onValueChanged = {}
         )
+        Spacer(modifier = Modifier.height(20.dp))
         CustomTextField(
             label = "Mot de passe",
+            readOnly = false,
+            passwordVisible = true,
+            iconRight = null,
+            iconLeft = null,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+            onValueChanged = {}
+        )
+        CustomTextField(
+            label = "Confirmation du mot de passe",
             readOnly = false,
             passwordVisible = false,
             iconRight = null,
@@ -69,40 +70,19 @@ fun login_ui_compose() {
             onValueChanged = {}
         )
 
-        Button(onClick = { }) {
+        Button(onClick = { onButtonClick() }, modifier = Modifier.fillMaxWidth(0.5f)) {
             Text(
-                text = "Connexion",
+                text = "Valider",
                 fontSize = 20.sp
             )
         }
-        val text = buildAnnotatedString {
-            withStyle(
-                style = SpanStyle(
-                    textDecoration = TextDecoration.Underline,
-                    color = Color.Blue
-                )
-            ) {
-                append("Forgot your password?")
-            }
-        }
-        ClickableText(
-            text = text,
-            modifier = Modifier.padding(8.dp),
-            onClick = {}
-        )
         Spacer(modifier = Modifier.height(20.dp))
-        OutlinedButton(
-            onClick = { /*TODO*/ },
-            modifier = Modifier.fillMaxWidth(0.5f)
-        ) {
-            Text(text = "Rechercher", color = Color.Black)
-        }
 
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewCustomDialogCenterd() {
-    login_ui_compose()
+fun PreviewLogin() {
+    new_user_ui()
 }

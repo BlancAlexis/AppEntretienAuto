@@ -11,6 +11,7 @@ import com.example.manageyourcar.R
 import com.example.manageyourcar.databinding.FragmentAddUserBinding
 import com.example.manageyourcar.UIlayer.viewmodel.UserViewModel
 import com.example.manageyourcar.composeView.login_ui_compose
+import com.example.manageyourcar.composeView.new_user_ui
 
 
 class addUserFragment : Fragment() {
@@ -29,7 +30,7 @@ class addUserFragment : Fragment() {
     ): View? {
         return ComposeView(requireContext()).apply {
             setContent {
-                login_ui_compose()
+                new_user_ui()
             }
         }
     }

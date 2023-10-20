@@ -5,6 +5,7 @@ import android.os.Bundle
 import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.view.fragments.addCarFragment
 import com.example.manageyourcar.UIlayer.view.fragments.addUserFragment
+import com.example.manageyourcar.UIlayer.view.fragments.loginUserFragment
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,7 +14,7 @@ class LoginActivity : AppCompatActivity() {
 
         supportFragmentManager
             .beginTransaction()
-            .add(R.id.fragContainerView, addCarFragment.newInstance())
+            .add(R.id.fragContainerView, loginUserFragment.newInstance())
             .commit()
     }
 }
