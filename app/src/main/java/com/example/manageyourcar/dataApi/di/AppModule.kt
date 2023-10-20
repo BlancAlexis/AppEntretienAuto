@@ -16,8 +16,8 @@ import com.example.manageyourcar.dataApi.repositoryRetrofit.ApiCarSIVRepositoryI
 import com.example.manageyourcar.dataApi.requestApiImmat
 import com.example.manageyourcar.dataApi.requestApiSIV
 
-import com.example.manageyourcar.domainLayer.useCaseRoom.AddCarToRoomUseCase
-import com.example.manageyourcar.domainLayer.useCaseRoom.GetCarFromRoomUseCase
+import com.example.manageyourcar.domainLayer.useCaseRoom.car.AddCarToRoomUseCase
+import com.example.manageyourcar.domainLayer.useCaseRoom.car.GetCarFromRoomUseCase
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module

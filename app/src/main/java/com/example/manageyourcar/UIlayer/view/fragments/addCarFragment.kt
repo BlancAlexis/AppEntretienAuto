@@ -12,7 +12,7 @@ import com.example.manageyourcar.databinding.FragmentAddCarBinding
 import com.example.manageyourcar.databinding.FragmentAddUserBinding
 import com.example.manageyourcar.UIlayer.viewmodel.UserViewModel
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkUseCase
-import com.example.manageyourcar.domainLayer.useCaseRoom.AddCarToRoomUseCase
+import com.example.manageyourcar.domainLayer.useCaseRoom.car.AddCarToRoomUseCase
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.java.KoinJavaComponent.inject

@@ -1,4 +1,4 @@
-package com.example.manageyourcar.domainLayer.useCaseRoom
+package com.example.manageyourcar.domainLayer.useCaseRoom.car
 
 import com.example.manageyourcar.dataRoom.model.Car
 import com.example.manageyourcar.dataRoom.repository.CarRepository

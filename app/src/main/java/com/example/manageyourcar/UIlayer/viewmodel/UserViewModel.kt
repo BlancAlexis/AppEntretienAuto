@@ -6,8 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.manageyourcar.dataApi.util.Ressource
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkImmatUseCase
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkUseCase
-import com.example.manageyourcar.domainLayer.useCaseRoom.AddCarToRoomUseCase
-import com.example.manageyourcar.domainLayer.useCaseRoom.GetCarFromRoomUseCase
+import com.example.manageyourcar.domainLayer.useCaseRoom.car.AddCarToRoomUseCase
+import com.example.manageyourcar.domainLayer.useCaseRoom.car.GetCarFromRoomUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent

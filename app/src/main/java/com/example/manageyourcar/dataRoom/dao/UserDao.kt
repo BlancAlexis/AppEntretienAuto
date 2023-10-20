@@ -10,14 +10,14 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface UserDao {
     @Insert
-    fun addNewContact(contactEntity: UserEntity)
+    fun addNewUser(userEntity: UserEntity)
 
     @Query("SELECT * FROM users")
-    fun getContacts() : Flow<List<UserEntity>>
+    fun getUsers() : List<UserEntity>
 
     @Update
-    fun updateContact(contactEntity: UserEntity)
+    fun updateUser(userEntity: UserEntity)
 
     @Query("DELETE FROM users WHERE id = :idUser")
-    fun deleteContact(idUser: Long)
+    fun deleteUser(idUser: Long)
 }
