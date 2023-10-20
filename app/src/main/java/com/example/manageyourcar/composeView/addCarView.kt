@@ -14,6 +14,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -35,7 +37,7 @@ import androidx.compose.ui.unit.sp
 import com.example.manageyourcar.composeView.common.CustomTextField
 
 @Composable
-fun login_ui_compose() {
+fun AddCarView() {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -53,58 +55,26 @@ fun login_ui_compose() {
         }
         Spacer(modifier = Modifier.height(20.dp))
         CustomTextField(
-            label = "Identifiant",
+            label = "VIN",
             readOnly = false,
             passwordVisible = true,
-            iconRight = null,
             iconLeft = null,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-            onValueChanged = {}
-        )
-        CustomTextField(
-            label = "Mot de passe",
-            readOnly = false,
-            passwordVisible = false,
-            iconRight = null,
-            iconLeft = null,
+            iconRight = Icons.Outlined.Info,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             onValueChanged = {}
         )
 
         Button(onClick = { }) {
             Text(
-                text = "Connexion",
+                text = "Rechercher",
                 fontSize = 20.sp
             )
         }
-        val text = buildAnnotatedString {
-            withStyle(
-                style = SpanStyle(
-                    textDecoration = TextDecoration.Underline,
-                    color = Color.Blue
-                )
-            ) {
-                append("Forgot your password?")
-            }
-        }
-        ClickableText(
-            text = text,
-            modifier = Modifier.padding(8.dp),
-            onClick = {}
-        )
-        Spacer(modifier = Modifier.height(20.dp))
-        OutlinedButton(
-            onClick = { /*TODO*/ },
-            modifier = Modifier.fillMaxWidth(0.5f).border(5.dp, Color.Green, CircleShape)
-        ) {
-            Text(text = "Rechercher", color = Color.Black)
-        }
-
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewCustomDialogCenterd() {
-    login_ui_compose()
+fun PreviewAddCarView() {
+    AddCarView()
 }
