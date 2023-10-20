@@ -53,9 +53,12 @@ android {
 }
 
 dependencies {
-    //Injection de dépendance hilt
+    //Injection de dépendance koin
     implementation("io.insert-koin:koin-android:3.2.0-beta-1")
     implementation ("io.insert-koin:koin-androidx-navigation:3.2.0-beta-1")
+
+
+
 
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")

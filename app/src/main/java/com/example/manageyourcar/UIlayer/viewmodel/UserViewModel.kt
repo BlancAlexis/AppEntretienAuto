@@ -1,6 +1,5 @@
 package com.example.manageyourcar.UIlayer.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,7 +16,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class UserViewModel : ViewModel(), KoinComponent {
-    val liveDataConnect = MutableLiveData<Boolean>()
+    val isConnect = MutableLiveData<Boolean>()
     val liveDataIsCarAdd = MutableLiveData<Boolean>()
     val getVehiculeBySivNetworkUseCase by inject<GetVehiculeByNetworkUseCase>()
     val getVehiculeByImmatNetworkUseCase by inject<GetVehiculeByNetworkImmatUseCase>()
@@ -29,12 +28,21 @@ class UserViewModel : ViewModel(), KoinComponent {
 
     fun addNewUser(name: String, password: String, mail: String) {
         //Traitement de l'information puis envoie du résultat
-        liveDataConnect.postValue(true)
+        isConnect.postValue(true)
+    }
+
+    fun checkUserIdentifiant(login: String, password: String) {
+        viewModelScope.launch {
+            val roomUser = getUserFromRoomUseCase.getUserFromRoom()
+            if (roomUser.get(0).password == password && roomUser.get(0).login == login) {
+                isConnect.postValue(true)
+            }
+        }
     }
 
     fun getCarByImmat(immat: String) {
         viewModelScope.launch {
-            getVehiculeByImmatNetworkUseCase.getVehiculeByImmat(immat).collect{ result ->
+            getVehiculeByImmatNetworkUseCase.getVehiculeByImmat(immat).collect { result ->
                 when (result) {
                     is Ressource.Loading -> {
                         println("load")
@@ -78,32 +86,32 @@ class UserViewModel : ViewModel(), KoinComponent {
         }
     }
 
-        fun addCarToRoom() {
-           viewModelScope.launch(Dispatchers.IO) {
-               addCarToRoomUseCase.addCarToRoom(1, "d", "e")
-               println(getCarToRoomUseCase.getCarFromRoom().toString() + "Jules le bozo");
+    fun addCarToRoom() {
+        viewModelScope.launch(Dispatchers.IO) {
+            addCarToRoomUseCase.addCarToRoom(1, "d", "e")
+            println(getCarToRoomUseCase.getCarFromRoom().toString() + "Jules le bozo")
 
-            }
         }
+    }
 
-        fun getCarToRoom() {
-            viewModelScope.launch(Dispatchers.IO) {
-                println(getCarToRoomUseCase.getCarFromRoom()[0].toString() + "Jules le bozo");
+    fun getCarToRoom() {
+        viewModelScope.launch(Dispatchers.IO) {
+            println(getCarToRoomUseCase.getCarFromRoom()[0].toString() + "Jules le bozo")
 
-            }
         }
+    }
 
     fun addUserToRoom(id: Int, name: String, password: String) {
         viewModelScope.launch(Dispatchers.IO) {
             addUserToRoomUseCase.addUserToRoom(id, name, password)
-            println("TEST JULES : " + getUserFromRoomUseCase.getUserFromRoom().toString());
+            println("TEST JULES : " + getUserFromRoomUseCase.getUserFromRoom().toString())
 
         }
     }
 
     fun getUserToRoom() {
         viewModelScope.launch(Dispatchers.IO) {
-            println(getUserFromRoomUseCase.getUserFromRoom()[0].toString() + "Jules le bozo");
+            println(getUserFromRoomUseCase.getUserFromRoom()[0].toString() + "Jules le bozo")
 
         }
     }

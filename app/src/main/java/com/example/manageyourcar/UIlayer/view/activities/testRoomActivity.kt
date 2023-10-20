@@ -12,7 +12,7 @@ class testRoomActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test_room)
 
-        userViewModel.addCarToRoom()
-        userViewModel.addUserToRoom(1, "JUJU", "TEST")
+//        userViewModel.addCarToRoom()
+//        userViewModel.addUserToRoom(1, "JUJU", "TEST")
     }
 }

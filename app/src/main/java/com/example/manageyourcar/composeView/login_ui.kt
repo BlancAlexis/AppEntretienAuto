@@ -1,5 +1,6 @@
 package com.example.manageyourcar.composeView
 
+import android.service.autofill.OnClickAction
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,9 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
@@ -22,9 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
@@ -35,7 +32,8 @@ import androidx.compose.ui.unit.sp
 import com.example.manageyourcar.composeView.common.CustomTextField
 
 @Composable
-fun login_ui_compose() {
+fun LoginUserView(
+    onClickAction: () -> Unit) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -59,7 +57,7 @@ fun login_ui_compose() {
             iconRight = null,
             iconLeft = null,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-            onValueChanged = {}
+            onValueChanged = { }
         )
         CustomTextField(
             label = "Mot de passe",
@@ -94,7 +92,7 @@ fun login_ui_compose() {
         )
         Spacer(modifier = Modifier.height(20.dp))
         OutlinedButton(
-            onClick = { /*TODO*/ },
+            onClick = { onClickAction() },
             modifier = Modifier.fillMaxWidth(0.5f).border(5.dp, Color.Green, CircleShape)
         ) {
             Text(text = "Rechercher", color = Color.Black)
@@ -106,5 +104,5 @@ fun login_ui_compose() {
 @Preview(showBackground = true)
 @Composable
 fun PreviewCustomDialogCenterd() {
-    login_ui_compose()
+    LoginUserView()
 }

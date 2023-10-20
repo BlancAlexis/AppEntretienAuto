@@ -38,8 +38,6 @@ class addCarFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        userViewModel.addCarToRoom()
-        userViewModel.getCarToRoom()
     }
 
     override fun onResume() {
