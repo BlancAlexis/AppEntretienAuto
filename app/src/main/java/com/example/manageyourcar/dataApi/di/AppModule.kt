@@ -56,6 +56,9 @@ fun injectFeature() = loadFeature
         single{
             get<Database>().getCarDAO()
         }
+        single{
+            get<Database>().getUserDAO()
+        }
     }
 
     val repositoryModule = module {
