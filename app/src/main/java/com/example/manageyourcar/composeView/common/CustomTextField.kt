@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun CustomTextField(
+    onValueChanged : () -> Unit,
     passwordVisible: Boolean = true,
     readOnly: Boolean = true,
     keyboardOptions: KeyboardOptions? = null,
@@ -91,6 +92,7 @@ fun PreviewCustomDialogCenterd() {
         passwordVisible = true,
         iconLeft = Icons.Default.Search,
         iconRight = Icons.Default.Settings,
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+        onValueChanged = {}
     )
 }

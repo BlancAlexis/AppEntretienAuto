@@ -51,16 +51,20 @@ fun login_ui_compose() {
         }
         Spacer(modifier = Modifier.height(20.dp))
         CustomTextField(
+            readOnly = false,
             passwordVisible = true,
             iconRight = null,
             iconLeft = null,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+            onValueChanged = {}
         )
         CustomTextField(
+            readOnly = false,
             passwordVisible = false,
             iconRight = null,
             iconLeft = null,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+            onValueChanged = {}
         )
 
         Button(onClick = { }) {
