@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
+import com.example.manageyourcar.composeView.common.CustomDialog
 import com.example.manageyourcar.composeView.login_ui_compose
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -15,7 +16,7 @@ class loginUserFragment : BottomSheetDialogFragment() {
     ): View? {
         return ComposeView(requireContext()).apply {
             setContent {
-                login_ui_compose()
+                CustomDialog( onDismiss = {})
             }
         }
     }
