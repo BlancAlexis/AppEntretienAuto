@@ -15,9 +15,13 @@ import com.example.manageyourcar.dataApi.repositoryRetrofit.ApiCarSIVRepository
 import com.example.manageyourcar.dataApi.repositoryRetrofit.ApiCarSIVRepositoryImpl
 import com.example.manageyourcar.dataApi.requestApiImmat
 import com.example.manageyourcar.dataApi.requestApiSIV
+import com.example.manageyourcar.dataRoom.repository.UserRepository
+import com.example.manageyourcar.dataRoom.repositoryImpl.UserRepositoryImpl
 
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.AddCarToRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.GetCarFromRoomUseCase
+import com.example.manageyourcar.domainLayer.useCaseRoom.user.AddUserToRoomUseCase
+import com.example.manageyourcar.domainLayer.useCaseRoom.user.GetUserFromRoomUseCase
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
@@ -56,10 +60,13 @@ fun injectFeature() = loadFeature
 
     val repositoryModule = module {
         single<CarRepository> { CarRepositoryImpl(get()) }
+        single<UserRepository> { UserRepositoryImpl(get()) }
     }
 
 val useCaseModule = module {
     factory { AddCarToRoomUseCase() }
+    factory { AddUserToRoomUseCase() }
+    factory { GetUserFromRoomUseCase() }
     factory { GetCarFromRoomUseCase() }
     factory { GetVehiculeByNetworkUseCase() }
 
