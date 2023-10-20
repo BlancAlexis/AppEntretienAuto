@@ -29,3 +29,5 @@ Capp/src/main/java/com/example/manageyourcar/composeView/login_ui.kt,c\b\cbaf99
 Sapp/src/main/java/com/example/manageyourcar/UIlayer/view/activities/MainActivity.kt,e\4\e4e9e6e206bb8a9113415905558ae69a2d4a4127
 v
 Fapp/src/main/java/com/example/manageyourcar/composeView/activity_ui.kt,d\f\dff29adbdff2ce532b53d25ab8a2edb2a88435f0
+„
+Tapp/src/main/java/com/example/manageyourcar/UIlayer/view/activities/LoginActivity.kt,1\c\1cefb12af7e1b97e4ee4fabe8e52ffc5c89b6e2b
