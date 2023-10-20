@@ -19,5 +19,5 @@ interface UserDao {
     fun updateUser(userEntity: UserEntity)
 
     @Query("DELETE FROM users WHERE id = :idUser")
-    fun deleteUser(idUser: Long)
+    fun deleteUser(idUser: Int)
 }
