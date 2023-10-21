@@ -104,5 +104,7 @@ fun LoginUserView(
 @Preview(showBackground = true)
 @Composable
 fun PreviewCustomDialogCenterd() {
-    LoginUserView()
+    LoginUserView(
+        onClickAction = {}
+    )
 }
