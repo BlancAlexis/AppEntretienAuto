@@ -16,6 +16,7 @@ import com.example.manageyourcar.domainLayer.useCaseRoom.car.AddCarToRoomUseCase
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.java.KoinJavaComponent.inject
+import kotlin.math.abs
 
 
 class addCarFragment : Fragment() {
@@ -27,7 +28,6 @@ class addCarFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

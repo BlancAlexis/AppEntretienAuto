@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,7 +20,7 @@ import com.example.manageyourcar.composeView.common.CustomTextField
 
 @Composable
 fun SignInUser(
-    onButtonClick : () -> Unit = {}
+    onButtonClick: () -> Unit = {}
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -28,15 +29,19 @@ fun SignInUser(
     ) {
         CustomTextField(
             textFieldValue = "",
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp),
             label = "Identifiant",
             readOnly = false,
-           keyboardType = KeyboardType.Text,
+            keyboardType = KeyboardType.Text,
             onValueChange = {}
         )
-        Spacer(modifier = Modifier.height(20.dp))
         CustomTextField(
             textFieldValue = "",
-
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp),
             label = "Mot de passe",
             readOnly = false,
             keyboardType = KeyboardType.Text,
@@ -44,10 +49,12 @@ fun SignInUser(
         )
         CustomTextField(
             textFieldValue = "",
-
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp),
             label = "Confirmation du mot de passe",
             readOnly = false,
-          keyboardType = KeyboardType.Text,
+            keyboardType = KeyboardType.Text,
             onValueChange = {}
         )
 

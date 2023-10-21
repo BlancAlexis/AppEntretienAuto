@@ -9,7 +9,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.lifecycle.ViewModelProvider
 import com.example.manageyourcar.databinding.FragmentAddUserBinding
 import com.example.manageyourcar.UIlayer.viewmodel.UserViewModel
-import com.example.manageyourcar.composeView.new_user_ui
+import com.example.manageyourcar.composeView.SignInUser
 
 
 class addUserFragment : Fragment() {
@@ -28,7 +28,7 @@ class addUserFragment : Fragment() {
     ): View? {
         return ComposeView(requireContext()).apply {
             setContent {
-                new_user_ui()
+                SignInUser()
             }
         }
     }

@@ -11,14 +11,19 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class loginUserFragment : BottomSheetDialogFragment() {
-    private val userViewModel : UserViewModel by viewModel()
+    private val userViewModel: UserViewModel by viewModel()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         return ComposeView(requireContext()).apply {
             setContent {
-                LoginUserView()
+/*  SignInUser()*/
+                LoginUserView(
+                    onClickAction = { userID, userPassword ->
+                        onUserConnectionTry(userID, userPassword)
+                    }
+                )
             }
         }
     }
@@ -30,11 +35,13 @@ class loginUserFragment : BottomSheetDialogFragment() {
 
 
     }
-    fun logUser(password: String, login: String) {
+
+    fun onUserConnectionTry(login: String, password: String) {
         userViewModel.checkUserIdentifiant(login, password)
-        // Connexiion du user
-        // Erreur sur un champs
+// Connexiion du user
+// Erreur sur un champs
     }
+
     companion object {
         fun newInstance(): loginUserFragment {
             return loginUserFragment()

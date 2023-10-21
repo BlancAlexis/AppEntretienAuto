@@ -20,9 +20,14 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -34,10 +39,22 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.manageyourcar.R
+import com.example.manageyourcar.composeView.UIState.addCarUIState
+import com.example.manageyourcar.composeView.common.CustomDialog
 import com.example.manageyourcar.composeView.common.CustomTextField
 
 @Composable
-fun AddCarView() {
+fun AddCarView(
+    addCarUIState: addCarUIState
+) {
+    var openDialog by remember { mutableStateOf(false) }
+    if (openDialog){
+        CustomDialog(
+            title = "Numéro VIN",
+            content = "Le numéro VIN est un identifiant unique de la voiture, il peut généralement être trouvé dans la baie moteur ou sur la carte grise du véhicule"
+        )
+    }
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -54,15 +71,19 @@ fun AddCarView() {
             )
         }
         Spacer(modifier = Modifier.height(20.dp))
-        CustomTextField(
-            label = "VIN",
-            readOnly = false,
-            passwordVisible = true,
-            iconLeft = null,
-            iconRight = Icons.Outlined.Info,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-            onValueChanged = {}
-        )
+        addCarUIState.inputVIN?.let {
+            CustomTextField(
+                textFieldValue = it,
+                label = "VIN",
+                readOnly = false,
+                onValueChange = {},
+                keyboardType = KeyboardType.Text,
+                labelTextStyle = TextStyle(
+                    color = Color.Red,
+                )
+
+            )
+        }
 
         Button(onClick = { }) {
             Text(
@@ -76,5 +97,5 @@ fun AddCarView() {
 @Preview(showBackground = true)
 @Composable
 fun PreviewAddCarView() {
-    AddCarView()
+    AddCarView(addCarUIState())
 }
