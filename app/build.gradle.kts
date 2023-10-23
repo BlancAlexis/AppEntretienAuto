@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -69,6 +70,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics-android:1.5.4")
     implementation("androidx.compose.ui:ui-text-android:1.5.4")
     implementation("androidx.compose.foundation:foundation-android:1.5.4")
+    implementation("com.google.android.gms:play-services-maps:18.1.0")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")

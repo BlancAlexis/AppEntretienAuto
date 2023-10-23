@@ -1,16 +1,8 @@
 
 å
 \app/src/main/java/com/example/manageyourcar/domainLayer/useCaseRoom/GetCarFromRoomUseCase.kt,d\5\d5e5d954e4cf47ac38dcd20824dd8fa0e8b0b702
-~
-Napp/src/main/java/com/example/manageyourcar/UIlayer/viewmodel/UserViewModel.kt,4\4\4490f1cb1e1386357dbcd8518c20543afbaa8b7b
-Ñ
-Tapp/src/main/java/com/example/manageyourcar/UIlayer/view/fragments/addCarFragment.kt,c\c\ccc3d70d5aca801e765f6b776fcf41ea00839523
-u
-Eapp/src/main/java/com/example/manageyourcar/UIlayer/AppApplication.kt,8\4\847dbaa675c2ea4ffdb94aa044a93c6bedbf38da
 @
 build.gradle.kts,d\b\dbcff70658daf80b53ce624f6adcaa529df5ed8d
-Ö
-Uapp/src/main/java/com/example/manageyourcar/UIlayer/view/fragments/addUserFragment.kt,2\b\2ba7f093c3e92cecb6e6f929bb179aa47618b955
 |
 Lapp/src/main/java/com/example/manageyourcar/dataApi/model/dataClass/Color.kt,a\b\ab21f347180ae1d43bb3ad0075598658b3ea0581
 Å
@@ -25,8 +17,6 @@ Capp/src/main/java/com/example/manageyourcar/dataApi/di/AppModule.kt,c\0\c0f8af
 Qapp/src/main/java/com/example/manageyourcar/composeView/common/CustomTextField.kt,6\9\699c340284aa7f26f40d122d1d8ebabba13f4650
 s
 Capp/src/main/java/com/example/manageyourcar/composeView/login_ui.kt,c\b\cbaf997fe9862c019bbaa499dfdc089286e96c50
-É
-Sapp/src/main/java/com/example/manageyourcar/UIlayer/view/activities/MainActivity.kt,e\4\e4e9e6e206bb8a9113415905558ae69a2d4a4127
 v
 Fapp/src/main/java/com/example/manageyourcar/composeView/activity_ui.kt,d\f\dff29adbdff2ce532b53d25ab8a2edb2a88435f0
 Ñ
