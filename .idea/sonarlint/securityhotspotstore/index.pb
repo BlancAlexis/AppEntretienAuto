@@ -43,3 +43,5 @@ Wapp/src/main/java/com/example/manageyourcar/UIlayer/view/fragments/loginUserFra
 Sapp/src/main/java/com/example/manageyourcar/UIlayer/view/activities/MainActivity.kt,e\4\e4e9e6e206bb8a9113415905558ae69a2d4a4127
 P
  app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
+‰
+Yapp/src/main/java/com/example/manageyourcar/UIlayer/view/activities/onApplicationEvent.kt,0\d\0d56f05ca47c1c31825bfa13fc23d7bb6eb4b2db

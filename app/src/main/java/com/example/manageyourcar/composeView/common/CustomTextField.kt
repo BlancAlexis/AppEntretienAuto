@@ -28,9 +28,12 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.outlined.Build
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.setValue
@@ -93,6 +96,8 @@ fun CustomTextField(
                         .padding(12.dp),
                     contentAlignment = Alignment.TopStart
                 ) {
+                    Icon(imageVector = Icons.Outlined.Build, contentDescription = "")
+
                     BasicTextField(
                         enabled = enabled,
                         readOnly = readOnly,
@@ -111,6 +116,10 @@ fun CustomTextField(
                             .height(IntrinsicSize.Max)
                             .fillMaxWidth()
                     )
+                    IconButton(onClick = { /*TODO*/ }) {
+                        Icon(imageVector = Icons.Outlined.Info, contentDescription = "",modifier = Modifier.align(
+                                            Alignment.CenterEnd))
+                    }
                     if (placeholder != null && textFieldValue.isBlank()) {
                         Text(
                             text = placeholder,

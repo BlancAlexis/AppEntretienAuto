@@ -43,3 +43,5 @@ P
  app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
 u
 Eapp/src/main/java/com/example/manageyourcar/composeView/addCarView.kt,9\9\99e97c9bba01d8d2095bcb36c32b9156c2d9410b
+‰
+Yapp/src/main/java/com/example/manageyourcar/UIlayer/view/activities/onApplicationEvent.kt,0\d\0d56f05ca47c1c31825bfa13fc23d7bb6eb4b2db
