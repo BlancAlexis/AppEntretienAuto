@@ -58,6 +58,11 @@ dependencies {
     implementation("io.insert-koin:koin-android:3.2.0-beta-1")
     implementation ("io.insert-koin:koin-androidx-navigation:3.2.0-beta-1")
 
+    //API Places Google
+    implementation("com.google.android.libraries.places:places:3.2.0")
+    implementation("com.google.maps.android:places-ktx:2.0.0")
+
+
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")

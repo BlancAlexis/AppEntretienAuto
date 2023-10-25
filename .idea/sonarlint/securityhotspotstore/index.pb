@@ -1,16 +1,10 @@
 
-å
-\app/src/main/java/com/example/manageyourcar/domainLayer/useCaseRoom/GetCarFromRoomUseCase.kt,d\5\d5e5d954e4cf47ac38dcd20824dd8fa0e8b0b702
-@
-build.gradle.kts,d\b\dbcff70658daf80b53ce624f6adcaa529df5ed8d
 |
 Lapp/src/main/java/com/example/manageyourcar/dataApi/model/dataClass/Color.kt,a\b\ab21f347180ae1d43bb3ad0075598658b3ea0581
 Å
 Qapp/src/main/java/com/example/manageyourcar/dataApi/model/dataClass/Categories.kt,1\7\1714760f91c72ca373cf0a656faea2431a583b95
 {
 Kapp/src/main/java/com/example/manageyourcar/dataApi/model/dataClass/Make.kt,5\4\5406687ab3c9ab8784a7bb82f3e974f875943ae5
-D
-app/build.gradle.kts,d\2\d2a4383452aad84a18429a5844d31330a012a9e6
 s
 Capp/src/main/java/com/example/manageyourcar/dataApi/di/AppModule.kt,c\0\c0f8af87a3a8982491f48732aca68fd82d81bff8
 Å
@@ -20,4 +14,18 @@ Capp/src/main/java/com/example/manageyourcar/composeView/login_ui.kt,c\b\cbaf99
 v
 Fapp/src/main/java/com/example/manageyourcar/composeView/activity_ui.kt,d\f\dff29adbdff2ce532b53d25ab8a2edb2a88435f0
 Ñ
-Tapp/src/main/java/com/example/manageyourcar/UIlayer/view/activities/LoginActivity.kt,1\c\1cefb12af7e1b97e4ee4fabe8e52ffc5c89b6e2b
+Tapp/src/main/java/com/example/manageyourcar/UIlayer/view/fragments/addCarFragment.kt,c\c\ccc3d70d5aca801e765f6b776fcf41ea00839523
+~
+Napp/src/main/java/com/example/manageyourcar/UIlayer/viewmodel/UserViewModel.kt,4\4\4490f1cb1e1386357dbcd8518c20543afbaa8b7b
+É
+Sapp/src/main/java/com/example/manageyourcar/UIlayer/view/activities/MainActivity.kt,e\4\e4e9e6e206bb8a9113415905558ae69a2d4a4127
+A
+gradle.properties,2\a\2afbb999f001938c88fa43fc2ef52abf0f8213e4
+C
+settings.gradle.kts,7\4\749edfcc96398253e5b3416184e95c46621da850
+F
+app/proguard-rules.pro,9\e\9e08934d811afe28fbc77aaa3c0d747b94348db9
+X
+(gradle/wrapper/gradle-wrapper.properties,f\b\fbe448ebfc3eb2d4e308f6b8b043666f5b57235e
+@
+build.gradle.kts,d\b\dbcff70658daf80b53ce624f6adcaa529df5ed8d

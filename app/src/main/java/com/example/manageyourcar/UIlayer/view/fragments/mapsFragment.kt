@@ -1,21 +1,24 @@
 package com.example.manageyourcar.UIlayer.view.fragments
 
-import androidx.fragment.app.Fragment
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.example.manageyourcar.R
-
 import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.api.net.FetchPlaceRequest
+import com.google.android.libraries.places.api.net.PlacesClient
+import com.google.android.libraries.places.api.model
 
 class mapsFragment : Fragment() {
+    private lateinit var placesClient: PlacesClient
 
     private val callback = OnMapReadyCallback { googleMap ->
         /**
@@ -44,5 +47,31 @@ class mapsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
+        Places.initialize(requireContext(), BuildConfig.MAPS_API_KEY)
+           placesClient = Places.createClient(requireContext())
+        fun getGaragesAround(latitude: Double, longitude: Double): List<Garage> {
+            // Créer une requête aux services Google Maps
+            val request = PlacesClient.textSearch(latitude, longitude, "garage")            // Exécuter la requête
+            val response = request.await()
+
+            // Récupérer la liste des garages
+            val garages = mutableListOf<Garage>()
+            for (place in response.places) {
+                val garage = Garage(
+                    place.latitude,
+                    place.longitude,
+                    place.name,
+                    place.address
+                )
+                garages.add(garage)
+            }
+
+            return garages
+        }
+
+    companion object {
+        fun newInstance(): mapsFragment {
+            return mapsFragment()
+        }
     }
 }
