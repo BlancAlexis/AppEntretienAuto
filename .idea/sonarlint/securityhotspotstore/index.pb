@@ -45,3 +45,5 @@ P
  app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
 ‰
 Yapp/src/main/java/com/example/manageyourcar/UIlayer/view/activities/onApplicationEvent.kt,0\d\0d56f05ca47c1c31825bfa13fc23d7bb6eb4b2db
+ƒ
+Sapp/src/main/java/com/example/manageyourcar/composeView/common/CustomPlaqueImmat.kt,3\4\34040cbfdffd86c04b06565f42f2c66c1e3a4162

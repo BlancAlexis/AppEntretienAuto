@@ -7,8 +7,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -48,14 +52,13 @@ fun AddCarView(
     ) {
         Text(text = "Merci d'entrer votre plaque d'immatriculation")
         CustomPlaqueImmat()
-        Row(
-            modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center
-        ) {
-            Text(
+        Text(
                 textAlign = TextAlign.Center, text = "OU", fontSize = 30.sp
-            )
-        }
-        Spacer(modifier = Modifier.height(20.dp))
+        )
+
+        Row(
+            modifier = Modifier.fillMaxWidth(0.9f), horizontalArrangement = Arrangement.Center
+        ) {
         CustomTextField(
             onValueChange = { println("f") },
             textFieldValue = "it",
@@ -63,11 +66,11 @@ fun AddCarView(
             readOnly = false,
             keyboardType = KeyboardType.Text,
             labelTextStyle = TextStyle(
-                color = Color.Red,
+                color = Color.Black,
             )
 
         )
-
+    }
 
     Button(onClick = {}) {
         Text(

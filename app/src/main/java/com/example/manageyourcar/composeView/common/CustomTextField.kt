@@ -96,8 +96,6 @@ fun CustomTextField(
                         .padding(12.dp),
                     contentAlignment = Alignment.TopStart
                 ) {
-                    Icon(imageVector = Icons.Outlined.Build, contentDescription = "")
-
                     BasicTextField(
                         enabled = enabled,
                         readOnly = readOnly,
@@ -116,10 +114,6 @@ fun CustomTextField(
                             .height(IntrinsicSize.Max)
                             .fillMaxWidth()
                     )
-                    IconButton(onClick = { /*TODO*/ }) {
-                        Icon(imageVector = Icons.Outlined.Info, contentDescription = "",modifier = Modifier.align(
-                                            Alignment.CenterEnd))
-                    }
                     if (placeholder != null && textFieldValue.isBlank()) {
                         Text(
                             text = placeholder,

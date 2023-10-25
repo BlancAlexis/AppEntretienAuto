@@ -34,7 +34,6 @@ import com.example.manageyourcar.R
 @Composable
 fun CustomPlaqueImmat() {
     Card(
-
         colors = CardDefaults.cardColors(Color.Blue),
         shape = RoundedCornerShape(5.dp),
         elevation = CardDefaults.cardElevation(
@@ -68,10 +67,6 @@ fun CustomPlaqueImmat() {
             }
 
             TextField(
-                modifier = Modifier
-                    .wrapContentWidth()
-                    .wrapContentHeight()
-                    .padding(0.dp),
                 value = "BJ-764-QE",
                 onValueChange = { println("f") },
                 textStyle = TextStyle(
