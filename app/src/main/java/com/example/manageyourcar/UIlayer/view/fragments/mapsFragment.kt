@@ -5,21 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import com.example.manageyourcar.BuildConfig
 import com.example.manageyourcar.R
+import com.example.manageyourcar.UIlayer.viewmodel.MapsViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMapOptions
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.libraries.places.api.Places
-import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.api.net.FetchPlaceRequest
-import com.google.android.libraries.places.api.net.PlacesClient
-import com.google.android.libraries.places.api.model
 
 class mapsFragment : Fragment() {
-    private lateinit var placesClient: PlacesClient
-
+    val key = BuildConfig.MAPS_API_KEY
+    val mapsViewModel by viewModels<MapsViewModel>()
     private val callback = OnMapReadyCallback { googleMap ->
         /**
          * Manipulates the map once available.
@@ -45,29 +44,12 @@ class mapsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
-        Places.initialize(requireContext(), BuildConfig.MAPS_API_KEY)
-           placesClient = Places.createClient(requireContext())
-        fun getGaragesAround(latitude: Double, longitude: Double): List<Garage> {
-            // Créer une requête aux services Google Maps
-            val request = PlacesClient.textSearch(latitude, longitude, "garage")            // Exécuter la requête
-            val response = request.await()
+        mapsViewModel.getCarRepairShop(46.258545, 5.231658)
 
-            // Récupérer la liste des garages
-            val garages = mutableListOf<Garage>()
-            for (place in response.places) {
-                val garage = Garage(
-                    place.latitude,
-                    place.longitude,
-                    place.name,
-                    place.address
-                )
-                garages.add(garage)
-            }
-
-            return garages
-        }
+    }
 
     companion object {
         fun newInstance(): mapsFragment {

@@ -1,11 +1,13 @@
 package com.example.manageyourcar.dataApi.di
 
 import androidx.room.Room
+import com.example.manageyourcar.UIlayer.viewmodel.MapsViewModel
 import com.example.manageyourcar.dataApi.dataSource.RemoteDataSource
 import com.example.manageyourcar.dataApi.util.RequestLoggingInterceptor
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkUseCase
 import okhttp3.OkHttpClient
 import com.example.manageyourcar.UIlayer.viewmodel.UserViewModel
+import com.example.manageyourcar.dataApi.garageApi
 import com.example.manageyourcar.dataApi.repositoryRetrofit.ApiCarImmatRepository
 import com.example.manageyourcar.dataApi.repositoryRetrofit.ApiCarImmatRepositoryImpl
 import com.example.manageyourcar.dataRoom.database.Database
@@ -13,10 +15,13 @@ import com.example.manageyourcar.dataRoom.repository.CarRepository
 import com.example.manageyourcar.dataRoom.repositoryImpl.CarRepositoryImpl
 import com.example.manageyourcar.dataApi.repositoryRetrofit.ApiCarSIVRepository
 import com.example.manageyourcar.dataApi.repositoryRetrofit.ApiCarSIVRepositoryImpl
+import com.example.manageyourcar.dataApi.repositoryRetrofit.GarageRepository
+import com.example.manageyourcar.dataApi.repositoryRetrofit.GarageRepositoryImpl
 import com.example.manageyourcar.dataApi.requestApiImmat
 import com.example.manageyourcar.dataApi.requestApiSIV
 import com.example.manageyourcar.dataRoom.repository.UserRepository
 import com.example.manageyourcar.dataRoom.repositoryImpl.UserRepositoryImpl
+import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetCarRepairShopUseCase
 
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.AddCarToRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.GetCarFromRoomUseCase
@@ -69,10 +74,27 @@ val useCaseModule = module {
     factory { GetUserFromRoomUseCase() }
     factory { GetCarFromRoomUseCase() }
     factory { GetVehiculeByNetworkUseCase() }
+    factory { GetCarRepairShopUseCase() }
 
 }
 
 val retrofitModule = module {
+    single<garageApi> {
+        val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(RequestLoggingInterceptor())
+            .build()
+
+        Retrofit.Builder()
+            .baseUrl("https://maps.googleapis.com/maps/api/place/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .build()
+            .create(garageApi::class.java)
+    }
+
+    factory<GarageRepository> { GarageRepositoryImpl() }
+
+
     single<requestApiSIV> {
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(RequestLoggingInterceptor())
@@ -107,5 +129,6 @@ val retrofitModule = module {
 }
 
   val viewModelModule = module {
-    viewModelOf(::UserViewModel)
+        viewModelOf(::UserViewModel)
+        viewModelOf(::MapsViewModel)
 }
