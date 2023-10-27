@@ -40,9 +40,6 @@ class loginUserFragment : BottomSheetDialogFragment() {
         }
     }
 
-fun onUserConnectionTry(login: String, password: String) {}
-
-
 companion object {
     fun newInstance(): loginUserFragment {
         return loginUserFragment()

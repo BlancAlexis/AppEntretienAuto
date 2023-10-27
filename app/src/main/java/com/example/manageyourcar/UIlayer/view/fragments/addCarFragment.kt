@@ -29,10 +29,6 @@ class addCarFragment : Fragment() {
         return binding.root
     }
 
-    override fun onStart() {
-        super.onStart()
-    }
-
     companion object {
         fun newInstance(): addCarFragment {
             return addCarFragment()
@@ -54,52 +50,3 @@ class addCarFragment : Fragment() {
         }
     }
 }
-/* binding.buttonFindCar.setOnClickListener {
-    /* if (ding.InputNumberPlate.hasFocus()) {
-        if (!binding.InputSIV.text.isNullOrEmpty()) {
-            userViewModel.addNewCarBySIV(binding.InputSIV.text.toString())
-        }
-
-    }
-    if (binding.textInputLayout.hasFocus()) {
-        if (!binding.InputNumberPlate.text.isNullOrEmpty()) {
-            userViewModel.addNewCarByImmat(binding.InputNumberPlate.text.toString())
-        }
-    }
-}
-
-binding.InputNumberPlate.setOnFocusChangeListener { view, hasFocus ->
-    if (!hasFocus) {
-        if(!checkPlate(binding.InputNumberPlate.toString()))
-            binding.InputSIV.error="Numéro de plaque d'immatriculation invalide"
-        binding.InputNumberPlate.setBackgroundColor(Color.RED)
-    }
-}
-
-binding.InputSIV.setOnFocusChangeListener { view, hasFocus ->
-    if (!hasFocus) {
-        if(!checkSIV(binding.InputSIV.toString()))
-            binding.InputSIV.error="Numéro SIV non-valide"
-            binding.InputSIV.setBackgroundColor(Color.RED)
-    }
-}
-}
-}
-}
-
-private fun checkPlate(plate: String?): Boolean {
-if (plate?.length == 7) {
-    return true
-}
-return false
-}
-
-fun checkSIV(SIV: String?): Boolean {
-if (SIV?.length == 17) {
-    return true
-}
-return false
-}
-
-
-}*/
