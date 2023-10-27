@@ -33,51 +33,8 @@ class UserViewModel : ViewModel(), KoinComponent {
         liveDataConnect.postValue(true)
     }
 
-    fun getCarByImmat(immat: String) {
-        viewModelScope.launch {
-            getVehiculeByImmatNetworkUseCase.getVehiculeByImmat(immat).collect{ result ->
-                when (result) {
-                    is Ressource.Loading -> {
-                        println("load")
-                    }
 
-                    is Ressource.Error -> {
-                        println("Ressource.Error" + result.message)
-                        // Faire une classe gestion erreur
-                    }
 
-                    is Ressource.Success -> {
-                        println("Ressource.Success" + result.data)
-                        // Requete pour vérif si voiture existe puis enregistrement room
-
-                    }
-                }
-            }
-        }
-    }
-
-    fun getCarBySIV(SIV: String) {
-        viewModelScope.launch {
-            getVehiculeBySivNetworkUseCase.getVehiculeBySiv(SIV).collect { result ->
-                when (result) {
-                    is Ressource.Loading -> {
-                        println("load")
-                    }
-
-                    is Ressource.Error -> {
-                        println("Ressource.Error" + result.message)
-                        // Faire une classe gestion erreur
-                    }
-
-                    is Ressource.Success -> {
-                        println("Ressource.Success" + result.data)
-                        // Requete pour vérif si voiture existe puis enregistrement room
-
-                    }
-                }
-            }
-        }
-    }
 
         fun addCarToRoom() {
            viewModelScope.launch(Dispatchers.IO) {
@@ -99,7 +56,7 @@ class UserViewModel : ViewModel(), KoinComponent {
 
         fun getCarFromRoom() {
             viewModelScope.launch(Dispatchers.IO) {
-                println(getCarToRoomUseCase.getCarsFromRoom()[0].toString() + "Jules le bozo");
+               // println(getCarToRoomUseCase.getCarsFromRoom()[0].toString() + "Jules le bozo");
                 liveDataCar.postValue(getCarToRoomUseCase.getCarsFromRoom());
             }
         }

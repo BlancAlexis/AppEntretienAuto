@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.manageyourcar.R
+import com.example.manageyourcar.UIlayer.view.fragments.addCarFragment
 import com.example.manageyourcar.UIlayer.view.fragments.addUserFragment
 import com.example.manageyourcar.UIlayer.view.fragments.loginUserFragment
 import com.example.manageyourcar.databinding.ActivityMainBinding
@@ -23,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
         supportFragmentManager
             .beginTransaction()
-            .add(R.id.fragContainerView, loginUserFragment.newInstance())
+            .add(R.id.fragContainerView, addCarFragment.newInstance())
             .commit()
 
         binding.bottomAppBar.setOnMenuItemClickListener { menuItem ->

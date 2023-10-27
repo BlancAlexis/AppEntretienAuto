@@ -21,8 +21,8 @@ class testRoomActivity : AppCompatActivity() {
         userViewModel.getCarFromRoom();
 
         userViewModel.addUserToRoom(1, "JUJU", "TEST")
-        userViewModel.liveDataCar.observe(this){
-            cars -> txt.setText(cars[0].toString())
-        }
+//        userViewModel.liveDataCar.observe(this){
+//            cars -> txt.setText(cars[0].toString())
+//        }
     }
 }
