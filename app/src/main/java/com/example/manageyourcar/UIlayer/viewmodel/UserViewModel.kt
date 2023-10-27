@@ -14,10 +14,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import com.example.manageyourcar.dataRoom.model.Car
+import kotlinx.coroutines.withContext
 
 class UserViewModel : ViewModel(), KoinComponent {
     val liveDataConnect = MutableLiveData<Boolean>()
     val liveDataIsCarAdd = MutableLiveData<Boolean>()
+    val liveDataCar = MutableLiveData<List<Car>>()
     val getVehiculeBySivNetworkUseCase by inject<GetVehiculeByNetworkUseCase>()
     val getVehiculeByImmatNetworkUseCase by inject<GetVehiculeByNetworkImmatUseCase>()
     val addCarToRoomUseCase by inject<AddCarToRoomUseCase>()
@@ -85,10 +88,10 @@ class UserViewModel : ViewModel(), KoinComponent {
             }
         }
 
-        fun getCarToRoom() {
+        fun getCarFromRoom() {
             viewModelScope.launch(Dispatchers.IO) {
                 println(getCarToRoomUseCase.getCarFromRoom()[0].toString() + "Jules le bozo");
-
+                liveDataCar.postValue(getCarToRoomUseCase.getCarFromRoom());
             }
         }
 
