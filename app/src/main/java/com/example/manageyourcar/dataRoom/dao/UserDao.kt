@@ -12,6 +12,9 @@ interface UserDao {
     @Insert
     fun addNewUser(userEntity: UserEntity)
 
+    @Query("SELECT * FROM users WHERE id=:idUser")
+    fun getUser(idUser: Int) : UserEntity
+
     @Query("SELECT * FROM users")
     fun getUsers() : List<UserEntity>
 

@@ -15,13 +15,26 @@ import com.example.manageyourcar.dataApi.repositoryRetrofit.ApiCarSIVRepository
 import com.example.manageyourcar.dataApi.repositoryRetrofit.ApiCarSIVRepositoryImpl
 import com.example.manageyourcar.dataApi.requestApiImmat
 import com.example.manageyourcar.dataApi.requestApiSIV
+import com.example.manageyourcar.dataRoom.repository.EntretienRepository
 import com.example.manageyourcar.dataRoom.repository.UserRepository
+import com.example.manageyourcar.dataRoom.repositoryImpl.EntretienRepositoryImpl
 import com.example.manageyourcar.dataRoom.repositoryImpl.UserRepositoryImpl
 
 import com.example.manageyourcar.dataRoom.useCase.car.AddCarToRoomUseCase
+import com.example.manageyourcar.dataRoom.useCase.car.DeleteCarToRoomUseCase
 import com.example.manageyourcar.dataRoom.useCase.car.GetCarFromRoomUseCase
+import com.example.manageyourcar.dataRoom.useCase.car.GetCarsFromRoomUseCase
+import com.example.manageyourcar.dataRoom.useCase.car.UpdateCarToRoomUseCase
+import com.example.manageyourcar.dataRoom.useCase.entretien.AddEntretienToRoomUseCase
+import com.example.manageyourcar.dataRoom.useCase.entretien.DeleteEntretienToRoomUseCase
+import com.example.manageyourcar.dataRoom.useCase.entretien.GetEntretienFromRoomUseCase
+import com.example.manageyourcar.dataRoom.useCase.entretien.GetEntretiensFromRoomUseCase
+import com.example.manageyourcar.dataRoom.useCase.entretien.UpdateEntretienToRoomUseCase
 import com.example.manageyourcar.dataRoom.useCase.user.AddUserToRoomUseCase
+import com.example.manageyourcar.dataRoom.useCase.user.DeleteUserToRoomUseCase
 import com.example.manageyourcar.dataRoom.useCase.user.GetUserFromRoomUseCase
+import com.example.manageyourcar.dataRoom.useCase.user.GetUsersFromRoomUseCase
+import com.example.manageyourcar.dataRoom.useCase.user.UpdateUserToRoomUseCase
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
@@ -59,18 +72,36 @@ fun injectFeature() = loadFeature
         single{
             get<Database>().getUserDAO()
         }
+        single{
+            get<Database>().getEntretienDAO()
+        }
     }
 
     val repositoryModule = module {
         single<CarRepository> { CarRepositoryImpl(get()) }
         single<UserRepository> { UserRepositoryImpl(get()) }
+        single<EntretienRepository> { EntretienRepositoryImpl(get()) }
     }
 
 val useCaseModule = module {
     factory { AddCarToRoomUseCase() }
+    factory { GetCarFromRoomUseCase() }
+    factory { GetCarsFromRoomUseCase() }
+    factory { UpdateCarToRoomUseCase() }
+    factory { DeleteCarToRoomUseCase() }
+
     factory { AddUserToRoomUseCase() }
     factory { GetUserFromRoomUseCase() }
-    factory { GetCarFromRoomUseCase() }
+    factory { GetUsersFromRoomUseCase() }
+    factory { UpdateUserToRoomUseCase() }
+    factory { DeleteUserToRoomUseCase() }
+
+    factory { AddEntretienToRoomUseCase() }
+    factory { GetEntretienFromRoomUseCase() }
+    factory { GetEntretiensFromRoomUseCase() }
+    factory { UpdateEntretienToRoomUseCase() }
+    factory { DeleteEntretienToRoomUseCase() }
+
     factory { GetVehiculeByNetworkUseCase() }
 
 }
