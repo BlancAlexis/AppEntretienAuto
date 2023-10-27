@@ -8,7 +8,7 @@ import org.koin.core.component.inject
 class AddEntretienToRoomUseCase: KoinComponent {
     val roomRepository by inject<EntretienRepository>()
 
-    suspend fun addEntretienFromRoom(entretien: Entretien) {
-        return roomRepository.addNewEntretien(entretien);
+    suspend fun addEntretienFromRoom(id: Int, name: String, iterationKilometre: Int) {
+        return roomRepository.addNewEntretien(Entretien(id, name, iterationKilometre));
     }
 }
