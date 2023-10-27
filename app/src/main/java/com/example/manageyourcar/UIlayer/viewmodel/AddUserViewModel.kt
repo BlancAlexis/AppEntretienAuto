@@ -1,5 +1,6 @@
 package com.example.manageyourcar.UIlayer.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.manageyourcar.composeView.UIState.SignInUiState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,13 +16,18 @@ class AddUserViewModel  : ViewModel(), KoinComponent{
 
     fun onEvent(event : UserSubscriptionEvent){
         when(event){
-            is UserSubscriptionEvent.OnClickSendButton -> TODO()
+            is UserSubscriptionEvent.OnClickSendButton -> onCheckFields()
             is UserSubscriptionEvent.OnLoginChanged ->  onLoginChanged(event)
             is UserSubscriptionEvent.OnPasswordChanged -> onPasswordChanged(event)
             is UserSubscriptionEvent.OnValidatePasswordChanged -> onValidateChanged(event)
         }
 
     }
+
+    private fun onCheckFields() {
+if (uiState.value.userPassword.equals(uiState.value.userValidatePassword)) {
+    Log.i("onCheckFields", "égal")
+}}
 
     private fun onLoginChanged(event: UserSubscriptionEvent.OnLoginChanged){
         _uiState.update {

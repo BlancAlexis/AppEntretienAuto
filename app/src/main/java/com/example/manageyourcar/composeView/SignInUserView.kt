@@ -3,6 +3,7 @@ package com.example.manageyourcar.composeView
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -26,8 +27,8 @@ fun SignInUserView(
     onEvent: (UserSubscriptionEvent) -> Unit = {}
 ) {
     Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.aligned(Alignment.),
+        modifier = Modifier.fillMaxHeight().padding(top = 150.dp),
+        verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         uiState.userLogin?.let {
