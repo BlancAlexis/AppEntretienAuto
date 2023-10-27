@@ -11,27 +11,27 @@ class AddCarToRoomUseCase : KoinComponent{
     val roomRepository by inject<CarRepository>()
 
     suspend fun addCarToRoom(id: Int,
-                             marque: String,
+                             brand: String,
                              model: String,
-                             dateDeParution: Int,
-                             carburant: String,
+                             releaseDate: Int,
+                             fuel: String,
                              transmission: String,
-                             motorisation: String,
-                             puissance: Int,
-                             couple: Int,
-                             vitesseMax: Int,
-                             kilometrage: Int) {
+                             motorization: String,
+                             power: Int,
+                             torque: Int,
+                             maxSpeed: Int,
+                             mileage: Int) {
 
         roomRepository.addNewCar(Car(id,
-            marque,
+            brand,
             model,
-            dateDeParution,
-            carburant,
+            releaseDate,
+            fuel,
             transmission,
-            motorisation,
-            puissance,
-            couple,
-            vitesseMax,
-            kilometrage))
+            motorization,
+            power,
+            torque,
+            maxSpeed,
+            mileage))
     }
 }

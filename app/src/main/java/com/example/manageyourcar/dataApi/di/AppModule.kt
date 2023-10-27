@@ -15,9 +15,9 @@ import com.example.manageyourcar.dataApi.repositoryRetrofit.ApiCarSIVRepository
 import com.example.manageyourcar.dataApi.repositoryRetrofit.ApiCarSIVRepositoryImpl
 import com.example.manageyourcar.dataApi.requestApiImmat
 import com.example.manageyourcar.dataApi.requestApiSIV
-import com.example.manageyourcar.dataRoom.repository.EntretienRepository
+import com.example.manageyourcar.dataRoom.repository.ServicingRepository
 import com.example.manageyourcar.dataRoom.repository.UserRepository
-import com.example.manageyourcar.dataRoom.repositoryImpl.EntretienRepositoryImpl
+import com.example.manageyourcar.dataRoom.repositoryImpl.ServicingRepositoryImpl
 import com.example.manageyourcar.dataRoom.repositoryImpl.UserRepositoryImpl
 
 import com.example.manageyourcar.dataRoom.useCase.car.AddCarToRoomUseCase
@@ -25,11 +25,11 @@ import com.example.manageyourcar.dataRoom.useCase.car.DeleteCarToRoomUseCase
 import com.example.manageyourcar.dataRoom.useCase.car.GetCarFromRoomUseCase
 import com.example.manageyourcar.dataRoom.useCase.car.GetCarsFromRoomUseCase
 import com.example.manageyourcar.dataRoom.useCase.car.UpdateCarToRoomUseCase
-import com.example.manageyourcar.dataRoom.useCase.entretien.AddEntretienToRoomUseCase
-import com.example.manageyourcar.dataRoom.useCase.entretien.DeleteEntretienToRoomUseCase
-import com.example.manageyourcar.dataRoom.useCase.entretien.GetEntretienFromRoomUseCase
-import com.example.manageyourcar.dataRoom.useCase.entretien.GetEntretiensFromRoomUseCase
-import com.example.manageyourcar.dataRoom.useCase.entretien.UpdateEntretienToRoomUseCase
+import com.example.manageyourcar.dataRoom.useCase.servicing.AddServicingToRoomUseCase
+import com.example.manageyourcar.dataRoom.useCase.servicing.DeleteServicingToRoomUseCase
+import com.example.manageyourcar.dataRoom.useCase.servicing.GetServicingFromRoomUseCase
+import com.example.manageyourcar.dataRoom.useCase.servicing.GetAllServicingFromRoomUseCase
+import com.example.manageyourcar.dataRoom.useCase.servicing.UpdateServicingToRoomUseCase
 import com.example.manageyourcar.dataRoom.useCase.user.AddUserToRoomUseCase
 import com.example.manageyourcar.dataRoom.useCase.user.DeleteUserToRoomUseCase
 import com.example.manageyourcar.dataRoom.useCase.user.GetUserFromRoomUseCase
@@ -73,14 +73,14 @@ fun injectFeature() = loadFeature
             get<Database>().getUserDAO()
         }
         single{
-            get<Database>().getEntretienDAO()
+            get<Database>().getServicingDAO()
         }
     }
 
     val repositoryModule = module {
         single<CarRepository> { CarRepositoryImpl(get()) }
         single<UserRepository> { UserRepositoryImpl(get()) }
-        single<EntretienRepository> { EntretienRepositoryImpl(get()) }
+        single<ServicingRepository> { ServicingRepositoryImpl(get()) }
     }
 
 val useCaseModule = module {
@@ -96,11 +96,11 @@ val useCaseModule = module {
     factory { UpdateUserToRoomUseCase() }
     factory { DeleteUserToRoomUseCase() }
 
-    factory { AddEntretienToRoomUseCase() }
-    factory { GetEntretienFromRoomUseCase() }
-    factory { GetEntretiensFromRoomUseCase() }
-    factory { UpdateEntretienToRoomUseCase() }
-    factory { DeleteEntretienToRoomUseCase() }
+    factory { AddServicingToRoomUseCase() }
+    factory { GetServicingFromRoomUseCase() }
+    factory { GetAllServicingFromRoomUseCase() }
+    factory { UpdateServicingToRoomUseCase() }
+    factory { DeleteServicingToRoomUseCase() }
 
     factory { GetVehiculeByNetworkUseCase() }
 

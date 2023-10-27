@@ -7,14 +7,14 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "cars")
 data class CarEntity(
     @PrimaryKey(autoGenerate = true,) val id: Int = 0,
-    @ColumnInfo(name = "marque") val marque: String,
+    @ColumnInfo(name = "brand") val brand: String,
     @ColumnInfo(name = "model") val model: String,
-    @ColumnInfo(name = "dateDeParution") val dateDeParution: Int,
-    @ColumnInfo(name = "carburant") val carburant: String,
+    @ColumnInfo(name = "releaseDate") val releaseDate: Int,
+    @ColumnInfo(name = "fuel") val fuel: String,
     @ColumnInfo(name = "transmission") val transmission: String,
-    @ColumnInfo(name = "motorisation") val motorisation: String,
-    @ColumnInfo(name = "puissance") val puissance: Int,
-    @ColumnInfo(name = "couple") val couple: Int,
-    @ColumnInfo(name = "vitesseMax") val vitesseMax: Int,
-    @ColumnInfo(name = "kilometrage") val kilometrage: Int,
+    @ColumnInfo(name = "motorization") val motorization: String,
+    @ColumnInfo(name = "power") val power: Int,
+    @ColumnInfo(name = "torque") val torque: Int,
+    @ColumnInfo(name = "maxSpeed") val maxSpeed: Int,
+    @ColumnInfo(name = "mileage") val mileage: Int,
 )

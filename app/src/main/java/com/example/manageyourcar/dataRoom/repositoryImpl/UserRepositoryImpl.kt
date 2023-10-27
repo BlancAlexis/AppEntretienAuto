@@ -15,6 +15,8 @@ class UserRepositoryImpl(private val userDao: UserDao) : UserRepository, KoinCom
         val userEntity = UserEntity(
             login = user.login,
             password = user.password,
+            firstname = user.firstname,
+            lastname = user.lastname
         )
         userDao.addNewUser(userEntity)
     }
@@ -26,6 +28,8 @@ class UserRepositoryImpl(private val userDao: UserDao) : UserRepository, KoinCom
             id = brutResult.id,
             login = brutResult.login,
             password = brutResult.password,
+            firstname = brutResult.firstname,
+            lastname= brutResult.lastname
         );
     }
 
@@ -34,7 +38,7 @@ class UserRepositoryImpl(private val userDao: UserDao) : UserRepository, KoinCom
         val resultUser: MutableList<User> = arrayListOf();
 
         for(element in brutResult){
-            resultUser.add(User(0, element.login, element.password))
+            resultUser.add(User(0, element.login, element.password, element.firstname, element.lastname))
         }
 
         return resultUser;
@@ -45,6 +49,8 @@ class UserRepositoryImpl(private val userDao: UserDao) : UserRepository, KoinCom
             id = user.id,
             login = user.login,
             password = user.password,
+            firstname = user.firstname,
+            lastname = user.lastname
         )
         userDao.updateUser(userEntity)
     }

@@ -10,16 +10,16 @@ class CarRepositoryImpl(private val carDao: CarDao) : CarRepository,KoinComponen
 
     override fun addNewCar(car: Car) {
         val carEntity = CarEntity(
-            marque = car.marque,
+            brand = car.brand,
             model = car.model,
-            dateDeParution = car.dateDeParution,
-            carburant = car.carburant,
+            releaseDate = car.releaseDate,
+            fuel = car.fuel,
             transmission = car.transmission,
-            motorisation = car.motorisation,
-            puissance = car.puissance,
-            couple = car.couple,
-            vitesseMax = car.vitesseMax,
-            kilometrage = car.kilometrage
+            motorization = car.motorization,
+            power = car.power,
+            torque = car.torque,
+            maxSpeed = car.maxSpeed,
+            mileage = car.mileage
         )
         carDao.addNewCar(carEntity)
     }
@@ -28,16 +28,16 @@ class CarRepositoryImpl(private val carDao: CarDao) : CarRepository,KoinComponen
         val brutResult = carDao.getCar(idCar);
 
         return Car(brutResult.id,
-            brutResult.marque,
+            brutResult.brand,
             brutResult.model,
-            brutResult.dateDeParution,
-            brutResult.carburant,
+            brutResult.releaseDate,
+            brutResult.fuel,
             brutResult.transmission,
-            brutResult.motorisation,
-            brutResult.puissance,
-            brutResult.couple,
-            brutResult.vitesseMax,
-            brutResult.kilometrage);
+            brutResult.motorization,
+            brutResult.power,
+            brutResult.torque,
+            brutResult.maxSpeed,
+            brutResult.mileage);
     }
 
     override fun getCars(): List<Car> {
@@ -46,16 +46,16 @@ class CarRepositoryImpl(private val carDao: CarDao) : CarRepository,KoinComponen
 
         for(element in brutResult){
             resultCar.add(Car(0,
-                element.marque,
+                element.brand,
                 element.model,
-                element.dateDeParution,
-                element.carburant,
+                element.releaseDate,
+                element.fuel,
                 element.transmission,
-                element.motorisation,
-                element.puissance,
-                element.couple,
-                element.vitesseMax,
-                element.kilometrage))
+                element.motorization,
+                element.power,
+                element.torque,
+                element.maxSpeed,
+                element.mileage))
         }
 
         return resultCar;
@@ -64,16 +64,16 @@ class CarRepositoryImpl(private val carDao: CarDao) : CarRepository,KoinComponen
     override fun updateCar(car: Car) {
         val carEntity = CarEntity(
             id = car.id,
-            marque = car.marque,
+            brand = car.brand,
             model = car.model,
-            dateDeParution = car.dateDeParution,
-            carburant = car.carburant,
+            releaseDate = car.releaseDate,
+            fuel = car.fuel,
             transmission = car.transmission,
-            motorisation = car.motorisation,
-            puissance = car.puissance,
-            couple = car.couple,
-            vitesseMax = car.vitesseMax,
-            kilometrage = car.kilometrage
+            motorization = car.motorization,
+            power = car.power,
+            torque = car.torque,
+            maxSpeed = car.maxSpeed,
+            mileage = car.mileage
         )
         carDao.updateCar(carEntity)
     }
