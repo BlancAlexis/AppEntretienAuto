@@ -31,16 +31,17 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.manageyourcar.UIlayer.viewmodel.UserLoginEvent
+import com.example.manageyourcar.composeView.UIState.LoginUiState
 import com.example.manageyourcar.composeView.common.CustomDialog
 import com.example.manageyourcar.composeView.common.CustomTextField
 
 @Composable
 fun LoginUserView(
-    onClickAction: (String, String) -> Unit
+    onEvent: (UserLoginEvent) -> Unit = {},
+    uiState: LoginUiState
 ) {
     var displayPopup by remember { mutableStateOf(false) }
-    var userID by remember { mutableStateOf("") }
-    var userPassword by remember { mutableStateOf("") }
 
     if (displayPopup) {
         CustomDialog(
@@ -67,32 +68,37 @@ fun LoginUserView(
             )
         }
         Spacer(modifier = Modifier.height(20.dp))
-        CustomTextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp), textFieldValue = userID,
-            label = "Identifiant",
-            readOnly = false,
-            keyboardType = KeyboardType.Text,
-            onValueChange = {
-                userID = it
-            }
-        )
-        CustomTextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp),
-            label = "Mot de passe",
-            textFieldValue = userPassword,
-            readOnly = false,
-            keyboardType = KeyboardType.Text,
-            onValueChange = {
-                userPassword = it
-            }
-        )
+        uiState.userLogin?.let {
+            CustomTextField(
+                modifier = Modifier
+                    .fillMaxWidth(0.95f)
+                    .padding(10.dp),
+                textFieldValue = it,
+                label = "Identifiant",
+                readOnly = false,
+                keyboardType = KeyboardType.Text,
+                onValueChange = {
+                    onEvent(UserLoginEvent.OnLoginChanged(it))
+                }
+            )
+        }
+        uiState.userPassword?.let {
+            CustomTextField(
+                modifier = Modifier
+                    .fillMaxWidth(0.95f)
+                    .padding(10.dp),
+                label = "Mot de passe",
+                textFieldValue = it,
+                readOnly = false,
+                keyboardType = KeyboardType.Text,
+                onValueChange = {
+                    onEvent(UserLoginEvent.OnPasswordChanged(it))
+                }
+            )
+        }
         Spacer(modifier = Modifier.height(20.dp))
 
-        Button(onClick = { onClickAction(userID, userPassword) }) {
+        Button(onClick = { onEvent(UserLoginEvent.OnClickSendButton) }) {
             Text(
                 text = "Connexion",
                 fontSize = 20.sp
@@ -128,10 +134,4 @@ fun LoginUserView(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewCustomDialogCenterd() {
-    LoginUserView(
-        onClickAction = { f, d -> }
-    )
-}
+

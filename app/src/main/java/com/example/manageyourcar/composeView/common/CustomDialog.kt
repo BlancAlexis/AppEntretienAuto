@@ -1,11 +1,14 @@
 package com.example.manageyourcar.composeView.common
 
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -31,6 +34,7 @@ fun CustomDialog(
         properties = DialogProperties(dismissOnClickOutside = true)
     ) {
         Card(
+            modifier = Modifier.border(1.dp, Color.Red, RoundedCornerShape(10.dp)),
             colors = CardDefaults.cardColors(Color.White)
         ) {
 
