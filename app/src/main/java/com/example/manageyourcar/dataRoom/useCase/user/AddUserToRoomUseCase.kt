@@ -1,6 +1,5 @@
-package com.example.manageyourcar.domainLayer.useCaseRoom.user
+package com.example.manageyourcar.dataRoom.useCase.user
 
-import android.util.Log
 import com.example.manageyourcar.dataRoom.model.User
 import com.example.manageyourcar.dataRoom.repository.UserRepository
 import org.koin.core.component.KoinComponent

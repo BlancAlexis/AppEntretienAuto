@@ -5,14 +5,9 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
 import android.util.Log
-import com.example.manageyourcar.UIlayer.viewmodel.UserViewModel
 import com.example.manageyourcar.dataApi.di.injectFeature
-import com.example.manageyourcar.domainLayer.useCaseRoom.car.AddCarToRoomUseCase
 
 import org.koin.android.ext.koin.androidContext
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import org.koin.core.context.GlobalContext.startKoin
 
 class AppApplication : Application() {

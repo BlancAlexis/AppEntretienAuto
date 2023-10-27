@@ -1,16 +1,15 @@
 package com.example.manageyourcar.UIlayer.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.manageyourcar.dataApi.util.Ressource
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkImmatUseCase
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkUseCase
-import com.example.manageyourcar.domainLayer.useCaseRoom.car.AddCarToRoomUseCase
-import com.example.manageyourcar.domainLayer.useCaseRoom.car.GetCarFromRoomUseCase
-import com.example.manageyourcar.domainLayer.useCaseRoom.user.AddUserToRoomUseCase
-import com.example.manageyourcar.domainLayer.useCaseRoom.user.GetUserFromRoomUseCase
+import com.example.manageyourcar.dataRoom.useCase.car.AddCarToRoomUseCase
+import com.example.manageyourcar.dataRoom.useCase.car.GetCarFromRoomUseCase
+import com.example.manageyourcar.dataRoom.useCase.user.AddUserToRoomUseCase
+import com.example.manageyourcar.dataRoom.useCase.user.GetUserFromRoomUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
