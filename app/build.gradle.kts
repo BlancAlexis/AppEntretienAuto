@@ -1,7 +1,10 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -19,6 +22,8 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        val key: String = gradleLocalProperties(project.rootProject.projectDir).getProperty("MAPS_API_KEY") ?: ""
+        buildConfigField("String", "MAPS_API_KEY", "\"$key\"")
     }
 
     buildTypes {
@@ -40,6 +45,7 @@ android {
     buildFeatures {
         viewBinding = true
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
@@ -57,7 +63,9 @@ dependencies {
     implementation("io.insert-koin:koin-android:3.2.0-beta-1")
     implementation ("io.insert-koin:koin-androidx-navigation:3.2.0-beta-1")
 
-
+    //API Places Google
+    implementation("com.google.android.libraries.places:places:3.2.0")
+    implementation("com.google.maps.android:places-ktx:2.0.0")
 
 
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
@@ -72,6 +80,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics-android:1.5.4")
     implementation("androidx.compose.ui:ui-text-android:1.5.4")
     implementation("androidx.compose.foundation:foundation-android:1.5.4")
+    implementation("com.google.android.gms:play-services-maps:18.1.0")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")

@@ -1,11 +1,14 @@
 package com.example.manageyourcar.dataApi.di
 
 import androidx.room.Room
-import com.example.manageyourcar.UIlayer.viewmodel.AddCarViewModel
-import com.example.manageyourcar.UIlayer.viewmodel.AddUserViewModel
-import com.example.manageyourcar.UIlayer.viewmodel.LogUserViewModel
-import com.example.manageyourcar.UIlayer.viewmodel.UserViewModel
 import com.example.manageyourcar.dataApi.dataSource.RemoteDataSource
+
+import com.example.manageyourcar.UIlayer.viewmodel.UserViewModel
+import com.example.manageyourcar.UIlayer.viewmodel.LogUserViewModel
+import com.example.manageyourcar.UIlayer.viewmodel.AddUserViewModel
+import com.example.manageyourcar.UIlayer.viewmodel.AddCarViewModel
+import com.example.manageyourcar.UIlayer.viewmodel.MapsViewModel
+import com.example.manageyourcar.dataApi.garageApi
 import com.example.manageyourcar.dataApi.repositoryRetrofit.ApiCarImmatRepository
 import com.example.manageyourcar.dataApi.repositoryRetrofit.ApiCarImmatRepositoryImpl
 import com.example.manageyourcar.dataRoom.database.Database
@@ -13,6 +16,8 @@ import com.example.manageyourcar.dataRoom.repository.CarRepository
 import com.example.manageyourcar.dataRoom.repositoryImpl.CarRepositoryImpl
 import com.example.manageyourcar.dataApi.repositoryRetrofit.ApiCarSIVRepository
 import com.example.manageyourcar.dataApi.repositoryRetrofit.ApiCarSIVRepositoryImpl
+import com.example.manageyourcar.dataApi.repositoryRetrofit.GarageRepository
+import com.example.manageyourcar.dataApi.repositoryRetrofit.GarageRepositoryImpl
 import com.example.manageyourcar.dataApi.requestApiImmat
 import com.example.manageyourcar.dataApi.requestApiSIV
 import com.example.manageyourcar.dataApi.util.RequestLoggingInterceptor
@@ -20,6 +25,7 @@ import com.example.manageyourcar.dataRoom.repository.ServicingRepository
 import com.example.manageyourcar.dataRoom.repository.UserRepository
 import com.example.manageyourcar.dataRoom.repositoryImpl.ServicingRepositoryImpl
 import com.example.manageyourcar.dataRoom.repositoryImpl.UserRepositoryImpl
+import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetCarRepairShopUseCase
 
 import com.example.manageyourcar.dataRoom.useCase.car.AddCarToRoomUseCase
 import com.example.manageyourcar.dataRoom.useCase.car.DeleteCarToRoomUseCase
@@ -61,7 +67,6 @@ private val loadFeature by lazy {
         )
     )
 }
-
 
     val databaseModule = module {
         single {
@@ -108,11 +113,28 @@ val useCaseModule = module {
     factory { DeleteServicingToRoomUseCase() }
 
     factory { GetVehiculeByNetworkUseCase() }
+    factory { GetCarRepairShopUseCase() }
     factory { GetVehiculeByNetworkImmatUseCase() }
 
 }
 
 val retrofitModule = module {
+    single<garageApi> {
+        val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(RequestLoggingInterceptor())
+            .build()
+
+        Retrofit.Builder()
+            .baseUrl("https://maps.googleapis.com/maps/api/place/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .build()
+            .create(garageApi::class.java)
+    }
+
+    factory<GarageRepository> { GarageRepositoryImpl() }
+
+
     single<requestApiSIV> {
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(RequestLoggingInterceptor())
@@ -151,4 +173,5 @@ val viewModelModule = module {
     viewModelOf(::AddUserViewModel)
     viewModelOf(::LogUserViewModel)
     viewModelOf(::AddCarViewModel)
+    viewModelOf(::MapsViewModel)
 }
