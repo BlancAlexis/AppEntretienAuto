@@ -14,10 +14,15 @@ class LogUserViewModel : ViewModel() {
 
     fun onEvent(event : UserLoginEvent) {
         when(event){
-            is UserLoginEvent.OnClickSendButton -> TODO()
-            is UserLoginEvent.OnLoginChanged -> TODO()
-            is UserLoginEvent.OnPasswordChanged -> TODO()
+            is UserLoginEvent.OnClickSendButton -> onTryLog()
+            is UserLoginEvent.OnLoginChanged -> onLoginChanged(event)
+            is UserLoginEvent.OnPasswordChanged -> onPasswordChanged(event)
+            is UserLoginEvent.OnSignInButton -> return //redirect page inscription
         }
+    }
+
+    private fun onTryLog() {
+        //tenter de log
     }
 
     fun onLoginChanged(event : UserLoginEvent.OnLoginChanged){
@@ -37,6 +42,7 @@ class LogUserViewModel : ViewModel() {
 }
 sealed interface UserLoginEvent {
     object OnClickSendButton : UserLoginEvent
+    object OnSignInButton : UserLoginEvent
     data class OnLoginChanged(val newValue: String) : UserLoginEvent
     data class OnPasswordChanged(val newValue: String) : UserLoginEvent
 }

@@ -123,7 +123,9 @@ fun LoginUserView(
         )
         Spacer(modifier = Modifier.height(20.dp))
         OutlinedButton(
-            onClick = { },
+            onClick = {
+                      onEvent(UserLoginEvent.OnSignInButton)
+            },
             modifier = Modifier
                 .fillMaxWidth(0.5f)
                 .border(5.dp, Color.Blue, CircleShape)
