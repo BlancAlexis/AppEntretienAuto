@@ -9,4 +9,6 @@ data class UserEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo(name = "login") val login: String,
     @ColumnInfo(name = "password") val password: String,
+    @ColumnInfo(name = "firstname") val firstname: String,
+    @ColumnInfo(name = "lastname") val lastname: String,
 )

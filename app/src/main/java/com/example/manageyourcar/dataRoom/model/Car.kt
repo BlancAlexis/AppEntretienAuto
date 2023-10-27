@@ -6,14 +6,14 @@ import java.util.Date
 
 data class Car (
     val id: Int,
-    val marque: String,
+    val brand: String,
     val model: String,
-    val dateDeParution: Int,
-    val carburant: String,
+    val releaseDate: Int,
+    val fuel: String,
     val transmission: String,
-    val motorisation: String,
-    val puissance: Int,
-    val couple: Int,
-    val vitesseMax: Int,
-    val kilometrage: Int
+    val motorization: String,
+    val power: Int,
+    val torque: Int,
+    val maxSpeed: Int,
+    val mileage: Int
 )

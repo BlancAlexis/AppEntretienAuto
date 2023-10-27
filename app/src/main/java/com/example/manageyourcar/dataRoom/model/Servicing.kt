@@ -1,7 +1,7 @@
 package com.example.manageyourcar.dataRoom.model
 
-data class Entretien (
+data class Servicing (
     val id: Int,
     val name: String,
-    val iterationKilometre: Int,
+    val eachKilometre: Int,
 )

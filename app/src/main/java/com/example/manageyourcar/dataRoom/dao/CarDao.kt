@@ -9,7 +9,7 @@ import com.example.manageyourcar.dataRoom.entities.CarEntity
 @Dao
 interface CarDao {
     @Insert
-    fun addNewCar(contactEntity: CarEntity)
+    fun addNewCar(carEntity: CarEntity)
 
     @Query("SELECT * FROM cars")
     fun getCars() : List<CarEntity>
