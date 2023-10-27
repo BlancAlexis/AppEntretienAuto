@@ -8,7 +8,7 @@ import org.koin.core.component.inject
 class AddUserToRoomUseCase: KoinComponent {
     val roomRepository by inject<UserRepository>()
 
-    suspend fun addUserToRoom(i: Int, s: String, s1: String) {
-        roomRepository.addNewUser(User(i,s,s1))
+    suspend fun addUserToRoom(id: Int, login: String, password: String) {
+        roomRepository.addNewUser(User(id,login,password))
     }
 }
