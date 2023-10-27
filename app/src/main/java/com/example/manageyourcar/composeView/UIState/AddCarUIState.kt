@@ -1,6 +1,6 @@
 package com.example.manageyourcar.composeView.UIState
 
-data class addCarUIState (
+data class AddCarUIState (
 
     val inputVIN : String?= null,
     val inputImmat : String?= null,

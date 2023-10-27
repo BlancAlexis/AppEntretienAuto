@@ -3,16 +3,10 @@ package com.example.manageyourcar.composeView
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -26,9 +20,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.manageyourcar.composeView.UIState.addCarUIState
+import com.example.manageyourcar.UIlayer.viewmodel.onCarRequest
+import com.example.manageyourcar.composeView.UIState.AddCarUIState
 import com.example.manageyourcar.composeView.common.CustomDialog
 import com.example.manageyourcar.composeView.common.CustomPlaqueImmat
 import com.example.manageyourcar.composeView.common.CustomTextField
@@ -36,7 +30,9 @@ import com.example.manageyourcar.composeView.common.CustomTextField
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddCarView(
-    addCarUIState: addCarUIState
+    uiState: AddCarUIState,
+    onEvent : (onCarRequest) -> Unit = {}
+
 ) {
     var openDialog by remember { mutableStateOf(false) }
     if (openDialog) {
@@ -83,5 +79,5 @@ fun AddCarView(
 @Preview(showBackground = true)
 @Composable
 fun PreviewAddCarView() {
-    AddCarView(addCarUIState())
+    AddCarView(AddCarUIState())
 }
