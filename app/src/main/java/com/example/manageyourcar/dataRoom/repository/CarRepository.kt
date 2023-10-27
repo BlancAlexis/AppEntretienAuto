@@ -4,7 +4,8 @@ import com.example.manageyourcar.dataRoom.model.Car
 
 interface CarRepository {
      fun addNewCar(car: Car)
-     fun getCar(): List<Car>
+     fun getCars(): List<Car>
+     fun getCar(idCar: Int): Car
      fun updateCar(car: Car)
-     fun deleteCar(idCar: Long)
+     fun deleteCar(idCar: Int)
 }

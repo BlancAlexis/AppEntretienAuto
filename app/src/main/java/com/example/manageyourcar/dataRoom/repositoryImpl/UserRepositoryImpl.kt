@@ -19,6 +19,16 @@ class UserRepositoryImpl(private val userDao: UserDao) : UserRepository, KoinCom
         userDao.addNewUser(userEntity)
     }
 
+    override fun getUser(idUser: Int): User {
+        val brutResult = userDao.getUser(idUser);
+
+        return User(
+            id = brutResult.id,
+            login = brutResult.login,
+            password = brutResult.password,
+        );
+    }
+
     override fun getUsers(): List<User> {
         val brutResult = userDao.getUsers();
         val resultUser: MutableList<User> = arrayListOf();

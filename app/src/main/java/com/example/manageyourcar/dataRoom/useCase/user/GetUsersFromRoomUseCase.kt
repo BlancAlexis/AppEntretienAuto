@@ -5,10 +5,10 @@ import com.example.manageyourcar.dataRoom.repository.UserRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class GetUserFromRoomUseCase : KoinComponent {
+class GetUsersFromRoomUseCase: KoinComponent {
     val roomRepository by inject<UserRepository>()
 
-    suspend fun getUserFromRoom(idUser: Int): User{
-        return roomRepository.getUser(idUser);
+    suspend fun getUsersFromRoom(): List<User> {
+        return roomRepository.getUsers();
     }
 }
