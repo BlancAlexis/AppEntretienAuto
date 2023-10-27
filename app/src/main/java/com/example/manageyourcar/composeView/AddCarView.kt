@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -27,12 +26,10 @@ import com.example.manageyourcar.composeView.common.CustomDialog
 import com.example.manageyourcar.composeView.common.CustomPlaqueImmat
 import com.example.manageyourcar.composeView.common.CustomTextField
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddCarView(
     uiState: AddCarUIState,
-    onEvent : (onCarRequest) -> Unit = {}
-
+    onEvent: (onCarRequest) -> Unit = {}
 ) {
     var openDialog by remember { mutableStateOf(false) }
     if (openDialog) {
@@ -47,32 +44,35 @@ fun AddCarView(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(text = "Merci d'entrer votre plaque d'immatriculation")
-        CustomPlaqueImmat()
+        CustomPlaqueImmat(
+            registration = uiState.inputImmat,
+            onImmatEvent = { onEvent(onCarRequest.onImmatChanged(it ?: "")) }
+        )
         Text(
-                textAlign = TextAlign.Center, text = "OU", fontSize = 30.sp
+            textAlign = TextAlign.Center, text = "OU", fontSize = 30.sp
         )
 
         Row(
             modifier = Modifier.fillMaxWidth(0.9f), horizontalArrangement = Arrangement.Center
         ) {
-        CustomTextField(
-            onValueChange = { println("f") },
-            textFieldValue = "it",
-            label = "Rechercher par numéro VIN",
-            readOnly = false,
-            keyboardType = KeyboardType.Text,
-            labelTextStyle = TextStyle(
-                color = Color.Black,
+                CustomTextField(
+                    onValueChange = { onEvent(onCarRequest.onVINChanged(it)) },
+                    textFieldValue = uiState.inputVIN?:"",
+                    label = "Rechercher par numéro VIN",
+                    readOnly = false,
+                    keyboardType = KeyboardType.Text,
+                    labelTextStyle = TextStyle(
+                        color = Color.Black,
+                    )
+
+                )
+            }
+
+        Button(onClick = {onEvent(onCarRequest.onClickButton)}) {
+            Text(
+                text = "Rechercher", fontSize = 20.sp
             )
-
-        )
-    }
-
-    Button(onClick = {}) {
-        Text(
-            text = "Rechercher", fontSize = 20.sp
-        )
-    }
+        }
     }
 }
 

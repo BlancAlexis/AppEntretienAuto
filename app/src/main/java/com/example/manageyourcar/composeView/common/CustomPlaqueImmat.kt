@@ -32,7 +32,10 @@ import com.example.manageyourcar.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CustomPlaqueImmat() {
+fun CustomPlaqueImmat(
+    registration : String?,
+    onImmatEvent :(String?) -> Unit = {}
+) {
     Card(
         colors = CardDefaults.cardColors(Color.Blue),
         shape = RoundedCornerShape(5.dp),
@@ -66,24 +69,27 @@ fun CustomPlaqueImmat() {
                 )
             }
 
-            TextField(
-                value = "BJ-764-QE",
-                onValueChange = { println("f") },
-                textStyle = TextStyle(
-                    textAlign = TextAlign.Center,
-                    color = Color.Black,
-                    fontSize = 24.sp,
-                    letterSpacing = 9.sp,
-                    fontWeight = FontWeight.Bold
+                TextField(
+                    value = registration?:"",
+                    onValueChange = { onImmatEvent(it) },
+                    singleLine = true,
+                    textStyle = TextStyle(
+                        textAlign = TextAlign.Center,
+                        color = Color.Black,
+                        fontSize = 24.sp,
+                        letterSpacing = 9.sp,
+                        fontWeight = FontWeight.Bold
+                    )
                 )
-            )
+            }
         }
     }
-}
 
 @Preview(showBackground = true)
 @Composable
 fun PreviewCustomPlaqueImmat() {
     CustomPlaqueImmat(
+        registration = "AA",
+        onImmatEvent = {}
     )
 }
