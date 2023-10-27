@@ -11,11 +11,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.manageyourcar.UIlayer.viewmodel.AddUserViewModel
 import com.example.manageyourcar.composeView.SignInUserView
+import com.example.manageyourcar.dataRoom.useCase.user.AddUserToRoomUseCase
 import com.example.manageyourcar.databinding.FragmentAddUserBinding
+import org.koin.android.ext.android.inject
+import org.koin.core.component.inject
+import org.koin.java.KoinJavaComponent.inject
 
 
 class addUserFragment : Fragment() {
-
     private lateinit var binding: FragmentAddUserBinding
     private val addUserViewModel: AddUserViewModel by lazy {
         ViewModelProvider(this).get(
@@ -23,10 +26,14 @@ class addUserFragment : Fragment() {
         )
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentAddUserBinding.inflate(inflater, container, false)
+        return binding.root
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,14 +48,6 @@ class addUserFragment : Fragment() {
                 )
             }
         }
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentAddUserBinding.inflate(inflater, container, false)
-        return binding.root
     }
 
     companion object {

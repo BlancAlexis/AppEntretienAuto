@@ -57,3 +57,11 @@ Wapp/src/main/java/com/example/manageyourcar/UIlayer/view/activities/testRoomAct
 Papp/src/main/java/com/example/manageyourcar/composeView/UIState/SignInUiState.kt,6\0\60ac1e88a3d3ea9ee8d55ef166f2d26086065de9
 Å
 Qapp/src/main/java/com/example/manageyourcar/UIlayer/viewmodel/AddUserViewModel.kt,4\a\4affc62260394dddadffdf2159c07c318c7fadf8
+
+Oapp/src/main/java/com/example/manageyourcar/composeView/UIState/LoginUiState.kt,3\7\379c3cbba2ab7616a9b2b4f0f2cfb8aca89ce9a7
+u
+Eapp/src/main/java/com/example/manageyourcar/composeView/AddCarView.kt,0\c\0cdf5ca75088a9bebefd669447f712355786c2ca
+â
+Yapp/src/main/java/com/example/manageyourcar/dataRoom/useCase/user/AddUserToRoomUseCase.kt,8\b\8b301ad4f8bb65aeda780cd48805293b62d443a5
+Ä
+Papp/src/main/java/com/example/manageyourcar/UIlayer/viewmodel/AddCarViewModel.kt,f\f\ff0e19bfbe2a7fbc18c4b1e840d37eb7e7d0d03b
