@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UIlayer.view.fragments.addUserFragment">
+    tools:context=".UIlayer.view.fragments.loginUserFragment">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-<androidx.compose.ui.platform.ComposeView
-    android:id="@+id/addUserCompose"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/log_user_field"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

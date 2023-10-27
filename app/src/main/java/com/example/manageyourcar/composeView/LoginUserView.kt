@@ -1,5 +1,6 @@
 package com.example.manageyourcar.composeView
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,21 +9,21 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.ClickableText
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
@@ -30,10 +31,27 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.manageyourcar.UIlayer.viewmodel.UserLoginEvent
+import com.example.manageyourcar.composeView.UIState.LoginUiState
+import com.example.manageyourcar.composeView.common.CustomDialog
 import com.example.manageyourcar.composeView.common.CustomTextField
 
 @Composable
-fun login_ui_compose() {
+fun LoginUserView(
+    onEvent: (UserLoginEvent) -> Unit = {},
+    uiState: LoginUiState
+) {
+    var displayPopup by remember { mutableStateOf(false) }
+
+    if (displayPopup) {
+        CustomDialog(
+            onDismiss = {
+                displayPopup = false
+            },
+            title = "Mot de passe oublié?",
+            content = "La flemme d'y géré maintenant tchouss"
+        )
+    }
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -50,24 +68,37 @@ fun login_ui_compose() {
             )
         }
         Spacer(modifier = Modifier.height(20.dp))
-        CustomTextField(
-            readOnly = false,
-            passwordVisible = true,
-            iconRight = null,
-            iconLeft = null,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-            onValueChanged = {}
-        )
-        CustomTextField(
-            readOnly = false,
-            passwordVisible = false,
-            iconRight = null,
-            iconLeft = null,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-            onValueChanged = {}
-        )
+        uiState.userLogin?.let {
+            CustomTextField(
+                modifier = Modifier
+                    .fillMaxWidth(0.95f)
+                    .padding(10.dp),
+                textFieldValue = it,
+                label = "Identifiant",
+                readOnly = false,
+                keyboardType = KeyboardType.Text,
+                onValueChange = {
+                    onEvent(UserLoginEvent.OnLoginChanged(it))
+                }
+            )
+        }
+        uiState.userPassword?.let {
+            CustomTextField(
+                modifier = Modifier
+                    .fillMaxWidth(0.95f)
+                    .padding(10.dp),
+                label = "Mot de passe",
+                textFieldValue = it,
+                readOnly = false,
+                keyboardType = KeyboardType.Text,
+                onValueChange = {
+                    onEvent(UserLoginEvent.OnPasswordChanged(it))
+                }
+            )
+        }
+        Spacer(modifier = Modifier.height(20.dp))
 
-        Button(onClick = { }) {
+        Button(onClick = { onEvent(UserLoginEvent.OnClickSendButton) }) {
             Text(
                 text = "Connexion",
                 fontSize = 20.sp
@@ -86,21 +117,23 @@ fun login_ui_compose() {
         ClickableText(
             text = text,
             modifier = Modifier.padding(8.dp),
-            onClick = {}
+            onClick = {
+                displayPopup = true
+            }
         )
         Spacer(modifier = Modifier.height(20.dp))
         OutlinedButton(
-            onClick = { /*TODO*/ },
-            modifier = Modifier.fillMaxWidth(0.5f)
+            onClick = {
+                      onEvent(UserLoginEvent.OnSignInButton)
+            },
+            modifier = Modifier
+                .fillMaxWidth(0.5f)
+                .border(5.dp, Color.Blue, CircleShape)
         ) {
-            Text(text = "Rechercher", color = Color.Black)
+            Text(text = "S'inscrire", color = Color.Black)
         }
 
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewCustomDialogCenterd() {
-    login_ui_compose()
-}
+

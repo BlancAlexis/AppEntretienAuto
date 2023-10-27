@@ -5,9 +5,14 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
 import android.util.Log
+import com.example.manageyourcar.UIlayer.view.activities.OnApplicationEvent
+import com.example.manageyourcar.UIlayer.viewmodel.UserViewModel
 import com.example.manageyourcar.dataApi.di.injectFeature
 
 import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.koin.core.context.GlobalContext.startKoin
 
 class AppApplication : Application() {
@@ -27,8 +32,10 @@ class AppApplication : Application() {
         connectivityManager?.let {
             it.registerDefaultNetworkCallback(object : ConnectivityManager.NetworkCallback() {
                 override fun onAvailable(network: Network) {
+                    OnApplicationEvent.OnInternetStatusChanged(true)
                     Log.i(TAG, "onAvailable: Connecté à internet!")                }
                 override fun onLost(network: Network) {
+                    OnApplicationEvent.OnInternetStatusChanged(false)
                     Log.i(TAG, "onLost: Aucune connexion internet...")                }
             })
         }

@@ -6,6 +6,8 @@ import com.example.manageyourcar.dataApi.util.RequestLoggingInterceptor
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkUseCase
 import okhttp3.OkHttpClient
 import com.example.manageyourcar.UIlayer.viewmodel.UserViewModel
+import com.example.manageyourcar.UIlayer.viewmodel.AddUserViewModel
+import com.example.manageyourcar.UIlayer.viewmodel.LogUserViewModel
 import com.example.manageyourcar.dataApi.repositoryRetrofit.ApiCarImmatRepository
 import com.example.manageyourcar.dataApi.repositoryRetrofit.ApiCarImmatRepositoryImpl
 import com.example.manageyourcar.dataRoom.database.Database
@@ -111,4 +113,6 @@ val retrofitModule = module {
 
   val viewModelModule = module {
     viewModelOf(::UserViewModel)
+      viewModelOf(::AddUserViewModel)
+      viewModelOf(::LogUserViewModel)
 }

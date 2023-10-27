@@ -1,12 +1,12 @@
 package com.example.manageyourcar.UIlayer.view.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.manageyourcar.databinding.FragmentAddCarBinding
+import androidx.fragment.app.Fragment
 import com.example.manageyourcar.UIlayer.viewmodel.UserViewModel
+import com.example.manageyourcar.databinding.FragmentAddCarBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -15,15 +15,10 @@ class addCarFragment : Fragment() {
     val userViewModel: UserViewModel by viewModel()
     private lateinit var binding: FragmentAddCarBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentAddCarBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -32,10 +27,6 @@ class addCarFragment : Fragment() {
         super.onStart()
         userViewModel.addCarToRoom()
         userViewModel.getCarToRoom()
-    }
-
-    override fun onResume() {
-        super.onResume()
     }
 
     companion object {
@@ -80,14 +71,14 @@ class addCarFragment : Fragment() {
     }
 
     private fun checkPlate(plate: String?): Boolean {
-          if(plate?.length==7){
-              return true
-          }
+        if (plate?.length == 7) {
+            return true
+        }
         return false
     }
 
-    fun checkSIV(SIV : String?) : Boolean {
-        if (SIV?.length==17){
+    fun checkSIV(SIV: String?): Boolean {
+        if (SIV?.length == 17) {
             return true
         }
         return false
