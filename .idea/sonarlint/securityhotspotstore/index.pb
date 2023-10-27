@@ -17,8 +17,6 @@ D
 app/build.gradle.kts,d\2\d2a4383452aad84a18429a5844d31330a012a9e6
 @
 build.gradle.kts,d\b\dbcff70658daf80b53ce624f6adcaa529df5ed8d
-É
-Sapp/src/main/java/com/example/manageyourcar/composeView/UIState/logInUserUiState.kt,4\6\46321f0821d8712fb65f56ff5e3bc8192eb6cb47
 Å
 Qapp/src/main/java/com/example/manageyourcar/composeView/common/CustomTextField.kt,6\9\699c340284aa7f26f40d122d1d8ebabba13f4650
 ~
@@ -47,3 +45,15 @@ P
 Yapp/src/main/java/com/example/manageyourcar/UIlayer/view/activities/onApplicationEvent.kt,0\d\0d56f05ca47c1c31825bfa13fc23d7bb6eb4b2db
 É
 Sapp/src/main/java/com/example/manageyourcar/composeView/common/CustomPlaqueImmat.kt,3\4\34040cbfdffd86c04b06565f42f2c66c1e3a4162
+A
+gradle.properties,2\a\2afbb999f001938c88fa43fc2ef52abf0f8213e4
+C
+settings.gradle.kts,7\4\749edfcc96398253e5b3416184e95c46621da850
+X
+(gradle/wrapper/gradle-wrapper.properties,f\b\fbe448ebfc3eb2d4e308f6b8b043666f5b57235e
+á
+Wapp/src/main/java/com/example/manageyourcar/UIlayer/view/activities/testRoomActivity.kt,c\7\c70bfb75571609c577d218bf39d7294e0e6f5923
+Ä
+Papp/src/main/java/com/example/manageyourcar/composeView/UIState/SignInUiState.kt,6\0\60ac1e88a3d3ea9ee8d55ef166f2d26086065de9
+Å
+Qapp/src/main/java/com/example/manageyourcar/UIlayer/viewmodel/AddUserViewModel.kt,4\a\4affc62260394dddadffdf2159c07c318c7fadf8

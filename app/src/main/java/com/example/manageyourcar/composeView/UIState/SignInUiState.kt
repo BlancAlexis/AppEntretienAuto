@@ -1,8 +1,9 @@
 package com.example.manageyourcar.composeView.UIState
 
-data class logInUserUiState(
-    val userLogin : String?= null,
-    val userPassword : String?= null,
+data class SignInUiState(
+    val userLogin : String?= "",
+    val userPassword : String?= "",
+    val userValidatePassword : String?= "",
 
     val userLoginError : String?= null,
     val userPasswordError : String?= null
