@@ -8,10 +8,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
+import com.example.manageyourcar.UIlayer.composeView.AddCarView
 import com.example.manageyourcar.UIlayer.viewmodel.AddCarViewModel
-import com.example.manageyourcar.UIlayer.viewmodel.UserViewModel
-import com.example.manageyourcar.composeView.AddCarView
-import com.example.manageyourcar.composeView.SignInUserView
 import com.example.manageyourcar.databinding.FragmentAddCarBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

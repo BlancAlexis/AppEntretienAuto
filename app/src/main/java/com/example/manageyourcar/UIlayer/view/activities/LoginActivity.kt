@@ -1,10 +1,8 @@
 package com.example.manageyourcar.UIlayer.view.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.example.manageyourcar.R
-import com.example.manageyourcar.UIlayer.view.fragments.addCarFragment
-import com.example.manageyourcar.UIlayer.view.fragments.addUserFragment
 import com.example.manageyourcar.UIlayer.view.fragments.loginUserFragment
 
 class LoginActivity : AppCompatActivity(), OnApplicationEvent {

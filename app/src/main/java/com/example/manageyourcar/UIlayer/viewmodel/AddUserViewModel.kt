@@ -2,8 +2,8 @@ package com.example.manageyourcar.UIlayer.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.manageyourcar.composeView.UIState.SignInUiState
-import com.example.manageyourcar.dataRoom.useCase.user.AddUserToRoomUseCase
+import com.example.manageyourcar.UIlayer.composeView.UIState.SignInUiState
+import com.example.manageyourcar.domainLayer.useCaseRoom.user.AddUserToRoomUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -30,7 +30,7 @@ class AddUserViewModel : ViewModel(), KoinComponent {
 
     private fun onCheckFields() {
         if (uiState.value.userPassword.equals(uiState.value.userValidatePassword)) {
-          //  addUserToRoom()
+            //  addUserToRoom()
             //ID en auto non?
         }
     }
@@ -61,7 +61,7 @@ class AddUserViewModel : ViewModel(), KoinComponent {
 
     private fun addUserToRoom(id: Int, login: String, identifiant: String) {
         viewModelScope.launch {
-         //   addUserToRoomUseCase.addUserToRoom(id, login, identifiant)
+            //   addUserToRoomUseCase.addUserToRoom(id, login, identifiant)
         }
     }
 

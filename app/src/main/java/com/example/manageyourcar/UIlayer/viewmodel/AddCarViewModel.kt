@@ -2,11 +2,12 @@ package com.example.manageyourcar.UIlayer.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.manageyourcar.composeView.UIState.AddCarUIState
-import com.example.manageyourcar.dataApi.util.Ressource
-import com.example.manageyourcar.dataRoom.useCase.car.AddCarToRoomUseCase
+import com.example.manageyourcar.UIlayer.composeView.UIState.AddCarUIState
+import com.example.manageyourcar.dataLayer.dataLayerRetrofit.model.Car
+import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkImmatUseCase
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkUseCase
+import com.example.manageyourcar.domainLayer.useCaseRoom.car.AddCarToRoomUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -106,7 +107,7 @@ class AddCarViewModel : ViewModel(), KoinComponent {
         }
     }
 
-    private fun checkIfUserRightCar(data: com.example.manageyourcar.dataApi.model.dataClass.Car?) {
+    private fun checkIfUserRightCar(data: Car?) {
         //Display BottomSheetFragDialog
         addCarToRoom()
     }

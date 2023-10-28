@@ -1,8 +1,6 @@
 
 u
 Eapp/src/main/java/com/example/manageyourcar/UIlayer/AppApplication.kt,8\4\847dbaa675c2ea4ffdb94aa044a93c6bedbf38da
-~
-Napp/src/main/java/com/example/manageyourcar/UIlayer/viewmodel/UserViewModel.kt,4\4\4490f1cb1e1386357dbcd8518c20543afbaa8b7b
 |
 Lapp/src/main/java/com/example/manageyourcar/dataApi/model/dataClass/Color.kt,a\b\ab21f347180ae1d43bb3ad0075598658b3ea0581
 Å
@@ -29,8 +27,6 @@ Happ/src/main/java/com/example/manageyourcar/composeView/LoginUserView.kt,7\9\7
 Papp/src/main/java/com/example/manageyourcar/composeView/UIState/addCarUIState.kt,2\e\2e586fc1bf31a4ce31cf730cb0e03a6360f3ff8b
 Ñ
 Tapp/src/main/java/com/example/manageyourcar/UIlayer/view/activities/LoginActivity.kt,1\c\1cefb12af7e1b97e4ee4fabe8e52ffc5c89b6e2b
-Ñ
-Tapp/src/main/java/com/example/manageyourcar/UIlayer/view/fragments/addCarFragment.kt,c\c\ccc3d70d5aca801e765f6b776fcf41ea00839523
 Ö
 Uapp/src/main/java/com/example/manageyourcar/UIlayer/view/fragments/addUserFragment.kt,2\b\2ba7f093c3e92cecb6e6f929bb179aa47618b955
 á

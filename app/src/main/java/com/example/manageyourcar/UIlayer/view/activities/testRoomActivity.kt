@@ -1,8 +1,8 @@
 package com.example.manageyourcar.UIlayer.view.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.viewmodel.UserViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -16,9 +16,9 @@ class testRoomActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_room_test)
 
-        txt = findViewById(R.id.test);
+        txt = findViewById(R.id.test)
 
-        userViewModel.getCarFromRoom();
+        userViewModel.getCarFromRoom()
 
         userViewModel.addUserToRoom(1, "JUJU", "TEST")
 //        userViewModel.liveDataCar.observe(this){

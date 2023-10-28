@@ -6,8 +6,7 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.util.Log
 import com.example.manageyourcar.UIlayer.view.activities.OnApplicationEvent
-import com.example.manageyourcar.UIlayer.viewmodel.UserViewModel
-import com.example.manageyourcar.dataApi.di.injectFeature
+import com.example.manageyourcar.dataLayer.dataLayerRetrofit.di.injectFeature
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.GlobalContext.startKoin
 
@@ -27,14 +26,17 @@ class AppApplication : Application() {
     fun registerInternetListener() {
         val connectivityManager =
             applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        connectivityManager?.let {
+        connectivityManager.let {
             it.registerDefaultNetworkCallback(object : ConnectivityManager.NetworkCallback() {
                 override fun onAvailable(network: Network) {
                     OnApplicationEvent.OnInternetStatusChanged(true)
-                    Log.i(TAG, "onAvailable: Connecté à internet!")                }
+                    Log.i(TAG, "onAvailable: Connecté à internet!")
+                }
+
                 override fun onLost(network: Network) {
                     OnApplicationEvent.OnInternetStatusChanged(false)
-                    Log.i(TAG, "onLost: Aucune connexion internet...")                }
+                    Log.i(TAG, "onLost: Aucune connexion internet...")
+                }
             })
         }
     }

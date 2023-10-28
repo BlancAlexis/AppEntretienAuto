@@ -1,6 +1,4 @@
 
-~
-Napp/src/main/java/com/example/manageyourcar/UIlayer/viewmodel/UserViewModel.kt,4\4\4490f1cb1e1386357dbcd8518c20543afbaa8b7b
 u
 Eapp/src/main/java/com/example/manageyourcar/UIlayer/AppApplication.kt,8\4\847dbaa675c2ea4ffdb94aa044a93c6bedbf38da
 |
@@ -31,8 +29,6 @@ Papp/src/main/java/com/example/manageyourcar/composeView/UIState/addCarUIState.k
 Tapp/src/main/java/com/example/manageyourcar/UIlayer/view/activities/LoginActivity.kt,1\c\1cefb12af7e1b97e4ee4fabe8e52ffc5c89b6e2b
 u
 Eapp/src/main/java/com/example/manageyourcar/composeView/addCarView.kt,9\9\99e97c9bba01d8d2095bcb36c32b9156c2d9410b
-„
-Tapp/src/main/java/com/example/manageyourcar/UIlayer/view/fragments/addCarFragment.kt,c\c\ccc3d70d5aca801e765f6b776fcf41ea00839523
 …
 Uapp/src/main/java/com/example/manageyourcar/UIlayer/view/fragments/addUserFragment.kt,2\b\2ba7f093c3e92cecb6e6f929bb179aa47618b955
 ‡

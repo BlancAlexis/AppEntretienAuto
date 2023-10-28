@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import com.example.manageyourcar.UIlayer.composeView.LoginUserView
 import com.example.manageyourcar.UIlayer.viewmodel.LogUserViewModel
-import com.example.manageyourcar.composeView.LoginUserView
 import com.example.manageyourcar.databinding.FragmentLoginUserBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -20,7 +20,7 @@ class loginUserFragment : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentLoginUserBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -40,10 +40,10 @@ class loginUserFragment : BottomSheetDialogFragment() {
         }
     }
 
-companion object {
-    fun newInstance(): loginUserFragment {
-        return loginUserFragment()
-    }
+    companion object {
+        fun newInstance(): loginUserFragment {
+            return loginUserFragment()
+        }
 
-}
+    }
 }
