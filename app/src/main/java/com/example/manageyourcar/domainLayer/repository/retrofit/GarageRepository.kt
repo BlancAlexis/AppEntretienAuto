@@ -1,4 +1,4 @@
-package com.example.manageyourcar.dataLayer.dataLayerRetrofit.repositoryRetrofit
+package com.example.manageyourcar.domainLayer.repository.retrofit
 
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.model.Place
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource

@@ -1,4 +1,4 @@
-package com.example.manageyourcar.dataLayer.dataLayerRoom.repository
+package com.example.manageyourcar.domainLayer.repository.room
 
 import com.example.manageyourcar.dataLayer.model.User
 

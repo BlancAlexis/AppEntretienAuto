@@ -2,7 +2,7 @@ package com.example.manageyourcar.dataLayer.dataLayerRoom.repositoryImpl
 
 import com.example.manageyourcar.dataLayer.dataLayerRoom.dao.CarDao
 import com.example.manageyourcar.dataLayer.dataLayerRoom.entities.CarEntity
-import com.example.manageyourcar.dataLayer.dataLayerRoom.repository.CarRepository
+import com.example.manageyourcar.domainLayer.repository.room.CarRepository
 import com.example.manageyourcar.dataLayer.model.Car
 import org.koin.core.component.KoinComponent
 
