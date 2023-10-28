@@ -14,7 +14,7 @@ import com.example.manageyourcar.databinding.FragmentAddCarBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class addCarFragment : Fragment() {
+class AddCarFragment : Fragment() {
 
     val addCarViewModel: AddCarViewModel by viewModel()
     private lateinit var binding: FragmentAddCarBinding
@@ -28,8 +28,8 @@ class addCarFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance(): addCarFragment {
-            return addCarFragment()
+        fun newInstance(): AddCarFragment {
+            return AddCarFragment()
         }
     }
 

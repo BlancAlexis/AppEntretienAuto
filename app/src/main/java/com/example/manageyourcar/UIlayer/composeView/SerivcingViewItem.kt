@@ -1,32 +1,40 @@
 package com.example.manageyourcar.UIlayer.composeView
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.manageyourcar.UIlayer.composeView.UIState.ServicingUIState
 
 @Composable
 fun SerivcingViewItem(
-
+    uiState: ServicingUIState
 ) {
+    var linearProgressColor by remember {
+        mutableStateOf(Color.Green)
+    }
     Card(
         modifier = Modifier
             .wrapContentSize()
@@ -41,18 +49,20 @@ fun SerivcingViewItem(
         ) {
             Row(
                 modifier = Modifier
-                    .fillMaxHeight(0.3f)
                     .fillMaxWidth()
                     .background(Color.Blue)
             ) {
-                Text(text = "Corsa D GSI", modifier = Modifier.padding(5.dp, 6.dp))
+                uiState.carName?.let {
+                    Text(
+                        text = it,
+                        modifier = Modifier.padding(6.dp, 6.dp),
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
             }
             Column(
-
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight(0.7f)
-
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Row(
                     modifier = Modifier
@@ -60,21 +70,34 @@ fun SerivcingViewItem(
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text(text = "Changement plaquette de frein")
-                    Text(text = "12000km")
+                    uiState.description?.let {
+                        Text(
+                            text = it,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.fillMaxWidth(0.7f)
+                        )
+                    }
+                    uiState.mileage?.let { Text(text = it) }
                 }
 
-                LinearProgressIndicator(
-                    color = Color.Gray,
-                    trackColor = Color.Red,
-                    progress = 0.5f,
-                    modifier = Modifier
-                        .height(10.dp)
-                        .fillMaxWidth()
-                        .border(1.dp, Color.Transparent, CircleShape)
+                uiState.progressIndicator?.let {
+                    if (it >= 0.9) {
+                        linearProgressColor = Color.Red
+                    }
+                    if (it >= 0.7 && it < 0.7)
+                        linearProgressColor = Color.Yellow
 
-                )
-
+                    LinearProgressIndicator(
+                        color = linearProgressColor,
+                        trackColor = Color.Gray,
+                        progress = it,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(10.dp)
+                            .clip(RoundedCornerShape(100))
+                            .height(10.dp)
+                    )
+                }
             }
         }
 
@@ -86,5 +109,12 @@ fun SerivcingViewItem(
 @Preview(showBackground = true)
 @Composable
 fun PreviewServicingItem() {
-    SerivcingViewItem()
+    SerivcingViewItem(
+        ServicingUIState(
+            "Citroen C4 VTS 1.6 VTS 1.6 HDI 110CH",
+            "123333km",
+            0.91f,
+            "Changement plaquette de frein moteur"
+        )
+    )
 }

@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UIlayer.view.fragments.AddUserFragment">
+    tools:context=".UIlayer.view.fragments.ViewServicingFragment">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-<androidx.compose.ui.platform.ComposeView
-    android:id="@+id/addUserCompose"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/viewMaintenance"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

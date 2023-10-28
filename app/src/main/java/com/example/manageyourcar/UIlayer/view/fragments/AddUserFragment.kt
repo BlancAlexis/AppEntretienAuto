@@ -14,7 +14,7 @@ import com.example.manageyourcar.UIlayer.viewmodel.AddUserViewModel
 import com.example.manageyourcar.databinding.FragmentAddUserBinding
 
 
-class addUserFragment : Fragment() {
+class AddUserFragment : Fragment() {
     private lateinit var binding: FragmentAddUserBinding
     private val addUserViewModel: AddUserViewModel by lazy {
         ViewModelProvider(this).get(
@@ -47,8 +47,8 @@ class addUserFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance(): addUserFragment {
-            return addUserFragment()
+        fun newInstance(): AddUserFragment {
+            return AddUserFragment()
         }
 
     }

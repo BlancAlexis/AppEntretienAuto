@@ -7,8 +7,6 @@ D
 Uapp/src/main/java/com/example/manageyourcar/UIlayer/view/fragments/addUserFragment.kt,2\b\2ba7f093c3e92cecb6e6f929bb179aa47618b955
 á
 Wapp/src/main/java/com/example/manageyourcar/UIlayer/view/fragments/loginUserFragment.kt,7\e\7e40695e776a3424150df70ee999fe605b00aff4
-P
- app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
 A
 gradle.properties,2\a\2afbb999f001938c88fa43fc2ef52abf0f8213e4
 C
@@ -17,12 +15,8 @@ X
 (gradle/wrapper/gradle-wrapper.properties,f\b\fbe448ebfc3eb2d4e308f6b8b043666f5b57235e
 á
 Wapp/src/main/java/com/example/manageyourcar/UIlayer/view/activities/testRoomActivity.kt,c\7\c70bfb75571609c577d218bf39d7294e0e6f5923
-Å
-Qapp/src/main/java/com/example/manageyourcar/UIlayer/viewmodel/AddUserViewModel.kt,4\a\4affc62260394dddadffdf2159c07c318c7fadf8
 Ñ
 Tapp/src/main/java/com/example/manageyourcar/UIlayer/view/fragments/addCarFragment.kt,c\c\ccc3d70d5aca801e765f6b776fcf41ea00839523
-~
-Napp/src/main/java/com/example/manageyourcar/UIlayer/viewmodel/UserViewModel.kt,4\4\4490f1cb1e1386357dbcd8518c20543afbaa8b7b
 Å
 Qapp/src/main/java/com/example/manageyourcar/dataLayer/dataLayerRoom/dao/CarDao.kt,5\e\5ecd42e3fe177dcff8ea228b3bac4c0f2185a811
 á

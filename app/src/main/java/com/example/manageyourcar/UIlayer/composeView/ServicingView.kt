@@ -3,7 +3,6 @@ package com.example.manageyourcar.UIlayer.composeView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,16 +19,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import com.example.manageyourcar.UIlayer.composeView.UIState.ServicingUIState
+import com.example.manageyourcar.UIlayer.viewmodel.onServicingEvent
 
 @Composable
-fun RecyclerServicing(
-
+fun ServicingView(
+    uiState: List<ServicingUIState>,
+    onEvent: (onServicingEvent) -> Unit = {}
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
-        horizontalAlignment =  Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Text(text = "Vos prochain entretiens")
         Button(onClick = { /*TODO*/ }) {
             Text(text = "Ajouter un entretien")
         }
@@ -45,8 +47,8 @@ fun RecyclerServicing(
             }
         }
         LazyColumn(modifier = Modifier.fillMaxWidth()) {
-            items(listOf(1, 2, 3, 4, 5,6,7,8,9,10,11,12,13)) { item ->
-                SerivcingViewItem()
+            items(uiState.size) { item ->
+               // SerivcingViewItem(item)
             }
         }
 
@@ -56,5 +58,7 @@ fun RecyclerServicing(
 @Preview(showBackground = true)
 @Composable
 fun PreviewServicing() {
-    RecyclerServicing()
+    ServicingView(
+        uiState = listOf(ServicingUIState()) ,
+        onEvent = {})
 }
