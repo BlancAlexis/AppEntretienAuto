@@ -15,14 +15,14 @@ class RemoteDataSource : KoinComponent {
     val garageApi by inject<garageApi>()
 
     suspend fun getVehiculeBySIV(SIV: String) = flow {
-        emit(Ressource.Loading())
-        val vehicule = requestApiSIV.getVehiculeBySIV(SIV).body()
-        emit(Ressource.Success(vehicule))
-    }.catch { cause ->
-        emit(Ressource.Error(cause.toString(), null))
-    }
+            emit(Ressource.Loading())
+            val vehicule = requestApiSIV.getVehiculeBySIV(SIV).body()
+            emit(Ressource.Success(vehicule))
+        }.catch { cause ->
+            emit(Ressource.Error(cause.toString(), null))
+        }
 
-    suspend fun getVehiculeByImmat(immat: String) = flow {
+            suspend fun getVehiculeByImmat(immat: String) = flow {
         emit(Ressource.Loading())
         val vehicule = requestAPIImmat.getVehiculeByImmat(immat).body()
         emit(Ressource.Success(vehicule))
