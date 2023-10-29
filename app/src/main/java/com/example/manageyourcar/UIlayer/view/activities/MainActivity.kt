@@ -2,6 +2,7 @@ package com.example.manageyourcar.UIlayer.view.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
 import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.view.fragments.addCarFragment
 import com.example.manageyourcar.databinding.ActivityMainBinding
@@ -19,10 +20,9 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.bottomAppBar)
         setSupportActionBar(binding.toolbar)
 
-        supportFragmentManager
-            .beginTransaction()
-            .add(R.id.fragContainerView, addCarFragment.newInstance())
-            .commit()
+        val navController = findNavController(R.id.nav_host_fragment)
+        navController.navigateUp() // to clear previous navigation history
+        navController.navigate(R.id.MapsFragment)
 
     }
 

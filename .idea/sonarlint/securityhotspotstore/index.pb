@@ -11,8 +11,6 @@ s
 Capp/src/main/java/com/example/manageyourcar/dataApi/di/AppModule.kt,c\0\c0f8af87a3a8982491f48732aca68fd82d81bff8
 v
 Fapp/src/main/java/com/example/manageyourcar/composeView/activity_ui.kt,d\f\dff29adbdff2ce532b53d25ab8a2edb2a88435f0
-D
-app/build.gradle.kts,d\2\d2a4383452aad84a18429a5844d31330a012a9e6
 @
 build.gradle.kts,d\b\dbcff70658daf80b53ce624f6adcaa529df5ed8d
 Å
@@ -25,18 +23,12 @@ x
 Happ/src/main/java/com/example/manageyourcar/composeView/LoginUserView.kt,7\9\7949c2f2e156987d6f83ee38c478074f4f9da012
 Ä
 Papp/src/main/java/com/example/manageyourcar/composeView/UIState/addCarUIState.kt,2\e\2e586fc1bf31a4ce31cf730cb0e03a6360f3ff8b
-Ñ
-Tapp/src/main/java/com/example/manageyourcar/UIlayer/view/activities/LoginActivity.kt,1\c\1cefb12af7e1b97e4ee4fabe8e52ffc5c89b6e2b
 u
 Eapp/src/main/java/com/example/manageyourcar/composeView/addCarView.kt,9\9\99e97c9bba01d8d2095bcb36c32b9156c2d9410b
 Ö
 Uapp/src/main/java/com/example/manageyourcar/UIlayer/view/fragments/addUserFragment.kt,2\b\2ba7f093c3e92cecb6e6f929bb179aa47618b955
 á
 Wapp/src/main/java/com/example/manageyourcar/UIlayer/view/fragments/loginUserFragment.kt,7\e\7e40695e776a3424150df70ee999fe605b00aff4
-É
-Sapp/src/main/java/com/example/manageyourcar/UIlayer/view/activities/MainActivity.kt,e\4\e4e9e6e206bb8a9113415905558ae69a2d4a4127
-P
- app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
 â
 Yapp/src/main/java/com/example/manageyourcar/UIlayer/view/activities/onApplicationEvent.kt,0\d\0d56f05ca47c1c31825bfa13fc23d7bb6eb4b2db
 É
