@@ -22,8 +22,12 @@ class ServicingViewModel : ViewModel() {
     fun onEvent(event: onServicingEvent) {
         when (event) {
             is onServicingEvent.onButtonAddServicingPush -> TODO()
-            is onServicingEvent.onSortMethodChanged -> TODO()
+            is onServicingEvent.onSortMethodChanged -> changeSortMethod(event)
         }
+    }
+
+    private fun changeSortMethod(event: onServicingEvent.onSortMethodChanged) {
+        //Trier le uiState
     }
 
     fun ServicingListToUiState() {

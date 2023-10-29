@@ -14,5 +14,7 @@ class LoginActivity : AppCompatActivity(), OnApplicationEvent {
             .beginTransaction()
             .add(R.id.fragContainerView, ViewServicingFragment.newInstance())
             .commit()
+
+
     }
 }
