@@ -7,8 +7,11 @@ import android.net.Network
 import android.util.Log
 import com.example.manageyourcar.UIlayer.view.activities.OnApplicationEvent
 import com.example.manageyourcar.dataLayer.di.injectFeature
+import com.example.manageyourcar.dataLayer.model.Entretien
+import com.example.manageyourcar.dataLayer.model.MaintenanceService
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.GlobalContext.startKoin
+import java.util.Date
 
 class AppApplication : Application() {
     val TAG: String = "AppApplication"
@@ -21,6 +24,13 @@ class AppApplication : Application() {
         }
         registerInternetListener()
 
+        val entretien=Entretien(23,66, Date(166), MaintenanceService.Freins())
+
+        when(entretien.service){
+            is MaintenanceService.Freins -> entretien.service.category
+            is MaintenanceService.Pneus -> TODO()
+            is MaintenanceService.Vidange -> TODO()
+        }
     }
 
     fun registerInternetListener() {
