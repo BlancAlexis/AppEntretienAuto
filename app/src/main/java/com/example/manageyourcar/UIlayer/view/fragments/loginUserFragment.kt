@@ -7,7 +7,10 @@ import android.view.ViewGroup
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import com.example.manageyourcar.UIlayer.composeView.AddMaintenanceView
 import com.example.manageyourcar.UIlayer.composeView.LoginUserView
+import com.example.manageyourcar.UIlayer.composeView.UIState.AddVehiculeMaintenanceUiState
+import com.example.manageyourcar.UIlayer.composeView.common.CalendarView
 import com.example.manageyourcar.UIlayer.viewmodel.LogUserViewModel
 import com.example.manageyourcar.databinding.FragmentLoginUserBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -29,14 +32,16 @@ class loginUserFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.logUserField.apply {
             setContent {
-                setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-
-                val loginUserUiState by logUserViewModel.uiState.collectAsState()
-                LoginUserView(
-                    uiState = loginUserUiState,
-                    onEvent = logUserViewModel::onEvent
-                )
+                AddMaintenanceView(uiState = AddVehiculeMaintenanceUiState())
             }
+//                setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+//
+//                val loginUserUiState by logUserViewModel.uiState.collectAsState()
+//                LoginUserView(
+//                    uiState = loginUserUiState,
+//                    onEvent = logUserViewModel::onEvent
+//                )
+//            }
         }
     }
 

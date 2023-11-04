@@ -11,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.manageyourcar.UIlayer.composeView.AddVehiculeMaintenanceView
 import com.example.manageyourcar.UIlayer.composeView.UIState.AddVehiculeMaintenanceUiState
@@ -20,7 +21,7 @@ import com.example.manageyourcar.UIlayer.composeView.UIState.AddVehiculeMaintena
 fun OutlinedSpinner(
     listMaintenanceName : List<String>,
     textLabel : String,
-    onItemSelect : () -> Unit = {}
+    onItemSelect : (Any?) -> Unit = {}
 ) {
     var expanded by remember { mutableStateOf(false) }
     var selectedOptionText by remember { mutableStateOf(listMaintenanceName[0]) }
@@ -32,6 +33,7 @@ fun OutlinedSpinner(
         }
     ) {
         TextField(
+            modifier = Modifier.menuAnchor(),
             readOnly = true,
             value = selectedOptionText,
             onValueChange = { },
@@ -49,13 +51,13 @@ fun OutlinedSpinner(
                 expanded = false
             }
         ) {
-            listMaintenanceName.forEach { selectionOption ->
+            listMaintenanceName.forEach { selectionOption : String ->
                 DropdownMenuItem(
-                    text = {
+                    text = { Text(text = selectionOption) },
+                    onClick = {
                         selectedOptionText = selectionOption
                         expanded = false
-                    },
-                    onClick = {}
+                    }
                 )
             }
         }
