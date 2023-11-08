@@ -8,6 +8,7 @@ import org.koin.core.component.KoinComponent
 
 class CarRepositoryImpl(private val carDao: CarDao) : CarRepository, KoinComponent {
 
+
     override fun addNewCar(car: Car) {
         val carEntity = CarEntity(
             brand = car.brand,
@@ -88,3 +89,4 @@ class CarRepositoryImpl(private val carDao: CarDao) : CarRepository, KoinCompone
         carDao.deleteCar(idCar)
     }
 }
+
