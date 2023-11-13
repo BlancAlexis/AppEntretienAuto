@@ -93,7 +93,6 @@ val repositoryModule = module {
     single<CarRepository> { CarRepositoryImpl(get()) }
     single<UserRepository> { UserRepositoryImpl(get()) }
     single<ServicingRepository> { ServicingRepositoryImpl(get()) }
-    single<CacheManagerRepository> { CacheManagerRepositoryImpl(get()) }
 }
 
 val useCaseModule = module {
@@ -122,6 +121,8 @@ val useCaseModule = module {
 }
 
 val retrofitModule = module {
+    factory <CacheManagerRepository> { CacheManagerRepositoryImpl(get()) }
+
     single<garageApi> {
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(RequestLoggingInterceptor())
