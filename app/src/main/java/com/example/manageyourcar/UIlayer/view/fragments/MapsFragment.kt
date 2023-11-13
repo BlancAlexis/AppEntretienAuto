@@ -15,7 +15,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
-class mapsFragment : Fragment() {
+class MapsFragment : Fragment() {
     val key = BuildConfig.MAPS_API_KEY
     val mapsViewModel by viewModels<MapsViewModel>()
     private val callback = OnMapReadyCallback { googleMap ->
@@ -51,8 +51,8 @@ class mapsFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance(): mapsFragment {
-            return mapsFragment()
+        fun newInstance(): MapsFragment {
+            return MapsFragment()
         }
     }
 }

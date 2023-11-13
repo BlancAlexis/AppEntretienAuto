@@ -6,6 +6,7 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.util.Log
 import com.example.manageyourcar.UIlayer.view.activities.OnApplicationEvent
+import com.example.manageyourcar.UIlayer.viewmodel.LogUserViewModel
 import com.example.manageyourcar.dataLayer.di.injectFeature
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.GlobalContext.startKoin
@@ -39,5 +40,11 @@ class AppApplication : Application() {
                 }
             })
         }
+    }
+
+
+    companion object {
+        lateinit var instance: AppApplication
+            private set
     }
 }

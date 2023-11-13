@@ -2,7 +2,9 @@ package com.example.manageyourcar.UIlayer.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.UIlayer.composeView.UIState.AddCarUIState
+import com.example.manageyourcar.UIlayer.view.activities.OnApplicationEvent
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.model.Car
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkImmatUseCase
@@ -24,9 +26,8 @@ class AddCarViewModel : ViewModel(), KoinComponent {
     private val _uiState = MutableStateFlow(AddCarUIState())
     val uiState = _uiState.asStateFlow()
 
-
     fun onEvent(event: onCarRequest) {
-        when (event) {
+            when (event) {
             is onCarRequest.onClickButton -> onValidation()
             is onCarRequest.onImmatChanged -> onChangedImmat(event)
             is onCarRequest.onVINChanged -> onChangedVIN(event)

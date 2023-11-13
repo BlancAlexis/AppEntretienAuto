@@ -7,43 +7,41 @@ import android.view.ViewGroup
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import com.example.manageyourcar.UIlayer.composeView.LoginUserView
-import com.example.manageyourcar.UIlayer.viewmodel.LogUserViewModel
-import com.example.manageyourcar.databinding.FragmentLoginUserBinding
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import androidx.fragment.app.Fragment
+import com.example.manageyourcar.UIlayer.composeView.ServicingView
+import com.example.manageyourcar.UIlayer.viewmodel.ServicingViewModel
+import com.example.manageyourcar.databinding.FragmentViewServicingBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class loginUserFragment : BottomSheetDialogFragment() {
-    private val logUserViewModel: LogUserViewModel by viewModel()
-    private lateinit var binding: FragmentLoginUserBinding
+class ViewServicingFragment : Fragment() {
+    private val servicingViewModel: ServicingViewModel by viewModel()
+    private lateinit var binding: FragmentViewServicingBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentLoginUserBinding.inflate(inflater, container, false)
+        binding = FragmentViewServicingBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.logUserField.apply {
+        binding.viewMaintenance.apply {
             setContent {
                 setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
 
-                val loginUserUiState by logUserViewModel.uiState.collectAsState()
-                LoginUserView(
-                    uiState = loginUserUiState,
-                    onEvent = logUserViewModel::onEvent
+                val maintenancesPlannedUIState by servicingViewModel.uiState.collectAsState()
+                ServicingView(
+                    uiState = maintenancesPlannedUIState,
+                    onEvent = servicingViewModel::onEvent
                 )
             }
         }
     }
-
     companion object {
-        fun newInstance(): loginUserFragment {
-            return loginUserFragment()
+        fun newInstance(): ViewServicingFragment {
+            return ViewServicingFragment()
         }
-
     }
 }

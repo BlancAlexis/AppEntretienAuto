@@ -6,6 +6,7 @@ import com.example.manageyourcar.UIlayer.viewmodel.AddUserViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.LogUserViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.MapsViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.UserViewModel
+import com.example.manageyourcar.UIlayer.viewmodel.ServicingViewModel
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.dataSource.RemoteDataSource
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.garageApi
 import com.example.manageyourcar.domainLayer.repository.retrofit.ApiCarImmatRepository
@@ -171,4 +172,6 @@ val viewModelModule = module {
     viewModelOf(::LogUserViewModel)
     viewModelOf(::AddCarViewModel)
     viewModelOf(::MapsViewModel)
+    viewModelOf(::ServicingViewModel)
+
 }
