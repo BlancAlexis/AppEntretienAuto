@@ -1,11 +1,10 @@
 package com.example.manageyourcar.UIlayer.view.activities
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
 import com.example.manageyourcar.R
 import com.example.manageyourcar.databinding.ActivityMainBinding
-import com.example.manageyourcar.UIlayer.view.fragments.AddCarFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,13 +20,10 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
 
 
-        val navController = findNavController(R.id.nav_host_fragment)
-        navController.navigateUp() // to clear previous navigation history
-        navController.navigate(R.id.MapsFragment)
-
         binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId){
                  R.id.action_specification -> {
+                     Log.i("MainActivity", "action_specification")
                 true }
                 R.id.action_home -> {
                     true
@@ -44,5 +40,3 @@ class MainActivity : AppCompatActivity() {
     }
 
 }
-
-
