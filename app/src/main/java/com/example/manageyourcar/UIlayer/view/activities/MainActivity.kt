@@ -20,6 +20,13 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.bottomAppBar)
         setSupportActionBar(binding.toolbar)
 
+<<<<<<< HEAD
+=======
+        val navController = findNavController(R.id.nav_host_fragment)
+        navController.navigateUp() // to clear previous navigation history
+        navController.navigate(R.id.MapsFragment)
+
+>>>>>>> f73bf524870513ccfcdcdece7a72a7be9ff894a9
     }
 
 }

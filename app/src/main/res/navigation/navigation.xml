@@ -2,12 +2,48 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/navigation"
+<<<<<<< HEAD
     app:startDestination="@id/LoginUserFragment">
 
     <fragment
         android:id="@+id/AddCarFragment"
         android:name="com.example.manageyourcar.UIlayer.view.fragments.addCarFragment"
         android:label="MainActivity"/>
+=======
+    app:startDestination="@id/loginActivity">
+
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="com.example.manageyourcar.UIlayer.view.activities.LoginActivity"
+        android:label="LoginActivity">
+        <action
+            android:id="@+id/action_AddCarFragment_to_LoginUserFragment"
+            app:destination="@id/LoginUserFragment" />
+    </activity>
+
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.example.manageyourcar.UIlayer.view.activities.MainActivity"
+        android:label="MainActivity" >
+        <action
+            android:id="@+id/action_MainActivity_to_MapsFragment"
+            app:destination="@id/MapsFragment" />
+        <action
+            android:id="@+id/action_MainActivity_to_ServicingFragment"
+            app:destination="@id/LoginUserFragment" />
+        <action
+            android:id="@+id/action_MainActivity_to_AddCarFragment"
+            app:destination="@id/AddCarFragment" />
+    </activity>
+    <fragment
+        android:id="@+id/AddCarFragment"
+        android:name="com.example.manageyourcar.UIlayer.view.fragments.addCarFragment"
+        android:label="MainActivity">
+        <action
+            android:id="@+id/action_AddCarFragment_to_LoginUserFragment"
+            app:destination="@id/LoginUserFragment" />
+    </fragment>
+>>>>>>> f73bf524870513ccfcdcdece7a72a7be9ff894a9
     <fragment
         android:id="@+id/AddUserFragment"
         android:name="com.example.manageyourcar.UIlayer.view.fragments.addUserFragment"
@@ -15,6 +51,7 @@
     <fragment
         android:id="@+id/LoginUserFragment"
         android:name="com.example.manageyourcar.UIlayer.view.fragments.loginUserFragment"
+<<<<<<< HEAD
         android:label="MainActivity">
         <action
             android:id="@+id/action_LoginUserFragment_to_AddUserFragment"
@@ -27,6 +64,9 @@
             android:id="@+id/action_LoginUserFragment_to_MapsFragment"
             app:destination="@id/MapsFragment" />
     </fragment>
+=======
+        android:label="MainActivity"/>
+>>>>>>> f73bf524870513ccfcdcdece7a72a7be9ff894a9
     <fragment
         android:id="@+id/MapsFragment"
         android:name="com.example.manageyourcar.UIlayer.view.fragments.mapsFragment"

@@ -1,23 +1,15 @@
 
-u
-Eapp/src/main/java/com/example/manageyourcar/UIlayer/AppApplication.kt,8\4\847dbaa675c2ea4ffdb94aa044a93c6bedbf38da
-@
-build.gradle.kts,d\b\dbcff70658daf80b53ce624f6adcaa529df5ed8d
-Ö
-Uapp/src/main/java/com/example/manageyourcar/UIlayer/view/fragments/addUserFragment.kt,2\b\2ba7f093c3e92cecb6e6f929bb179aa47618b955
-á
-Wapp/src/main/java/com/example/manageyourcar/UIlayer/view/fragments/loginUserFragment.kt,7\e\7e40695e776a3424150df70ee999fe605b00aff4
-â
-Yapp/src/main/java/com/example/manageyourcar/UIlayer/view/activities/onApplicationEvent.kt,0\d\0d56f05ca47c1c31825bfa13fc23d7bb6eb4b2db
-A
-gradle.properties,2\a\2afbb999f001938c88fa43fc2ef52abf0f8213e4
-C
-settings.gradle.kts,7\4\749edfcc96398253e5b3416184e95c46621da850
-X
-(gradle/wrapper/gradle-wrapper.properties,f\b\fbe448ebfc3eb2d4e308f6b8b043666f5b57235e
-á
-Wapp/src/main/java/com/example/manageyourcar/UIlayer/view/activities/testRoomActivity.kt,c\7\c70bfb75571609c577d218bf39d7294e0e6f5923
+É
+Sapp/src/main/java/com/example/manageyourcar/UIlayer/view/activities/MainActivity.kt,e\4\e4e9e6e206bb8a9113415905558ae69a2d4a4127
 Å
-Qapp/src/main/java/com/example/manageyourcar/UIlayer/viewmodel/AddUserViewModel.kt,4\a\4affc62260394dddadffdf2159c07c318c7fadf8
-Ä
-Papp/src/main/java/com/example/manageyourcar/UIlayer/viewmodel/AddCarViewModel.kt,f\f\ff0e19bfbe2a7fbc18c4b1e840d37eb7e7d0d03b
+Qapp/src/main/java/com/example/manageyourcar/dataLayer/dataLayerRoom/dao/CarDao.kt,5\e\5ecd42e3fe177dcff8ea228b3bac4c0f2185a811
+Ñ
+Tapp/src/main/java/com/example/manageyourcar/UIlayer/view/activities/LoginActivity.kt,1\c\1cefb12af7e1b97e4ee4fabe8e52ffc5c89b6e2b
+u
+Eapp/src/main/java/com/example/manageyourcar/dataLayer/di/AppModule.kt,e\9\e9bd00608d81ce23e5e4038131b683af212a957c
+P
+ app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
+ó
+gapp/src/main/java/com/example/manageyourcar/dataLayer/dataLayerRoom/repositoryImpl/CarRepositoryImpl.kt,5\1\51890f6146b1cf50b435f6329bcc9ecea2bafad3
+ù
+mapp/src/main/java/com/example/manageyourcar/dataLayer/dataLayerRoom/repositoryImpl/ServicingRepositoryImpl.kt,9\d\9d871278a49b6e3d20e2f594b306f207935dbb03
