@@ -42,6 +42,7 @@ fun CustomPlaqueImmat(
         ),
         border = BorderStroke(2.dp, Color.Black),
     ) {
+
         Row(
             modifier = Modifier.fillMaxWidth(0.8f)
         ) {
