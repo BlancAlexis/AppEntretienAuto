@@ -36,9 +36,7 @@
         </activity>
         <activity
             android:name=".UIlayer.view.activities.LoginActivity"
-            android:exported="true">
-
-        </activity>
-    </application>
+            android:exported="true" />
+       </application>
 
 </manifest>

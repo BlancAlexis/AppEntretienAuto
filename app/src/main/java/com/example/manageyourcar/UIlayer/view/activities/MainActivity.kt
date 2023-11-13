@@ -1,11 +1,11 @@
 package com.example.manageyourcar.UIlayer.view.activities
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
 import com.example.manageyourcar.R
-import com.example.manageyourcar.UIlayer.view.fragments.AddCarFragment
 import com.example.manageyourcar.databinding.ActivityMainBinding
+import com.example.manageyourcar.UIlayer.view.fragments.AddCarFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,22 +20,19 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.bottomAppBar)
         setSupportActionBar(binding.toolbar)
 
-        supportFragmentManager
-            .beginTransaction()
-            .add(R.id.fragContainerView, AddCarFragment.newInstance())
-            .commit()
+
+        val navController = findNavController(R.id.nav_host_fragment)
+        navController.navigateUp() // to clear previous navigation history
+        navController.navigate(R.id.MapsFragment)
 
         binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId){
                  R.id.action_specification -> {
-                 Log.i("e","gfgd")
                 true }
                 R.id.action_home -> {
-                    Log.i("e","gffdddd")
                     true
                 }
                 R.id.action_manage -> {
-                    Log.i("e","vvvvvvv")
                     true
                 }
 

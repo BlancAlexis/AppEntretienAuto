@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation"
+    app:startDestination="@id/LoginUserFragment">
+
+    <fragment
+        android:id="@+id/AddCarFragment"
+        android:name="com.example.manageyourcar.UIlayer.view.fragments.AddCarFragment"
+        android:label="MainActivity"/>
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="com.example.manageyourcar.UIlayer.view.activities.LoginActivity"
+        android:label="LoginActivity">
+        <action
+            android:id="@+id/action_AddCarFragment_to_LoginUserFragment"
+            app:destination="@id/LoginUserFragment" />
+    </activity>
+
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.example.manageyourcar.UIlayer.view.activities.MainActivity"
+        android:label="MainActivity" >
+        <action
+            android:id="@+id/action_MainActivity_to_MapsFragment"
+            app:destination="@id/MapsFragment" />
+        <action
+            android:id="@+id/action_MainActivity_to_ServicingFragment"
+            app:destination="@id/LoginUserFragment" />
+        <action
+            android:id="@+id/action_MainActivity_to_AddCarFragment"
+            app:destination="@id/AddCarFragment" />
+    </activity>
+    <fragment
+        android:id="@+id/AddCarFragment"
+        android:name="com.example.manageyourcar.UIlayer.view.fragments.addCarFragment"
+        android:label="MainActivity">
+        <action
+            android:id="@+id/action_AddCarFragment_to_LoginUserFragment"
+            app:destination="@id/LoginUserFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/AddUserFragment"
+        android:name="com.example.manageyourcar.UIlayer.view.fragments.addUserFragment"
+        android:label="MainActivity"/>
+    <fragment
+        android:id="@+id/LoginUserFragment"
+        android:name="com.example.manageyourcar.UIlayer.view.fragments.loginUserFragment"
+    android:label="MainActivity">
+    <action
+        android:id="@+id/action_LoginUserFragment_to_AddUserFragment"
+        app:destination="@id/AddUserFragment"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"/>
+    <action
+        android:id="@+id/action_LoginUserFragment_to_MapsFragment"
+        app:destination="@id/MapsFragment" />
+</fragment>
+    android:label="MainActivity"/>
+    <fragment
+        android:id="@+id/MapsFragment"
+        android:name="com.example.manageyourcar.UIlayer.view.fragments.mapsFragment"
+        android:label="MainActivity"/>
+
+</navigation>
