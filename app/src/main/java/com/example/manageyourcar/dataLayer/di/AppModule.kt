@@ -7,6 +7,7 @@ import com.example.manageyourcar.UIlayer.viewmodel.LogUserViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.MapsViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.UserViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.ServicingViewModel
+import com.example.manageyourcar.dataLayer.CacheDataSource
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.dataSource.RemoteDataSource
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.garageApi
 import com.example.manageyourcar.domainLayer.repository.retrofit.ApiCarImmatRepository
@@ -19,12 +20,14 @@ import com.example.manageyourcar.dataLayer.dataLayerRetrofit.requestApiImmat
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.requestApiSIV
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.RequestLoggingInterceptor
 import com.example.manageyourcar.dataLayer.dataLayerRoom.database.Database
+import com.example.manageyourcar.dataLayer.CacheManagerRepositoryImpl
 import com.example.manageyourcar.domainLayer.repository.room.CarRepository
 import com.example.manageyourcar.domainLayer.repository.room.ServicingRepository
 import com.example.manageyourcar.domainLayer.repository.room.UserRepository
 import com.example.manageyourcar.dataLayer.dataLayerRoom.repositoryImpl.CarRepositoryImpl
 import com.example.manageyourcar.dataLayer.dataLayerRoom.repositoryImpl.ServicingRepositoryImpl
 import com.example.manageyourcar.dataLayer.dataLayerRoom.repositoryImpl.UserRepositoryImpl
+import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetCarRepairShopUseCase
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkImmatUseCase
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkUseCase
@@ -86,6 +89,8 @@ val databaseModule = module {
 }
 
 val repositoryModule = module {
+    single { CacheDataSource() }
+
     single<CarRepository> { CarRepositoryImpl(get()) }
     single<UserRepository> { UserRepositoryImpl(get()) }
     single<ServicingRepository> { ServicingRepositoryImpl(get()) }
@@ -117,6 +122,8 @@ val useCaseModule = module {
 }
 
 val retrofitModule = module {
+    single <CacheManagerRepository> { CacheManagerRepositoryImpl(get()) }
+
     single<garageApi> {
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(RequestLoggingInterceptor())

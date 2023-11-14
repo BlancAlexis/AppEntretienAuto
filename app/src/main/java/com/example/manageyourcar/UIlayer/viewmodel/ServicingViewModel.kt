@@ -3,12 +3,14 @@ package com.example.manageyourcar.UIlayer.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.manageyourcar.UIlayer.composeView.UIState.ServicingUIState
+import com.example.manageyourcar.domainLayer.useCaseRoom.user.AddUserToRoomUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class ServicingViewModel : ViewModel() {
-
+class ServicingViewModel : ViewModel(), KoinComponent {
     private val _uiState = MutableStateFlow(arrayListOf(ServicingUIState()))
     val uiState = _uiState.asStateFlow()
 
