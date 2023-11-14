@@ -19,6 +19,7 @@ class AppApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        instance = this
         startKoin {
             androidContext(this@AppApplication)
             injectFeature()
@@ -51,6 +52,7 @@ class AppApplication : Application() {
             })
         }
     }
+
 
 
     companion object {

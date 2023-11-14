@@ -46,6 +46,34 @@ fun SignInUserView(
                 }
             )
         }
+            uiState?.userFirstName?.let {
+            CustomTextField(
+                textFieldValue = it,
+                modifier = Modifier
+                    .fillMaxWidth(0.95f)
+                    .padding(10.dp),
+                label = "Firstname",
+                readOnly = false,
+                keyboardType = KeyboardType.Text,
+                onValueChange = {
+                    onEvent(UserSubscriptionEvent.OnFirstnameChanged(it))
+                }
+            )
+        }
+        uiState.userLastName?.let {
+            CustomTextField(
+                textFieldValue = it,
+                modifier = Modifier
+                    .fillMaxWidth(0.95f)
+                    .padding(10.dp),
+                label = "Lastname",
+                readOnly = false,
+                keyboardType = KeyboardType.Text,
+                onValueChange = {
+                    onEvent(UserSubscriptionEvent.OnLastNameChanged(it))
+                }
+            )
+        }
         uiState.userPassword?.let {
             CustomTextField(
                 textFieldValue = it,
@@ -54,7 +82,7 @@ fun SignInUserView(
                     .padding(10.dp),
                 label = "Mot de passe",
                 readOnly = false,
-                keyboardType = KeyboardType.Text,
+                keyboardType = KeyboardType.Password,
                 onValueChange = {
                     onEvent(UserSubscriptionEvent.OnPasswordChanged(it))
                 }
@@ -68,7 +96,7 @@ fun SignInUserView(
                     .padding(10.dp),
                 label = "Confirmation du mot de passe",
                 readOnly = false,
-                keyboardType = KeyboardType.Text,
+                keyboardType = KeyboardType.Password,
                 onValueChange = {
                     onEvent(UserSubscriptionEvent.OnValidatePasswordChanged(it))
                 }

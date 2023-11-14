@@ -66,11 +66,15 @@ private val loadFeature by lazy {
             repositoryModule,
             useCaseModule,
             viewModelModule,
-            retrofitModule
+            retrofitModule,
+            mappersModule
         )
     )
 }
 
+val mappersModule = module {
+    single{ com.example.manageyourcar.domainLayer.mappers.UserMappers }
+}
 val databaseModule = module {
     single {
         Room.databaseBuilder(

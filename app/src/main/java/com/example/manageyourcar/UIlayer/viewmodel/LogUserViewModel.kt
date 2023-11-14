@@ -1,11 +1,13 @@
 package com.example.manageyourcar.UIlayer.viewmodel
 
+import android.app.Activity
 import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.manageyourcar.R
+import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.UIlayer.composeView.UIState.LoginUiState
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.domainLayer.repository.cacheRepo
@@ -44,7 +46,7 @@ class LogUserViewModel : ViewModel(), KoinComponent {
     private fun onTryLog() {
         viewModelScope.launch {
             when (val result =
-                logUseCase.loginUser(_uiState.value.userLogin!!, _uiState.value.userPassword!!)) {
+                logUseCase.loginUser(_uiState.value.userLogin!!, _uiState.value.userPassword!!, AppApplication.instance.applicationContext as Activity)){
                 is Ressource.Success -> {
                     cacheManagerRepository.putUserID()
                     navController?.navigate(R.id.action_LoginUserFragment_to_AddUserFragment)
@@ -53,8 +55,8 @@ class LogUserViewModel : ViewModel(), KoinComponent {
                 is Ressource.Error -> {
                     _uiState.update {
                         it.copy(
-                            userLoginError = "",
-                            userPasswordError = ""
+                            userLoginError = "Un champs ne correspond pas",
+                            userPasswordError = "Un champs ne correspond pas"
                         )
                     }
                 }

@@ -9,17 +9,19 @@ import com.example.manageyourcar.dataLayer.dataLayerRoom.entities.UserEntity
 @Dao
 interface UserDao {
     @Insert
-    fun addNewUser(userEntity: UserEntity)
+    suspend fun addNewUser(userEntity: UserEntity)
 
     @Query("SELECT * FROM users WHERE id=:idUser")
-    fun getUser(idUser: Int): UserEntity
+    suspend fun getUser(idUser: Int): UserEntity
+    @Query("SELECT * FROM users WHERE password=:password AND login=:login ")
+    suspend fun logUser(login : String, password : String): UserEntity
 
     @Query("SELECT * FROM users")
-    fun getUsers(): List<UserEntity>
+    suspend fun getUsers(): List<UserEntity>
 
     @Update
-    fun updateUser(userEntity: UserEntity)
+    suspend fun updateUser(userEntity: UserEntity)
 
     @Query("DELETE FROM users WHERE id = :idUser")
-    fun deleteUser(idUser: Int)
+    suspend fun deleteUser(idUser: Int)
 }
