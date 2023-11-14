@@ -4,32 +4,24 @@ import com.example.manageyourcar.dataLayer.dataLayerRoom.dao.UserDao
 import com.example.manageyourcar.dataLayer.dataLayerRoom.entities.UserEntity
 import com.example.manageyourcar.domainLayer.repository.room.UserRepository
 import com.example.manageyourcar.dataLayer.model.User
+import com.example.manageyourcar.domainLayer.mappers.UserMappers.toUser
+import com.example.manageyourcar.domainLayer.mappers.UserMappers.toUserEntity
 import org.koin.core.component.KoinComponent
 
 class UserRepositoryImpl(private val userDao: UserDao) : UserRepository, KoinComponent {
-    override fun addNewUser(user: User) {
-        val userEntity = UserEntity(
-            login = user.login,
-            password = user.password,
-            firstname = user.firstname,
-            lastname = user.lastname
-        )
-        userDao.addNewUser(userEntity)
+    override suspend fun logUser(email: String, password: String): User {
+        return userDao.logUser(email, password).toUser()
     }
 
-    override fun getUser(idUser: Int): User {
-        val brutResult = userDao.getUser(idUser)
-
-        return User(
-            id = brutResult.id,
-            login = brutResult.login,
-            password = brutResult.password,
-            firstname = brutResult.firstname,
-            lastname = brutResult.lastname
-        )
+    override suspend fun addNewUser(user: User) {
+        return userDao.addNewUser(user.toUserEntity())
     }
 
-    override fun getUsers(): List<User> {
+    override suspend fun getUser(idUser: Int): User {
+        return userDao.getUser(idUser).toUser()
+    }
+
+    override suspend fun getUsers(): List<User> {
         val brutResult = userDao.getUsers()
         val resultUser: MutableList<User> = arrayListOf()
 
@@ -44,22 +36,14 @@ class UserRepositoryImpl(private val userDao: UserDao) : UserRepository, KoinCom
                 )
             )
         }
-
         return resultUser
     }
 
-    override fun updateUser(user: User) {
-        val userEntity = UserEntity(
-            id = user.id,
-            login = user.login,
-            password = user.password,
-            firstname = user.firstname,
-            lastname = user.lastname
-        )
-        userDao.updateUser(userEntity)
+    override suspend fun updateUser(user: User) {
+       return userDao.updateUser(user.toUserEntity())
     }
 
-    override fun deleteUser(idUser: Int) {
+    override suspend fun deleteUser(idUser: Int) {
         userDao.deleteUser(idUser)
     }
 }
