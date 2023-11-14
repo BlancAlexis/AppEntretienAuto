@@ -16,8 +16,7 @@ import com.example.manageyourcar.databinding.FragmentLoginUserBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class loginUserFragment : BottomSheetDialogFragment() {
-    var navController : NavController?=null
+class LoginUserFragment : BottomSheetDialogFragment() {
     private val logUserViewModel: LogUserViewModel by viewModel()
     private lateinit var binding: FragmentLoginUserBinding
 
@@ -31,7 +30,7 @@ class loginUserFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        navController= Navigation.findNavController(view)
+        logUserViewModel.setNavController(view)
         binding.logUserField.apply {
             setContent {
                 setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
@@ -39,16 +38,15 @@ class loginUserFragment : BottomSheetDialogFragment() {
                 val loginUserUiState by logUserViewModel.uiState.collectAsState()
                 LoginUserView(
                     uiState = loginUserUiState,
-                    onEvent = { navController!!.navigate(R.id.action_LoginUserFragment_to_AddUserFragment) }
-                    //onEvent = logUserViewModel::onEvent
+                    onEvent = logUserViewModel::onEvent
                 )
             }
         }
     }
 
     companion object {
-            fun newInstance(): loginUserFragment {
-            return loginUserFragment()
+            fun newInstance(): LoginUserFragment {
+            return LoginUserFragment()
         }
     }
 }

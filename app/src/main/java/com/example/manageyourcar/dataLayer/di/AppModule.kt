@@ -1,6 +1,7 @@
 package com.example.manageyourcar.dataLayer.di
 
 import androidx.room.Room
+import com.example.manageyourcar.UIlayer.view.fragments.LoginUserFragment
 import com.example.manageyourcar.UIlayer.viewmodel.AddCarViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.AddUserViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.LogUserViewModel
@@ -28,6 +29,7 @@ import com.example.manageyourcar.dataLayer.dataLayerRoom.repositoryImpl.CarRepos
 import com.example.manageyourcar.dataLayer.dataLayerRoom.repositoryImpl.ServicingRepositoryImpl
 import com.example.manageyourcar.dataLayer.dataLayerRoom.repositoryImpl.UserRepositoryImpl
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
+import com.example.manageyourcar.domainLayer.useCaseBusiness.LoginUserUseCase
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetCarRepairShopUseCase
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkImmatUseCase
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkUseCase
@@ -97,6 +99,7 @@ val repositoryModule = module {
 }
 
 val useCaseModule = module {
+    factory { LoginUserUseCase() }
     factory { AddCarToRoomUseCase() }
     factory { GetCarFromRoomUseCase() }
     factory { GetCarsFromRoomUseCase() }

@@ -19,7 +19,7 @@ class RemoteDataSource : KoinComponent {
             val vehicule = requestApiSIV.getVehiculeBySIV(SIV).body()
             emit(Ressource.Success(vehicule))
         }.catch { cause ->
-            emit(Ressource.Error(cause.toString(), null))
+            emit(Ressource.Error(message =cause.toString()))
         }
 
             suspend fun getVehiculeByImmat(immat: String) = flow {
@@ -27,7 +27,7 @@ class RemoteDataSource : KoinComponent {
         val vehicule = requestAPIImmat.getVehiculeByImmat(immat).body()
         emit(Ressource.Success(vehicule))
     }.catch { cause ->
-        emit(Ressource.Error(cause.toString(), null))
+        emit(Ressource.Error(message =cause.toString()))
     }
 
     suspend fun getCarRepairShopInProximity(latitude: Double, longitude: Double) = flow {
@@ -39,6 +39,6 @@ class RemoteDataSource : KoinComponent {
         ).body()
         emit(Ressource.Success(CarRepairShops))
     }.catch { cause ->
-        emit(Ressource.Error(cause.toString(), null))
+        emit(Ressource.Error(message =cause.toString()))
     }
 }
