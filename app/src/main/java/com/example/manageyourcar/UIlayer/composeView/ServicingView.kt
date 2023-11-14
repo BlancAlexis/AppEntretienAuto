@@ -32,7 +32,7 @@ fun ServicingView(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(text = "Vos prochain entretiens")
-        Button(onClick = { /*TODO*/ }) {
+        Button(onClick = { onEvent(onServicingEvent.onButtonAddServicingPush) }) {
             Text(text = "Ajouter un entretien")
         }
         Row(

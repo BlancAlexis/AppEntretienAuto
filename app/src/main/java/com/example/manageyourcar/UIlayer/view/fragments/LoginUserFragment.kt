@@ -7,9 +7,6 @@ import android.view.ViewGroup
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
-import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.composeView.LoginUserView
 import com.example.manageyourcar.UIlayer.viewmodel.LogUserViewModel
 import com.example.manageyourcar.databinding.FragmentLoginUserBinding

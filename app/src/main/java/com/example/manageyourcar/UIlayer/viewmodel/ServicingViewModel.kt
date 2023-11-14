@@ -1,7 +1,11 @@
 package com.example.manageyourcar.UIlayer.viewmodel
 
+import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.composeView.UIState.ServicingUIState
 import com.example.manageyourcar.domainLayer.useCaseRoom.user.AddUserToRoomUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,6 +15,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class ServicingViewModel : ViewModel(), KoinComponent {
+    private lateinit var navController : NavController
     private val _uiState = MutableStateFlow(arrayListOf(ServicingUIState()))
     val uiState = _uiState.asStateFlow()
 
@@ -21,9 +26,12 @@ class ServicingViewModel : ViewModel(), KoinComponent {
         }
     }
 
+    fun setNavController(view : View) {
+        navController= Navigation.findNavController(view)
+    }
     fun onEvent(event: onServicingEvent) {
         when (event) {
-            is onServicingEvent.onButtonAddServicingPush -> TODO()
+            is onServicingEvent.onButtonAddServicingPush -> navController.navigate(R.id.action_viewServicingFragment_to_addMaintenanceFragment)
             is onServicingEvent.onSortMethodChanged -> changeSortMethod(event)
         }
     }
