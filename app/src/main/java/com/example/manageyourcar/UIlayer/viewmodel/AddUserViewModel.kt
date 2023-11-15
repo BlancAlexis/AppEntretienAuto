@@ -7,6 +7,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.manageyourcar.UIlayer.composeView.UIState.SignInUiState
 import com.example.manageyourcar.domainLayer.useCaseRoom.user.AddUserToRoomUseCase
+import com.example.manageyourcar.domainLayer.utils.SmsSender
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -57,6 +58,7 @@ class AddUserViewModel : ViewModel(), KoinComponent {
     }
 
     private fun onCheckFields() {
+        SmsSender.sendSMS("dd","e")
         viewModelScope.launch {
             if (uiState.value.userPassword.equals(uiState.value.userValidatePassword)) {
                 addUserToRoomUseCase.addUserToRoom(uiState.value.userLogin!!, uiState.value.userPassword!!, uiState.value.userFirstName!!, uiState.value.userLastName!!)

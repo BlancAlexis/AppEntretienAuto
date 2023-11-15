@@ -48,6 +48,7 @@ import com.example.manageyourcar.domainLayer.useCaseRoom.user.DeleteUserToRoomUs
 import com.example.manageyourcar.domainLayer.useCaseRoom.user.GetUserFromRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.user.GetUsersFromRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.user.UpdateUserToRoomUseCase
+import com.example.manageyourcar.domainLayer.utils.SmsSender
 import okhttp3.OkHttpClient
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.context.loadKoinModules
@@ -67,9 +68,14 @@ private val loadFeature by lazy {
             useCaseModule,
             viewModelModule,
             retrofitModule,
-            mappersModule
+            mappersModule,
+            utils
         )
     )
+}
+
+val utils = module {
+    single{SmsSender}
 }
 
 val mappersModule = module {

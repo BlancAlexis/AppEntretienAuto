@@ -24,13 +24,15 @@ class LogUserViewModel : ViewModel(), KoinComponent {
     private val cacheManagerRepository by inject<CacheManagerRepository>()
     private lateinit var navController: NavController
     private val _uiState = MutableStateFlow(LoginUiState())
+    private var isLog : Boolean = false
     val uiState = _uiState.asStateFlow()
 
     init {
         viewModelScope.launch {
             cacheManagerRepository.getUserId(AppApplication.instance.applicationContext).let {
                 if (it is Ressource.Success) {
-                       // NavController toujours pas ini comme dans init navController?.navigate(R.id.action_LoginUserFragment_to_viewServicingFragment)
+                    isLog=true
+                       //navController?.navigate(R.id.action_LoginUserFragment_to_viewServicingFragment)
                 }
             }
         }
