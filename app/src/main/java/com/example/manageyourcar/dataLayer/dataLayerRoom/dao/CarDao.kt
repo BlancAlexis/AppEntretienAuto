@@ -11,6 +11,9 @@ interface CarDao {
     @Insert
     fun addNewCar(carEntity: CarEntity)
 
+    @Query("SELECT * FROM cars WHERE owner_id=:idUser")
+    fun getCars(idUser : Int): List<CarEntity>
+
     @Query("SELECT * FROM cars")
     fun getCars(): List<CarEntity>
 

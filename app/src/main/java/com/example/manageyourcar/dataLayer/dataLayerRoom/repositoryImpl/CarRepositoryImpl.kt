@@ -1,46 +1,31 @@
 package com.example.manageyourcar.dataLayer.dataLayerRoom.repositoryImpl
 
 import com.example.manageyourcar.dataLayer.dataLayerRoom.dao.CarDao
-import com.example.manageyourcar.dataLayer.dataLayerRoom.entities.CarEntity
 import com.example.manageyourcar.domainLayer.repository.room.CarRepository
 import com.example.manageyourcar.dataLayer.model.Car
+import com.example.manageyourcar.domainLayer.mappers.CarMappers.toCar
+import com.example.manageyourcar.domainLayer.mappers.CarMappers.toCarEntity
 import org.koin.core.component.KoinComponent
 
 class CarRepositoryImpl(private val carDao: CarDao) : CarRepository, KoinComponent {
 
 
     override fun addNewCar(car: Car) {
-        val carEntity = CarEntity(
-            brand = car.brand,
-            model = car.model,
-            releaseDate = car.releaseDate,
-            fuel = car.fuel,
-            transmission = car.transmission,
-            motorization = car.motorization,
-            power = car.power,
-            torque = car.torque,
-            maxSpeed = car.maxSpeed,
-            mileage = car.mileage
-        )
-        carDao.addNewCar(carEntity)
+        carDao.addNewCar(car.toCarEntity())
+    }
+
+    override fun getCars(idUser: Int): List<Car> {
+        val brutResult = carDao.getCars(idUser)
+        val resultCar: MutableList<Car> = arrayListOf()
+
+        for (element in brutResult) {
+            resultCar.add(element.toCar())
+        }
+        return resultCar
     }
 
     override fun getCar(idCar: Int): Car {
-        val brutResult = carDao.getCar(idCar)
-
-        return Car(
-            brutResult.carID,
-            brutResult.brand,
-            brutResult.model,
-            brutResult.releaseDate,
-            brutResult.fuel,
-            brutResult.transmission,
-            brutResult.motorization,
-            brutResult.power,
-            brutResult.torque,
-            brutResult.maxSpeed,
-            brutResult.mileage
-        )
+        return carDao.getCar(idCar).toCar()
     }
 
     override fun getCars(): List<Car> {
@@ -48,41 +33,13 @@ class CarRepositoryImpl(private val carDao: CarDao) : CarRepository, KoinCompone
         val resultCar: MutableList<Car> = arrayListOf()
 
         for (element in brutResult) {
-            resultCar.add(
-                Car(
-                    0,
-                    element.brand,
-                    element.model,
-                    element.releaseDate,
-                    element.fuel,
-                    element.transmission,
-                    element.motorization,
-                    element.power,
-                    element.torque,
-                    element.maxSpeed,
-                    element.mileage
-                )
-            )
+            resultCar.add(element.toCar())
         }
-
         return resultCar
     }
 
     override fun updateCar(car: Car) {
-        val carEntity = CarEntity(
-            carID = car.id,
-            brand = car.brand,
-            model = car.model,
-            releaseDate = car.releaseDate,
-            fuel = car.fuel,
-            transmission = car.transmission,
-            motorization = car.motorization,
-            power = car.power,
-            torque = car.torque,
-            maxSpeed = car.maxSpeed,
-            mileage = car.mileage
-        )
-        carDao.updateCar(carEntity)
+        carDao.updateCar(car.toCarEntity())
     }
 
     override fun deleteCar(idCar: Int) {

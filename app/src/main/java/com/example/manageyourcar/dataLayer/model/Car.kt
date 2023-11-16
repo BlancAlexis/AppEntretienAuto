@@ -11,5 +11,8 @@ data class Car(
     val power: Int,
     val torque: Int,
     val maxSpeed: Int,
-    val mileage: Int
-)
+    val mileage: Int,
+    val ownerID: Int?
+) {
+
+}
