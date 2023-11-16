@@ -29,7 +29,7 @@ class CarRepositoryImpl(private val carDao: CarDao) : CarRepository, KoinCompone
         val brutResult = carDao.getCar(idCar)
 
         return Car(
-            brutResult.id,
+            brutResult.carID,
             brutResult.brand,
             brutResult.model,
             brutResult.releaseDate,
@@ -70,7 +70,7 @@ class CarRepositoryImpl(private val carDao: CarDao) : CarRepository, KoinCompone
 
     override fun updateCar(car: Car) {
         val carEntity = CarEntity(
-            id = car.id,
+            carID = car.id,
             brand = car.brand,
             model = car.model,
             releaseDate = car.releaseDate,

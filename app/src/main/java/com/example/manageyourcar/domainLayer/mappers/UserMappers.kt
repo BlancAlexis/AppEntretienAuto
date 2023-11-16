@@ -16,7 +16,7 @@ object UserMappers {
 
     fun UserEntity.toUser(): User {
         return User(
-            id = this.id,
+            id = this.userID,
             login = this.login,
             password = this.password,
             firstname = this.firstname,

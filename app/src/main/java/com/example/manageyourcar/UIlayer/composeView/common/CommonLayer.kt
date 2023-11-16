@@ -1,6 +1,5 @@
 package com.example.manageyourcar.UIlayer.composeView.common
 
-package com.example.manageyourcar.composeView
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement

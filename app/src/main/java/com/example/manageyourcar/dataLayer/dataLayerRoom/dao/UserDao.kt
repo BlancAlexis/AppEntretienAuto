@@ -11,7 +11,7 @@ interface UserDao {
     @Insert
     suspend fun addNewUser(userEntity: UserEntity)
 
-    @Query("SELECT * FROM users WHERE id=:idUser")
+    @Query("SELECT * FROM users WHERE userID=:idUser")
     suspend fun getUser(idUser: Int): UserEntity
     @Query("SELECT * FROM users WHERE password=:password AND login=:login ")
     suspend fun logUser(login : String, password : String): UserEntity
@@ -22,6 +22,6 @@ interface UserDao {
     @Update
     suspend fun updateUser(userEntity: UserEntity)
 
-    @Query("DELETE FROM users WHERE id = :idUser")
+    @Query("DELETE FROM users WHERE userID = :idUser")
     suspend fun deleteUser(idUser: Int)
 }

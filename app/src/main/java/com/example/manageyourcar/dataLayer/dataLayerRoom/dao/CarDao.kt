@@ -14,12 +14,12 @@ interface CarDao {
     @Query("SELECT * FROM cars")
     fun getCars(): List<CarEntity>
 
-    @Query("SELECT * FROM cars WHERE id = :idCar")
+    @Query("SELECT * FROM cars WHERE carID = :idCar")
     fun getCar(idCar: Int): CarEntity
 
     @Update
     fun updateCar(carEntity: CarEntity)
 
-    @Query("DELETE FROM cars WHERE id = :idUser")
+    @Query("DELETE FROM cars WHERE carID = :idUser")
     fun deleteCar(idUser: Int)
 }
