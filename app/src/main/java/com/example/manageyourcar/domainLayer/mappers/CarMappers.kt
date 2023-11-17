@@ -6,7 +6,6 @@ import com.example.manageyourcar.dataLayer.model.Car
 object CarMappers {
     fun Car.toCarEntity(): CarEntity {
         return CarEntity(
-          carID = this.id,
             brand = this.brand,
             fuel = this.fuel,
             model = this.model,
@@ -34,7 +33,7 @@ object CarMappers {
             maxSpeed = this.maxSpeed,
             mileage = this.mileage,
             ownerID = this.ownerID,
-            id = this.carID
+            carID = this.carID
         )
     }
 

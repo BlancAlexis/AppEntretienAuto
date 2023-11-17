@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.example.manageyourcar.dataLayer.dataLayerRoom.entities.CarEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CarDao {
@@ -12,7 +13,7 @@ interface CarDao {
     fun addNewCar(carEntity: CarEntity)
 
     @Query("SELECT * FROM cars WHERE owner_id=:idUser")
-    fun getCars(idUser : Int): List<CarEntity>
+    fun getCars(idUser : Int): Flow<List<CarEntity>>
 
     @Query("SELECT * FROM cars")
     fun getCars(): List<CarEntity>

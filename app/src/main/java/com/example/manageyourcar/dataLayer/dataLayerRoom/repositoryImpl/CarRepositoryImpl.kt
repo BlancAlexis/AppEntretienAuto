@@ -5,6 +5,8 @@ import com.example.manageyourcar.domainLayer.repository.room.CarRepository
 import com.example.manageyourcar.dataLayer.model.Car
 import com.example.manageyourcar.domainLayer.mappers.CarMappers.toCar
 import com.example.manageyourcar.domainLayer.mappers.CarMappers.toCarEntity
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
 
 class CarRepositoryImpl(private val carDao: CarDao) : CarRepository, KoinComponent {
@@ -14,14 +16,10 @@ class CarRepositoryImpl(private val carDao: CarDao) : CarRepository, KoinCompone
         carDao.addNewCar(car.toCarEntity())
     }
 
-    override fun getCars(idUser: Int): List<Car> {
-        val brutResult = carDao.getCars(idUser)
-        val resultCar: MutableList<Car> = arrayListOf()
-
-        for (element in brutResult) {
-            resultCar.add(element.toCar())
+    override fun getCars(idUser: Int): Flow<List<Car>> {
+        return carDao.getCars(idUser).map { it ->
+            it.map { it.toCar() }
         }
-        return resultCar
     }
 
     override fun getCar(idCar: Int): Car {
