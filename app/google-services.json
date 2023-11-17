@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1013761663908",
+    "project_id": "manageyourcar",
+    "storage_bucket": "manageyourcar.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1013761663908:android:cce414f96e1c570b7ad731",
+        "android_client_info": {
+          "package_name": "com.example.manageyourcar"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoMeEh35sLtn7Y6iCffQGfobLjvgMiZRg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
