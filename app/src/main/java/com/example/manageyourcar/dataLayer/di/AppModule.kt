@@ -51,6 +51,8 @@ import com.example.manageyourcar.domainLayer.useCaseRoom.user.GetUserFromRoomUse
 import com.example.manageyourcar.domainLayer.useCaseRoom.user.GetUsersFromRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.user.UpdateUserToRoomUseCase
 import com.example.manageyourcar.domainLayer.utils.SmsSender
+import com.google.firebase.Firebase
+import com.google.firebase.database.database
 import okhttp3.OkHttpClient
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.context.loadKoinModules
@@ -71,7 +73,8 @@ private val loadFeature by lazy {
             viewModelModule,
             retrofitModule,
             mappersModule,
-            utils
+            utils,
+            firebaseModule
         )
     )
 }
@@ -80,6 +83,9 @@ val utils = module {
     single{SmsSender}
 }
 
+val firebaseModule = module {
+    single{ Firebase.database}
+}
 val mappersModule = module {
     single{ com.example.manageyourcar.domainLayer.mappers.UserMappers }
     single{ com.example.manageyourcar.domainLayer.mappers.CarMappers }
