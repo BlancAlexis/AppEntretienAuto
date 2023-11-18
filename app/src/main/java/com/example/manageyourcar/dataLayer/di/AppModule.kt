@@ -2,6 +2,7 @@ package com.example.manageyourcar.dataLayer.di
 
 import androidx.room.Room
 import com.example.manageyourcar.UIlayer.viewmodel.AddCarViewModel
+import com.example.manageyourcar.UIlayer.viewmodel.OBDViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.AddUserViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.AddMaintenanceViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.LogUserViewModel
@@ -200,5 +201,6 @@ val viewModelModule = module {
     viewModelOf(::MapsViewModel)
     viewModelOf(::ServicingViewModel)
     viewModelOf(::AddMaintenanceViewModel)
+    viewModelOf(::OBDViewModel)
 
 }

@@ -3,8 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/LoginUserFragment">
+    app:startDestination="@id/OBDFragment">
 
+    <fragment
+        android:id="@+id/OBDFragment"
+        android:name="com.example.manageyourcar.UIlayer.view.fragments.OBDFragment"
+        android:label="MainActivity"/>
     <fragment
         android:id="@+id/AddCarFragment"
         android:name="com.example.manageyourcar.UIlayer.view.fragments.AddCarFragment"
