@@ -39,12 +39,20 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
         jvmTarget = "17"
+    }
+    allprojects {
+        repositories {
+            google()
+            mavenCentral()
+            maven ( url="https://jitpack.io" )
+        }
     }
     buildFeatures {
         viewBinding = true
@@ -72,6 +80,12 @@ dependencies {
     implementation("com.google.maps.android:places-ktx:2.0.0")
     implementation("androidx.navigation:navigation-fragment:2.7.4")
     implementation("com.google.firebase:firebase-database:20.3.0")
+
+    implementation("com.github.AAChartModel:AAChartCore-Kotlin:-SNAPSHOT")
+
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
 
     val nav_version = "2.5.3"
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
