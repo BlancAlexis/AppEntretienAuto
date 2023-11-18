@@ -1,7 +1,7 @@
 package com.example.manageyourcar.dataLayer.model
 
 data class Car(
-    val carID: Int,
+    val carID: Int? = null,
     val brand: String,
     val model: String,
     val releaseDate: Int,
@@ -12,7 +12,7 @@ data class Car(
     val torque: Int,
     val maxSpeed: Int,
     val mileage: Int,
-    val ownerID: Int?
+    val ownerID: Int? = null
 ) {
 
 }

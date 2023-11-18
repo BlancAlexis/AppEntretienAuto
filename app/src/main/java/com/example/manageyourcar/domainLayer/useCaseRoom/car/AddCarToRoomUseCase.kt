@@ -1,7 +1,6 @@
 package com.example.manageyourcar.domainLayer.useCaseRoom.car
 
 import com.example.manageyourcar.UIlayer.AppApplication
-import com.example.manageyourcar.dataLayer.CacheManagerRepositoryImpl
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.domainLayer.repository.room.CarRepository
 import com.example.manageyourcar.dataLayer.model.Car
@@ -19,17 +18,15 @@ class AddCarToRoomUseCase : KoinComponent{
                 is Ressource.Error -> Ressource.Error(result.error)
                 is Ressource.Loading -> Ressource.Error()
                 is Ressource.Success -> {
-                    val carl : Car = car.copy(
-                        ownerID = 7
-                       // ownerID = result.data
+                    val carWithOwnerID : Car = car.copy(
+                        ownerID = result.data
                     )
-                    //Marche roomRepository.addNewCar(car)
-                    roomRepository.addNewCar(carl)
-
+                    roomRepository.addNewCar(carWithOwnerID)
                     Ressource.Success(Unit)
                 }
             }
         } catch (e: Exception) {
+            println(e.localizedMessage)
             Ressource.Error(exception = e)
         }
     }

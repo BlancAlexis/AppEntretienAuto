@@ -1,6 +1,5 @@
 package com.example.manageyourcar.domainLayer.useCaseBusiness
 
-import android.app.Activity
 import android.content.Context
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
@@ -11,18 +10,24 @@ import org.koin.core.component.inject
 class LoginUserUseCase : KoinComponent {
     private val user by inject<UserRepository>()
     private val cacheManager by inject<CacheManagerRepository>()
-    suspend fun loginUser(login: String, password: String, context: Context): Ressource<Boolean> {
+    suspend fun loginUser(login: String, password: String, context: Context): Ressource<Int> {
         return try {
-            if(cacheManager.getUserId(context).data!=null){
-                Ressource.Success(true)}
-            val result = user.logUser(login, password)
-            if (result.login == login && result.password == password) {
-                Ressource.Success(true)
-            } else {
-                Ressource.Success(false)
+            when (val resultWhen = cacheManager.getUserId(context)) {
+                is Ressource.Success -> Ressource.Success(resultWhen.data)
+                is Ressource.Error -> {
+                    val result = user.logUser(login, password)
+                    if (result.login == login && result.password == password) {
+                        Ressource.Success(result.id)
+                    } else {
+                        Ressource.Error(message = "Identifiant non valide")
+                    }
+                }
+                else -> {
+                    Ressource.Error(resultWhen.error)
+                }
             }
-        } catch (e: Exception) {
+        }catch (e: Exception) {
             Ressource.Error(e)
-      }
+        }
     }
 }

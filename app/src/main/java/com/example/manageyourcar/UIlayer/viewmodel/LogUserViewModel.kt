@@ -25,35 +25,19 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class LogUserViewModel : ViewModel(), KoinComponent {
-    //Test, à supprimer
-    private val addCarToRoomUseCase by inject<AddCarToRoomUseCase>()
-    private val getCarsFromRoomUseCase by inject<GetUserCarsUseCase>()
 
     private val logUseCase by inject<LoginUserUseCase>()
     private val cacheManagerRepository by inject<CacheManagerRepository>()
     private lateinit var navController: NavController
     private val _uiState = MutableStateFlow(LoginUiState())
-    private var isLog : Boolean = false
     val uiState = _uiState.asStateFlow()
 
-    fun mdr() {
-        onTryLog()
-        viewModelScope.launch(Dispatchers.IO) {
-        addCarToRoomUseCase.addCarToRoom(Car(1,"Peugeot", "206", 2000, "100000", "0", "0", 2, 2, 2, 2, ownerID = null))
-          getCarsFromRoomUseCase.invoke().collect(){
-            when(val result= it){
-            is Ressource.Error -> println(result.error?.localizedMessage)
-              is Ressource.Loading -> println("Load")
-              is Ressource.Success -> println(result.data.toString())
-          }
-    }}
-    }
+
 
 /*    init {
         viewModelScope.launch {
             cacheManagerRepository.getUserId(AppApplication.instance.applicationContext).let {
                 if (it is Ressource.Success) {
-                    isLog=true
                        //navController?.navigate(R.id.action_LoginUserFragment_to_viewServicingFragment)
                 }
             }
@@ -62,8 +46,7 @@ class LogUserViewModel : ViewModel(), KoinComponent {
     fun onEvent(event: UserLoginEvent) {
         when (event) {
             is UserLoginEvent.OnClickSendButton ->{
-                mdr()
-                //onTryLog()
+                onTryLog()
             }
             is UserLoginEvent.OnLoginChanged -> onLoginChanged(event)
             is UserLoginEvent.OnPasswordChanged -> onPasswordChanged(event)
@@ -80,8 +63,8 @@ class LogUserViewModel : ViewModel(), KoinComponent {
         viewModelScope.launch {
             when (val result = logUseCase.loginUser(_uiState.value.userLogin!!, _uiState.value.userPassword!!, AppApplication.instance.applicationContext)){
                 is Ressource.Success -> {
-                    cacheManagerRepository.putUserId(AppApplication.instance.applicationContext, 0)
-                   // navController?.navigate(R.id.action_LoginUserFragment_to_viewServicingFragment)
+                    cacheManagerRepository.putUserId(AppApplication.instance.applicationContext, result.data!!)
+                    navController?.navigate(R.id.action_LoginUserFragment_to_viewServicingFragment)
                 }
 
                 is Ressource.Error -> {
