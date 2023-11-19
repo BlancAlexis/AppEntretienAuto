@@ -1,57 +1,40 @@
 package com.example.manageyourcar.dataLayer.dataLayerRoom.repositoryImpl
 
 import com.example.manageyourcar.dataLayer.dataLayerRoom.dao.ServicingDao
-import com.example.manageyourcar.dataLayer.dataLayerRoom.entities.ServicingEntity
+import com.example.manageyourcar.dataLayer.dataLayerRoom.entities.MaintenanceEntity
+import com.example.manageyourcar.dataLayer.model.Entretien
 import com.example.manageyourcar.domainLayer.repository.room.ServicingRepository
 import com.example.manageyourcar.dataLayer.model.Servicing
+import com.example.manageyourcar.domainLayer.mappers.CarMappers.toCar
+import com.example.manageyourcar.domainLayer.mappers.MaintenanceMappers.toEntretien
+import com.example.manageyourcar.domainLayer.mappers.MaintenanceMappers.toMaintenanceEntity
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
 
-class ServicingRepositoryImpl(private val servicingDao: ServicingDao) : ServicingRepository,
-    KoinComponent {
-    override fun addNewServicing(servicing: Servicing) {
-        val servicingEntity = ServicingEntity(
-            name = servicing.name,
-            eachKilometre = servicing.eachKilometre,
-        )
-
-        servicingDao.addNewServicing(servicingEntity)
+class ServicingRepositoryImpl(private val servicingDao: ServicingDao) : ServicingRepository,KoinComponent {
+    override fun addNewServicing(entretien: Entretien) {
+        servicingDao.addNewServicing(entretien.toMaintenanceEntity())
     }
 
-    override fun getAllServicing(): List<Servicing> {
-        val brutResult = servicingDao.getServicing()
-        val resultServicing: MutableList<Servicing> = arrayListOf()
-
-        for (element in brutResult) {
-            resultServicing.add(
-                Servicing(
-                    element.id,
-                    element.name,
-                    element.eachKilometre
-                )
-            )
+    override fun getAllServicing(): List<Entretien> {
+        return servicingDao.getServicing().map { it ->
+            it.toEntretien()
         }
-
-        return resultServicing
     }
 
-    override fun getServicing(idServicing: Int): Servicing {
-        val brutResult = servicingDao.getServicing(idServicing)
-
-        return Servicing(
-            id = brutResult.id,
-            name = brutResult.name,
-            eachKilometre = brutResult.eachKilometre
-        )
+    override fun getAllUserMaintenance(): Flow<List<Entretien>> {
+        return servicingDao.getUserServicing().map { it ->
+            it.map{ it.toEntretien() }
+        }
     }
 
-    override fun updateServicing(servicing: Servicing) {
-        val servicingEntity = ServicingEntity(
-            id = servicing.id,
-            name = servicing.name,
-            eachKilometre = servicing.eachKilometre
-        )
+    override fun getServicing(idServicing: Int): Entretien {
+        return servicingDao.getServicing(idServicing).toEntretien()
+    }
 
-        servicingDao.updateServicing(servicingEntity)
+    override fun updateServicing(entretien: Entretien) {
+        servicingDao.updateServicing(entretien.toMaintenanceEntity())
     }
 
     override fun deleteServicing(idServicing: Int) {

@@ -8,7 +8,7 @@ import org.koin.core.component.inject
 class UpdateServicingToRoomUseCase : KoinComponent {
     val roomRepository by inject<ServicingRepository>()
 
-    suspend fun updateServicingToRoom(servicing: Servicing) {
+   /* suspend fun updateServicingToRoom(servicing: Servicing) {
         roomRepository.updateServicing(servicing)
-    }
+    }*/
 }

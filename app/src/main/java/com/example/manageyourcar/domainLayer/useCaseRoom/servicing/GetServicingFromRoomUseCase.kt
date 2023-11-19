@@ -8,7 +8,7 @@ import org.koin.core.component.inject
 class GetServicingFromRoomUseCase : KoinComponent {
     val roomRepository by inject<ServicingRepository>()
 
-    suspend fun getServicingFromRoom(idServicing: Int): Servicing {
-        return roomRepository.getServicing(idServicing)
-    }
+    //suspend fun getServicingFromRoom(idServicing: Int): Servicing {
+       // return roomRepository.getServicing(idServicing)
+  //  }
 }

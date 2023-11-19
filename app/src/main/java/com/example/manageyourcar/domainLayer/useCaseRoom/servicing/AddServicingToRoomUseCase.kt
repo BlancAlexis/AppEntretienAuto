@@ -9,6 +9,6 @@ class AddServicingToRoomUseCase : KoinComponent {
     val roomRepository by inject<ServicingRepository>()
 
     suspend fun addServicingFromRoom(id: Int, name: String, iterationKilometre: Int) {
-        return roomRepository.addNewServicing(Servicing(id, name, iterationKilometre))
+        //return roomRepository.addNewServicing(Servicing(id, name, iterationKilometre))
     }
 }

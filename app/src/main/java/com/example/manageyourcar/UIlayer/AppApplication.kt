@@ -26,13 +26,6 @@ class AppApplication : Application() {
         }
         registerInternetListener()
 
-        val entretien=Entretien(23,66, Date(166), MaintenanceService.Freins())
-
-        when(entretien.service){
-            is MaintenanceService.Freins -> entretien.service.category
-            is MaintenanceService.Pneus -> TODO()
-            is MaintenanceService.Vidange -> TODO()
-        }
     }
 
     fun registerInternetListener() {

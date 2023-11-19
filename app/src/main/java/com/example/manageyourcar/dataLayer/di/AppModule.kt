@@ -21,6 +21,8 @@ import com.example.manageyourcar.dataLayer.dataLayerRetrofit.repositoryImpl.Gara
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.requestApiImmat
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.requestApiSIV
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.RequestLoggingInterceptor
+import com.example.manageyourcar.dataLayer.dataLayerRoom.converter.DateConverter
+import com.example.manageyourcar.dataLayer.dataLayerRoom.converter.MaintenanceConverter
 import com.example.manageyourcar.dataLayer.dataLayerRoom.database.Database
 import com.example.manageyourcar.domainLayer.repository.room.CarRepository
 import com.example.manageyourcar.domainLayer.repository.room.ServicingRepository
@@ -39,9 +41,11 @@ import com.example.manageyourcar.domainLayer.useCaseRoom.car.GetCarFromRoomUseCa
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.GetCarsFromRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.GetUserCarsUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.UpdateCarToRoomUseCase
+import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.AddCarMaintenanceUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.AddServicingToRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.DeleteServicingToRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.GetAllServicingFromRoomUseCase
+import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.GetAllUserMaintenanceUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.GetServicingFromRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.UpdateServicingToRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.user.AddUserToRoomUseCase
@@ -82,6 +86,7 @@ val utils = module {
 val mappersModule = module {
     single{ com.example.manageyourcar.domainLayer.mappers.UserMappers }
     single{ com.example.manageyourcar.domainLayer.mappers.CarMappers }
+    single{ com.example.manageyourcar.domainLayer.mappers.MaintenanceMappers }
 }
 val databaseModule = module {
     single {
@@ -112,6 +117,9 @@ val repositoryModule = module {
 }
 
 val useCaseModule = module {
+    factory { AddCarMaintenanceUseCase() }
+
+    factory { GetAllUserMaintenanceUseCase() }
     factory { GetUserCarsUseCase() }
     factory { LoginUserUseCase() }
     factory { AddCarToRoomUseCase() }
