@@ -75,25 +75,32 @@ dependencies {
     implementation("io.insert-koin:koin-android:3.2.0-beta-1")
     implementation ("io.insert-koin:koin-androidx-navigation:3.2.0-beta-1")
 
-    //API Places Google
+    //API Places et Maps Google
+    implementation("com.google.android.gms:play-services-maps:18.1.0")
+
     implementation("com.google.android.libraries.places:places:3.2.0")
     implementation("com.google.maps.android:places-ktx:2.0.0")
     implementation("androidx.navigation:navigation-fragment:2.7.4")
     implementation("com.google.firebase:firebase-database:20.3.0")
 
-    implementation("com.github.AAChartModel:AAChartCore-Kotlin:-SNAPSHOT")
+    //Graphique
+    implementation("com.github.AAChartModel:AAChartCore-Kotlin:7.1.0")
 
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
 
+    //Navigation graph
     val nav_version = "2.5.3"
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
     implementation("androidx.navigation:navigation-compose:$nav_version")
 
+    //Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    //Compose
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     implementation("androidx.activity:activity-compose:1.7.2")
     implementation(platform("androidx.compose:compose-bom:2023.03.00"))
@@ -104,7 +111,6 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics-android:1.5.4")
     implementation("androidx.compose.ui:ui-text-android:1.5.4")
     implementation("androidx.compose.foundation:foundation-android:1.5.4")
-    implementation("com.google.android.gms:play-services-maps:18.1.0")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")

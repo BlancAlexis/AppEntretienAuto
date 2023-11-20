@@ -87,6 +87,7 @@ val firebaseModule = module {
 }
 val mappersModule = module {
     single{ com.example.manageyourcar.domainLayer.mappers.UserMappers }
+    single{ com.example.manageyourcar.domainLayer.mappers.BluetoothDeviceMappers }
 }
 val databaseModule = module {
     single {
