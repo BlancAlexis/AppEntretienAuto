@@ -91,6 +91,7 @@ val mappersModule = module {
     single{ com.example.manageyourcar.domainLayer.mappers.UserMappers }
     single{ com.example.manageyourcar.domainLayer.mappers.CarMappers }
     single{ com.example.manageyourcar.domainLayer.mappers.MaintenanceMappers }
+    single{ com.example.manageyourcar.domainLayer.mappers.BluetoothDeviceMappers }
 }
 val databaseModule = module {
     single {
