@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import com.example.manageyourcar.UIlayer.composeView.UIState.ServicingUIState
 
 @Composable
-fun SerivcingViewItem(
+fun ServcingViewItem(
     uiState: ServicingUIState
 ) {
     var linearProgressColor by remember {
@@ -109,7 +109,7 @@ fun SerivcingViewItem(
 @Preview(showBackground = true)
 @Composable
 fun PreviewServicingItem() {
-    SerivcingViewItem(
+    ServcingViewItem(
         ServicingUIState(
             "Citroen C4 VTS 1.6 VTS 1.6 HDI 110CH",
             "123333km",

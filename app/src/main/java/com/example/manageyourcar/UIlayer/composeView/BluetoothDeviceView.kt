@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -18,20 +19,38 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.manageyourcar.UIlayer.composeView.UIState.BluetoothUiState
 import com.example.manageyourcar.UIlayer.composeView.UIState.ServicingUIState
-import com.example.manageyourcar.UIlayer.viewmodel.onServicingEvent
+import com.example.manageyourcar.UIlayer.viewmodel.onBluetoothDeviceEvent
+import com.example.manageyourcar.domainLayer.bluetooth.BluetoothDevice
 
 @Composable
-fun ServicingView(
-    uiState: List<ServicingUIState>,
-    onEvent: (onServicingEvent) -> Unit = {}
-) {
+fun BluetoothDeviceItemView(uiState: BluetoothDevice) {
+    Card {
+        Column {
+            Row {
+                Text(text = uiState.address)
+            }
+            Row {
+                uiState.name?.let { Text(text = it) }
+            }
+        }
+
+    }
+
+}
+
+@Composable
+fun BluetoothDeviceView (
+    uiState: BluetoothUiState,
+    onEvent: (onBluetoothDeviceEvent) -> Unit = {})
+{
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(text = "Vos prochain entretiens")
-        Button(onClick = { onEvent(onServicingEvent.onButtonAddServicingPush) }) {
+        Button(onClick = { }) {
             Text(text = "Ajouter un entretien")
         }
         Row(
@@ -46,8 +65,15 @@ fun ServicingView(
             }
         }
         LazyColumn(modifier = Modifier.fillMaxWidth()) {
-            items(uiState.size) { item ->
-                 //ServcingViewItem(item)
+            item {
+                Text(text = "Available devices")            }
+            items(uiState.scannedDevices.size) { item ->
+                BluetoothDeviceItemView(uiState.scannedDevices[item] )
+            }
+            item {
+                 Text(text = "Paired devices")            }
+            items(uiState.pairedDevices.size) { item ->
+                BluetoothDeviceItemView(uiState.pairedDevices[item] )
             }
         }
 
@@ -56,7 +82,7 @@ fun ServicingView(
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewServicing() {
+fun PreviewBluetoothDevice() {
     ServicingView(
         uiState = listOf(ServicingUIState()),
         onEvent = {})
