@@ -6,7 +6,6 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.util.Log
 import com.example.manageyourcar.UIlayer.view.activities.OnApplicationEvent
-import com.example.manageyourcar.UIlayer.viewmodel.LogUserViewModel
 import com.example.manageyourcar.dataLayer.di.injectFeature
 import com.example.manageyourcar.dataLayer.model.Entretien
 import com.example.manageyourcar.dataLayer.model.MaintenanceService
@@ -26,9 +25,9 @@ class AppApplication : Application() {
         }
         registerInternetListener()
 
-        val entretien=Entretien(23,66, Date(166), MaintenanceService.Freins())
+        val entretien = Entretien(23, 66, Date(166), MaintenanceService.Freins())
 
-        when(entretien.service){
+        when (entretien.service) {
             is MaintenanceService.Freins -> entretien.service.category
             is MaintenanceService.Pneus -> TODO()
             is MaintenanceService.Vidange -> TODO()
@@ -52,7 +51,6 @@ class AppApplication : Application() {
             })
         }
     }
-
 
 
     companion object {

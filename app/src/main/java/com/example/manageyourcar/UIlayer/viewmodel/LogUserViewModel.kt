@@ -24,19 +24,20 @@ class LogUserViewModel : ViewModel(), KoinComponent {
     private val cacheManagerRepository by inject<CacheManagerRepository>()
     private lateinit var navController: NavController
     private val _uiState = MutableStateFlow(LoginUiState())
-    private var isLog : Boolean = false
+    private var isLog: Boolean = false
     val uiState = _uiState.asStateFlow()
 
     init {
         viewModelScope.launch {
             cacheManagerRepository.getUserId(AppApplication.instance.applicationContext).let {
                 if (it is Ressource.Success) {
-                    isLog=true
-                       //navController?.navigate(R.id.action_LoginUserFragment_to_viewServicingFragment)
+                    isLog = true
+                    //navController?.navigate(R.id.action_LoginUserFragment_to_viewServicingFragment)
                 }
             }
         }
     }
+
     fun onEvent(event: UserLoginEvent) {
         when (event) {
             is UserLoginEvent.OnClickSendButton -> onTryLog()
@@ -47,13 +48,17 @@ class LogUserViewModel : ViewModel(), KoinComponent {
         }
     }
 
-     fun setNavController(view: View) {
+    fun setNavController(view: View) {
         navController = Navigation.findNavController(view)
     }
 
     private fun onTryLog() {
         viewModelScope.launch {
-            when (val result = logUseCase.loginUser(_uiState.value.userLogin!!, _uiState.value.userPassword!!, AppApplication.instance.applicationContext)){
+            when (val result = logUseCase.loginUser(
+                _uiState.value.userLogin!!,
+                _uiState.value.userPassword!!,
+                AppApplication.instance.applicationContext
+            )) {
                 is Ressource.Success -> {
                     cacheManagerRepository.putUserId(AppApplication.instance.applicationContext, 0)
                     navController?.navigate(R.id.action_LoginUserFragment_to_viewServicingFragment)

@@ -8,7 +8,6 @@ import android.os.Build
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavController
 import com.example.manageyourcar.R
 import com.example.manageyourcar.databinding.ActivityMainBinding
 
@@ -33,18 +32,18 @@ class MainActivity : AppCompatActivity() {
         val permissionLauncher = registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()
         ) { perms ->
-            val canEnableBluetooth = if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val canEnableBluetooth = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 perms[Manifest.permission.BLUETOOTH_CONNECT] == true
             } else true
 
-            if(canEnableBluetooth && !isBluetoothEnabled) {
+            if (canEnableBluetooth && !isBluetoothEnabled) {
                 enableBluetoothLauncher.launch(
                     Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
                 )
             }
         }
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             permissionLauncher.launch(
                 arrayOf(
                     Manifest.permission.BLUETOOTH_SCAN,

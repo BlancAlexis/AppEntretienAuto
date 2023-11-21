@@ -8,10 +8,9 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.example.manageyourcar.UIlayer.view.activities.OnApplicationEvent
 
 class BroadcastReceiverInternet : BroadcastReceiver() {
-    val isConnected= MutableLiveData<Boolean>()
+    val isConnected = MutableLiveData<Boolean>()
     override fun onReceive(p0: Context?, p1: Intent?) {
         val connectivityManager =
             p0?.applicationContext?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -27,5 +26,6 @@ class BroadcastReceiverInternet : BroadcastReceiver() {
                     Log.i(TAG, "onLost: Aucune connexion internet...")
                 }
             })
-        }    }
+        }
+    }
 }

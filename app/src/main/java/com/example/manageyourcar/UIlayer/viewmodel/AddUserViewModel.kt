@@ -8,12 +8,10 @@ import androidx.navigation.Navigation
 import com.example.manageyourcar.UIlayer.composeView.UIState.SignInUiState
 import com.example.manageyourcar.domainLayer.useCaseRoom.user.AddUserToRoomUseCase
 import com.example.manageyourcar.domainLayer.utils.SmsSender
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -29,14 +27,15 @@ class AddUserViewModel : ViewModel(), KoinComponent {
     fun setNavController(view: View) {
         navController = Navigation.findNavController(view)
     }
+
     fun onEvent(event: UserSubscriptionEvent) {
         when (event) {
             is UserSubscriptionEvent.OnClickSendButton -> onCheckFields()
             is UserSubscriptionEvent.OnLoginChanged -> onLoginChanged(event)
             is UserSubscriptionEvent.OnPasswordChanged -> onPasswordChanged(event)
             is UserSubscriptionEvent.OnValidatePasswordChanged -> onValidateChanged(event)
-            is UserSubscriptionEvent.OnFirstnameChanged ->onFirstnameChanged(event)
-            is UserSubscriptionEvent.OnLastNameChanged ->  onLastNameChanged(event)
+            is UserSubscriptionEvent.OnFirstnameChanged -> onFirstnameChanged(event)
+            is UserSubscriptionEvent.OnLastNameChanged -> onLastNameChanged(event)
         }
 
     }
@@ -58,10 +57,15 @@ class AddUserViewModel : ViewModel(), KoinComponent {
     }
 
     private fun onCheckFields() {
-        SmsSender.sendSMS("dd","e")
+        SmsSender.sendSMS("dd", "e")
         viewModelScope.launch {
             if (uiState.value.userPassword.equals(uiState.value.userValidatePassword)) {
-                addUserToRoomUseCase.addUserToRoom(uiState.value.userLogin!!, uiState.value.userPassword!!, uiState.value.userFirstName!!, uiState.value.userLastName!!)
+                addUserToRoomUseCase.addUserToRoom(
+                    uiState.value.userLogin!!,
+                    uiState.value.userPassword!!,
+                    uiState.value.userFirstName!!,
+                    uiState.value.userLastName!!
+                )
                 navController.popBackStack()
             } else {
                 _uiState.update {

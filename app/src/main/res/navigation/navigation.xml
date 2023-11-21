@@ -3,20 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/OBDFragment">
+    app:startDestination="@id/connectObdFragment">
 
     <fragment
         android:id="@+id/OBDFragment"
         android:name="com.example.manageyourcar.UIlayer.view.fragments.OBDFragment"
-        android:label="MainActivity"/>
+        android:label="MainActivity" />
     <fragment
         android:id="@+id/AddCarFragment"
         android:name="com.example.manageyourcar.UIlayer.view.fragments.AddCarFragment"
-        android:label="MainActivity"/>
+        android:label="MainActivity" />
     <fragment
         android:id="@+id/AddUserFragment"
         android:name="com.example.manageyourcar.UIlayer.view.fragments.AddUserFragment"
-        android:label="MainActivity"/>
+        android:label="MainActivity" />
     <fragment
         android:id="@+id/LoginUserFragment"
         android:name="com.example.manageyourcar.UIlayer.view.fragments.LoginUserFragment"
@@ -27,55 +27,63 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"/>
+            app:exitAnim="@anim/slide_out_left" />
         <action
             android:id="@+id/action_LoginUserFragment_to_viewServicingFragment"
             app:destination="@id/viewServicingFragment"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"/>
+            app:exitAnim="@anim/slide_out_left" />
     </fragment>
     <fragment
         android:id="@+id/MapsFragment"
         android:name="com.example.manageyourcar.UIlayer.view.fragments.MapsFragment"
-        android:label="MainActivity"/>
+        android:label="MainActivity" />
     <fragment
         android:id="@+id/viewServicingFragment"
         android:name="com.example.manageyourcar.UIlayer.view.fragments.ViewServicingFragment"
         android:label="fragment_view_servicing"
-        tools:layout="@layout/fragment_view_servicing" >
+        tools:layout="@layout/fragment_view_servicing">
         <action
             android:id="@+id/action_viewServicingFragment_to_MapsFragment"
             app:destination="@id/MapsFragment"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"/>
+            app:exitAnim="@anim/slide_out_left" />
         <action
             android:id="@+id/action_viewServicingFragment_to_placeholder"
             app:destination="@id/placeholder"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"/>
+            app:exitAnim="@anim/slide_out_left" />
         <action
             android:id="@+id/action_viewServicingFragment_to_addMaintenanceFragment"
             app:destination="@id/addMaintenanceFragment"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"/>
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_viewServicingFragment_to_OBDFragment"
+            app:destination="@id/OBDFragment" />
     </fragment>
     <dialog
         android:id="@+id/addMaintenanceFragment"
         android:name="com.example.manageyourcar.UIlayer.view.fragments.AddMaintenanceFragment"
         android:label="fragment_add_maintenance_car"
         tools:layout="@layout/fragment_add_maintenance_car" />
-    <fragment android:id="@+id/placeholder" >
+    <fragment android:id="@+id/placeholder">
         <action
             android:id="@+id/action_placeholder_to_AddCarFragment"
             app:destination="@id/AddCarFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/connectObdFragment"
+        android:name="com.example.manageyourcar.UIlayer.view.fragments.ConnectObdFragment"
+        android:label="fragment_connect_obd"
+        tools:layout="@layout/fragment_connect_obd" />
 
 </navigation>

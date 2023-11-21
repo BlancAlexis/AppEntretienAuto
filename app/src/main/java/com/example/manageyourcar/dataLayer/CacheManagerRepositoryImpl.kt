@@ -1,13 +1,12 @@
 package com.example.manageyourcar.dataLayer
 
-import android.app.Activity
 import android.content.Context
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
-class CacheManagerRepositoryImpl(val dataSource: CacheDataSource) : CacheManagerRepository, KoinComponent {
+class CacheManagerRepositoryImpl(val dataSource: CacheDataSource) : CacheManagerRepository,
+    KoinComponent {
     override fun getCachedListUserCar() {
         dataSource.getCachedListUserCar()
     }

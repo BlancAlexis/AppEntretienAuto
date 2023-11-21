@@ -1,6 +1,5 @@
 package com.example.manageyourcar.domainLayer.repository
 
-import android.app.Activity
 import android.content.Context
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 

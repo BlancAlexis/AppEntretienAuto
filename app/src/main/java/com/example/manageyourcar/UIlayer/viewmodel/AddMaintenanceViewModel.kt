@@ -13,8 +13,8 @@ class AddMaintenanceViewModel : ViewModel(), KoinComponent {
     private val _uiState = MutableStateFlow(AddVehiculeMaintenanceUiState())
     val uiState = _uiState.asStateFlow()
 
-    fun onEvent(event: onMaintenanceEvent){
-        when (event){
+    fun onEvent(event: onMaintenanceEvent) {
+        when (event) {
             is onMaintenanceEvent.onCarChanged -> TODO()
             is onMaintenanceEvent.onMaintenanceChanged -> TODO()
             is onMaintenanceEvent.onMileageChanged -> TODO()

@@ -2,8 +2,8 @@ package com.example.manageyourcar.dataLayer.dataLayerRoom.repositoryImpl
 
 import com.example.manageyourcar.dataLayer.dataLayerRoom.dao.ServicingDao
 import com.example.manageyourcar.dataLayer.dataLayerRoom.entities.ServicingEntity
-import com.example.manageyourcar.domainLayer.repository.room.ServicingRepository
 import com.example.manageyourcar.dataLayer.model.Servicing
+import com.example.manageyourcar.domainLayer.repository.room.ServicingRepository
 import org.koin.core.component.KoinComponent
 
 class ServicingRepositoryImpl(private val servicingDao: ServicingDao) : ServicingRepository,

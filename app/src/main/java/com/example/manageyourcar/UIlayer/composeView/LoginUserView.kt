@@ -69,7 +69,7 @@ fun LoginUserView(
         Spacer(modifier = Modifier.height(20.dp))
         uiState.userLogin?.let {
             CustomTextField(
-                error = uiState.userLoginError?: "",
+                error = uiState.userLoginError ?: "",
                 modifier = Modifier
                     .fillMaxWidth(0.95f)
                     .padding(10.dp),
@@ -84,7 +84,7 @@ fun LoginUserView(
         }
         uiState.userPassword?.let {
             CustomTextField(
-                error = uiState.userPasswordError?: "",
+                error = uiState.userPasswordError ?: "",
                 modifier = Modifier
                     .fillMaxWidth(0.95f)
                     .padding(10.dp),

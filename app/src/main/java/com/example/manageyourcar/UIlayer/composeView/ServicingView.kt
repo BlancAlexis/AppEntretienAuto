@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Button
@@ -48,7 +47,7 @@ fun ServicingView(
         }
         LazyColumn(modifier = Modifier.fillMaxWidth()) {
             items(uiState.size) { item ->
-               // SerivcingViewItem(item)
+                // SerivcingViewItem(item)
             }
         }
 
@@ -59,6 +58,6 @@ fun ServicingView(
 @Composable
 fun PreviewServicing() {
     ServicingView(
-        uiState = listOf(ServicingUIState()) ,
+        uiState = listOf(ServicingUIState()),
         onEvent = {})
 }

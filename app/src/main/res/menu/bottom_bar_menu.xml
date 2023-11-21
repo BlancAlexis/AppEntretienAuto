@@ -4,17 +4,17 @@
         android:id="@+id/action_home"
         android:title="Home"
         android:icon="@drawable/outline_home_24"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_specification"
         android:title="Search"
         android:icon="@drawable/outline_speed_24"
-        app:showAsAction="ifRoom"/>
-  <item
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/action_manage"
         android:title="Search"
         android:icon="@drawable/outline_build_24"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom" />
 
 </menu>
