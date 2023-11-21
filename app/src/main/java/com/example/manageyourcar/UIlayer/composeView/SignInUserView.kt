@@ -47,7 +47,7 @@ fun SignInUserView(
                 }
             )
         }
-            uiState?.userFirstName?.let {
+        uiState?.userFirstName?.let {
             CustomTextField(
                 textFieldValue = it,
                 modifier = Modifier

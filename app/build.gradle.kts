@@ -23,10 +23,13 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-        val mapsKey: String = gradleLocalProperties(project.rootProject.projectDir).getProperty("MAPS_API_KEY") ?: ""
+        val mapsKey: String =
+            gradleLocalProperties(project.rootProject.projectDir).getProperty("MAPS_API_KEY") ?: ""
         buildConfigField("String", "MAPS_API_KEY", "\"$mapsKey\"")
-        
-        val placesKey: String = gradleLocalProperties(project.rootProject.projectDir).getProperty("PLACES_API_KEY") ?: ""
+
+        val placesKey: String =
+            gradleLocalProperties(project.rootProject.projectDir).getProperty("PLACES_API_KEY")
+                ?: ""
         buildConfigField("String", "PLACES_API_KEY", "\"$placesKey\"")
     }
 
@@ -51,7 +54,7 @@ android {
         repositories {
             google()
             mavenCentral()
-            maven ( url="https://jitpack.io" )
+            maven(url = "https://jitpack.io")
         }
     }
     buildFeatures {
@@ -73,7 +76,7 @@ android {
 dependencies {
     //Injection de dépendance koin
     implementation("io.insert-koin:koin-android:3.2.0-beta-1")
-    implementation ("io.insert-koin:koin-androidx-navigation:3.2.0-beta-1")
+    implementation("io.insert-koin:koin-androidx-navigation:3.2.0-beta-1")
 
     //API Places et Maps Google
     implementation("com.google.android.gms:play-services-maps:18.1.0")

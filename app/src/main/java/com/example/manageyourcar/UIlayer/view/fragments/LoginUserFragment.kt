@@ -14,7 +14,6 @@ import com.example.manageyourcar.UIlayer.composeView.LoginUserView
 import com.example.manageyourcar.UIlayer.view.activities.MainActivity
 import com.example.manageyourcar.UIlayer.viewmodel.LogUserViewModel
 import com.example.manageyourcar.databinding.FragmentLoginUserBinding
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginUserFragment : Fragment() {
@@ -52,7 +51,7 @@ class LoginUserFragment : Fragment() {
     }
 
     companion object {
-            fun newInstance(): LoginUserFragment {
+        fun newInstance(): LoginUserFragment {
             return LoginUserFragment()
         }
     }

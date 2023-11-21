@@ -1,11 +1,10 @@
 package com.example.manageyourcar.dataLayer.dataLayerRoom.repositoryImpl
 
 import com.example.manageyourcar.dataLayer.dataLayerRoom.dao.UserDao
-import com.example.manageyourcar.dataLayer.dataLayerRoom.entities.UserEntity
-import com.example.manageyourcar.domainLayer.repository.room.UserRepository
 import com.example.manageyourcar.dataLayer.model.User
 import com.example.manageyourcar.domainLayer.mappers.UserMappers.toUser
 import com.example.manageyourcar.domainLayer.mappers.UserMappers.toUserEntity
+import com.example.manageyourcar.domainLayer.repository.room.UserRepository
 import org.koin.core.component.KoinComponent
 
 class UserRepositoryImpl(private val userDao: UserDao) : UserRepository, KoinComponent {
@@ -40,7 +39,7 @@ class UserRepositoryImpl(private val userDao: UserDao) : UserRepository, KoinCom
     }
 
     override suspend fun updateUser(user: User) {
-       return userDao.updateUser(user.toUserEntity())
+        return userDao.updateUser(user.toUserEntity())
     }
 
     override suspend fun deleteUser(idUser: Int) {

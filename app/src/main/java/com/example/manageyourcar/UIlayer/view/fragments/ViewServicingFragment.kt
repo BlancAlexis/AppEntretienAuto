@@ -41,6 +41,7 @@ class ViewServicingFragment : Fragment() {
             }
         }
     }
+
     companion object {
         fun newInstance(): ViewServicingFragment {
             return ViewServicingFragment()

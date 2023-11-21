@@ -1,7 +1,6 @@
 package com.example.manageyourcar.dataLayer
 
 import android.content.Context
-import android.content.res.Resources
 import com.example.manageyourcar.R
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 
@@ -25,7 +24,10 @@ class CacheDataSource {
 
     fun putUserId(context: Context, userId: Int): Ressource<Boolean> {
         return try {
-            val sharedPref = context.getSharedPreferences(context.getString(R.string.user_id), Context.MODE_PRIVATE)
+            val sharedPref = context.getSharedPreferences(
+                context.getString(R.string.user_id),
+                Context.MODE_PRIVATE
+            )
             with(sharedPref.edit()) {
                 putInt(context.getString(com.example.manageyourcar.R.string.user_id), userId)
                 apply()

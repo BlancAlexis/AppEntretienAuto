@@ -1,23 +1,24 @@
 package com.example.manageyourcar.dataLayer.di
 
 import androidx.room.Room
+import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.UIlayer.viewmodel.AddCarViewModel
-import com.example.manageyourcar.UIlayer.viewmodel.OBDViewModel
-import com.example.manageyourcar.UIlayer.viewmodel.AddUserViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.AddMaintenanceViewModel
+import com.example.manageyourcar.UIlayer.viewmodel.AddUserViewModel
+import com.example.manageyourcar.UIlayer.viewmodel.BluetoothViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.LogUserViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.MapsViewModel
+import com.example.manageyourcar.UIlayer.viewmodel.OBDViewModel
+import com.example.manageyourcar.UIlayer.viewmodel.ServicingViewModel
+import com.example.manageyourcar.UIlayer.viewmodel.UserViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.UserViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.ListMaintenanceViewModel
 import com.example.manageyourcar.dataLayer.CacheDataSource
 import com.example.manageyourcar.dataLayer.CacheManagerRepositoryImpl
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.dataSource.RemoteDataSource
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.garageApi
-import com.example.manageyourcar.domainLayer.repository.retrofit.ApiCarImmatRepository
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.repositoryImpl.ApiCarImmatRepositoryImpl
-import com.example.manageyourcar.domainLayer.repository.retrofit.ApiCarSIVRepository
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.repositoryImpl.ApiCarSIVRepositoryImpl
-import com.example.manageyourcar.domainLayer.repository.retrofit.GarageRepository
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.repositoryImpl.GarageRepositoryImpl
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.requestApiImmat
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.requestApiSIV
@@ -29,7 +30,14 @@ import com.example.manageyourcar.domainLayer.repository.room.UserRepository
 import com.example.manageyourcar.dataLayer.dataLayerRoom.repositoryImpl.CarRepositoryImpl
 import com.example.manageyourcar.dataLayer.dataLayerRoom.repositoryImpl.ServicingRepositoryImpl
 import com.example.manageyourcar.dataLayer.dataLayerRoom.repositoryImpl.UserRepositoryImpl
+import com.example.manageyourcar.domainLayer.bluetooth.BluetoothController
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
+import com.example.manageyourcar.domainLayer.repository.retrofit.ApiCarImmatRepository
+import com.example.manageyourcar.domainLayer.repository.retrofit.ApiCarSIVRepository
+import com.example.manageyourcar.domainLayer.repository.retrofit.GarageRepository
+import com.example.manageyourcar.domainLayer.repository.room.CarRepository
+import com.example.manageyourcar.domainLayer.repository.room.ServicingRepository
+import com.example.manageyourcar.domainLayer.repository.room.UserRepository
 import com.example.manageyourcar.domainLayer.useCaseBusiness.LoginUserUseCase
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetCarRepairShopUseCase
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkImmatUseCase
@@ -54,6 +62,7 @@ import com.example.manageyourcar.domainLayer.useCaseRoom.user.UpdateUserToRoomUs
 import com.example.manageyourcar.domainLayer.utils.SmsSender
 import com.google.firebase.Firebase
 import com.google.firebase.database.database
+import com.plcoding.bluetoothchat.data.chat.AndroidBluetoothController
 import okhttp3.OkHttpClient
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.context.loadKoinModules
@@ -81,14 +90,16 @@ private val loadFeature by lazy {
 }
 
 val utils = module {
-    single{SmsSender}
+    single { SmsSender }
+    factory<BluetoothController> { AndroidBluetoothController(AppApplication.instance) }
 }
 
 val firebaseModule = module {
-    single{ Firebase.database}
+    single { Firebase.database }
 }
 val mappersModule = module {
-    single{ com.example.manageyourcar.domainLayer.mappers.UserMappers }
+    single { com.example.manageyourcar.domainLayer.mappers.UserMappers }
+    single { com.example.manageyourcar.domainLayer.mappers.BluetoothDeviceMappers }
     single{ com.example.manageyourcar.domainLayer.mappers.CarMappers }
     single{ com.example.manageyourcar.domainLayer.mappers.MaintenanceMappers }
     single{ com.example.manageyourcar.domainLayer.mappers.BluetoothDeviceMappers }
@@ -151,6 +162,7 @@ val useCaseModule = module {
 }
 
 val retrofitModule = module {
+
     single<garageApi> {
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(RequestLoggingInterceptor())
@@ -209,5 +221,6 @@ val viewModelModule = module {
     viewModelOf(::ListMaintenanceViewModel)
     viewModelOf(::AddMaintenanceViewModel)
     viewModelOf(::OBDViewModel)
+    viewModelOf(::BluetoothViewModel)
 
 }

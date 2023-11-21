@@ -3,16 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UIlayer.view.fragments.AddMaintenanceFragment">
-
+    tools:context=".UIlayer.view.fragments.ConnectObdFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.compose.ui.platform.ComposeView
-            android:id="@+id/addMaintenanceCompose"
+            android:id="@+id/listOBDDevice"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </FrameLayout>

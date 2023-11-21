@@ -6,7 +6,6 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.util.Log
 import com.example.manageyourcar.UIlayer.view.activities.OnApplicationEvent
-import com.example.manageyourcar.UIlayer.viewmodel.LogUserViewModel
 import com.example.manageyourcar.dataLayer.di.injectFeature
 import com.example.manageyourcar.dataLayer.model.Entretien
 import com.example.manageyourcar.dataLayer.model.MaintenanceService
@@ -45,7 +44,6 @@ class AppApplication : Application() {
             })
         }
     }
-
 
 
     companion object {
