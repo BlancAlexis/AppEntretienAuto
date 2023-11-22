@@ -99,7 +99,7 @@ class AddMaintenanceViewModel : ViewModel(), KoinComponent {
                     uiState.value.mileage,
                     uiState.value.price,
                     uiState.value.date!!,
-                    uiState.value.selectedMaintenance!!
+                    MaintenanceService.Freins()
                 )
             )
         }
