@@ -2,11 +2,15 @@ package com.example.manageyourcar.UIlayer.composeView.UIState
 
 import com.example.manageyourcar.dataLayer.model.Car
 import com.example.manageyourcar.dataLayer.model.MaintenanceService
+import com.example.manageyourcar.dataLayer.model.MaintenanceServiceType
+import java.util.Date
 
-class AddVehiculeMaintenanceUiState {
-    val listCars : List<Car> = listOf()
-    val listMaintenance : List<MaintenanceService> = listOf()
-    val mileage : String? = null
-    val date : String?=null
-
-}
+data class AddVehiculeMaintenanceUiState (
+    val price: Int = 0,
+    val listCars : List<Car> = listOf(),
+    val selectedCar : Car?= null,
+    val listMaintenance : List<Array<MaintenanceServiceType>> = listOf(MaintenanceServiceType.values()),
+    val selectedMaintenance : MaintenanceServiceType? = null,
+    val mileage : Int = 0,
+    val date : Date?= null
+    )

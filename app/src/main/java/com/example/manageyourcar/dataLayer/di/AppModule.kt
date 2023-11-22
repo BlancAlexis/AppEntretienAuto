@@ -7,7 +7,7 @@ import com.example.manageyourcar.UIlayer.viewmodel.AddMaintenanceViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.LogUserViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.MapsViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.UserViewModel
-import com.example.manageyourcar.UIlayer.viewmodel.ServicingViewModel
+import com.example.manageyourcar.UIlayer.viewmodel.ListMaintenanceViewModel
 import com.example.manageyourcar.dataLayer.CacheDataSource
 import com.example.manageyourcar.dataLayer.CacheManagerRepositoryImpl
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.dataSource.RemoteDataSource
@@ -198,7 +198,7 @@ val viewModelModule = module {
     viewModelOf(::LogUserViewModel)
     viewModelOf(::AddCarViewModel)
     viewModelOf(::MapsViewModel)
-    viewModelOf(::ServicingViewModel)
+    viewModelOf(::ListMaintenanceViewModel)
     viewModelOf(::AddMaintenanceViewModel)
 
 }

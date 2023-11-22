@@ -48,11 +48,3 @@ class AddMaintenanceFragment : BottomSheetDialogFragment() {
     }
 }
 
-sealed interface onMaintenanceEvent{
-    object onValidatePressed : onMaintenanceEvent
-    data class onDateChanged (val newDate : String): onMaintenanceEvent
-    data class onMileageChanged( val newValue: String) : onMaintenanceEvent
-    data class onMaintenanceChanged(val newValue: MaintenanceService) : onMaintenanceEvent
-    data class onCarChanged( val newValue: String) : onMaintenanceEvent
-
-}

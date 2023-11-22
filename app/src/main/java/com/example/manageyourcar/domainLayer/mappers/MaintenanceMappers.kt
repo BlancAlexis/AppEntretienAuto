@@ -16,7 +16,7 @@ object MaintenanceMappers {
             mileage = this.mileage,
             price = this.price,
             date = this.date,
-            serviceType = MaintenanceServiceType.FREINS
+            serviceType = this.service
         )
     }
 
@@ -27,7 +27,7 @@ object MaintenanceMappers {
             mileage = this.mileage,
             price = this.price,
             date = this.date,
-            service = MaintenanceService.Freins()
+            service = this.serviceType
         )
     }
 }

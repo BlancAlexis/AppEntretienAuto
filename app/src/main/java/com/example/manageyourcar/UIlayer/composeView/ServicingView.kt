@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Button
@@ -19,46 +18,56 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.manageyourcar.UIlayer.composeView.UIState.ServicingUIState
-import com.example.manageyourcar.UIlayer.viewmodel.onServicingEvent
+import com.example.manageyourcar.UIlayer.composeView.UIState.MaintenanceListUiState
+import com.example.manageyourcar.UIlayer.viewmodel.onMaintenanceEvent
+import com.example.manageyourcar.UIlayer.viewmodel.onMaintenanceListEvent
 
 @Composable
 fun ServicingView(
-    uiState: List<ServicingUIState>,
-    onEvent: (onServicingEvent) -> Unit = {}
+    uiState: MaintenanceListUiState,
+    onEvent: (onMaintenanceListEvent) -> Unit = {}
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(text = "Vos prochain entretiens")
-        Button(onClick = { onEvent(onServicingEvent.onButtonAddServicingPush) }) {
-            Text(text = "Ajouter un entretien")
-        }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(color = Color.Blue),
-            horizontalArrangement = Arrangement.End
-        ) {
-            IconButton(onClick = { /*TODO*/ }) {
-                Icon(imageVector = Icons.Filled.Menu, contentDescription = "")
-
+//        if (uiState.isLoading) {
+//            Column(
+//                modifier = Modifier.fillMaxSize(),
+//                horizontalAlignment = Alignment.CenterHorizontally,
+//                verticalArrangement = Arrangement.Center
+//            ) {
+//                CircularProgressIndicator()
+//            }
+ //       } else {
+            Text(text = "Vos prochain entretiens")
+            Button(onClick = { onEvent(onMaintenanceListEvent.onButtonAddMaintenancePush) }) {
+                Text(text = "Ajouter un entretien")
             }
-        }
-        LazyColumn(modifier = Modifier.fillMaxWidth()) {
-            items(uiState.size) { item ->
-               // SerivcingViewItem(item)
-            }
-        }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(color = Color.Blue),
+                horizontalArrangement = Arrangement.End
+            ) {
+                IconButton(onClick = { /*TODO*/ }) {
+                    Icon(imageVector = Icons.Filled.Menu, contentDescription = "")
 
-    }
+                }
+            }
+            LazyColumn(modifier = Modifier.fillMaxWidth()) {
+                items(uiState.listUiState.size) { item ->
+                    // SerivcingViewItem(item)
+                }
+            }
+
+        }
+   // }
 }
-
 @Preview(showBackground = true)
 @Composable
 fun PreviewServicing() {
     ServicingView(
-        uiState = listOf(ServicingUIState()) ,
+        uiState = MaintenanceListUiState(listUiState = listOf(), isLoading = true) ,
         onEvent = {})
 }

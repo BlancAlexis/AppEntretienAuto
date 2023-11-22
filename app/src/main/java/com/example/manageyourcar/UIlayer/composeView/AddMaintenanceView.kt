@@ -20,8 +20,7 @@ import com.example.manageyourcar.UIlayer.composeView.UIState.AddVehiculeMaintena
 import com.example.manageyourcar.UIlayer.composeView.common.CalendarView
 import com.example.manageyourcar.UIlayer.composeView.common.CustomTextField
 import com.example.manageyourcar.UIlayer.composeView.common.OutlinedSpinner
-import com.example.manageyourcar.UIlayer.view.fragments.onMaintenanceEvent
-import com.example.manageyourcar.dataLayer.model.MaintenanceService
+import com.example.manageyourcar.UIlayer.viewmodel.onMaintenanceEvent
 
 @Composable
 fun AddMaintenanceView(
@@ -29,7 +28,7 @@ fun AddMaintenanceView(
     onEvent: (onMaintenanceEvent) -> Unit = {}
 ) {
     Column(
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxSize()
     ) {
@@ -47,24 +46,24 @@ fun AddMaintenanceView(
         }
 
         Text(text = "Ajouter une opération", fontSize = 18.sp)
-      /*  OutlinedSpinner(
-            listMaintenanceName = uiState.listCars,
-            textLabel = "votre véhicule",
-            onItemSelect = { car ->
-                when (car) {
-                     is onMaintenanceEvent.onCarChanged -> onMaintenanceEvent.onCarChanged(car as String)
-                    else -> throw Exception("Unexpected item type")
-                }
-            })
-        OutlinedSpinner(
-            listMaintenanceName = uiState.listMaintenance.flatMap { it.a},
-            textLabel = "opération effectué",
-            onItemSelect = { item ->
-                when (item) {
-                       is onMaintenanceEvent.onMaintenanceChanged -> onMaintenanceEvent.onMaintenanceChanged(item as MaintenanceService)
-                    else -> throw Exception("Unexpected item type")
-                }
-            })*/
+//        OutlinedSpinner(
+//            listMaintenanceName = uiState.listCars.map { it -> it.model },
+//            textLabel = "Votre véhicule",
+//            onItemSelect = { car ->
+//                when (car) {
+//                    // is onMaintenanceEvent.onCarChanged -> onMaintenanceEvent.onCarChanged(car)
+//                    else -> throw Exception("Unexpected item type")
+//                }
+//            })
+//        OutlinedSpinner(
+//            listMaintenanceName = listOf("Frein","Pneu"),
+//            textLabel = "Opération effectué",
+//            onItemSelect = { item ->
+//                when (item) {
+//                   //    is onMaintenanceEvent.onMaintenanceChanged -> onMaintenanceEvent.onMaintenanceChanged(item as MaintenanceService)
+//                    else -> throw Exception("Unexpected item type")
+//                }
+//            })
         CustomTextField(textFieldValue = "", label = "Prix")
         CustomTextField(textFieldValue = "", label = "Kilométrage")
         IconButton(onClick = {

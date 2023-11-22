@@ -63,9 +63,7 @@ fun CustomTextField(
             mutableStateOf(visualTransformation)
         }
         Row(modifier = Modifier.fillMaxWidth()) {
-            Text(label, style = labelTextStyle)
-            Icon(imageVector = Icons.Outlined.Info, contentDescription = "")
-        }
+            Text(label, style = labelTextStyle) }
 
         Spacer(modifier = Modifier.height(8.dp))
         Card(

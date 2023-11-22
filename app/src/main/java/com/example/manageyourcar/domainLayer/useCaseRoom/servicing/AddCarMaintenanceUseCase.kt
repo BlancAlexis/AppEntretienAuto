@@ -15,7 +15,7 @@ class AddCarMaintenanceUseCase : KoinComponent {
     private val roomRepository by inject<ServicingRepository>()
     private val cacheManagerRepository by inject<CacheManagerRepository>()
 
-    suspend fun addCarToRoom(entretien: Entretien): Ressource<Unit> {
+    suspend fun addMainntenanceOperation(entretien: Entretien): Ressource<Unit> {
         return try {
             when (val result = cacheManagerRepository.getUserId(AppApplication.instance)) {
                 is Ressource.Error -> Ressource.Error(result.error)

@@ -9,12 +9,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import com.example.manageyourcar.UIlayer.composeView.ServicingView
-import com.example.manageyourcar.UIlayer.viewmodel.ServicingViewModel
+import com.example.manageyourcar.UIlayer.viewmodel.ListMaintenanceViewModel
 import com.example.manageyourcar.databinding.FragmentViewServicingBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ViewServicingFragment : Fragment() {
-    private val servicingViewModel: ServicingViewModel by viewModel()
+    private val listMaintenanceViewModel: ListMaintenanceViewModel by viewModel()
     private lateinit var binding: FragmentViewServicingBinding
 
     override fun onCreateView(
@@ -27,15 +27,15 @@ class ViewServicingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        servicingViewModel.setNavController(view)
+        listMaintenanceViewModel.setNavController(view)
         binding.viewMaintenance.apply {
             setContent {
                 setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
 
-                val maintenancesPlannedUIState by servicingViewModel.uiState.collectAsState()
+                val maintenancesPlannedUIState by listMaintenanceViewModel.uiState.collectAsState()
                 ServicingView(
                     uiState = maintenancesPlannedUIState,
-                    onEvent = servicingViewModel::onEvent
+                    onEvent = listMaintenanceViewModel::onEvent
                 )
             }
         }
