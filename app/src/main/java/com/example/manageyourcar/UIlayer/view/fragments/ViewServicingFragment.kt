@@ -27,7 +27,6 @@ class ViewServicingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        listMaintenanceViewModel.setNavController(view)
         binding.viewMaintenance.apply {
             setContent {
                 setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)

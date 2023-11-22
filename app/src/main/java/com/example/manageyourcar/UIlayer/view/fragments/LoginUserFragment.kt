@@ -1,5 +1,6 @@
 package com.example.manageyourcar.UIlayer.view.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,8 +8,10 @@ import android.view.ViewGroup
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.manageyourcar.UIlayer.composeView.LoginUserView
+import com.example.manageyourcar.UIlayer.view.activities.MainActivity
 import com.example.manageyourcar.UIlayer.viewmodel.LogUserViewModel
 import com.example.manageyourcar.databinding.FragmentLoginUserBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -29,6 +32,12 @@ class LoginUserFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         logUserViewModel.setNavController(view)
+        logUserViewModel.isConnected.observe(viewLifecycleOwner) {
+            if (it) {
+                val intent = Intent(activity, MainActivity::class.java)
+                startActivity(intent)
+            }
+        }
         binding.logUserField.apply {
             setContent {
                 setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)

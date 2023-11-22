@@ -58,9 +58,7 @@ isLoading = true
         }
     }
 
-    fun setNavController(view: View) {
-            navController = Navigation.findNavController(view)
-        }
+
 
         fun onEvent(event: onMaintenanceListEvent) {
             when (event) {

@@ -12,15 +12,12 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.manageyourcar.UIlayer.composeView.SignInUserView
 import com.example.manageyourcar.UIlayer.viewmodel.AddUserViewModel
 import com.example.manageyourcar.databinding.FragmentAddUserBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class AddUserFragment : Fragment() {
     private lateinit var binding: FragmentAddUserBinding
-    private val addUserViewModel: AddUserViewModel by lazy {
-        ViewModelProvider(this).get(
-            AddUserViewModel::class.java
-        )
-    }
+    private val addUserViewModel: AddUserViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

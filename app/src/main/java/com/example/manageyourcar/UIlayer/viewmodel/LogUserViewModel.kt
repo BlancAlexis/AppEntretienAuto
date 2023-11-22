@@ -3,6 +3,7 @@ package com.example.manageyourcar.UIlayer.viewmodel
 import android.content.Intent
 import android.view.View
 import androidx.core.content.ContextCompat.startActivity
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
@@ -36,6 +37,7 @@ class LogUserViewModel : ViewModel(), KoinComponent {
     private val logUseCase by inject<LoginUserUseCase>()
     private val cacheManagerRepository by inject<CacheManagerRepository>()
     private lateinit var navController: NavController
+    val isConnected : MutableLiveData<Boolean> = MutableLiveData(false)
     private val _uiState = MutableStateFlow(LoginUiState())
     val uiState = _uiState.asStateFlow()
 
@@ -44,7 +46,6 @@ class LogUserViewModel : ViewModel(), KoinComponent {
             is UserLoginEvent.OnClickSendButton -> {
                 onTryLog()
             }
-
             is UserLoginEvent.OnLoginChanged -> onLoginChanged(event)
             is UserLoginEvent.OnPasswordChanged -> onPasswordChanged(event)
             is UserLoginEvent.OnSignInButton -> navController?.navigate(R.id.action_LoginUserFragment_to_AddUserFragment)
@@ -53,21 +54,18 @@ class LogUserViewModel : ViewModel(), KoinComponent {
     }
 
     fun setNavController(view: View) {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
+        navController = Navigation.findNavController(view)
     }
 
 
-    navController = Navigation.findNavController(view)
         //onTryLog()
-    }
 
     private fun onTryLog() {
         viewModelScope.launch {
             when (val result = logUseCase.loginUser(_uiState.value.userLogin!!, _uiState.value.userPassword!!, AppApplication.instance.applicationContext)) {
                 is Ressource.Success -> {
                     cacheManagerRepository.putUserId(AppApplication.instance.applicationContext, result.data!!)
-                    navController?.navigate(R.id.action_LoginUserFragment_to_viewServicingFragment)
+                    isConnected.postValue(true)
                 }
 
                 is Ressource.Error -> {

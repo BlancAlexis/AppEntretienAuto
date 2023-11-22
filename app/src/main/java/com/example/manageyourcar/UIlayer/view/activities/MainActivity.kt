@@ -9,6 +9,9 @@ import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.manageyourcar.R
+import com.example.manageyourcar.UIlayer.view.fragments.AddUserFragment
+import com.example.manageyourcar.UIlayer.view.fragments.MapsFragment
+import com.example.manageyourcar.UIlayer.view.fragments.ViewServicingFragment
 import com.example.manageyourcar.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -21,17 +24,35 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.bottomAppBar)
 
+        supportFragmentManager
+            .beginTransaction()
+            .add(R.id.nav_host_fragment, ViewServicingFragment.newInstance())
+            .commit()
+
+
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.action_specification -> {
+                    supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.nav_host_fragment, ViewServicingFragment.newInstance())
+                        .commit()
                     true
                 }
 
                 R.id.action_home -> {
+                    supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.nav_host_fragment, MapsFragment.newInstance())
+                        .commit()
                     true
                 }
 
                 R.id.action_manage -> {
+                    supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.nav_host_fragment, ViewServicingFragment.newInstance())
+                        .commit()
                     true
                 }
 
