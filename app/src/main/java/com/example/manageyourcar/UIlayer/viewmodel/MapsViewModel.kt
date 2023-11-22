@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetCarRepairShopUseCase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -13,7 +14,7 @@ class MapsViewModel : ViewModel(), KoinComponent {
     val getCarRepairShopUseCase by inject<GetCarRepairShopUseCase>()
 
     fun getCarRepairShop(longitude: Double, latitude: Double) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             getCarRepairShopUseCase.getVehiculeByImmat(longitude, latitude).collect { result ->
                 when (result) {
                     is Ressource.Error -> Log.e("c", "${result.message}")

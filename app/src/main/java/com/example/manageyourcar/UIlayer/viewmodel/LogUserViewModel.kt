@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.time.Instant
@@ -52,17 +53,32 @@ class LogUserViewModel : ViewModel(), KoinComponent {
         }
     }
 
+
+    private fun listLoad() {
+        _uiState.update {
+            it.copy(
+               // isLoading = true
+            )
+        }
+    }
+
+    private fun listLoading(data: List<Entretien>?) {
+
+    }
+
     fun setNavController(view: View) {
         navController = Navigation.findNavController(view)
         onTryLog()
     }
 
     private fun onTryLog() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             when (val result = logUseCase.loginUser(_uiState.value.userLogin!!, _uiState.value.userPassword!!, AppApplication.instance.applicationContext)) {
                 is Ressource.Success -> {
                     cacheManagerRepository.putUserId(AppApplication.instance.applicationContext, result.data!!)
-                    navController?.navigate(R.id.action_LoginUserFragment_to_viewServicingFragment)
+                    withContext(Dispatchers.Main) {
+                        navController?.navigate(R.id.action_LoginUserFragment_to_viewServicingFragment)
+                    }
                 }
 
                 is Ressource.Error -> {

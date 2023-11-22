@@ -7,10 +7,13 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.composeView.UIState.MaintenanceListUiState
+import com.example.manageyourcar.UIlayer.composeView.UIState.ServicingUIState
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.dataLayer.model.Entretien
+import com.example.manageyourcar.dataLayer.model.MaintenanceService
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.AddCarMaintenanceUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.GetAllUserMaintenanceUseCase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -28,7 +31,7 @@ class ListMaintenanceViewModel : ViewModel(), KoinComponent {
 
 
     init {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             getAllUserMaintenanceUseCase.invoke().collect { result ->
                 when (result) {
                     is Ressource.Error -> TODO()
@@ -40,14 +43,27 @@ class ListMaintenanceViewModel : ViewModel(), KoinComponent {
     }
 
     private fun listLoading(newData: List<Entretien>?) {
-_uiState.update {
-    it.copy(
-        isLoading = true,
-//        listUiState = newData.map {
-//            it.service
-//        }
-    )
-}
+        _uiState.update {
+            it.copy(
+                isLoading = false,
+                listUiState = newData?.map { entretien ->
+                    val carName = entretien.carID.toString() ?: ""
+                    val mileage = entretien.mileage.toString()
+                    val progressIndicator = 0.5f
+                    val description = when(entretien.service) {
+                        is MaintenanceService.Freins -> entretien.service.name
+                        is MaintenanceService.Pneus -> entretien.service.name
+                        is MaintenanceService.Vidange -> entretien.service.name
+                    }
+                    ServicingUIState(
+                        carName = carName,
+                        mileage = mileage,
+                        progressIndicator = progressIndicator,
+                        description = description
+                    )
+                } ?: emptyList()
+            )
+        }
     }
 
     private fun listLoad() {
@@ -64,7 +80,7 @@ isLoading = true
 
         fun onEvent(event: onMaintenanceListEvent) {
             when (event) {
-                onMaintenanceListEvent.onButtonAddMaintenancePush ->     navController.navigate(R.id.action_viewServicingFragment_to_addMaintenanceFragment)
+                onMaintenanceListEvent.onButtonAddMaintenancePush -> navController.navigate(R.id.action_viewServicingFragment_to_addMaintenanceFragment)
 
                 is onMaintenanceListEvent.onSortMethodChanged -> changeSortMethod(event)
             }

@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import java.time.Instant
 import java.util.Date
 
 class AddMaintenanceViewModel : ViewModel(), KoinComponent {
@@ -28,16 +29,31 @@ class AddMaintenanceViewModel : ViewModel(), KoinComponent {
     private val addCarMaintenanceUseCase by inject<AddCarMaintenanceUseCase>()
 
     init {
-        viewModelScope.launch {
-        getUserCarsUseCase.invoke().collect{ result ->
-            when(result){
-                is Ressource.Error -> TODO()
-                is Ressource.Loading -> TODO()
-                is Ressource.Success -> updateListCar(result.data)
+        viewModelScope.launch(Dispatchers.IO) {
+            getUserCarsUseCase.invoke().collect{ result ->
+                when(result){
+                    is Ressource.Error -> TODO()
+                    is Ressource.Loading -> TODO()
+                    is Ressource.Success -> updateListCar(result.data)
+                }
             }
         }
-    }
 }
+
+/*    init {
+        viewModelScope.launch(Dispatchers.IO) {
+            addCarToRoomUseCase.addCarToRoom(Car(carID = null, "AA-123-AA", "Clio", Date(12), "d", "1.5 DCI", "d", 5, 5, 5, 5, 1))
+            addCarMaintenanceUseCase.addMainntenanceOperation(Entretien(1, 1,12,12, Date.from(
+                Instant.now()),MaintenanceService.Pneus()))
+            getAllUserMaintenanceUseCase.invoke().collect { result ->
+                when (result) {
+                    is Ressource.Error ->{}
+                    is Ressource.Loading -> listLoad()
+                    is Ressource.Success -> listLoading(result.data)
+                }
+            }
+        }
+    }*/
 
     private fun updateListCar(data: List<Car>?) {
         _uiState.update {

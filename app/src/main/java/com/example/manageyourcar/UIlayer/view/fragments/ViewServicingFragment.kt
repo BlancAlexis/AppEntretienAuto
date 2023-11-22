@@ -14,6 +14,7 @@ import com.example.manageyourcar.databinding.FragmentViewServicingBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ViewServicingFragment : Fragment() {
+
     private val listMaintenanceViewModel: ListMaintenanceViewModel by viewModel()
     private lateinit var binding: FragmentViewServicingBinding
 
