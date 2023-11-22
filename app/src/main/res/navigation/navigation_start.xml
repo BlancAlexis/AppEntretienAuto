@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/LoginUserFragment">
+
+    <fragment
+        android:id="@+id/AddUserFragment"
+        android:name="com.example.manageyourcar.UIlayer.view.fragments.AddUserFragment"
+        android:label="MainActivity"/>
+    <fragment
+        android:id="@+id/LoginUserFragment"
+        android:name="com.example.manageyourcar.UIlayer.view.fragments.LoginUserFragment"
+        android:label="MainActivity">
+        <action
+            android:id="@+id/action_LoginUserFragment_to_AddUserFragment"
+            app:destination="@id/AddUserFragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
+        <action
+            android:id="@+id/action_LoginUserFragment_to_viewServicingFragment"
+            app:destination="@id/viewServicingFragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
+    </fragment>
+    <fragment
+        android:id="@+id/viewServicingFragment"
+        android:name="com.example.manageyourcar.UIlayer.view.fragments.ViewServicingFragment"
+        android:label="fragment_view_servicing"
+        tools:layout="@layout/fragment_view_servicing" />
+
+</navigation>

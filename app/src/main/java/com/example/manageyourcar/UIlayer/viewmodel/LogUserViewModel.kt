@@ -1,6 +1,8 @@
 package com.example.manageyourcar.UIlayer.viewmodel
 
+import android.content.Intent
 import android.view.View
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
@@ -8,6 +10,7 @@ import androidx.navigation.Navigation
 import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.UIlayer.composeView.UIState.LoginUiState
+import com.example.manageyourcar.UIlayer.view.activities.MainActivity
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.dataLayer.model.Car
 import com.example.manageyourcar.dataLayer.model.Entretien
@@ -29,9 +32,6 @@ import java.time.Instant
 import java.util.Date
 
 class LogUserViewModel : ViewModel(), KoinComponent {
-    private val getAllUserMaintenanceUseCase by inject<GetAllUserMaintenanceUseCase>()
-    private val addCarMaintenanceUseCase by inject<AddCarMaintenanceUseCase>()
-    private val addCarToRoomUseCase by inject<AddCarToRoomUseCase>()
 
     private val logUseCase by inject<LoginUserUseCase>()
     private val cacheManagerRepository by inject<CacheManagerRepository>()
@@ -53,8 +53,13 @@ class LogUserViewModel : ViewModel(), KoinComponent {
     }
 
     fun setNavController(view: View) {
-        navController = Navigation.findNavController(view)
-        onTryLog()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
+
+
+    navController = Navigation.findNavController(view)
+        //onTryLog()
     }
 
     private fun onTryLog() {

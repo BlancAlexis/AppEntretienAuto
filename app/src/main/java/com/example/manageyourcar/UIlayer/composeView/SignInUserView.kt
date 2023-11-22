@@ -29,7 +29,7 @@ fun SignInUserView(
     Column(
         modifier = Modifier
             .fillMaxHeight()
-            .padding(top = 150.dp),
+            .padding(top = 100.dp),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

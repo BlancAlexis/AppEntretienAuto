@@ -64,7 +64,7 @@ isLoading = true
 
         fun onEvent(event: onMaintenanceListEvent) {
             when (event) {
-                onMaintenanceListEvent.onButtonAddMaintenancePush ->     navController.navigate(R.id.action_viewServicingFragment_to_addMaintenanceFragment)
+                onMaintenanceListEvent.onButtonAddMaintenancePush ->     {}//navController.navigate(R.id.action_viewServicingFragment_to_addMaintenanceFragment)
 
                 is onMaintenanceListEvent.onSortMethodChanged -> changeSortMethod(event)
             }
