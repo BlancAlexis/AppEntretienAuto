@@ -9,25 +9,16 @@ import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.UIlayer.composeView.UIState.LoginUiState
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
-import com.example.manageyourcar.dataLayer.model.Car
-import com.example.manageyourcar.dataLayer.model.Entretien
-import com.example.manageyourcar.dataLayer.model.MaintenanceService
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
 import com.example.manageyourcar.domainLayer.useCaseBusiness.LoginUserUseCase
-import com.example.manageyourcar.domainLayer.useCaseRoom.car.AddCarToRoomUseCase
-import com.example.manageyourcar.domainLayer.useCaseRoom.car.GetCarsFromRoomUseCase
-import com.example.manageyourcar.domainLayer.useCaseRoom.car.GetUserCarsUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.AddCarMaintenanceUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.GetAllUserMaintenanceUseCase
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import java.util.Date
 
 class LogUserViewModel : ViewModel(), KoinComponent {
 
@@ -40,25 +31,16 @@ class LogUserViewModel : ViewModel(), KoinComponent {
     private val _uiState = MutableStateFlow(LoginUiState())
     val uiState = _uiState.asStateFlow()
 
-
-
-/*    init {
-        viewModelScope.launch {
-            cacheManagerRepository.getUserId(AppApplication.instance.applicationContext).let {
-                if (it is Ressource.Success) {
-                       //navController?.navigate(R.id.action_LoginUserFragment_to_viewServicingFragment)
-                }
-            }
-        }
-    }*/
-
-
-
+    fun addMaintenance(){
+        onTryLog()
+        
+    }
     fun onEvent(event: UserLoginEvent) {
         when (event) {
-            is UserLoginEvent.OnClickSendButton ->{
+            is UserLoginEvent.OnClickSendButton -> {
                 onTryLog()
             }
+
             is UserLoginEvent.OnLoginChanged -> onLoginChanged(event)
             is UserLoginEvent.OnPasswordChanged -> onPasswordChanged(event)
             is UserLoginEvent.OnSignInButton -> navController?.navigate(R.id.action_LoginUserFragment_to_AddUserFragment)
@@ -66,15 +48,23 @@ class LogUserViewModel : ViewModel(), KoinComponent {
         }
     }
 
-     fun setNavController(view: View) {
+    fun setNavController(view: View) {
         navController = Navigation.findNavController(view)
+        onTryLog()
     }
 
     private fun onTryLog() {
         viewModelScope.launch {
-            when (val result = logUseCase.loginUser(_uiState.value.userLogin!!, _uiState.value.userPassword!!, AppApplication.instance.applicationContext)){
+            when (val result = logUseCase.loginUser(
+                _uiState.value.userLogin!!,
+                _uiState.value.userPassword!!,
+                AppApplication.instance.applicationContext
+            )) {
                 is Ressource.Success -> {
-                    cacheManagerRepository.putUserId(AppApplication.instance.applicationContext, result.data!!)
+                    cacheManagerRepository.putUserId(
+                        AppApplication.instance.applicationContext,
+                        result.data!!
+                    )
                     navController?.navigate(R.id.action_LoginUserFragment_to_viewServicingFragment)
                 }
 

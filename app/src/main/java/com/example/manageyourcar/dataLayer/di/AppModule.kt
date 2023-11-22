@@ -21,8 +21,6 @@ import com.example.manageyourcar.dataLayer.dataLayerRetrofit.repositoryImpl.Gara
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.requestApiImmat
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.requestApiSIV
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.RequestLoggingInterceptor
-import com.example.manageyourcar.dataLayer.dataLayerRoom.converter.DateConverter
-import com.example.manageyourcar.dataLayer.dataLayerRoom.converter.MaintenanceConverter
 import com.example.manageyourcar.dataLayer.dataLayerRoom.database.Database
 import com.example.manageyourcar.domainLayer.repository.room.CarRepository
 import com.example.manageyourcar.domainLayer.repository.room.ServicingRepository
@@ -42,7 +40,6 @@ import com.example.manageyourcar.domainLayer.useCaseRoom.car.GetCarsFromRoomUseC
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.GetUserCarsUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.UpdateCarToRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.AddCarMaintenanceUseCase
-import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.AddServicingToRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.DeleteServicingToRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.GetAllServicingFromRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.GetAllUserMaintenanceUseCase
@@ -134,7 +131,6 @@ val useCaseModule = module {
     factory { UpdateUserToRoomUseCase() }
     factory { DeleteUserToRoomUseCase() }
 
-    factory { AddServicingToRoomUseCase() }
     factory { GetServicingFromRoomUseCase() }
     factory { GetAllServicingFromRoomUseCase() }
     factory { UpdateServicingToRoomUseCase() }
