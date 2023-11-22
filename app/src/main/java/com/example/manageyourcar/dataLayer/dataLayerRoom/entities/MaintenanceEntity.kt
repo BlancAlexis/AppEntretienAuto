@@ -24,6 +24,6 @@ data class MaintenanceEntity(
     @ColumnInfo(name = "price") val price: Int,
     @ColumnInfo(name = "mileage") val mileage: Int,
     @ColumnInfo(name = "date") val date: Date,
-    @ColumnInfo(name = "service_type") val serviceType: MaintenanceServiceType
+    @ColumnInfo(name = "service_type") val serviceType: MaintenanceService
 
     )

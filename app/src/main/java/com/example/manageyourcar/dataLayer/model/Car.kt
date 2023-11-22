@@ -1,10 +1,12 @@
 package com.example.manageyourcar.dataLayer.model
 
+import java.util.Date
+
 data class Car(
     val carID: Int? = null,
     val brand: String,
     val model: String,
-    val releaseDate: Int,
+    val releaseDate: Date,
     val fuel: String,
     val transmission: String,
     val motorization: String,

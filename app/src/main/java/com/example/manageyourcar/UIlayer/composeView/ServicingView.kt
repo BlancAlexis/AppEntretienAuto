@@ -57,7 +57,7 @@ fun ServicingView(
             }
             LazyColumn(modifier = Modifier.fillMaxWidth()) {
                 items(uiState.listUiState.size) { item ->
-                    // SerivcingViewItem(item)
+                     SerivcingViewItem(uiState.listUiState[item])
                 }
             }
 

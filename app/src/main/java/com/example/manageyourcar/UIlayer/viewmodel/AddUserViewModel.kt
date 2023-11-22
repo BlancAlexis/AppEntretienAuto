@@ -59,7 +59,7 @@ class AddUserViewModel : ViewModel(), KoinComponent {
 
     private fun onCheckFields() {
         SmsSender.sendSMS("dd","e")
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             if (uiState.value.userPassword.equals(uiState.value.userValidatePassword)) {
                 addUserToRoomUseCase.addUserToRoom(uiState.value.userLogin!!, uiState.value.userPassword!!, uiState.value.userFirstName!!, uiState.value.userLastName!!)
                 navController.popBackStack()

@@ -5,21 +5,24 @@ import com.example.manageyourcar.dataLayer.dataLayerRoom.entities.MaintenanceSer
 import com.example.manageyourcar.dataLayer.model.MaintenanceService
 import com.example.manageyourcar.dataLayer.model.MaintenanceServiceType
 
-class MaintenanceConverter {
+class MaintenanceServiceConverter {
+
     @TypeConverter
-    fun convertMaintenanceServiceToEnum(service: MaintenanceService): MaintenanceServiceType {
+    fun fromMaintenanceService(service: MaintenanceService): String {
         return when (service) {
-            is MaintenanceService.Vidange -> MaintenanceServiceType.VIDANGE
-            is MaintenanceService.Freins -> MaintenanceServiceType.FREINS
-            is MaintenanceService.Pneus -> MaintenanceServiceType.PNEUS
+            is MaintenanceService.Vidange -> "Vidange"
+            is MaintenanceService.Freins -> "Freins"
+            is MaintenanceService.Pneus -> "Pneus"
         }
     }
-@TypeConverter
-    fun convertEnumToMaintenanceService(serviceType: MaintenanceServiceType): MaintenanceService {
+
+    @TypeConverter
+    fun toMaintenanceService(serviceType: String): MaintenanceService {
         return when (serviceType) {
-            MaintenanceServiceType.VIDANGE -> MaintenanceService.Vidange()
-            MaintenanceServiceType.FREINS -> MaintenanceService.Freins()
-            MaintenanceServiceType.PNEUS -> MaintenanceService.Pneus()
+            "Vidange" -> MaintenanceService.Vidange()
+            "Freins" -> MaintenanceService.Freins()
+            "Pneus" -> MaintenanceService.Pneus()
+            else -> throw IllegalArgumentException("Invalid service type: $serviceType")
         }
     }
 }

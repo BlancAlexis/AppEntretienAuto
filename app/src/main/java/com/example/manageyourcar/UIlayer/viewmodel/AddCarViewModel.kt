@@ -10,6 +10,7 @@ import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkImmatUseCase
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.AddCarToRoomUseCase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -61,7 +62,7 @@ class AddCarViewModel : ViewModel(), KoinComponent {
     }
 
     fun getCarBySIV(SIV: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             getVehiculeBySivNetworkUseCase.getVehiculeBySiv(SIV).collect { result ->
                 when (result) {
                     is Ressource.Loading -> {
@@ -85,7 +86,7 @@ class AddCarViewModel : ViewModel(), KoinComponent {
     }
 
     fun getCarByImmat(immat: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             getVehiculeByImmatNetworkUseCase.getVehiculeByImmat(immat).collect { result ->
                 when (result) {
                     is Ressource.Loading -> {
