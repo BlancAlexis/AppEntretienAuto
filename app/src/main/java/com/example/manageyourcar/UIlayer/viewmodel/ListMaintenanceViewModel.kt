@@ -39,6 +39,13 @@ class ListMaintenanceViewModel : ViewModel(), KoinComponent {
         }
     }
 
+    fun onInternetLost(bool : Boolean) {
+        _uiState.update {
+            it.copy(
+                onInternetLost = bool
+            )
+        }
+    }
     private fun listLoading(newData: List<Entretien>?) {
 _uiState.update {
     it.copy(

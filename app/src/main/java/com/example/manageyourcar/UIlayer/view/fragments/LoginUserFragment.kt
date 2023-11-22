@@ -10,11 +10,14 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import com.example.manageyourcar.UIlayer.composeView.LoginUserView
 import com.example.manageyourcar.UIlayer.viewmodel.LogUserViewModel
+import com.example.manageyourcar.dataLayer.ListenerInternet
 import com.example.manageyourcar.databinding.FragmentLoginUserBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginUserFragment : Fragment() {
+    private val listenerInternet by inject<ListenerInternet>()
     private val logUserViewModel: LogUserViewModel by viewModel()
     private lateinit var binding: FragmentLoginUserBinding
 
@@ -42,6 +45,12 @@ class LoginUserFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        listenerInternet.mutableLiveData.observe(viewLifecycleOwner){
+            logUserViewModel.onInternetLost(it)
+        }
+    }
     companion object {
             fun newInstance(): LoginUserFragment {
             return LoginUserFragment()

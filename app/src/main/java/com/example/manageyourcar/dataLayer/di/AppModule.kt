@@ -1,6 +1,7 @@
 package com.example.manageyourcar.dataLayer.di
 
 import androidx.room.Room
+import com.example.manageyourcar.UIlayer.view.activities.OnApplicationEvent
 import com.example.manageyourcar.UIlayer.viewmodel.AddCarViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.AddUserViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.AddMaintenanceViewModel
@@ -10,6 +11,7 @@ import com.example.manageyourcar.UIlayer.viewmodel.UserViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.ListMaintenanceViewModel
 import com.example.manageyourcar.dataLayer.CacheDataSource
 import com.example.manageyourcar.dataLayer.CacheManagerRepositoryImpl
+import com.example.manageyourcar.dataLayer.ListenerInternet
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.dataSource.RemoteDataSource
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.garageApi
 import com.example.manageyourcar.domainLayer.repository.retrofit.ApiCarImmatRepository
@@ -114,6 +116,7 @@ val repositoryModule = module {
 }
 
 val useCaseModule = module {
+    single { ListenerInternet() }
     factory { AddCarMaintenanceUseCase() }
 
     factory { GetAllUserMaintenanceUseCase() }

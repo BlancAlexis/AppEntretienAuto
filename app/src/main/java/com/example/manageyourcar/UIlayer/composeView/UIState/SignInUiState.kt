@@ -8,5 +8,9 @@ data class SignInUiState(
     val userValidatePassword: String? = "",
 
     val userLoginError: String? = null,
-    val userPasswordError: String? = null
-)
+    val userPasswordError: String? = null,
+
+    val onInternetLost: Boolean=false
+) {
+
+}

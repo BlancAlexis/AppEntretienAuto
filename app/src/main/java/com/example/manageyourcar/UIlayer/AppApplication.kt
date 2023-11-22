@@ -34,12 +34,10 @@ class AppApplication : Application() {
         connectivityManager.let {
             it.registerDefaultNetworkCallback(object : ConnectivityManager.NetworkCallback() {
                 override fun onAvailable(network: Network) {
-                    OnApplicationEvent.OnInternetStatusChanged(true)
                     Log.i(TAG, "onAvailable: Connecté à internet!")
                 }
 
                 override fun onLost(network: Network) {
-                    OnApplicationEvent.OnInternetStatusChanged(false)
                     Log.i(TAG, "onLost: Aucune connexion internet...")
                 }
             })

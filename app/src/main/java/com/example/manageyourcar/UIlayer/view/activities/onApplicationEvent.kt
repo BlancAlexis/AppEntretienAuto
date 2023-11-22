@@ -1,7 +1,6 @@
 package com.example.manageyourcar.UIlayer.view.activities
 
 import android.database.Observable
-
-sealed interface OnApplicationEvent {
-    data class OnInternetStatusChanged(val status: Boolean) : OnApplicationEvent
+abstract class OnApplicationEvent {
+    abstract fun OnInternetStatusChanged(status: Boolean)
 }

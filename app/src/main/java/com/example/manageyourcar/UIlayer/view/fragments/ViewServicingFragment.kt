@@ -9,12 +9,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import com.example.manageyourcar.UIlayer.composeView.ServicingView
+import com.example.manageyourcar.UIlayer.view.activities.OnApplicationEvent
 import com.example.manageyourcar.UIlayer.viewmodel.ListMaintenanceViewModel
+import com.example.manageyourcar.dataLayer.ListenerInternet
 import com.example.manageyourcar.databinding.FragmentViewServicingBinding
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ViewServicingFragment : Fragment() {
     private val listMaintenanceViewModel: ListMaintenanceViewModel by viewModel()
+    private val listenerInternet by inject<ListenerInternet>()
     private lateinit var binding: FragmentViewServicingBinding
 
     override fun onCreateView(
@@ -40,6 +44,14 @@ class ViewServicingFragment : Fragment() {
             }
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        listenerInternet.mutableLiveData.observe(viewLifecycleOwner){
+            listMaintenanceViewModel.onInternetLost(it)
+        }
+    }
+
     companion object {
         fun newInstance(): ViewServicingFragment {
             return ViewServicingFragment()

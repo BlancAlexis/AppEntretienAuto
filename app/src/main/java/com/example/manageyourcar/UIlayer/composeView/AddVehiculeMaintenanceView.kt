@@ -16,6 +16,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.manageyourcar.UIlayer.composeView.UIState.AddVehiculeMaintenanceUiState
+import com.example.manageyourcar.UIlayer.composeView.common.CustomDialog
 import com.example.manageyourcar.UIlayer.composeView.common.OutlinedSpinner
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -27,15 +28,18 @@ fun AddVehiculeMaintenanceView(
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
+        if (addVehiculeMaintenanceUiState.onInternetLost) {
+            CustomDialog(title = "Internet perdu")
+        } else {
 
 
-
-  OutlinedSpinner(
-      listMaintenanceName = listOf("Vidange","Pneu"),
-      textLabel = "Opérations")
+            OutlinedSpinner(
+                listMaintenanceName = listOf("Vidange", "Pneu"),
+                textLabel = "Opérations"
+            )
+        }
     }
 }
-
 @Preview(showBackground = true)
 @Composable
 fun PreviewAddVehiculeMaintenaceView() {

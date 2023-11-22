@@ -43,101 +43,105 @@ fun LoginUserView(
     onEvent: (UserLoginEvent) -> Unit = {},
     uiState: LoginUiState
 ) {
-    var displayPopup by remember { mutableStateOf(false) }
+    if (uiState.onInternetLost) {
+        CustomDialog(title = "Internet perdu")
+    } else {
+        var displayPopup by remember { mutableStateOf(false) }
 
-    if (displayPopup) {
-        CustomDialog(
-            onDismiss = {
-                displayPopup = false
-            },
-            title = "Mot de passe oublié?",
-            content = "La flemme d'y géré maintenant tchouss"
-        )
-    }
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
+        if (displayPopup) {
+            CustomDialog(
+                onDismiss = {
+                    displayPopup = false
+                },
+                title = "Mot de passe oublié?",
+                content = "La flemme d'y géré maintenant tchouss"
+            )
+        }
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                textAlign = TextAlign.Center,
-                text = "Connexion",
-                fontSize = 30.sp
-            )
-        }
-        Spacer(modifier = Modifier.height(20.dp))
-        uiState.userLogin?.let {
-            CustomTextField(
-                error = uiState.userLoginError?: "",
-                modifier = Modifier
-                    .fillMaxWidth(0.95f)
-                    .padding(10.dp),
-                textFieldValue = it,
-                label = "Identifiant",
-                readOnly = false,
-                keyboardType = KeyboardType.Text,
-                onValueChange = {
-                    onEvent(UserLoginEvent.OnLoginChanged(it))
-                }
-            )
-        }
-        uiState.userPassword?.let {
-            CustomTextField(
-                visualTransformation = PasswordVisualTransformation(),
-                error = uiState.userPasswordError?: "",
-                modifier = Modifier
-                    .fillMaxWidth(0.95f)
-                    .padding(10.dp),
-                label = "Mot de passe",
-                textFieldValue = it,
-                readOnly = false,
-                keyboardType = KeyboardType.Password,
-                onValueChange = {
-                    onEvent(UserLoginEvent.OnPasswordChanged(it))
-                }
-            )
-        }
-        Spacer(modifier = Modifier.height(20.dp))
-
-        Button(onClick = { onEvent(UserLoginEvent.OnClickSendButton) }) {
-            Text(
-                text = "Connexion",
-                fontSize = 20.sp
-            )
-        }
-        val text = buildAnnotatedString {
-            withStyle(
-                style = SpanStyle(
-                    textDecoration = TextDecoration.Underline,
-                    color = Color.Blue
-                )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
             ) {
-                append("Forgot your password?")
+                Text(
+                    textAlign = TextAlign.Center,
+                    text = "Connexion",
+                    fontSize = 30.sp
+                )
             }
-        }
-        ClickableText(
-            text = text,
-            modifier = Modifier.padding(8.dp),
-            onClick = {
-                displayPopup = true
+            Spacer(modifier = Modifier.height(20.dp))
+            uiState.userLogin?.let {
+                CustomTextField(
+                    error = uiState.userLoginError ?: "",
+                    modifier = Modifier
+                        .fillMaxWidth(0.95f)
+                        .padding(10.dp),
+                    textFieldValue = it,
+                    label = "Identifiant",
+                    readOnly = false,
+                    keyboardType = KeyboardType.Text,
+                    onValueChange = {
+                        onEvent(UserLoginEvent.OnLoginChanged(it))
+                    }
+                )
             }
-        )
-        Spacer(modifier = Modifier.height(20.dp))
-        OutlinedButton(
-            onClick = {
-                onEvent(UserLoginEvent.OnSignInButton)
-            },
-            modifier = Modifier
-                .fillMaxWidth(0.5f)
-                .border(5.dp, Color.Blue, CircleShape)
-        ) {
-            Text(text = "S'inscrire", color = Color.Black)
-        }
+            uiState.userPassword?.let {
+                CustomTextField(
+                    visualTransformation = PasswordVisualTransformation(),
+                    error = uiState.userPasswordError ?: "",
+                    modifier = Modifier
+                        .fillMaxWidth(0.95f)
+                        .padding(10.dp),
+                    label = "Mot de passe",
+                    textFieldValue = it,
+                    readOnly = false,
+                    keyboardType = KeyboardType.Password,
+                    onValueChange = {
+                        onEvent(UserLoginEvent.OnPasswordChanged(it))
+                    }
+                )
+            }
+            Spacer(modifier = Modifier.height(20.dp))
 
+            Button(onClick = { onEvent(UserLoginEvent.OnClickSendButton) }) {
+                Text(
+                    text = "Connexion",
+                    fontSize = 20.sp
+                )
+            }
+            val text = buildAnnotatedString {
+                withStyle(
+                    style = SpanStyle(
+                        textDecoration = TextDecoration.Underline,
+                        color = Color.Blue
+                    )
+                ) {
+                    append("Forgot your password?")
+                }
+            }
+            ClickableText(
+                text = text,
+                modifier = Modifier.padding(8.dp),
+                onClick = {
+                    displayPopup = true
+                }
+            )
+            Spacer(modifier = Modifier.height(20.dp))
+            OutlinedButton(
+                onClick = {
+                    onEvent(UserLoginEvent.OnSignInButton)
+                },
+                modifier = Modifier
+                    .fillMaxWidth(0.5f)
+                    .border(5.dp, Color.Blue, CircleShape)
+            ) {
+                Text(text = "S'inscrire", color = Color.Black)
+            }
+
+        }
     }
 }
 

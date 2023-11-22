@@ -12,5 +12,9 @@ data class AddVehiculeMaintenanceUiState (
     val listMaintenance : List<Array<MaintenanceServiceType>> = listOf(MaintenanceServiceType.values()),
     val selectedMaintenance : MaintenanceServiceType? = null,
     val mileage : Int = 0,
-    val date : Date?= null
-    )
+    val date : Date?= null,
+
+    val onInternetLost: Boolean=false
+    ) {
+
+}

@@ -119,6 +119,14 @@ class AddCarViewModel : ViewModel(), KoinComponent {
         }
     }
 
+    fun onInternetLost(bool: Boolean) {
+        _uiState.update {
+            it.copy(
+                onInternetLost = bool
+            )
+        }
+    }
+
 
 }
 

@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.example.manageyourcar.UIlayer.composeView.UIState.AddVehiculeMaintenanceUiState
 import com.example.manageyourcar.UIlayer.composeView.common.CalendarView
+import com.example.manageyourcar.UIlayer.composeView.common.CustomDialog
 import com.example.manageyourcar.UIlayer.composeView.common.CustomTextField
 import com.example.manageyourcar.UIlayer.composeView.common.OutlinedSpinner
 import com.example.manageyourcar.UIlayer.viewmodel.onMaintenanceEvent
@@ -32,6 +33,9 @@ fun AddMaintenanceView(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxSize()
     ) {
+        if (uiState.onInternetLost) {
+            CustomDialog(title = "Internet perdu")
+        } else {
         val showCalendar = remember { mutableStateOf(false) }
         val selectedDate = remember { mutableStateOf("") }
 
@@ -75,7 +79,7 @@ fun AddMaintenanceView(
             onEvent(onMaintenanceEvent.onValidatePressed)
         }) {
             Text(text = "Ajouter")
-
+        }
         }
     }
 }

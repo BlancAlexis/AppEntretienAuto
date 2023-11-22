@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.manageyourcar.UIlayer.composeView.UIState.SignInUiState
+import com.example.manageyourcar.UIlayer.composeView.common.CustomDialog
 import com.example.manageyourcar.UIlayer.composeView.common.CustomTextField
 import com.example.manageyourcar.UIlayer.viewmodel.UserSubscriptionEvent
 
@@ -26,6 +27,9 @@ fun SignInUserView(
     uiState: SignInUiState,
     onEvent: (UserSubscriptionEvent) -> Unit = {}
 ) {
+    if (uiState.onInternetLost) {
+        CustomDialog(title = "Internet perdu")
+    } else {
     Column(
         modifier = Modifier
             .fillMaxHeight()
@@ -118,7 +122,7 @@ fun SignInUserView(
         Spacer(modifier = Modifier.height(20.dp))
 
     }
-}
+}}
 
 @Preview(showBackground = true)
 @Composable
