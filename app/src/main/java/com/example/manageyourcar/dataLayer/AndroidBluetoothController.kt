@@ -1,4 +1,4 @@
-package com.plcoding.bluetoothchat.data.chat
+package com.example.manageyourcar.dataLayer
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -10,6 +10,7 @@ import android.bluetooth.BluetoothSocket
 import android.content.Context
 import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.util.Log
 import com.example.manageyourcar.dataLayer.broadcastReceiver.BluetoothStateReceiver
 import com.example.manageyourcar.dataLayer.broadcastReceiver.FoundDeviceReceiver
 import com.example.manageyourcar.domainLayer.ConnectionResult
@@ -85,6 +86,7 @@ class AndroidBluetoothController(
 
     override fun startDiscovery() {
         if (!hasPermission(Manifest.permission.BLUETOOTH_SCAN)) {
+            Log.w("AndroidBluetoothController","No BLUETOOTH_SCAN permission")
             return
         }
 
@@ -100,44 +102,17 @@ class AndroidBluetoothController(
 
     override fun stopDiscovery() {
         if (!hasPermission(Manifest.permission.BLUETOOTH_SCAN)) {
+            Log.w("AndroidBluetoothController","No BLUETOOTH_SCAN permission")
             return
         }
 
         bluetoothAdapter?.cancelDiscovery()
     }
 
-    override fun startBluetoothServer(): Flow<ConnectionResult> {
-        return flow {
-            if (!hasPermission(Manifest.permission.BLUETOOTH_CONNECT)) {
-                throw SecurityException("No BLUETOOTH_CONNECT permission")
-            }
-
-            currentServerSocket = bluetoothAdapter?.listenUsingRfcommWithServiceRecord(
-                "chat_service",
-                UUID.fromString(SERVICE_UUID)
-            )
-
-            var shouldLoop = true
-            while (shouldLoop) {
-                currentClientSocket = try {
-                    currentServerSocket?.accept()
-                } catch (e: IOException) {
-                    shouldLoop = false
-                    null
-                }
-                emit(ConnectionResult.ConnectionEstablished)
-                currentClientSocket?.let {
-                    currentServerSocket?.close()
-                }
-            }
-        }.onCompletion {
-            closeConnection()
-        }.flowOn(Dispatchers.IO)
-    }
-
     override fun connectToDevice(device: BluetoothDeviceDomain): Flow<ConnectionResult> {
         return flow {
             if (!hasPermission(Manifest.permission.BLUETOOTH_CONNECT)) {
+                println("No BLUETOOTH_CONNECT permission")
                 throw SecurityException("No BLUETOOTH_CONNECT permission")
             }
 
@@ -151,9 +126,10 @@ class AndroidBluetoothController(
             currentClientSocket?.let { socket ->
                 try {
                     socket.connect()
-                    emit(ConnectionResult.ConnectionEstablished)
+                    emit(ConnectionResult.ConnectionEstablished(socket.inputStream, socket.outputStream))
                 } catch (e: IOException) {
                     socket.close()
+                    Log.e("AndroidBluetoothController", "Error while connecting to device", e)
                     currentClientSocket = null
                     emit(ConnectionResult.Error("Connection was interrupted"))
                 }

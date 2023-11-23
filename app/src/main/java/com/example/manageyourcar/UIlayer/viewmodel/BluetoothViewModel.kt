@@ -7,7 +7,9 @@ import com.example.manageyourcar.UIlayer.composeView.UIState.BluetoothUiState
 import com.example.manageyourcar.UIlayer.composeView.UIState.SignInUiState
 import com.example.manageyourcar.domainLayer.ConnectionResult
 import com.example.manageyourcar.domainLayer.bluetooth.BluetoothController
+import com.example.manageyourcar.domainLayer.bluetooth.BluetoothDevice
 import com.example.manageyourcar.domainLayer.bluetooth.BluetoothDeviceDomain
+import com.github.eltonvs.obd.connection.ObdDeviceConnection
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -55,6 +57,7 @@ class BluetoothViewModel : ViewModel(), KoinComponent {
     }
 
     fun connectToDevice(device: BluetoothDeviceDomain) {
+        println("Connecting to device: $device")
         _state.update { it.copy(isConnecting = true) }
         deviceConnectionJob = bluetoothController
             .connectToDevice(device)
@@ -73,12 +76,12 @@ class BluetoothViewModel : ViewModel(), KoinComponent {
     }
 
 
-    fun waitForIncomingConnections() {
-        _state.update { it.copy(isConnecting = true) }
-        deviceConnectionJob = bluetoothController
-            .startBluetoothServer()
-            .listen()
-    }
+//    fun waitForIncomingConnections() {
+//        _state.update { it.copy(isConnecting = true) }
+//        deviceConnectionJob = bluetoothController
+//            .startBluetoothServer()
+//            .listen()
+//    }
 
     fun startScan() {
         bluetoothController.startDiscovery()
@@ -91,7 +94,8 @@ class BluetoothViewModel : ViewModel(), KoinComponent {
     private fun Flow<ConnectionResult>.listen(): Job {
         return onEach { result ->
             when (result) {
-                ConnectionResult.ConnectionEstablished -> {
+                is ConnectionResult.ConnectionEstablished -> {
+                    val obdConnection = ObdDeviceConnection(result.inputStream, result.outputStream)
                     _state.update {
                         it.copy(
                             isConnected = true,
@@ -130,12 +134,26 @@ class BluetoothViewModel : ViewModel(), KoinComponent {
     }
 
     fun onEvent(onBluetoothDeviceEvent: onBluetoothDeviceEvent) {
-
+when (val result=onBluetoothDeviceEvent) {
+            is onBluetoothDeviceEvent.OnBluetoothDeviceClick -> connectToDevice(result.bluetoothDevice)
+            is onBluetoothDeviceEvent.OnBluetoothDeviceLongClick -> {
+            }
+            is onBluetoothDeviceEvent.OnBluetoothDeviceConnectClick -> {
+            }
+            is onBluetoothDeviceEvent.OnBluetoothDeviceDisconnectClick -> {
+            }
+            is onBluetoothDeviceEvent.OnBluetoothDeviceScanClick -> {
+                startScan()
+            }
+            is onBluetoothDeviceEvent.OnBluetoothDeviceStopScanClick -> {
+                stopScan()
+            }
+        }
     }
 }
 
 sealed interface onBluetoothDeviceEvent {
-    object OnBluetoothDeviceClick : onBluetoothDeviceEvent
+    data class OnBluetoothDeviceClick(val bluetoothDevice : BluetoothDevice) : onBluetoothDeviceEvent
     object OnBluetoothDeviceLongClick : onBluetoothDeviceEvent
     object OnBluetoothDeviceConnectClick : onBluetoothDeviceEvent
     object OnBluetoothDeviceDisconnectClick : onBluetoothDeviceEvent

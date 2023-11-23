@@ -74,6 +74,9 @@ android {
 }
 
 dependencies {
+    //API OBD2
+    implementation("com.github.eltonvs:kotlin-obd-api:1.3.0")
+
     //Injection de dépendance koin
     implementation("io.insert-koin:koin-android:3.2.0-beta-1")
     implementation("io.insert-koin:koin-androidx-navigation:3.2.0-beta-1")
