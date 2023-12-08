@@ -42,6 +42,10 @@ class LogUserViewModel : ViewModel(), KoinComponent {
     private val _uiState = MutableStateFlow(LoginUiState())
     val uiState = _uiState.asStateFlow()
 
+    init {
+        onTryLog()
+    }
+
     fun onEvent(event: UserLoginEvent) {
         when (event) {
             is UserLoginEvent.OnClickSendButton -> {
@@ -52,19 +56,6 @@ class LogUserViewModel : ViewModel(), KoinComponent {
             is UserLoginEvent.OnSignInButton -> navController?.navigate(R.id.action_LoginUserFragment_to_AddUserFragment)
 
         }
-    }
-
-
-    private fun listLoad() {
-        _uiState.update {
-            it.copy(
-               // isLoading = true
-            )
-        }
-    }
-
-    private fun listLoading(data: List<Entretien>?) {
-
     }
 
     fun setNavController(view: View) {

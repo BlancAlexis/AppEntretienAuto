@@ -1,5 +1,6 @@
 package com.example.manageyourcar.dataLayer.dataLayerRoom.repositoryImpl
 
+import com.example.manageyourcar.dataLayer.dataLayerRoom.dao.MaintenanceWithCarEntity
 import com.example.manageyourcar.dataLayer.dataLayerRoom.dao.ServicingDao
 import com.example.manageyourcar.dataLayer.dataLayerRoom.entities.MaintenanceEntity
 import com.example.manageyourcar.dataLayer.model.Entretien
@@ -39,6 +40,10 @@ class ServicingRepositoryImpl(private val servicingDao: ServicingDao) : Servicin
 
     override fun deleteServicing(idServicing: Int) {
         servicingDao.deleteServicing(idServicing)
+    }
+
+    override fun getMaintenceActWithCar(userId: Int): Flow<List<MaintenanceWithCarEntity>> {
+        return servicingDao.getMaintenceActWithCar(userId)
     }
 
 }

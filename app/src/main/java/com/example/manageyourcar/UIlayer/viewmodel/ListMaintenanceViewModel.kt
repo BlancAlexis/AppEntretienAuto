@@ -9,10 +9,12 @@ import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.composeView.UIState.MaintenanceListUiState
 import com.example.manageyourcar.UIlayer.composeView.UIState.ServicingUIState
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
+import com.example.manageyourcar.dataLayer.dataLayerRoom.dao.MaintenanceWithCarEntity
 import com.example.manageyourcar.dataLayer.model.Entretien
 import com.example.manageyourcar.dataLayer.model.MaintenanceService
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.AddCarMaintenanceUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.GetAllUserMaintenanceUseCase
+import com.example.manageyourcar.domainLayer.utils.MaintenanceActScheddule
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -35,40 +37,45 @@ class ListMaintenanceViewModel : ViewModel(), KoinComponent {
                 when (result) {
                     is Ressource.Error -> TODO()
                     is Ressource.Loading -> listLoad()
-                    is Ressource.Success -> listLoading(result.data)
+                    is Ressource.Success -> result.data?.let { listLoading(it) }
                 }
             }
         }
     }
 
-    private fun listLoading(newData: List<Entretien>?) {
+    private fun listLoading(newData: List<MaintenanceWithCarEntity>) {
         _uiState.update {
             it.copy(
                 isLoading = false,
-                listUiState = newData?.map { entretien ->
-                    val carName = entretien.carID.toString() ?: ""
-                    val mileage = entretien.mileage.toString()
-                    val progressIndicator = 0.5f
-                    val description = when(entretien.service) {
-                        is MaintenanceService.Freins -> entretien.service.name
-                        is MaintenanceService.Pneus -> entretien.service.name
-                        is MaintenanceService.Vidange -> entretien.service.name
-                    }
-                    ServicingUIState(
-                        carName = carName,
-                        mileage = mileage,
-                        progressIndicator = progressIndicator,
-                        description = description
-                    )
-                } ?: emptyList()
-            )
+                listUiState = newData.map { entretien ->
+             var progressIndicator : Int = 0
+                    var description : String = ""
+             when(entretien.maintenanceEntity.serviceType) {
+                 is MaintenanceService.Freins -> {
+                     description=entretien.maintenanceEntity.serviceType.name
+                     progressIndicator =  MaintenanceActScheddule.valueOf(entretien.maintenanceEntity.serviceType.name.uppercase()).km-entretien.maintenanceEntity.mileage
+                 }
+                 is MaintenanceService.Pneus -> {
+                     description=entretien.maintenanceEntity.serviceType.name
+                     progressIndicator =  entretien.maintenanceEntity.mileage/MaintenanceActScheddule.valueOf(entretien.maintenanceEntity.serviceType.name.uppercase()).km
+                 }
+                 is MaintenanceService.Vidange -> entretien.maintenanceEntity.serviceType.name
+             }
+             ServicingUIState(
+                 carName = entretien.carEntity.model,
+             mileage = entretien.maintenanceEntity.mileage.toString(),
+             progressIndicator = progressIndicator.toFloat(),
+             description = description,
+             ) })
         }
-    }
+
+        }
+
 
     private fun listLoad() {
         _uiState.update {
             it.copy(
-isLoading = true
+                isLoading = true
             )
         }
     }
@@ -77,8 +84,7 @@ isLoading = true
 
         fun onEvent(event: onMaintenanceListEvent) {
             when (event) {
-              is onMaintenanceListEvent.onButtonAddMaintenancePush -> {}
-
+              is onMaintenanceListEvent.onButtonAddMaintenancePush -> { }
                 is onMaintenanceListEvent.onSortMethodChanged -> changeSortMethod(event)
             }
         }

@@ -46,24 +46,24 @@ fun AddMaintenanceView(
         }
 
         Text(text = "Ajouter une opération", fontSize = 18.sp)
-//        OutlinedSpinner(
-//            listMaintenanceName = uiState.listCars.map { it -> it.model },
-//            textLabel = "Votre véhicule",
-//            onItemSelect = { car ->
-//                when (car) {
-//                    // is onMaintenanceEvent.onCarChanged -> onMaintenanceEvent.onCarChanged(car)
-//                    else -> throw Exception("Unexpected item type")
-//                }
-//            })
-//        OutlinedSpinner(
-//            listMaintenanceName = listOf("Frein","Pneu"),
-//            textLabel = "Opération effectué",
-//            onItemSelect = { item ->
-//                when (item) {
-//                   //    is onMaintenanceEvent.onMaintenanceChanged -> onMaintenanceEvent.onMaintenanceChanged(item as MaintenanceService)
-//                    else -> throw Exception("Unexpected item type")
-//                }
-//            })
+        OutlinedSpinner(
+            listMaintenanceName = uiState.listCars.map { it -> it.model },
+            textLabel = "Votre véhicule",
+            onItemSelect = { car ->
+                when (car) {
+                    // is onMaintenanceEvent.onCarChanged -> onMaintenanceEvent.onCarChanged(car)
+                    else -> throw Exception("Unexpected item type")
+                }
+            })
+        OutlinedSpinner(
+            listMaintenanceName = listOf("Frein","Pneu"),
+            textLabel = "Opération effectué",
+            onItemSelect = { item ->
+                when (item) {
+                   //    is onMaintenanceEvent.onMaintenanceChanged -> onMaintenanceEvent.onMaintenanceChanged(item as MaintenanceService)
+                    else -> throw Exception("Unexpected item type")
+                }
+            })
         CustomTextField(textFieldValue = "", label = "Prix")
         CustomTextField(textFieldValue = "", label = "Kilométrage")
         IconButton(onClick = {
