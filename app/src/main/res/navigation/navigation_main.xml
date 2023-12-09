@@ -1,6 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/navigation_main">
+    android:id="@+id/navigation_main"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/viewMaintenance">
+
+        <fragment
+            android:id="@+id/AddCarFragment"
+            android:name="com.example.manageyourcar.UIlayer.view.fragments.AddCarFragment"
+            android:label="MainActivity"/>
+    <fragment
+            android:id="@+id/MapsFragment"
+            android:name="com.example.manageyourcar.UIlayer.view.fragments.MapsFragment"
+            android:label="MainActivity"/>
+        <fragment
+            android:id="@+id/viewMaintenance"
+            android:name="com.example.manageyourcar.UIlayer.view.fragments.ViewServicingFragment"
+            android:label="fragment_view_servicing"
+            tools:layout="@layout/fragment_view_servicing" >
+            <action
+                android:id="@+id/action_viewServicingFragment_to_MapsFragment"
+                app:destination="@id/MapsFragment"
+                app:popEnterAnim="@anim/slide_in_left"
+                app:popExitAnim="@anim/slide_out_right"
+                app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left"/>
+            <action
+                android:id="@+id/action_viewServicingFragment_to_placeholder"
+                app:destination="@id/placeholder"
+                app:popEnterAnim="@anim/slide_in_left"
+                app:popExitAnim="@anim/slide_out_right"
+                app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left"/>
+            <action
+                android:id="@+id/action_viewServicingFragment_to_addMaintenanceFragment"
+                app:destination="@id/addMaintenanceFragment"
+                app:popEnterAnim="@anim/slide_in_left"
+                app:popExitAnim="@anim/slide_out_right"
+                app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left"/>
+        </fragment>
+        <dialog
+            android:id="@+id/addMaintenanceFragment"
+            android:name="com.example.manageyourcar.UIlayer.view.fragments.AddMaintenanceFragment"
+            android:label="fragment_add_maintenance_car"
+            tools:layout="@layout/fragment_add_maintenance_car" />
+        <fragment android:id="@+id/placeholder" >
+            <action
+                android:id="@+id/action_placeholder_to_AddCarFragment"
+                app:destination="@id/AddCarFragment" />
+        </fragment>
+    <include app:graph="@navigation/navigation_start" />
+
 
 </navigation>

@@ -27,6 +27,7 @@ class ListMaintenanceViewModel : ViewModel(), KoinComponent {
     private val _uiState = MutableStateFlow(MaintenanceListUiState())
     val uiState = _uiState.asStateFlow()
 
+    private lateinit var navController : NavController
     private val getAllUserMaintenanceUseCase by inject<GetAllUserMaintenanceUseCase>()
     private val addCarMaintenanceUseCase by inject<AddCarMaintenanceUseCase>()
 
@@ -43,6 +44,9 @@ class ListMaintenanceViewModel : ViewModel(), KoinComponent {
         }
     }
 
+    fun setNavController(view: View) {
+        navController = Navigation.findNavController(view)
+    }
     private fun listLoading(newData: List<MaintenanceWithCarEntity>) {
         _uiState.update {
             it.copy(
@@ -84,7 +88,7 @@ class ListMaintenanceViewModel : ViewModel(), KoinComponent {
 
         fun onEvent(event: onMaintenanceListEvent) {
             when (event) {
-              is onMaintenanceListEvent.onButtonAddMaintenancePush -> { }
+              is onMaintenanceListEvent.onButtonAddMaintenancePush -> {  navController?.navigate(R.id.addMaintenanceFragment) }
                 is onMaintenanceListEvent.onSortMethodChanged -> changeSortMethod(event)
             }
         }

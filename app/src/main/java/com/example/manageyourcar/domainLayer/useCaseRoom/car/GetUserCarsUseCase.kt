@@ -18,7 +18,7 @@ class GetUserCarsUseCase : KoinComponent {
     suspend fun invoke(): Flow<Ressource<List<Car>>> {
         return try {
             when (val result = cacheManagerRepository.getUserId(AppApplication.instance)) {
-                is Ressource.Success -> roomRepository.getCars(1)
+                is Ressource.Success -> roomRepository.getCars(result.data!!)
                     .map { it -> Ressource.Success(it) }
                 is Ressource.Error -> flowOf(Ressource.Error(exception = result.error))
                 is Ressource.Loading -> flowOf(Ressource.Loading())

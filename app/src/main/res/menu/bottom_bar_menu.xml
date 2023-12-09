@@ -7,14 +7,20 @@
         app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/action_specification"
+        android:id="@+id/viewSpecification"
+        android:checked="true"
         android:title="Search"
         android:icon="@drawable/outline_speed_24"
         app:showAsAction="ifRoom"/>
   <item
-        android:id="@+id/action_manage"
+        android:id="@+id/viewMaintenance"
         android:title="Search"
         android:icon="@drawable/outline_build_24"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/MapsFragment"
+        android:title="Maps"
+        android:icon="@drawable/baseline_map_24"
         app:showAsAction="ifRoom"/>
 
 </menu>

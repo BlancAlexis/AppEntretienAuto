@@ -17,7 +17,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import java.time.Instant
 import java.util.Date
 
 class AddMaintenanceViewModel : ViewModel(), KoinComponent {
@@ -34,15 +33,15 @@ class AddMaintenanceViewModel : ViewModel(), KoinComponent {
                 when(result){
                     is Ressource.Error -> TODO()
                     is Ressource.Loading -> TODO()
-                    is Ressource.Success -> updateListCar(result.data)
+                    is Ressource.Success -> result.data?.let { updateListCar(it) }
                 }
             }
         }
 }
-    private fun updateListCar(data: List<Car>?) {
+    private fun updateListCar(data: List<Car>) {
         _uiState.update {
             it.copy(
-                listCars = data!!
+                listCars = data
             )
         }
     }
@@ -92,7 +91,7 @@ class AddMaintenanceViewModel : ViewModel(), KoinComponent {
 
     private fun addMaintenance() {
         viewModelScope.launch(Dispatchers.IO) {
-            addCarMaintenanceUseCase.addMainntenanceOperation(
+            addCarMaintenanceUseCase.addMaintenanceOperation(
                 Entretien(
                     userID = null,
                     carID = uiState.value.selectedCar?.carID!!,

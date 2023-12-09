@@ -19,6 +19,7 @@ import com.example.manageyourcar.UIlayer.composeView.UIState.AddVehiculeMaintena
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OutlinedSpinner(
+    modifier : Modifier? = null,
     listMaintenanceName : List<String>,
     textLabel : String,
     onItemSelect : (Any?) -> Unit = {}
@@ -67,5 +68,5 @@ fun OutlinedSpinner(
 @Preview(showBackground = true)
 @Composable
 fun PreviewOutlinedSpinner() {
-    OutlinedSpinner(listOf("Vidange","Pneus","Baterrie"),"Opérations")
+    //OutlinedSpinner(listOf("Vidange","Pneus","Baterrie"),"Opérations")
 }

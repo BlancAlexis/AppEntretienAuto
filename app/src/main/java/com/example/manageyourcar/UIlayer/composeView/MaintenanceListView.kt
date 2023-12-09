@@ -10,6 +10,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -32,30 +34,30 @@ fun ServicingView(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-//        if (uiState.isLoading) {
-//            Column(
-//                modifier = Modifier.fillMaxSize(),
-//                horizontalAlignment = Alignment.CenterHorizontally,
-//                verticalArrangement = Arrangement.Center
-//            ) {
-//                CircularProgressIndicator()
-//            }
- //       } else {
+        if (uiState.isLoading) {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                CircularProgressIndicator()
+            }
+        } else {
 
+        Button(onClick = { onEvent(onMaintenanceListEvent.onButtonAddMaintenancePush) }) {
+            Text(text = "Ajout d'un acte d'entretien")
+        }
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(color = Color.Blue),
                 horizontalArrangement = Arrangement.End
             ) {
-                IconButton(onClick = { /*TODO*/ }) {
+                IconButton(onClick = { }) {
                     Icon(imageVector = Icons.Filled.Menu, contentDescription = "")
 
                 }
-                IconButton(onClick = { /*TODO*/ }) {
-                    Icon(imageVector = Icons.Filled.Add, contentDescription = "")
 
-                }
   /*              DropdownMenu(expanded = true, onDismissRequest = { *//*TODO*//* }) {
                       DropdownMenuItem(onClick = { *//*TODO*//* },text = {Text("Item 1")} )
                        DropdownMenuItem(onClick = { *//*TODO*//* },text = {Text("Item 2")} )
@@ -70,7 +72,7 @@ fun ServicingView(
             }
 
         }
-   // }
+    }
 }
 @Preview(showBackground = true)
 @Composable
