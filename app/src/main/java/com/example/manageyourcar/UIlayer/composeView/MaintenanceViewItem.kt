@@ -29,7 +29,11 @@ import androidx.compose.ui.unit.dp
 import com.example.manageyourcar.UIlayer.composeView.UIState.ServicingUIState
 
 @Composable
+<<<<<<<< HEAD:app/src/main/java/com/example/manageyourcar/UIlayer/composeView/MaintenanceViewItem.kt
 fun MaintenanceViewItem(
+========
+fun ServcingViewItem(
+>>>>>>>> a841a90 (WIP):app/src/main/java/com/example/manageyourcar/UIlayer/composeView/ServcingViewItem.kt
     uiState: ServicingUIState
 ) {
     var linearProgressColor by remember {
@@ -109,7 +113,11 @@ fun MaintenanceViewItem(
 @Preview(showBackground = true)
 @Composable
 fun PreviewServicingItem() {
+<<<<<<<< HEAD:app/src/main/java/com/example/manageyourcar/UIlayer/composeView/MaintenanceViewItem.kt
     MaintenanceViewItem(
+========
+    ServcingViewItem(
+>>>>>>>> a841a90 (WIP):app/src/main/java/com/example/manageyourcar/UIlayer/composeView/ServcingViewItem.kt
         ServicingUIState(
             "Citroen C4 VTS 1.6 VTS 1.6 HDI 110CH",
             "123333km",

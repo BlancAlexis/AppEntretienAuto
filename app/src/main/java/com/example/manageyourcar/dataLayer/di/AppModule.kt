@@ -3,15 +3,13 @@ package com.example.manageyourcar.dataLayer.di
 import androidx.room.Room
 import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.UIlayer.viewmodel.AddCarViewModel
+import com.example.manageyourcar.UIlayer.viewmodel.UserViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.AddMaintenanceViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.AddUserViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.BluetoothViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.LogUserViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.MapsViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.OBDViewModel
-import com.example.manageyourcar.UIlayer.viewmodel.ServicingViewModel
-import com.example.manageyourcar.UIlayer.viewmodel.UserViewModel
-import com.example.manageyourcar.UIlayer.viewmodel.UserViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.ListMaintenanceViewModel
 import com.example.manageyourcar.dataLayer.CacheDataSource
 import com.example.manageyourcar.dataLayer.CacheManagerRepositoryImpl
@@ -35,19 +33,14 @@ import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
 import com.example.manageyourcar.domainLayer.repository.retrofit.ApiCarImmatRepository
 import com.example.manageyourcar.domainLayer.repository.retrofit.ApiCarSIVRepository
 import com.example.manageyourcar.domainLayer.repository.retrofit.GarageRepository
-import com.example.manageyourcar.domainLayer.repository.room.CarRepository
-import com.example.manageyourcar.domainLayer.repository.room.ServicingRepository
-import com.example.manageyourcar.domainLayer.repository.room.UserRepository
 import com.example.manageyourcar.domainLayer.useCaseBusiness.LoginUserUseCase
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetCarRepairShopUseCase
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkImmatUseCase
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkUseCase
-import com.example.manageyourcar.domainLayer.useCaseRoom.car.AddCarToRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.DeleteCarToRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.GetCarFromRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.GetCarsFromRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.GetUserCarsUseCase
-import com.example.manageyourcar.domainLayer.useCaseRoom.car.UpdateCarToRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.AddCarMaintenanceUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.DeleteServicingToRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.GetAllServicingFromRoomUseCase
@@ -138,10 +131,8 @@ val useCaseModule = module {
     factory { GetAllUserMaintenanceUseCase() }
     factory { GetUserCarsUseCase() }
     factory { LoginUserUseCase() }
-    factory { AddCarToRoomUseCase() }
     factory { GetCarFromRoomUseCase() }
     factory { GetCarsFromRoomUseCase() }
-    factory { UpdateCarToRoomUseCase() }
     factory { DeleteCarToRoomUseCase() }
 
     factory { AddUserToRoomUseCase() }

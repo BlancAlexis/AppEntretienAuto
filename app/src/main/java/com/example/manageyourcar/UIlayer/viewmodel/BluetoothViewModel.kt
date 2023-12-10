@@ -4,6 +4,7 @@ package com.example.manageyourcar.UIlayer.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.manageyourcar.UIlayer.composeView.UIState.BluetoothUiState
+import com.example.manageyourcar.UIlayer.composeView.UIState.SignInUiState
 import com.example.manageyourcar.domainLayer.ConnectionResult
 import com.example.manageyourcar.domainLayer.bluetooth.BluetoothController
 import com.example.manageyourcar.domainLayer.bluetooth.BluetoothDeviceDomain
@@ -11,6 +12,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
@@ -22,6 +24,7 @@ import org.koin.core.component.inject
 
 class BluetoothViewModel : ViewModel(), KoinComponent {
     private val bluetoothController by inject<BluetoothController>()
+
 
     private val _state = MutableStateFlow(BluetoothUiState())
     val state = combine(
@@ -125,4 +128,17 @@ class BluetoothViewModel : ViewModel(), KoinComponent {
         super.onCleared()
         bluetoothController.release()
     }
+
+    fun onEvent(onBluetoothDeviceEvent: onBluetoothDeviceEvent) {
+
+    }
+}
+
+sealed interface onBluetoothDeviceEvent {
+    object OnBluetoothDeviceClick : onBluetoothDeviceEvent
+    object OnBluetoothDeviceLongClick : onBluetoothDeviceEvent
+    object OnBluetoothDeviceConnectClick : onBluetoothDeviceEvent
+    object OnBluetoothDeviceDisconnectClick : onBluetoothDeviceEvent
+    object OnBluetoothDeviceScanClick : onBluetoothDeviceEvent
+    object OnBluetoothDeviceStopScanClick : onBluetoothDeviceEvent
 }

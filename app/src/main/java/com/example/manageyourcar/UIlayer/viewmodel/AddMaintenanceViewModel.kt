@@ -52,7 +52,7 @@ class AddMaintenanceViewModel : ViewModel(), KoinComponent {
             is onMaintenanceEvent.onMaintenanceChanged -> OnMaintenanceChanged(event.newValue)
             is onMaintenanceEvent.onMileageChanged -> OnMileageChanged(event.newValue)
             is onMaintenanceEvent.onDateChanged -> OnDateChanged(Date(event.newDate))
-            is onMaintenanceEvent.onValidatePressed -> addMaintenance()
+            onMaintenanceEvent.onValidatePressed -> TODO()
         }
 
     }
@@ -89,20 +89,6 @@ class AddMaintenanceViewModel : ViewModel(), KoinComponent {
         }
     }
 
-    private fun addMaintenance() {
-        viewModelScope.launch(Dispatchers.IO) {
-            addCarMaintenanceUseCase.addMaintenanceOperation(
-                Entretien(
-                    userID = null,
-                    carID = uiState.value.selectedCar?.carID!!,
-                    uiState.value.mileage,
-                    uiState.value.price,
-                    uiState.value.date!!,
-                    MaintenanceService.Freins()
-                )
-            )
-        }
-    }
 
 }
 
