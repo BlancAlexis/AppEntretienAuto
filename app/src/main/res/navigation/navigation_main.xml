@@ -39,6 +39,9 @@
                 app:popExitAnim="@anim/slide_out_right"
                 app:enterAnim="@anim/slide_in_right"
                 app:exitAnim="@anim/slide_out_left"/>
+            <action
+                android:id="@+id/action_viewMaintenance_to_connectObdFragment2"
+                app:destination="@id/BluetoothConnectFragment" />
         </fragment>
         <dialog
             android:id="@+id/addMaintenanceFragment"
@@ -50,7 +53,20 @@
                 android:id="@+id/action_placeholder_to_AddCarFragment"
                 app:destination="@id/AddCarFragment" />
         </fragment>
-    <include app:graph="@navigation/navigation_start" />
+    <fragment
+        android:id="@+id/BluetoothConnectFragment"
+        android:name="com.example.manageyourcar.UIlayer.view.fragments.ConnectObdFragment"
+        android:label="fragment_connect_obd"
+        tools:layout="@layout/fragment_connect_obd" >
+        <action
+            android:id="@+id/action_connectObdFragment_to_OBDFragment"
+            app:destination="@id/OBDFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/OBDFragment"
+        android:name="com.example.manageyourcar.UIlayer.view.fragments.OBDFragment"
+        android:label="fragment_obd"
+        tools:layout="@layout/fragment_obd" />
 
 
 </navigation>

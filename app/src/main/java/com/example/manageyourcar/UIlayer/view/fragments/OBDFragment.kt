@@ -10,6 +10,7 @@ import com.example.manageyourcar.databinding.FragmentObdBinding
 import com.github.aachartmodel.aainfographics.aachartcreator.AAChartModel
 import com.github.aachartmodel.aainfographics.aachartcreator.AAChartType
 import com.github.aachartmodel.aainfographics.aachartcreator.AASeriesElement
+
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class OBDFragment : Fragment() {

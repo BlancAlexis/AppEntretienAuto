@@ -127,6 +127,7 @@ class AndroidBluetoothController(
                 try {
                     socket.connect()
                     emit(ConnectionResult.ConnectionEstablished(socket.inputStream, socket.outputStream))
+                    println("succes"+socket.inputStream.toString()+socket.outputStream.toString())
                 } catch (e: IOException) {
                     socket.close()
                     Log.e("AndroidBluetoothController", "Error while connecting to device", e)
@@ -169,6 +170,8 @@ class AndroidBluetoothController(
     }
 
     companion object {
-        const val SERVICE_UUID = "27b7d1da-08c7-4505-a6d1-2459987e5e2d"
+
+        // UUID commonly used for BT headphone, auto dongle
+        const val SERVICE_UUID = "00001101-0000-1000-8000-00805F9B34FB"
     }
 }

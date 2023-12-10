@@ -22,5 +22,10 @@
         android:title="Maps"
         android:icon="@drawable/baseline_map_24"
         app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/BluetoothConnectFragment"
+        android:title="Connection"
+        android:icon="@drawable/baseline_bluetooth_drive_24"
+        app:showAsAction="ifRoom"/>
 
 </menu>

@@ -1,14 +1,21 @@
 package com.example.manageyourcar.UIlayer.viewmodel
 
 
+import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
+import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.composeView.UIState.BluetoothUiState
 import com.example.manageyourcar.UIlayer.composeView.UIState.SignInUiState
 import com.example.manageyourcar.domainLayer.ConnectionResult
 import com.example.manageyourcar.domainLayer.bluetooth.BluetoothController
 import com.example.manageyourcar.domainLayer.bluetooth.BluetoothDevice
 import com.example.manageyourcar.domainLayer.bluetooth.BluetoothDeviceDomain
+import com.github.eltonvs.obd.command.ObdCommand
+import com.github.eltonvs.obd.command.control.VINCommand
+import com.github.eltonvs.obd.command.engine.RPMCommand
+import com.github.eltonvs.obd.command.engine.SpeedCommand
 import com.github.eltonvs.obd.connection.ObdDeviceConnection
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
@@ -25,6 +32,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class BluetoothViewModel : ViewModel(), KoinComponent {
+    private lateinit var navController: NavController
     private val bluetoothController by inject<BluetoothController>()
 
 
@@ -95,14 +103,18 @@ class BluetoothViewModel : ViewModel(), KoinComponent {
         return onEach { result ->
             when (result) {
                 is ConnectionResult.ConnectionEstablished -> {
+                    navController?.navigate(R.id.action_connectObdFragment_to_OBDFragment)
                     val obdConnection = ObdDeviceConnection(result.inputStream, result.outputStream)
-                    _state.update {
+                    println("vitesse"+obdConnection.run(SpeedCommand()).value)
+                    println("vin"+obdConnection.run(VINCommand()).value)
+                    println("rpm"+obdConnection.run(RPMCommand()).value)
+                  /*  _state.update {
                         it.copy(
                             isConnected = true,
                             isConnecting = false,
                             errorMessage = null
                         )
-                    }
+                    }*/
                 }
 
                 is ConnectionResult.Error -> {
