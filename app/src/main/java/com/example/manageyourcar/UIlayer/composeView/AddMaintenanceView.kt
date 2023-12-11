@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.sp
 import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.composeView.UIState.AddVehiculeMaintenanceUiState
 import com.example.manageyourcar.UIlayer.composeView.common.CalendarView
+import com.example.manageyourcar.UIlayer.composeView.common.CustomDialog
 import com.example.manageyourcar.UIlayer.composeView.common.CustomTextField
 import com.example.manageyourcar.UIlayer.composeView.common.OutlinedSpinner
 import com.example.manageyourcar.UIlayer.viewmodel.onMaintenanceEvent
@@ -51,63 +52,83 @@ fun AddMaintenanceView(
     uiState: AddVehiculeMaintenanceUiState,
     onEvent: (onMaintenanceEvent) -> Unit = {}
 ) {
+    Column(
+        verticalArrangement = Arrangement.SpaceEvenly,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        if (uiState.onInternetLost) {
+            CustomDialog(title = "Internet perdu")
+        } else {
 
-        val showCalendar = remember { mutableStateOf(false) }
-        val selectedDate = remember { mutableStateOf(Date.from(Instant.now())) }
+            val showCalendar = remember { mutableStateOf(false) }
+            val selectedDate = remember { mutableStateOf(Date.from(Instant.now())) }
 
-        if (showCalendar.value) {
-            CalendarView(
-                onDateSelected = { date ->
-                    selectedDate.value = SimpleDateFormat("dd/MM/yyyy").parse(date)
-                    onMaintenanceEvent.onDateChanged(date)
-                    showCalendar.value = false
-                }
-            )
-        }
-        Column(
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-        Text(text = "Ajouter une opération", fontSize = 25.sp, fontWeight = FontWeight.Bold)
-
-        LazyRow( contentPadding = PaddingValues(8.dp)){
-            items(50) { index ->
-                Card(
-                    modifier = Modifier
-                        .wrapContentSize(),
-                ) {
-                    Image(painter = painterResource(id = R.drawable.vidange), contentDescription = "")
-                }
+            if (showCalendar.value) {
+                CalendarView(
+                    onDateSelected = { date ->
+                        selectedDate.value = SimpleDateFormat("dd/MM/yyyy").parse(date)
+                        onMaintenanceEvent.onDateChanged(date)
+                        showCalendar.value = false
+                    }
+                )
             }
+            Column(
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(text = "Ajouter une opération", fontSize = 25.sp, fontWeight = FontWeight.Bold)
 
-        }
-        OutlinedSpinner(
-            listMaintenanceName = listOf("clio","corsa") ,
-            textLabel = "Votre véhicule",
-            onItemSelect = { car ->
-                when (car) {
-                    // is onMaintenanceEvent.onCarChanged -> onMaintenanceEvent.onCarChanged(car)
-                    else -> throw Exception("Unexpected item type")
+                LazyRow(contentPadding = PaddingValues(8.dp)) {
+                    items(50) { index ->
+                        Card(
+                            modifier = Modifier
+                                .wrapContentSize(),
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.vidange),
+                                contentDescription = ""
+                            )
+                        }
+                    }
+
                 }
-            })
+                OutlinedSpinner(
+                    listMaintenanceName = listOf("clio", "corsa"),
+                    textLabel = "Votre véhicule",
+                    onItemSelect = { car ->
+                        when (car) {
+                            // is onMaintenanceEvent.onCarChanged -> onMaintenanceEvent.onCarChanged(car)
+                            else -> throw Exception("Unexpected item type")
+                        }
+                    })
 
-        CustomTextField(textFieldValue = "", label = "Prix", modifier = Modifier.fillMaxWidth(0.9f))
-        CustomTextField(textFieldValue = "", label = "Kilométrage", modifier = Modifier.fillMaxWidth(0.9f))
-            Row {
-                Checkbox(checked = true, onCheckedChange = {  })
-                IconButton(onClick = {
-                    showCalendar.value = true
+                CustomTextField(
+                    textFieldValue = "",
+                    label = "Prix",
+                    modifier = Modifier.fillMaxWidth(0.9f)
+                )
+                CustomTextField(
+                    textFieldValue = "",
+                    label = "Kilométrage",
+                    modifier = Modifier.fillMaxWidth(0.9f)
+                )
+                Row {
+                    Checkbox(checked = true, onCheckedChange = { })
+                    IconButton(onClick = {
+                        showCalendar.value = true
+                    }) {
+                        Icon(imageVector = Icons.Outlined.DateRange, contentDescription = "")
+                    }
+                }
+                Text(text = "Date : ${selectedDate.value}")
+                Button(onClick = {
+                    onEvent(onMaintenanceEvent.onValidatePressed)
                 }) {
-                    Icon(imageVector = Icons.Outlined.DateRange, contentDescription = "")
+                    Text(text = "Ajouter")
                 }
             }
-            Text(text = "Date : ${selectedDate.value}")
-        Button(onClick = {
-            onEvent(onMaintenanceEvent.onValidatePressed)
-        }) {
-            Text(text = "Ajouter")
-
         }
     }
 }

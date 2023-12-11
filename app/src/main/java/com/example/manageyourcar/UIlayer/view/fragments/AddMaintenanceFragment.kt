@@ -9,11 +9,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import com.example.manageyourcar.UIlayer.composeView.AddMaintenanceView
 import com.example.manageyourcar.UIlayer.viewmodel.AddMaintenanceViewModel
+import com.example.manageyourcar.dataLayer.ListenerInternet
+import com.example.manageyourcar.dataLayer.model.MaintenanceService
 import com.example.manageyourcar.databinding.FragmentAddMaintenanceCarBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AddMaintenanceFragment : BottomSheetDialogFragment() {
+    private val listenerInternet by inject<ListenerInternet>()
     val addMaintenanceViewModel: AddMaintenanceViewModel by viewModel()
     private lateinit var binding: FragmentAddMaintenanceCarBinding
 
@@ -43,6 +47,13 @@ class AddMaintenanceFragment : BottomSheetDialogFragment() {
                     onEvent = addMaintenanceViewModel::onEvent
                 )
             }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        listenerInternet.mutableLiveData.observe(viewLifecycleOwner){
+            addMaintenanceViewModel.onInternetLost(it)
         }
     }
 }

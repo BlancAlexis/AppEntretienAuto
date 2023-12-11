@@ -23,6 +23,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.manageyourcar.UIlayer.composeView.UIState.MaintenanceListUiState
+import com.example.manageyourcar.UIlayer.composeView.common.CustomDialog
+import com.example.manageyourcar.UIlayer.viewmodel.onMaintenanceEvent
 import com.example.manageyourcar.UIlayer.viewmodel.onMaintenanceListEvent
 
 @Composable
@@ -34,6 +36,22 @@ fun ServicingView(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        if (uiState.onInternetLost) {
+            CustomDialog(title = "Internet perdu")
+        } else {
+//        if (uiState.isLoading) {
+//            Column(
+//                modifier = Modifier.fillMaxSize(),
+//                horizontalAlignment = Alignment.CenterHorizontally,
+//                verticalArrangement = Arrangement.Center
+//            ) {
+//                CircularProgressIndicator()
+//            }
+            //       } else {
+            Text(text = "Vos prochain entretiens")
+            Button(onClick = { onEvent(onMaintenanceListEvent.onButtonAddMaintenancePush) }) {
+                Text(text = "Ajouter un entretien")
+            }
         if (uiState.isLoading) {
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -72,6 +90,8 @@ fun ServicingView(
             }
 
         }
+    }
+   // }
     }
 }
 @Preview(showBackground = true)

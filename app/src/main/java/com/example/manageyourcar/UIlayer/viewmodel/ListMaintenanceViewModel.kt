@@ -44,6 +44,13 @@ class ListMaintenanceViewModel : ViewModel(), KoinComponent {
         }
     }
 
+    fun onInternetLost(bool : Boolean) {
+        _uiState.update {
+            it.copy(
+                onInternetLost = bool
+            )
+        }
+    }
     fun setNavController(view: View) {
         navController = Navigation.findNavController(view)
     }
@@ -83,7 +90,6 @@ class ListMaintenanceViewModel : ViewModel(), KoinComponent {
             )
         }
     }
-
 
 
         fun onEvent(event: onMaintenanceListEvent) {

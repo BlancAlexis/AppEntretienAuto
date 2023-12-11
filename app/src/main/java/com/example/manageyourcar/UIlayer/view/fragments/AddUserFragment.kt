@@ -11,11 +11,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.manageyourcar.UIlayer.composeView.SignInUserView
 import com.example.manageyourcar.UIlayer.viewmodel.AddUserViewModel
+import com.example.manageyourcar.dataLayer.ListenerInternet
 import com.example.manageyourcar.databinding.FragmentAddUserBinding
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class AddUserFragment : Fragment() {
+    private val listenerInternet by inject<ListenerInternet>()
     private lateinit var binding: FragmentAddUserBinding
     private val addUserViewModel: AddUserViewModel by viewModel()
 
@@ -41,6 +44,12 @@ class AddUserFragment : Fragment() {
                     onEvent = addUserViewModel::onEvent
                 )
             }
+        }
+    }
+    override fun onResume() {
+        super.onResume()
+        listenerInternet.mutableLiveData.observe(viewLifecycleOwner){
+            addUserViewModel.onInternetLost(it)
         }
     }
 

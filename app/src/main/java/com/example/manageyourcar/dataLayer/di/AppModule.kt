@@ -13,6 +13,7 @@ import com.example.manageyourcar.UIlayer.viewmodel.OBDViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.ListMaintenanceViewModel
 import com.example.manageyourcar.dataLayer.CacheDataSource
 import com.example.manageyourcar.dataLayer.CacheManagerRepositoryImpl
+import com.example.manageyourcar.dataLayer.ListenerInternet
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.dataSource.RemoteDataSource
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.garageApi
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.repositoryImpl.ApiCarImmatRepositoryImpl
@@ -125,6 +126,7 @@ val repositoryModule = module {
 }
 
 val useCaseModule = module {
+    single { ListenerInternet() }
     factory { AddCarMaintenanceUseCase() }
 
     factory { GetAllUserMaintenanceUseCase() }
@@ -152,7 +154,6 @@ val useCaseModule = module {
 }
 
 val retrofitModule = module {
-
     single<garageApi> {
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(RequestLoggingInterceptor())

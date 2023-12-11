@@ -10,11 +10,15 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import com.example.manageyourcar.UIlayer.composeView.AddCarView
 import com.example.manageyourcar.UIlayer.viewmodel.AddCarViewModel
+import com.example.manageyourcar.dataLayer.ListenerInternet
 import com.example.manageyourcar.databinding.FragmentAddCarBinding
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class AddCarFragment : Fragment() {
+    private val listenerInternet by inject<ListenerInternet>()
+
 
     val addCarViewModel: AddCarViewModel by viewModel()
     private lateinit var binding: FragmentAddCarBinding
@@ -45,6 +49,12 @@ class AddCarFragment : Fragment() {
                     onEvent = addCarViewModel::onEvent
                 )
             }
+        }
+    }
+    override fun onResume() {
+        super.onResume()
+        listenerInternet.mutableLiveData.observe(viewLifecycleOwner){
+            addCarViewModel.onInternetLost(it)
         }
     }
 }

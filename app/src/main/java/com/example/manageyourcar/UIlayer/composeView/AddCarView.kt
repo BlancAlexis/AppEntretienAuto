@@ -31,6 +31,9 @@ fun AddCarView(
     uiState: AddCarUIState,
     onEvent: (onCarRequest) -> Unit = {}
 ) {
+    if (uiState.onInternetLost) {
+        CustomDialog(title = "Internet perdu")
+    } else {
     var openDialog by remember { mutableStateOf(false) }
     if (openDialog) {
         CustomDialog(
@@ -74,7 +77,7 @@ fun AddCarView(
             )
         }
     }
-}
+}}
 
 @Preview(showBackground = true)
 @Composable
