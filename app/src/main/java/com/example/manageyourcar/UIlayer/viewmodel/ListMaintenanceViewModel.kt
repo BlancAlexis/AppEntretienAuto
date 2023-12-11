@@ -44,6 +44,7 @@ class ListMaintenanceViewModel : ViewModel(), KoinComponent {
         }
     }
 
+
     fun onInternetLost(bool : Boolean) {
         _uiState.update {
             it.copy(

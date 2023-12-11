@@ -1,7 +1,14 @@
 package com.example.manageyourcar.dataLayer.model
 
-enum class MaintenanceServiceType {
-    VIDANGE,
-    FREINS,
-    PNEUS
+import com.example.manageyourcar.R
+
+enum class MaintenanceServiceType(val image: Int)    {
+
+    VIDANGE(R.drawable.vidange),
+    FREINS(R.drawable.vidange),
+    PNEUS(R.drawable.vidange);
+
+    fun getImageEnum(): Int {
+        return image
+    }
 }
