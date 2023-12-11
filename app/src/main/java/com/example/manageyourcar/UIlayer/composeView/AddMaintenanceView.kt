@@ -1,22 +1,18 @@
 package com.example.manageyourcar.UIlayer.composeView
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.DateRange
-import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
@@ -29,7 +25,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -81,36 +76,40 @@ fun AddMaintenanceView(
                 Text(text = "Ajouter une opération", fontSize = 25.sp, fontWeight = FontWeight.Bold)
 
                 LazyRow(contentPadding = PaddingValues(8.dp)) {
-                    items(50) { index ->
+                    items(uiState.listMaintenance) { maintenance ->
                         Card(
                             modifier = Modifier
                                 .wrapContentSize(),
                         ) {
                             Image(
-                                painter = painterResource(id = R.drawable.vidange),
+                                painter = painterResource(id = maintenance.image),
                                 contentDescription = ""
                             )
                         }
                     }
-
                 }
                 OutlinedSpinner(
-                    listMaintenanceName = listOf("clio", "corsa"),
+                    listMaintenanceName = uiState.listCars.map { it.model} ?: listOf("corsa", "clio", "megane"),
                     textLabel = "Votre véhicule",
-                    onItemSelect = { car ->
-                        when (car) {
-                            // is onMaintenanceEvent.onCarChanged -> onMaintenanceEvent.onCarChanged(car)
-                            else -> throw Exception("Unexpected item type")
-                        }
+                    onItemSelect = { nomCar ->
+                        uiState.listCars.find { it.model == nomCar   }
+                            ?.let { it1 -> onMaintenanceEvent.onCarChanged(it1) }
+
                     })
 
                 CustomTextField(
-                    textFieldValue = "",
+                    onValueChange = {
+                        onMaintenanceEvent.onPriceChanged(it.toInt())
+                    },
+                    textFieldValue = uiState.price.toString(),
                     label = "Prix",
                     modifier = Modifier.fillMaxWidth(0.9f)
                 )
                 CustomTextField(
-                    textFieldValue = "",
+                    onValueChange = {
+                        onMaintenanceEvent.onMileageChanged(it.toInt())
+                    },
+                    textFieldValue = uiState.mileage.toString(),
                     label = "Kilométrage",
                     modifier = Modifier.fillMaxWidth(0.9f)
                 )

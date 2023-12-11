@@ -8,12 +8,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -24,11 +21,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.manageyourcar.UIlayer.composeView.UIState.MaintenanceListUiState
 import com.example.manageyourcar.UIlayer.composeView.common.CustomDialog
-import com.example.manageyourcar.UIlayer.viewmodel.onMaintenanceEvent
 import com.example.manageyourcar.UIlayer.viewmodel.onMaintenanceListEvent
 
 @Composable
-fun ServicingView(
+fun MaintenanceListView(
     uiState: MaintenanceListUiState,
     onEvent: (onMaintenanceListEvent) -> Unit = {}
 ) {
@@ -39,19 +35,6 @@ fun ServicingView(
         if (uiState.onInternetLost) {
             CustomDialog(title = "Internet perdu")
         } else {
-//        if (uiState.isLoading) {
-//            Column(
-//                modifier = Modifier.fillMaxSize(),
-//                horizontalAlignment = Alignment.CenterHorizontally,
-//                verticalArrangement = Arrangement.Center
-//            ) {
-//                CircularProgressIndicator()
-//            }
-            //       } else {
-            Text(text = "Vos prochain entretiens")
-            Button(onClick = { onEvent(onMaintenanceListEvent.onButtonAddMaintenancePush) }) {
-                Text(text = "Ajouter un entretien")
-            }
         if (uiState.isLoading) {
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -97,7 +80,7 @@ fun ServicingView(
 @Preview(showBackground = true)
 @Composable
 fun PreviewServicing() {
-    ServicingView(
+    MaintenanceListView(
         uiState = MaintenanceListUiState(listUiState = listOf(), isLoading = true) ,
         onEvent = {})
 }

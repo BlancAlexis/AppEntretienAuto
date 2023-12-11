@@ -8,14 +8,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
-import com.example.manageyourcar.UIlayer.composeView.ServicingView
+import com.example.manageyourcar.UIlayer.composeView.MaintenanceListView
 import com.example.manageyourcar.UIlayer.viewmodel.ListMaintenanceViewModel
 import com.example.manageyourcar.dataLayer.ListenerInternet
 import com.example.manageyourcar.databinding.FragmentViewServicingBinding
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ViewServicingFragment : Fragment() {
+class ViewListMaintenanceFragment : Fragment() {
     private val listMaintenanceViewModel: ListMaintenanceViewModel by viewModel()
     private val listenerInternet by inject<ListenerInternet>()
     private lateinit var binding: FragmentViewServicingBinding
@@ -36,7 +36,7 @@ class ViewServicingFragment : Fragment() {
                 setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
 
                 val maintenancesPlannedUIState by listMaintenanceViewModel.uiState.collectAsState()
-                ServicingView(
+                MaintenanceListView(
                     uiState = maintenancesPlannedUIState,
                     onEvent = listMaintenanceViewModel::onEvent
                 )
@@ -52,8 +52,8 @@ class ViewServicingFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance(): ViewServicingFragment {
-            return ViewServicingFragment()
+        fun newInstance(): ViewListMaintenanceFragment {
+            return ViewListMaintenanceFragment()
         }
     }
 }
