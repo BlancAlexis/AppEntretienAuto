@@ -5,10 +5,10 @@ import com.example.manageyourcar.dataLayer.model.MaintenanceServiceType
 import java.util.Date
 
 data class AddVehiculeMaintenanceUiState(
-    val price: String = "",
+    val price: Int = 0,
     val listCars: List<Car> = listOf(),
     val listMaintenance: List<MaintenanceServiceType>  = listOf(),
-    val mileage: String = "",
+    val mileage: Int = 0,
     val date: Date?= null,
 
     val pricePlahlder: String = "Prix",

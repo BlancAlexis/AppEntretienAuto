@@ -54,16 +54,26 @@ class AddMaintenanceViewModel : ViewModel(), KoinComponent {
             }
         }
 
+/*
     private fun populateMaintenancePlaceholder(index : Int){
         val a=MaintenanceServiceType.values()[index].toMaintenanceService()
         when(a){
-            is MaintenanceService.Freins -> TODO()
+            is MaintenanceService.Freins -> ui(a.defaultPrice, a.reminder)
             is MaintenanceService.Pneus -> TODO()
             is MaintenanceService.Vidange -> TODO()
         }
         //fill placeholder and background color
     }
+*/
 
+    private fun ui(){
+        _uiState.update {
+            it.copy(
+                pricePlahlder = "Prix",
+                mileagePlahlder = "Kilométrage"
+            )
+        }
+    }
     private fun addMaintenanceAct() {
         viewModelScope.launch(Dispatchers.IO) {
             addCarMaintenanceUseCase.addMaintenanceOperation(
@@ -105,7 +115,7 @@ class AddMaintenanceViewModel : ViewModel(), KoinComponent {
     private fun OnPriceChanged(newValue: Int) {
         _uiState.update {
             it.copy(
-price = newValue.toString()
+price = newValue
             )
         }
     }
@@ -116,7 +126,7 @@ price = newValue.toString()
     private fun OnMileageChanged(newValue: Int) {
         _uiState.update {
             it.copy(
-                mileage = newValue.toString()
+                mileage = newValue
             )
         }
     }

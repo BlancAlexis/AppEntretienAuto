@@ -5,6 +5,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -44,9 +45,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.util.lerp
 import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.composeView.UIState.AddVehiculeMaintenanceUiState
 import com.example.manageyourcar.UIlayer.composeView.common.CalendarView
@@ -66,7 +69,7 @@ fun AddMaintenanceView(
     onEvent: (onMaintenanceEvent) -> Unit = {}
 ) {
     Column(
-        verticalArrangement = Arrangement.SpaceEvenly,
+        verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxSize()
     ) {
@@ -92,8 +95,8 @@ fun AddMaintenanceView(
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.fillMaxWidth()
-            ) {                val pagerState = rememberPagerState(pageCount = {uiState.listMaintenance.size})
-
+            ) {
+                val pagerState = rememberPagerState(pageCount = {uiState.listMaintenance.size})
                 LaunchedEffect(pagerState) {
                     // Collect from the a snapshotFlow reading the currentPage
                     snapshotFlow { pagerState.currentPage }.collect { page ->
@@ -107,27 +110,22 @@ fun AddMaintenanceView(
                         Box(
                             modifier = Modifier
                                 .wrapContentSize()
-                                .size(200.dp)
-//                                .graphicsLayer {
-//                                    // Calculate the absolute offset for the current page from the
-//                                    // scroll position. We use the absolute value which allows us to mirror
-//                                    // any effects for both directions
-//                                    val pageOffset = (
-//                                            (pagerState.currentPage - page) + pagerState
-//                                                .currentPageOffsetFraction
-//                                            ).absoluteValue
-//
-//                                    // We animate the alpha, between 50% and 100%
-//                                    alpha = lerp(
-//                                        start = 0.5f,
-//                                        stop = 1f,
-//                                        fraction = 1f - pageOffset.coerceIn(0f, 1f)
-//                                    )
-//                                }
-//                            ,
+                                .graphicsLayer {
+                                    val pageOffset = (
+                                            (pagerState.currentPage - page) + pagerState
+                                                .currentPageOffsetFraction
+                                            ).absoluteValue
+
+                                    alpha = lerp(
+                                        start = 0.5f,
+                                        stop = 1f,
+                                        fraction = 1f - pageOffset.coerceIn(0f, 1f)
+                                    )
+                                }
+                            ,
                         ) {
 
-                            Text(text = uiState.listMaintenance[page].name, fontSize = 50.sp)
+
                             Image(
                                 painter = painterResource(id = uiState.listMaintenance[page].image),
                                 contentDescription = ""
@@ -138,8 +136,7 @@ fun AddMaintenanceView(
                 Modifier
                     .wrapContentHeight()
                     .fillMaxWidth()
-                    .align(Alignment.CenterHorizontally)
-                    .padding(bottom = 8.dp),
+                    .align(Alignment.CenterHorizontally),
                 horizontalArrangement = Arrangement.Center
             ) {
                 repeat(pagerState.pageCount) { iteration ->
@@ -149,12 +146,12 @@ fun AddMaintenanceView(
                             .padding(2.dp)
                             .clip(CircleShape)
                             .background(color)
-                            .size(16.dp)
+                            .size(10.dp)
                     )
                 }
             }
                 OutlinedSpinner(
-                    listMaintenanceName = listOf("corsa", "clio", "megane"),
+                    listMaintenanceName = uiState.listCars.map { it.model },
                     textLabel = "Votre véhicule",
                     onItemSelect = { nomCar ->
                         uiState.listCars.find { it.model == nomCar   }
@@ -163,16 +160,18 @@ fun AddMaintenanceView(
                     })
 
                 CustomTextField(
+                    keyboardType = KeyboardType.Number,
                     onValueChange = {
-                        onMaintenanceEvent.onPriceChanged(it.toInt())
+                        onEvent(onMaintenanceEvent.onPriceChanged(it.toInt()))
                     },
                     textFieldValue = uiState.price.toString(),
                     label = "Prix",
                     modifier = Modifier.fillMaxWidth(0.9f)
                 )
                 CustomTextField(
+                    keyboardType = KeyboardType.Number,
                     onValueChange = {
-                        onMaintenanceEvent.onMileageChanged(it.toInt())
+                        onEvent(onMaintenanceEvent.onMileageChanged(it.toInt()))
                     },
                     textFieldValue = uiState.mileage.toString(),
                     label = "Kilométrage",
