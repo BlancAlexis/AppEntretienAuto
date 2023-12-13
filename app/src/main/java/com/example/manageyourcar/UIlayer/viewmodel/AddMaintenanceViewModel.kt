@@ -1,7 +1,11 @@
 package com.example.manageyourcar.UIlayer.viewmodel
 
+import android.view.View
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.example.manageyourcar.UIlayer.composeView.UIState.AddVehiculeMaintenanceUiState
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.dataLayer.model.Car
@@ -16,12 +20,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.util.Date
 
 class AddMaintenanceViewModel : ViewModel(), KoinComponent {
     private val getUserCarsUseCase by inject<GetUserCarsUseCase>()
+ val a= MutableLiveData<Boolean>(false)
 
     private val _uiState = MutableStateFlow(AddVehiculeMaintenanceUiState())
     val uiState = _uiState.asStateFlow()
@@ -30,6 +36,7 @@ class AddMaintenanceViewModel : ViewModel(), KoinComponent {
 
     private lateinit var selectedCar: Car
     private lateinit var selectedMaintenance: MaintenanceServiceType
+
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
@@ -76,16 +83,22 @@ class AddMaintenanceViewModel : ViewModel(), KoinComponent {
     }
     private fun addMaintenanceAct() {
         viewModelScope.launch(Dispatchers.IO) {
-            addCarMaintenanceUseCase.addMaintenanceOperation(
+            when(addCarMaintenanceUseCase.addMaintenanceOperation(
                 Entretien(
                 userID = null,
                 carID = selectedCar.carID,
                 mileage = uiState.value.mileage.toInt(),
                 price = uiState.value.price.toInt(),
                 date = uiState.value.date?: Date(),
-                service = MaintenanceService.Pneus()
+                service = selectedMaintenance.toMaintenanceService()
                 )
-            )
+            )) {
+                is Ressource.Error -> TODO()
+                is Ressource.Loading -> TODO()
+                is Ressource.Success -> {
+                    a.postValue(true)
+                }
+            }
         }
     }
 

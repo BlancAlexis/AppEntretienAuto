@@ -36,6 +36,11 @@ class AddMaintenanceFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        addMaintenanceViewModel.a.observe(viewLifecycleOwner){
+            if(it){
+                dismiss()
+            }
+        }
         binding.addMaintenanceCompose.apply {
             setContent {
                 setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)

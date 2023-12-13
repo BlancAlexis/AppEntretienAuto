@@ -91,14 +91,13 @@ fun AddMaintenanceView(
                     }
                 )
             }
-            Column(
+        Column(
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 val pagerState = rememberPagerState(pageCount = {uiState.listMaintenance.size})
                 LaunchedEffect(pagerState) {
-                    // Collect from the a snapshotFlow reading the currentPage
                     snapshotFlow { pagerState.currentPage }.collect { page ->
                         onMaintenanceEvent.onMaintenanceChanged(uiState.listMaintenance[page])
                         Log.d("Page change", "Page changed to $page")
