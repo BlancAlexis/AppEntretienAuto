@@ -6,20 +6,19 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.manageyourcar.UIlayer.composeView.UIState.SignInUiState
-import com.example.manageyourcar.domainLayer.useCaseRoom.user.AddUserToRoomUseCase
+import com.example.manageyourcar.domainLayer.useCaseRoom.user.AddUserRoomUseCase
 import com.example.manageyourcar.domainLayer.utils.SmsSender
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 
 class AddUserViewModel : ViewModel(), KoinComponent {
-    private val addUserToRoomUseCase by inject<AddUserToRoomUseCase>()
+    private val addUserRoomUseCase by inject<AddUserRoomUseCase>()
     private lateinit var navController: NavController
 
 
@@ -61,7 +60,7 @@ class AddUserViewModel : ViewModel(), KoinComponent {
         SmsSender.sendSMS("dd","e")
         viewModelScope.launch(Dispatchers.IO) {
             if (uiState.value.userPassword.equals(uiState.value.userValidatePassword)) {
-                addUserToRoomUseCase.addUserToRoom(uiState.value.userLogin!!, uiState.value.userPassword!!, uiState.value.userFirstName!!, uiState.value.userLastName!!)
+                addUserRoomUseCase.addUserToRoom(uiState.value.userLogin!!, uiState.value.userPassword!!, uiState.value.userFirstName!!, uiState.value.userLastName!!)
                 navController.popBackStack()
             } else {
                 _uiState.update {

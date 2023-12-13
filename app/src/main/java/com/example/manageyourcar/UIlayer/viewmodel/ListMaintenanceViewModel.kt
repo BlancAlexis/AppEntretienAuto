@@ -10,8 +10,9 @@ import com.example.manageyourcar.UIlayer.composeView.UIState.MaintenanceListUiSt
 import com.example.manageyourcar.UIlayer.composeView.UIState.ServicingUIState
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.dataLayer.dataLayerRoom.dao.MaintenanceWithCarEntity
-import com.example.manageyourcar.dataLayer.model.Entretien
+import com.example.manageyourcar.dataLayer.model.Car
 import com.example.manageyourcar.dataLayer.model.MaintenanceService
+import com.example.manageyourcar.domainLayer.useCaseRoom.car.AddCarRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.AddCarMaintenanceUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.GetAllUserMaintenanceUseCase
 import com.example.manageyourcar.domainLayer.utils.MaintenanceActScheddule
@@ -22,6 +23,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import java.util.Date
 
 class ListMaintenanceViewModel : ViewModel(), KoinComponent {
     private val _uiState = MutableStateFlow(MaintenanceListUiState())
@@ -30,6 +32,7 @@ class ListMaintenanceViewModel : ViewModel(), KoinComponent {
     private lateinit var navController : NavController
     private val getAllUserMaintenanceUseCase by inject<GetAllUserMaintenanceUseCase>()
     private val addCarMaintenanceUseCase by inject<AddCarMaintenanceUseCase>()
+    private val addCarRoomUseCase by inject<AddCarRoomUseCase>()
 
 
     init {
@@ -41,6 +44,7 @@ class ListMaintenanceViewModel : ViewModel(), KoinComponent {
                     is Ressource.Success -> result.data?.let { listLoading(it) }
                 }
             }
+                addCarRoomUseCase.addCarToRoom(Car(null, "BMW", "X5", Date(), "d", "Diesel", "123456789", 150,300,250,25623,0))
         }
     }
 
