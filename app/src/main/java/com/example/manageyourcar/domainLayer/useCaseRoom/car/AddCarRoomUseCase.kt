@@ -8,7 +8,7 @@ import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class AddCarToRoomUseCase : KoinComponent{
+class AddCarRoomUseCase : KoinComponent{
     private val roomRepository by inject<CarRepository>()
     private val cacheManagerRepository by inject<CacheManagerRepository>()
 

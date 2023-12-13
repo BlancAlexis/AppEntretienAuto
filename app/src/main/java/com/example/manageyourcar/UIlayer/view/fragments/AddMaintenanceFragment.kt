@@ -10,7 +10,6 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import com.example.manageyourcar.UIlayer.composeView.AddMaintenanceView
 import com.example.manageyourcar.UIlayer.viewmodel.AddMaintenanceViewModel
 import com.example.manageyourcar.dataLayer.ListenerInternet
-import com.example.manageyourcar.dataLayer.model.MaintenanceService
 import com.example.manageyourcar.databinding.FragmentAddMaintenanceCarBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.koin.android.ext.android.inject
@@ -37,6 +36,11 @@ class AddMaintenanceFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        addMaintenanceViewModel.a.observe(viewLifecycleOwner){
+            if(it){
+                dismiss()
+            }
+        }
         binding.addMaintenanceCompose.apply {
             setContent {
                 setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)

@@ -12,17 +12,9 @@ import androidx.navigation.Navigation
 import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.UIlayer.composeView.UIState.LoginUiState
-import com.example.manageyourcar.UIlayer.view.activities.MainActivity
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
-import com.example.manageyourcar.dataLayer.model.Car
-import com.example.manageyourcar.dataLayer.model.Entretien
-import com.example.manageyourcar.dataLayer.model.MaintenanceService
-import com.example.manageyourcar.dataLayer.model.MaintenanceServiceType
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
 import com.example.manageyourcar.domainLayer.useCaseBusiness.LoginUserUseCase
-import com.example.manageyourcar.domainLayer.useCaseRoom.car.AddCarToRoomUseCase
-import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.AddCarMaintenanceUseCase
-import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.GetAllUserMaintenanceUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

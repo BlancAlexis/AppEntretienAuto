@@ -7,7 +7,7 @@ import com.example.manageyourcar.dataLayer.dataLayerRetrofit.model.Car
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkImmatUseCase
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkUseCase
-import com.example.manageyourcar.domainLayer.useCaseRoom.car.AddCarToRoomUseCase
+import com.example.manageyourcar.domainLayer.useCaseRoom.car.AddCarRoomUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,7 +17,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class AddCarViewModel : ViewModel(), KoinComponent {
-    private val addCarToRoomUseCase by inject<AddCarToRoomUseCase>()
+    private val addCarRoomUseCase by inject<AddCarRoomUseCase>()
     private val getVehiculeBySivNetworkUseCase by inject<GetVehiculeByNetworkUseCase>()
     private val getVehiculeByImmatNetworkUseCase by inject<GetVehiculeByNetworkImmatUseCase>()
 
