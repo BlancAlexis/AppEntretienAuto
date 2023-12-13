@@ -63,7 +63,9 @@ class AddUserViewModel : ViewModel(), KoinComponent {
         viewModelScope.launch(Dispatchers.IO) {
             if (uiState.value.userPassword.equals(uiState.value.userValidatePassword)) {
                 addUserToRoomUseCase.addUserToRoom(uiState.value.userLogin!!, uiState.value.userPassword!!, uiState.value.userFirstName!!, uiState.value.userLastName!!)
-                navController.popBackStack()
+              withContext(Dispatchers.Main) {
+                  navController.popBackStack()
+              }
             } else {
                 _uiState.update {
                     it.copy(
