@@ -55,6 +55,8 @@ class MainActivity : AppCompatActivity() {
                 arrayOf(
                     Manifest.permission.BLUETOOTH_SCAN,
                     Manifest.permission.BLUETOOTH_CONNECT,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
                 )
             )
         }
@@ -65,7 +67,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
+        navController = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment_login) as NavHostFragment).navController
+        setSupportActionBar(binding.bottomAppBar)
+        setupWithNavController(binding.bottomNavigationView, navController)
 
         var fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         if (ActivityCompat.checkSelfPermission(
@@ -92,9 +96,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        navController = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment_login) as NavHostFragment).navController
-        setSupportActionBar(binding.bottomAppBar)
-        setupWithNavController(binding.bottomNavigationView, navController)
+
     }
 
 
