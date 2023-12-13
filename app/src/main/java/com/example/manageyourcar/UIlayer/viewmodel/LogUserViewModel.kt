@@ -1,6 +1,7 @@
 package com.example.manageyourcar.UIlayer.viewmodel
 
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.MutableLiveData
@@ -11,17 +12,9 @@ import androidx.navigation.Navigation
 import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.UIlayer.composeView.UIState.LoginUiState
-import com.example.manageyourcar.UIlayer.view.activities.MainActivity
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
-import com.example.manageyourcar.dataLayer.model.Car
-import com.example.manageyourcar.dataLayer.model.Entretien
-import com.example.manageyourcar.dataLayer.model.MaintenanceService
-import com.example.manageyourcar.dataLayer.model.MaintenanceServiceType
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
 import com.example.manageyourcar.domainLayer.useCaseBusiness.LoginUserUseCase
-import com.example.manageyourcar.domainLayer.useCaseRoom.car.AddCarToRoomUseCase
-import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.AddCarMaintenanceUseCase
-import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.GetAllUserMaintenanceUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -43,7 +36,7 @@ class LogUserViewModel : ViewModel(), KoinComponent {
     val uiState = _uiState.asStateFlow()
 
     init {
-        onTryLog()
+        onTryLog(true)
     }
 
     fun onEvent(event: UserLoginEvent) {
@@ -53,7 +46,8 @@ class LogUserViewModel : ViewModel(), KoinComponent {
             }
             is UserLoginEvent.OnLoginChanged -> onLoginChanged(event)
             is UserLoginEvent.OnPasswordChanged -> onPasswordChanged(event)
-            is UserLoginEvent.OnSignInButton -> navController?.navigate(R.id.action_LoginUserFragment_to_AddUserFragment)
+            is UserLoginEvent.OnSignInButton -> {                 Log.i("TAG", "onCheckFields: ${navController.currentBackStack.value.toString()}")
+                navController?.navigate(R.id.action_LoginUserFragment_to_AddUserFragment) }
 
         }
     }
@@ -62,15 +56,17 @@ class LogUserViewModel : ViewModel(), KoinComponent {
         navController = Navigation.findNavController(view)
     }
 
-    private fun onTryLog() {
+    private fun onTryLog(autoConnect : Boolean = false) {
         viewModelScope.launch(Dispatchers.IO) {
             when (val result = logUseCase.loginUser(_uiState.value.userLogin!!, _uiState.value.userPassword!!, AppApplication.instance.applicationContext)) {
                 is Ressource.Success -> {
                     cacheManagerRepository.putUserId(AppApplication.instance.applicationContext, result.data!!)
                     isConnected.postValue(true)
                 }
-
                 is Ressource.Error -> {
+                    if(autoConnect) {
+                       return@launch
+                    }
                     _uiState.update {
                         it.copy(
                             userLoginError = "Un champs ne correspond pas",

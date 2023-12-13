@@ -15,7 +15,7 @@
             android:label="MainActivity"/>
         <fragment
             android:id="@+id/viewMaintenance"
-            android:name="com.example.manageyourcar.UIlayer.view.fragments.ViewServicingFragment"
+            android:name="com.example.manageyourcar.UIlayer.view.fragments.ViewListMaintenanceFragment"
             android:label="fragment_view_servicing"
             tools:layout="@layout/fragment_view_servicing" >
             <action
