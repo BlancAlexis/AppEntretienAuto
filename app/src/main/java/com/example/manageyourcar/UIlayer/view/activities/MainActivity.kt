@@ -71,7 +71,6 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.bottomAppBar)
         setupWithNavController(binding.bottomNavigationView, navController)
 
-        var fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         if (ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -89,12 +88,7 @@ class MainActivity : AppCompatActivity() {
             // for ActivityCompat#requestPermissions for more details.
             return
         }
-        fusedLocationProviderClient.lastLocation.addOnSuccessListener {
-            if (it != null) {
-                println("Latitude : " + it.latitude)
-                println("Longitude : " + it.longitude)
-            }
-        }
+
 
 
     }
