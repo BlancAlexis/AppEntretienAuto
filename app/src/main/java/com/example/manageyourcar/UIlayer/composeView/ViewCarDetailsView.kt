@@ -62,6 +62,7 @@ import com.example.manageyourcar.UIlayer.composeView.common.CustomTextField
 import com.example.manageyourcar.UIlayer.composeView.common.InformationBox
 import com.example.manageyourcar.UIlayer.composeView.common.InformationRow
 import com.example.manageyourcar.UIlayer.viewmodel.UserSubscriptionEvent
+import com.example.manageyourcar.UIlayer.viewmodel.ViewCarDetailsEvent
 import com.example.manageyourcar.UIlayer.viewmodel.onMaintenanceEvent
 import com.example.manageyourcar.dataLayer.model.Car
 import java.text.DateFormat
@@ -75,6 +76,7 @@ import java.util.TimeZone
 @Composable
 fun ViewCarDetailsView(
     uiState: ViewCarDetailsUIState,
+    onEvent: (ViewCarDetailsEvent) -> Unit = {}
 ) {
     val juraFamily = FontFamily(
         Font(R.font.jura, FontWeight.Medium)
@@ -100,7 +102,9 @@ fun ViewCarDetailsView(
         )
         TextButton(
             colors = ButtonDefaults.outlinedButtonColors(containerColor = Color(209, 228, 255)),
-            onClick = { /*TODO*/ },
+            onClick = {
+                onEvent(ViewCarDetailsEvent.OnClickAddCarButton)
+            },
             shape = RoundedCornerShape(30.dp),
             modifier = Modifier
                 .align(CenterHorizontally)
@@ -117,7 +121,7 @@ fun ViewCarDetailsView(
             )
         }
 
-        val pagerState = rememberPagerState(pageCount = {uiState.cars.size})
+        val pagerState = rememberPagerState(pageCount = { uiState.cars.size })
         LaunchedEffect(pagerState) {
             snapshotFlow { pagerState.currentPage }.collect { page ->
                 Log.d("Page change", "Page changed to $page")
@@ -211,22 +215,26 @@ fun ViewCarDetailsView(
                         Row(
                             Modifier.padding(top = 30.dp, bottom = 30.dp),
                         ) {
-                            Icon(
-                                modifier = Modifier.size(36.dp),
-                                painter = painterResource(R.drawable.baseline_arrow_back_24),
-                                contentDescription = "",
-                                tint = Color(0, 29, 54),
-                            )
+                            if (pagerState.currentPage != 0) {
+                                Icon(
+                                    modifier = Modifier.size(36.dp),
+                                    painter = painterResource(R.drawable.baseline_arrow_back_24),
+                                    contentDescription = "",
+                                    tint = Color(0, 29, 54),
+                                )
+                            }
                             Box(
-                                Modifier.width(100.dp)
+                                Modifier.width(200.dp)
                             ) {
                             }
-                            Icon(
-                                modifier = Modifier.size(36.dp),
-                                painter = painterResource(R.drawable.baseline_arrow_forward_24),
-                                contentDescription = "",
-                                tint = Color(0, 29, 54),
-                            )
+                            if (pagerState.currentPage != uiState.cars.size - 1) {
+                                Icon(
+                                    modifier = Modifier.size(36.dp),
+                                    painter = painterResource(R.drawable.baseline_arrow_forward_24),
+                                    contentDescription = "",
+                                    tint = Color(0, 29, 54),
+                                )
+                            }
                         }
                     }
                 }
@@ -239,8 +247,9 @@ fun ViewCarDetailsView(
 @Preview(showBackground = true)
 @Composable
 fun PreviewViewCarDetailsView() {
-    val carstest = listOf<Car>();
-    carstest + Car(brand = "Citroën",
+    var carstest = listOf<Car>();
+    carstest = carstest + Car(
+        brand = "Citroën",
         model = "C4 VTS",
         fuel = "Essence",
         maxSpeed = 200,
@@ -252,7 +261,8 @@ fun PreviewViewCarDetailsView() {
         transmission = "Manuelle",
     )
 
-    carstest + Car(brand = "Citroën",
+    carstest = carstest + Car(
+        brand = "Citroën",
         model = "C3 VTS",
         fuel = "Essence",
         maxSpeed = 200,

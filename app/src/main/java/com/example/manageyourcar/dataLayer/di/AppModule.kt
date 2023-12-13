@@ -3,6 +3,7 @@ package com.example.manageyourcar.dataLayer.di
 import androidx.room.Room
 import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.UIlayer.viewmodel.AddCarViewModel
+import com.example.manageyourcar.UIlayer.viewmodel.ViewCarDetailsViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.AddMaintenanceViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.AddUserViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.BluetoothViewModel
@@ -205,5 +206,5 @@ val viewModelModule = module {
     viewModelOf(::AddMaintenanceViewModel)
     viewModelOf(::OBDViewModel)
     viewModelOf(::BluetoothViewModel)
-
+    viewModelOf(::ViewCarDetailsViewModel)
 }
