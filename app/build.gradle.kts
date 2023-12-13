@@ -6,6 +6,8 @@ plugins {
     id("kotlin-kapt")
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
     id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
+
 }
 
 android {
@@ -74,6 +76,11 @@ android {
 }
 
 dependencies {
+    //Crashanalytics
+    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
+    implementation("com.google.firebase:firebase-crashlytics")
+    implementation("com.google.firebase:firebase-analytics")
+
     //API OBD2
     implementation("com.github.eltonvs:kotlin-obd-api:1.3.0")
 
