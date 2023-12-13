@@ -26,8 +26,7 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-        val mapsKey: String =
-            gradleLocalProperties(project.rootProject.projectDir).getProperty("MAPS_API_KEY") ?: ""
+        val mapsKey: String = gradleLocalProperties(project.rootProject.projectDir).getProperty("MAPS_API_KEY") ?: ""
         buildConfigField("String", "MAPS_API_KEY", "\"$mapsKey\"")
         val placesKey: String =
             gradleLocalProperties(project.rootProject.projectDir).getProperty("PLACES_API_KEY")

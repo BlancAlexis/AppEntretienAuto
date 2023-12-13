@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/LoginUserFragment">
+    app:startDestination="@id/geminiFragment">
 
     <fragment
         android:id="@+id/AddUserFragment"
@@ -33,5 +33,9 @@
         android:name="com.example.manageyourcar.UIlayer.view.fragments.ViewListMaintenance.ViewListMaintenanceFragment"
         android:label="fragment_view_servicing"
         tools:layout="@layout/fragment_view_servicing" />
+    <fragment
+        android:id="@+id/geminiFragment"
+        android:name="com.example.manageyourcar.UIlayer.view.fragments.GeminiFragment"
+        android:label="GeminiFragment" />
 
 </navigation>
