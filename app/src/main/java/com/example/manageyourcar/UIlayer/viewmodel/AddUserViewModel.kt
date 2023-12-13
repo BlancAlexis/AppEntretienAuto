@@ -7,6 +7,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.manageyourcar.UIlayer.composeView.UIState.SignInUiState
 import com.example.manageyourcar.domainLayer.useCaseRoom.user.AddUserRoomUseCase
+import com.example.manageyourcar.domainLayer.utils.UserEntryChecker
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -33,16 +34,26 @@ class AddUserViewModel : ViewModel(), KoinComponent {
             is UserSubscriptionEvent.OnClickSendButton -> onCheckFields()
             is UserSubscriptionEvent.OnLoginChanged -> onLoginChanged(event)
             is UserSubscriptionEvent.OnPasswordChanged -> onPasswordChanged(event)
-            is UserSubscriptionEvent.OnValidatePasswordChanged -> onValidateChanged(event)
             is UserSubscriptionEvent.OnFirstnameChanged ->onFirstnameChanged(event)
             is UserSubscriptionEvent.OnLastNameChanged ->  onLastNameChanged(event)
+            is UserSubscriptionEvent.OnConfirmPasswordChanged -> onConfirmPasswordChanged(event)
         }
 
+    }
+
+    private fun onConfirmPasswordChanged(event: UserSubscriptionEvent.OnConfirmPasswordChanged) {
+        _uiState.update {
+            it.copy(
+                userValidatePasswordError = UserEntryChecker.areTwoFieldPasswordTheSame(uiState.value.userPassword,event.newValue), //Pas fou
+                userValidatePassword = event.newValue
+            )
+        }
     }
 
     private fun onLastNameChanged(event: UserSubscriptionEvent.OnLastNameChanged) {
         _uiState.update {
             it.copy(
+                userLastNameError = UserEntryChecker.validateLastName(event.newValue), //Pas fou
                 userLastName = event.newValue
             )
         }
@@ -51,6 +62,7 @@ class AddUserViewModel : ViewModel(), KoinComponent {
     private fun onFirstnameChanged(event: UserSubscriptionEvent.OnFirstnameChanged) {
         _uiState.update {
             it.copy(
+                userFirstNameError = UserEntryChecker.validateFirstName(event.newValue),
                 userFirstName = event.newValue
             )
         }
@@ -59,7 +71,7 @@ class AddUserViewModel : ViewModel(), KoinComponent {
     private fun onCheckFields() {
         //SmsSender.sendSMS("dd","e")
         viewModelScope.launch(Dispatchers.IO) {
-            if (uiState.value.userPassword.equals(uiState.value.userValidatePassword)) {
+            if (uiState.value.userPassword == uiState.value.userValidatePassword) {
                 addUserRoomUseCase.invoke(uiState.value.userLogin!!, uiState.value.userPassword!!, uiState.value.userFirstName!!, uiState.value.userLastName!!)
               withContext(Dispatchers.Main) {
                   navController.popBackStack()
@@ -86,18 +98,13 @@ class AddUserViewModel : ViewModel(), KoinComponent {
     private fun onPasswordChanged(event: UserSubscriptionEvent.OnPasswordChanged) {
         _uiState.update {
             it.copy(
+                userPasswordError = UserEntryChecker.validatePassword(event.newValue),
                 userPassword = event.newValue
             )
         }
     }
 
-    private fun onValidateChanged(event: UserSubscriptionEvent.OnValidatePasswordChanged) {
-        _uiState.update {
-            it.copy(
-                userValidatePassword = event.newValue
-            )
-        }
-    }
+
 
     fun onInternetLost(bool : Boolean) {
         _uiState.update {
@@ -116,5 +123,5 @@ sealed interface UserSubscriptionEvent {
     data class OnPasswordChanged(val newValue: String) : UserSubscriptionEvent
     data class OnFirstnameChanged(val newValue: String) : UserSubscriptionEvent
     data class OnLastNameChanged(val newValue: String) : UserSubscriptionEvent
-    data class OnValidatePasswordChanged(val newValue: String) : UserSubscriptionEvent
+    data class OnConfirmPasswordChanged(val newValue: String) : UserSubscriptionEvent
 }

@@ -37,9 +37,9 @@ fun SignInUserView(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        uiState.userLogin?.let {
             CustomTextField(
-                textFieldValue = it,
+                textFieldValue = uiState.userLogin,
+                error = uiState.userLoginError,
                 modifier = Modifier
                     .fillMaxWidth(0.95f)
                     .padding(10.dp),
@@ -50,24 +50,23 @@ fun SignInUserView(
                     onEvent(UserSubscriptionEvent.OnLoginChanged(it))
                 }
             )
-        }
-        uiState?.userFirstName?.let {
+
+        CustomTextField(
+            textFieldValue = uiState.userFirstName,
+            error = uiState.userFirstNameError,
+            modifier = Modifier
+                .fillMaxWidth(0.95f)
+                .padding(10.dp),
+            label = "Firstname",
+            readOnly = false,
+            keyboardType = KeyboardType.Text,
+            onValueChange = {
+                onEvent(UserSubscriptionEvent.OnFirstnameChanged(it))
+            }
+        )
             CustomTextField(
-                textFieldValue = it,
-                modifier = Modifier
-                    .fillMaxWidth(0.95f)
-                    .padding(10.dp),
-                label = "Firstname",
-                readOnly = false,
-                keyboardType = KeyboardType.Text,
-                onValueChange = {
-                    onEvent(UserSubscriptionEvent.OnFirstnameChanged(it))
-                }
-            )
-        }
-        uiState.userLastName?.let {
-            CustomTextField(
-                textFieldValue = it,
+                textFieldValue =  uiState.userLastName,
+                error = uiState.userLastNameError,
                 modifier = Modifier
                     .fillMaxWidth(0.95f)
                     .padding(10.dp),
@@ -78,11 +77,10 @@ fun SignInUserView(
                     onEvent(UserSubscriptionEvent.OnLastNameChanged(it))
                 }
             )
-        }
-        uiState.userPassword?.let {
             CustomTextField(
                 visualTransformation = PasswordVisualTransformation(),
-                textFieldValue = it,
+                error = uiState.userPasswordError,
+                textFieldValue = uiState.userPassword,
                 modifier = Modifier
                     .fillMaxWidth(0.95f)
                     .padding(10.dp),
@@ -93,11 +91,10 @@ fun SignInUserView(
                     onEvent(UserSubscriptionEvent.OnPasswordChanged(it))
                 }
             )
-        }
-        uiState.userValidatePassword?.let {
             CustomTextField(
                 visualTransformation = PasswordVisualTransformation(),
-                textFieldValue = it,
+                textFieldValue = uiState.userValidatePassword,
+                error = uiState.userValidatePasswordError,
                 modifier = Modifier
                     .fillMaxWidth(0.95f)
                     .padding(10.dp),
@@ -105,10 +102,10 @@ fun SignInUserView(
                 readOnly = false,
                 keyboardType = KeyboardType.Password,
                 onValueChange = {
-                    onEvent(UserSubscriptionEvent.OnValidatePasswordChanged(it))
+                    onEvent(UserSubscriptionEvent.OnConfirmPasswordChanged(it))
                 }
             )
-        }
+
         Spacer(modifier = Modifier.height(20.dp))
         Button(
             onClick = { onEvent(UserSubscriptionEvent.OnClickSendButton) },
