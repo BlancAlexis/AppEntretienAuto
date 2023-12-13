@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import kotlin.math.log
 
 
 class AddUserViewModel : ViewModel(), KoinComponent {
@@ -58,7 +59,7 @@ class AddUserViewModel : ViewModel(), KoinComponent {
     }
 
     private fun onCheckFields() {
-        SmsSender.sendSMS("dd","e")
+        //SmsSender.sendSMS("dd","e")
         viewModelScope.launch(Dispatchers.IO) {
             if (uiState.value.userPassword.equals(uiState.value.userValidatePassword)) {
                 addUserToRoomUseCase.addUserToRoom(uiState.value.userLogin!!, uiState.value.userPassword!!, uiState.value.userFirstName!!, uiState.value.userLastName!!)
