@@ -37,6 +37,8 @@ class ListMaintenanceViewModel : ViewModel(), KoinComponent {
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
+            addCarRoomUseCase.addCarToRoom(Car(null, "BMW", "X5", Date(), "d", "Diesel", "123456789", 150,300,250,25623,null))
+
             getAllUserMaintenanceUseCase.invoke().collect { result ->
                 when (result) {
                     is Ressource.Error -> TODO()
@@ -44,7 +46,6 @@ class ListMaintenanceViewModel : ViewModel(), KoinComponent {
                     is Ressource.Success -> result.data?.let { listLoading(it) }
                 }
             }
-                addCarRoomUseCase.addCarToRoom(Car(null, "BMW", "X5", Date(), "d", "Diesel", "123456789", 150,300,250,25623,0))
         }
     }
 

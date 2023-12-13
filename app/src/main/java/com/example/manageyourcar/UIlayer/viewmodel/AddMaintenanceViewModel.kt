@@ -115,7 +115,7 @@ class AddMaintenanceViewModel : ViewModel(), KoinComponent {
     private fun OnPriceChanged(newValue: Int) {
         _uiState.update {
             it.copy(
-price = newValue
+                price = newValue.toString()
             )
         }
     }
@@ -126,7 +126,7 @@ price = newValue
     private fun OnMileageChanged(newValue: Int) {
         _uiState.update {
             it.copy(
-                mileage = newValue
+                mileage = newValue.toString()
             )
         }
     }
