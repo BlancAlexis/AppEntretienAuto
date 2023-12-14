@@ -31,7 +31,7 @@ class LoginUserViewModel : ViewModel(), KoinComponent {
     val uiState = _uiState.asStateFlow()
 
     init {
-        onTryLog(true)
+        //onTryLog(true)
     }
 
     fun onEvent(event: UserLoginEvent) {

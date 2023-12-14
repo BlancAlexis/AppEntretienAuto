@@ -23,7 +23,6 @@ class AppApplication : Application(), KoinComponent {
         ListenerInternet(get<GlobalEvent>())
     }
 
-
     companion object {
         lateinit var instance: AppApplication
             private set
