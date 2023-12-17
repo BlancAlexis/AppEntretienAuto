@@ -30,7 +30,7 @@ class OBDViewModel : ViewModel(), KoinComponent {
     fun getRPM() {
         viewModelScope.launch {
             while (true) {
-                Log.i("OBDViewModel",obdConnection.run(RPMCommand()).value)
+                Log.i("OBDViewModel",(Integer.parseInt(obdConnection.run(RPMCommand()).value, 16)).toString())
                 delay(50)
             }
         }
