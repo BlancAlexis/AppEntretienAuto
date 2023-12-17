@@ -2,6 +2,7 @@ package com.example.manageyourcar.UIlayer.view.fragments
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import androidx.fragment.app.viewModels
 import com.example.manageyourcar.BuildConfig
 import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.viewmodel.MapsViewModel
+import com.google.android.gms.location.LocationListener
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -19,7 +21,8 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
-class MapsFragment : Fragment() {
+class MapsFragment : Fragment(), LocationListener {
+   // val navController by lazy { findNavController() }
     val key = BuildConfig.MAPS_API_KEY
     val mapsViewModel by viewModels<MapsViewModel>()
     private val callback = OnMapReadyCallback { googleMap ->
@@ -38,6 +41,11 @@ class MapsFragment : Fragment() {
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        if (accessLocationPermissionStatus(context)) setupLocationProviderClient(context)
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -81,6 +89,25 @@ class MapsFragment : Fragment() {
     companion object {
         fun newInstance(): MapsFragment {
             return MapsFragment()
+        }
+    }
+
+    override fun onLocationChanged(location: Location) {
+        mapsViewModel.onLocationChanged(location.latitude, location.longitude)
+
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray,
+    ) {
+        when (requestCode) {
+            LOCATION_REQUEST_CODE -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                    context?.let { setupLocationProviderClient(it) }
+                else showSecondChangePositionRequest()
+            }
         }
     }
 }
