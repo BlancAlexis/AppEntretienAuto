@@ -8,6 +8,7 @@ import androidx.navigation.Navigation
 import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.composeView.UIState.MaintenanceListUiState
 import com.example.manageyourcar.UIlayer.composeView.UIState.ServicingUIState
+import com.example.manageyourcar.UIlayer.composeView.UIState.SortType
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.dataLayer.dataLayerRoom.dao.MaintenanceWithCarEntity
 import com.example.manageyourcar.dataLayer.model.Car
@@ -37,7 +38,7 @@ class ListMaintenanceViewModel : ViewModel(), KoinComponent {
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            addCarRoomUseCase.addCarToRoom(Car(null, "BMW", "X5", Date(), "d", "Diesel", "123456789", 150,300,250,25623,null))
+          //  addCarRoomUseCase.addCarToRoom(Car(null, "BMW", "X5", Date(), "d", "Diesel", "123456789", 150,300,250,25623,null))
 
             getAllUserMaintenanceUseCase.invoke().collect { result ->
                 when (result) {
@@ -105,20 +106,28 @@ class ListMaintenanceViewModel : ViewModel(), KoinComponent {
             }
         }
         private fun changeSortMethod(event: onMaintenanceListEvent.onSortMethodChanged) {
-            //Trier le uiState
-        }
-
-        fun ServicingListToUiState() {
-            /*_uiState.update {
-                it.copy(
-
-                )
+            when(event.newMethod) {
+                SortType.croissant ->
+                    _uiState.update {
+                    it.copy(
+                        listUiState = it.listUiState.sortedBy { it.mileage }
+                    )
+                }
+                SortType.décroissant ->
+                    _uiState.update {
+                    it.copy(
+                        listUiState = it.listUiState.sortedByDescending { it.mileage }
+                    )
+                }
             }
-        }*/
+
         }
+
     }
 
     sealed interface onMaintenanceListEvent {
         object onButtonAddMaintenancePush : onMaintenanceListEvent
-        class onSortMethodChanged(val newMethod: String) : onMaintenanceListEvent
-    }
+        class onSortMethodChanged(val newMethod: SortType) : onMaintenanceListEvent
+
+        }
+

@@ -22,7 +22,7 @@ fun OutlinedSpinner(
     modifier : Modifier? = null,
     listMaintenanceName : List<String>,
     textLabel : String,
-    onItemSelect : (Any?) -> Unit = {}
+    onItemSelect : (String) -> Unit = {}
 ) {
     var expanded by remember { mutableStateOf(false) }
     var selectedOptionText by remember { mutableStateOf(listMaintenanceName[0]) }
@@ -56,6 +56,7 @@ fun OutlinedSpinner(
                 DropdownMenuItem(
                     text = { Text(text = selectionOption) },
                     onClick = {
+                        onItemSelect(selectionOption)
                         selectedOptionText = selectionOption
                         expanded = false
                     }
