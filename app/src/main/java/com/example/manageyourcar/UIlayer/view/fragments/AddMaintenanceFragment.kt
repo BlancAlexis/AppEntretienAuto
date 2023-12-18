@@ -36,7 +36,7 @@ class AddMaintenanceFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        addMaintenanceViewModel.a.observe(viewLifecycleOwner){
+        addMaintenanceViewModel.isMaintenanceAdd.observe(viewLifecycleOwner){
             if(it){
                 dismiss()
             }

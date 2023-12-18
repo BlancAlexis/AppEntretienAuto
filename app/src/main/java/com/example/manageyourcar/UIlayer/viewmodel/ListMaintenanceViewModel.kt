@@ -66,31 +66,32 @@ class ListMaintenanceViewModel : ViewModel(), KoinComponent {
             it.copy(
                 isLoading = false,
                 listUiState = newData.map { entretien ->
-                    var progressIndicator: Int = 0
+                    var progressIndicator= 0.0f
                     var description: String = ""
                     when (entretien.maintenanceEntity.serviceType) {
                         is MaintenanceService.Freins -> {
                             description = entretien.maintenanceEntity.serviceType.name
-                            progressIndicator =
-                                MaintenanceActScheddule.valueOf(entretien.maintenanceEntity.serviceType.name.uppercase()).km - entretien.maintenanceEntity.mileage
+                            progressIndicator = ((entretien.maintenanceEntity.mileage.toFloat() / MaintenanceActScheddule.valueOf(
+                                entretien.maintenanceEntity.serviceType.name.uppercase()
+                            ).km.toFloat()) * 100).toFloat()
                         }
 
                         is MaintenanceService.Pneus -> {
+                            println(2563 / 3000)
                             description = entretien.maintenanceEntity.serviceType.name
-                            progressIndicator =
-                                entretien.maintenanceEntity.mileage / MaintenanceActScheddule.valueOf(
-                                    entretien.maintenanceEntity.serviceType.name.uppercase()
-                                ).km
+                            progressIndicator = ((entretien.maintenanceEntity.mileage .toFloat()/ MaintenanceActScheddule.valueOf(
+                                entretien.maintenanceEntity.serviceType.name.uppercase()
+                            ).km.toFloat()) * 100).toFloat()
                         }
 
                         is MaintenanceService.Vidange -> {
                             description = entretien.maintenanceEntity.serviceType.name
-                            progressIndicator =
-                                entretien.maintenanceEntity.mileage / MaintenanceActScheddule.valueOf(
-                                    entretien.maintenanceEntity.serviceType.name.uppercase()
-                                ).km
+                            progressIndicator =((entretien.maintenanceEntity.mileage.toFloat() / MaintenanceActScheddule.valueOf(
+                                entretien.maintenanceEntity.serviceType.name.uppercase()
+                            ).km.toFloat()) * 100).toFloat()
                         }
                     }
+
                     ServicingUIState(
                         carName = entretien.carEntity.brand + " " + entretien.carEntity.model,
                         mileage = entretien.maintenanceEntity.mileage.toString(),

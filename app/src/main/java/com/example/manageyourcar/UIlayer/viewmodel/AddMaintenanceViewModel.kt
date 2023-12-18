@@ -1,16 +1,12 @@
 package com.example.manageyourcar.UIlayer.viewmodel
 
-import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import com.example.manageyourcar.UIlayer.composeView.UIState.AddVehiculeMaintenanceUiState
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.dataLayer.model.Car
 import com.example.manageyourcar.dataLayer.model.Entretien
-import com.example.manageyourcar.dataLayer.model.MaintenanceService
 import com.example.manageyourcar.dataLayer.model.MaintenanceServiceType
 import com.example.manageyourcar.domainLayer.mappers.MapperMaintenanceView.toMaintenanceService
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.GetUserCarsUseCase
@@ -20,14 +16,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.util.Date
 
 class AddMaintenanceViewModel : ViewModel(), KoinComponent {
     private val getUserCarsUseCase by inject<GetUserCarsUseCase>()
- val a= MutableLiveData<Boolean>(false)
+ val isMaintenanceAdd= MutableLiveData<Boolean>(false)
 
     private val _uiState = MutableStateFlow(AddVehiculeMaintenanceUiState())
     val uiState = _uiState.asStateFlow()
@@ -96,7 +91,7 @@ class AddMaintenanceViewModel : ViewModel(), KoinComponent {
                 is Ressource.Error -> TODO()
                 is Ressource.Loading -> TODO()
                 is Ressource.Success -> {
-                    a.postValue(true)
+                    isMaintenanceAdd.postValue(true)
                 }
             }
         }
