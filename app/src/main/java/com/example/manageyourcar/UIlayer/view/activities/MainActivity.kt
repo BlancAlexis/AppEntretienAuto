@@ -8,7 +8,9 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
@@ -20,8 +22,9 @@ import com.example.manageyourcar.R
 import com.example.manageyourcar.databinding.ActivityMainBinding
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.elevation.SurfaceColors
+import com.google.android.material.navigation.NavigationView
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelectedListener {
     private lateinit var navController: NavController
     private lateinit var binding: ActivityMainBinding
     private val bluetoothManager by lazy {
@@ -76,6 +79,12 @@ class MainActivity : AppCompatActivity() {
         navController = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment_login) as NavHostFragment).navController
         setSupportActionBar(binding.bottomAppBar)
         setupWithNavController(binding.bottomNavigationView, navController)
+        binding.toolbarMain.setBackgroundColor(getColor(R.color.darkGray))
+        setSupportActionBar(binding.toolbarMain)
+        binding.navView.setNavigationItemSelectedListener(this)
+        val toggle = ActionBarDrawerToggle(this, binding.drawer, binding.toolbarMain, R.string.user_id, R.string.app_name)
+        binding.drawer.addDrawerListener(toggle)
+        toggle.syncState()
 
         if (ActivityCompat.checkSelfPermission(
                 this,
@@ -103,6 +112,24 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        println("ss")
+        when (item.itemId) {
+            R.id.nav_home -> {
+                print("do")
+            }
+
+            R.id.nav_about -> {
+                print("pr")
+            }
+
+            R.id.nav_logout -> {
+                print("déco")
+            }
+        }
+        return true
     }
 
 
