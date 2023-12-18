@@ -53,6 +53,7 @@ import com.example.manageyourcar.domainLayer.utils.SmsSender
 import com.google.firebase.Firebase
 import com.google.firebase.database.database
 import com.example.manageyourcar.dataLayer.AndroidBluetoothController
+import com.example.manageyourcar.domainLayer.useCaseBusiness.LogoutUserUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.AddCarRoomUseCase
 import okhttp3.OkHttpClient
 import org.koin.androidx.viewmodel.dsl.viewModelOf
@@ -130,6 +131,7 @@ val useCaseModule = module {
     factory { GetAllUserMaintenanceUseCase() }
     factory { GetUserCarsUseCase() }
     factory { LoginUserUseCase() }
+    factory { LogoutUserUseCase() }
     factory { DeleteCarRoomUseCase() }
 
     factory { AddUserRoomUseCase() }

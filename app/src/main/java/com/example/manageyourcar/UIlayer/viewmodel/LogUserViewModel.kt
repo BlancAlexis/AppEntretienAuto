@@ -58,24 +58,37 @@ class LogUserViewModel : ViewModel(), KoinComponent {
 
     private fun onTryLog(autoConnect : Boolean = false) {
         viewModelScope.launch(Dispatchers.IO) {
-            when (val result = logUseCase.loginUser(_uiState.value.userLogin!!, _uiState.value.userPassword!!, AppApplication.instance.applicationContext)) {
-                is Ressource.Success -> {
-                    cacheManagerRepository.putUserId(AppApplication.instance.applicationContext, result.data!!)
-                    isConnected.postValue(true)
-                }
-                is Ressource.Error -> {
-                    if(autoConnect) {
-                       return@launch
+            if (autoConnect) {
+                    when(val result= cacheManagerRepository.getUserId(AppApplication.instance.applicationContext)){
+                        is Ressource.Success ->  isConnected.postValue(true)
+                        is Ressource.Error -> println("zzzz"+result.message+ result.error)
+                        else -> null
                     }
-                    _uiState.update {
-                        it.copy(
-                            userLoginError = "Un champs ne correspond pas",
-                            userPasswordError = "Un champs ne correspond pas"
+            } else {
+                when (val result = logUseCase.loginUser(
+                    _uiState.value.userLogin!!,
+                    _uiState.value.userPassword!!,
+                    AppApplication.instance.applicationContext
+                )) {
+                    is Ressource.Success -> {
+                        cacheManagerRepository.putUserId(
+                            AppApplication.instance.applicationContext,
+                            result.data!!
                         )
+                        isConnected.postValue(true)
                     }
-                }
 
-                is Ressource.Loading -> TODO()
+                    is Ressource.Error -> {
+                        _uiState.update {
+                            it.copy(
+                                userLoginError = "Un champs ne correspond pas",
+                                userPasswordError = "Un champs ne correspond pas"
+                            )
+                        }
+                    }
+
+                    is Ressource.Loading -> TODO()
+                }
             }
         }
     }

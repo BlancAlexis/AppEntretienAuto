@@ -1,8 +1,10 @@
 package com.example.manageyourcar.dataLayer
 
 import android.content.Context
+import android.content.SharedPreferences
 import com.example.manageyourcar.R
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
+
 
 class CacheDataSource {
     fun getUserId(context: Context): Ressource<Int> {
@@ -45,5 +47,14 @@ class CacheDataSource {
 
     fun putListUserCarInCache() {
 
+    }
+
+    fun resetCurrentUserId(context: Context): Ressource<Boolean> {
+        return try {
+            context.getSharedPreferences(context.getString(R.string.user_id), Context.MODE_PRIVATE).edit().clear().apply()
+            Ressource.Success(true)
+        }catch(e : Exception){
+            Ressource.Error(message = "Impossible de supprimer l'userID $e")
+        }
     }
 }

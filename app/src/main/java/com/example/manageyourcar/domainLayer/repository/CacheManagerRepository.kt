@@ -8,4 +8,5 @@ interface CacheManagerRepository {
     fun putListUserCarInCache()
     fun putUserId(context: Context, userId: Int): Ressource<Boolean>
     fun getUserId(context: Context): Ressource<Int>
+    fun resetUserId(context: Context): Ressource<Boolean>
 }

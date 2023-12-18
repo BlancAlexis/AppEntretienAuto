@@ -6,12 +6,14 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.manageyourcar.R
+import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.UIlayer.composeView.UIState.MaintenanceListUiState
 import com.example.manageyourcar.UIlayer.composeView.UIState.ServicingUIState
 import com.example.manageyourcar.UIlayer.composeView.UIState.SortType
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.dataLayer.dataLayerRoom.dao.MaintenanceWithCarEntity
 import com.example.manageyourcar.dataLayer.model.MaintenanceService
+import com.example.manageyourcar.domainLayer.useCaseBusiness.LogoutUserUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.AddCarRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.AddCarMaintenanceUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.GetAllUserMaintenanceUseCase
@@ -21,6 +23,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -30,6 +33,8 @@ class ListMaintenanceViewModel : ViewModel(), KoinComponent {
 
     private lateinit var navController: NavController
     private val getAllUserMaintenanceUseCase by inject<GetAllUserMaintenanceUseCase>()
+    private val logoutUserUseCase by inject<LogoutUserUseCase>()
+
     private val addCarMaintenanceUseCase by inject<AddCarMaintenanceUseCase>()
     private val addCarRoomUseCase by inject<AddCarRoomUseCase>()
 
@@ -40,7 +45,7 @@ class ListMaintenanceViewModel : ViewModel(), KoinComponent {
 
             getAllUserMaintenanceUseCase.invoke().collect { result ->
                 when (result) {
-                    is Ressource.Error -> TODO()
+                    is Ressource.Error -> println("e")
                     is Ressource.Loading -> listLoad()
                     is Ressource.Success -> result.data?.let { listLoading(it) }
                 }
@@ -56,7 +61,15 @@ class ListMaintenanceViewModel : ViewModel(), KoinComponent {
             )
         }
     }
-
+fun onBackPressed(){
+    viewModelScope.launch {
+        when(logoutUserUseCase.logoutUser(AppApplication.instance.applicationContext)){
+            is Ressource.Error -> println("error")
+            is Ressource.Loading -> println("load")
+            is Ressource.Success -> return@launch //Faire une chose qui bloque si fail?
+        }
+    }
+}
     fun setNavController(view: View) {
         navController = Navigation.findNavController(view)
     }

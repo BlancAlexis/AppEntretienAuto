@@ -6,7 +6,7 @@ import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
 import org.koin.core.component.KoinComponent
 
 
-class CacheManagerRepositoryImpl(val dataSource: CacheDataSource) : CacheManagerRepository, KoinComponent {
+class CacheManagerRepositoryImpl(private val dataSource: CacheDataSource) : CacheManagerRepository, KoinComponent {
     override fun getCachedListUserCar() {
         dataSource.getCachedListUserCar()
     }
@@ -21,5 +21,9 @@ class CacheManagerRepositoryImpl(val dataSource: CacheDataSource) : CacheManager
 
     override fun getUserId(context: Context): Ressource<Int> {
         return dataSource.getUserId(context)
+    }
+
+    override fun resetUserId(context: Context): Ressource<Boolean> {
+        return dataSource.resetCurrentUserId(context)
     }
 }
