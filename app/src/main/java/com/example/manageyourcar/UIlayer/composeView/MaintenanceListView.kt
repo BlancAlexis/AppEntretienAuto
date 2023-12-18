@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -32,8 +33,10 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.toSize
+import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.composeView.UIState.MaintenanceListUiState
 import com.example.manageyourcar.UIlayer.composeView.UIState.SortType
 import com.example.manageyourcar.UIlayer.composeView.common.CustomDialog
@@ -47,7 +50,9 @@ fun MaintenanceListView(
 ) {
     var openSortChoice by remember { mutableStateOf(false) }
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = colorResource(R.color.primaryColor)),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         if (uiState.onInternetLost) {
@@ -63,18 +68,16 @@ fun MaintenanceListView(
             }
         } else {
 
-        Button(onClick = { onEvent(onMaintenanceListEvent.onButtonAddMaintenancePush) }) {
-            Text(text = "Ajout d'un acte d'entretien")
+        Button(onClick = { onEvent(onMaintenanceListEvent.onButtonAddMaintenancePush) }, colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.primaryContainer), contentColor = Color.Black)) {
+            Text(text = "Ajouter un acte d'entretien")
         }
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(color = Color.Blue),
+                    .background(color = colorResource(id = R.color.primaryContainer)),
                 horizontalArrangement = Arrangement.End
             ) {
                 Column {
-
-
                 IconButton(onClick = { openSortChoice=!openSortChoice }) {
                     Icon(imageVector = Icons.Filled.Menu, contentDescription = "")
 
