@@ -2,6 +2,7 @@ package com.example.manageyourcar.UIlayer.viewmodel
 
 
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
@@ -12,12 +13,14 @@ import com.example.manageyourcar.domainLayer.ConnectionResult
 import com.example.manageyourcar.domainLayer.bluetooth.BluetoothController
 import com.example.manageyourcar.domainLayer.bluetooth.BluetoothDevice
 import com.example.manageyourcar.domainLayer.bluetooth.BluetoothDeviceDomain
+import com.example.manageyourcar.domainLayer.bluetooth.ConnectedBluetoothDevice
 import com.github.eltonvs.obd.command.ObdCommand
 import com.github.eltonvs.obd.command.control.VINCommand
 import com.github.eltonvs.obd.command.engine.RPMCommand
 import com.github.eltonvs.obd.command.engine.SpeedCommand
 import com.github.eltonvs.obd.connection.ObdDeviceConnection
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -103,11 +106,11 @@ class BluetoothViewModel : ViewModel(), KoinComponent {
         return onEach { result ->
             when (result) {
                 is ConnectionResult.ConnectionEstablished -> {
-                    navController?.navigate(R.id.action_connectObdFragment_to_OBDFragment)
-                    val obdConnection = ObdDeviceConnection(result.inputStream, result.outputStream)
-                    println("vitesse"+obdConnection.run(SpeedCommand()).value)
-                    println("vin"+obdConnection.run(VINCommand()).value)
-                    println("rpm"+obdConnection.run(RPMCommand()).value)
+                    ConnectedBluetoothDevice.inputStream = result.inputStream
+                    ConnectedBluetoothDevice.bluetoothDevice = result.device
+                    ConnectedBluetoothDevice.outputStream = result.outputStream
+                    navController.navigate(R.id.action_connectObdFragment_to_OBDFragment)
+
                   /*  _state.update {
                         it.copy(
                             isConnected = true,

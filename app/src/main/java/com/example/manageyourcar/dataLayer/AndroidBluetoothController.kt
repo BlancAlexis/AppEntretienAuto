@@ -17,6 +17,10 @@ import com.example.manageyourcar.domainLayer.ConnectionResult
 import com.example.manageyourcar.domainLayer.bluetooth.BluetoothController
 import com.example.manageyourcar.domainLayer.bluetooth.BluetoothDeviceDomain
 import com.example.manageyourcar.domainLayer.mappers.BluetoothDeviceMappers.toBluetoothDeviceDomain
+import com.github.eltonvs.obd.command.control.VINCommand
+import com.github.eltonvs.obd.command.engine.RPMCommand
+import com.github.eltonvs.obd.command.engine.SpeedCommand
+import com.github.eltonvs.obd.connection.ObdDeviceConnection
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -126,8 +130,7 @@ class AndroidBluetoothController(
             currentClientSocket?.let { socket ->
                 try {
                     socket.connect()
-                    emit(ConnectionResult.ConnectionEstablished(socket.inputStream, socket.outputStream))
-                    println("succes"+socket.inputStream.toString()+socket.outputStream.toString())
+                    emit(ConnectionResult.ConnectionEstablished(device,socket.inputStream, socket.outputStream))
                 } catch (e: IOException) {
                     socket.close()
                     Log.e("AndroidBluetoothController", "Error while connecting to device", e)
