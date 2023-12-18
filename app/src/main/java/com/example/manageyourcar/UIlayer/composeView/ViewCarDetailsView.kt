@@ -152,7 +152,8 @@ fun ViewCarDetailsView(
                                 topEnd = 20.dp
                             )
                         )
-                        .height(135.dp),
+                        .fillMaxWidth()
+                        .height(138.dp),
                 )
                 Box(
                     modifier = Modifier.padding(0.dp)
