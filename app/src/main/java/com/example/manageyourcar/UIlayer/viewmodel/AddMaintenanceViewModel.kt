@@ -11,6 +11,7 @@ import com.example.manageyourcar.dataLayer.model.MaintenanceServiceType
 import com.example.manageyourcar.domainLayer.mappers.MapperMaintenanceView.toMaintenanceService
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.GetUserCarsUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.AddCarMaintenanceUseCase
+import com.example.manageyourcar.domainLayer.utils.UserEntryChecker
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -121,23 +122,24 @@ class AddMaintenanceViewModel : ViewModel(), KoinComponent {
         selectedCar=newValue
     }
     private fun OnPriceChanged(newValue: Int) {
-        _uiState.update {
-            it.copy(
-                price = newValue.toString()
-            )
+            _uiState.update {
+                it.copy(
+                    price = newValue.toString()
+                )
+            }
         }
-    }
+
 
     private fun OnMaintenanceChanged(newValue: MaintenanceServiceType) {
         selectedMaintenance = newValue  }
 
     private fun OnMileageChanged(newValue: Int) {
-        _uiState.update {
-            it.copy(
-                mileage = newValue.toString()
-            )
+            _uiState.update {
+                it.copy(
+                    mileage = newValue.toString()
+                )
+            }
         }
-    }
 
     private fun OnDateChanged(newDate: Date) {
         _uiState.update {
