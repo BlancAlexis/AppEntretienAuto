@@ -11,7 +11,6 @@ import com.example.manageyourcar.UIlayer.composeView.UIState.ServicingUIState
 import com.example.manageyourcar.UIlayer.composeView.UIState.SortType
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.dataLayer.dataLayerRoom.dao.MaintenanceWithCarEntity
-import com.example.manageyourcar.dataLayer.model.Car
 import com.example.manageyourcar.dataLayer.model.MaintenanceService
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.AddCarRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.AddCarMaintenanceUseCase
@@ -24,13 +23,12 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import java.util.Date
 
 class ListMaintenanceViewModel : ViewModel(), KoinComponent {
     private val _uiState = MutableStateFlow(MaintenanceListUiState())
     val uiState = _uiState.asStateFlow()
 
-    private lateinit var navController : NavController
+    private lateinit var navController: NavController
     private val getAllUserMaintenanceUseCase by inject<GetAllUserMaintenanceUseCase>()
     private val addCarMaintenanceUseCase by inject<AddCarMaintenanceUseCase>()
     private val addCarRoomUseCase by inject<AddCarRoomUseCase>()
@@ -38,7 +36,7 @@ class ListMaintenanceViewModel : ViewModel(), KoinComponent {
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-          //  addCarRoomUseCase.addCarToRoom(Car(null, "BMW", "X5", Date(), "d", "Diesel", "123456789", 150,300,250,25623,null))
+            //  addCarRoomUseCase.addCarToRoom(Car(null, "BMW", "X5", Date(), "d", "Diesel", "123456789", 150,300,250,25623,null))
 
             getAllUserMaintenanceUseCase.invoke().collect { result ->
                 when (result) {
@@ -51,43 +49,59 @@ class ListMaintenanceViewModel : ViewModel(), KoinComponent {
     }
 
 
-    fun onInternetLost(bool : Boolean) {
+    fun onInternetLost(bool: Boolean) {
         _uiState.update {
             it.copy(
                 onInternetLost = bool
             )
         }
     }
+
     fun setNavController(view: View) {
         navController = Navigation.findNavController(view)
     }
+
     private fun listLoading(newData: List<MaintenanceWithCarEntity>) {
         _uiState.update {
             it.copy(
                 isLoading = false,
                 listUiState = newData.map { entretien ->
-             var progressIndicator : Int = 0
-                    var description : String = ""
-             when(entretien.maintenanceEntity.serviceType) {
-                 is MaintenanceService.Freins -> {
-                     description=entretien.maintenanceEntity.serviceType.name
-                     progressIndicator =  MaintenanceActScheddule.valueOf(entretien.maintenanceEntity.serviceType.name.uppercase()).km-entretien.maintenanceEntity.mileage
-                 }
-                 is MaintenanceService.Pneus -> {
-                     description=entretien.maintenanceEntity.serviceType.name
-                     progressIndicator =  entretien.maintenanceEntity.mileage/MaintenanceActScheddule.valueOf(entretien.maintenanceEntity.serviceType.name.uppercase()).km
-                 }
-                 is MaintenanceService.Vidange -> entretien.maintenanceEntity.serviceType.name
-             }
-             ServicingUIState(
-                 carName = entretien.carEntity.model,
-             mileage = entretien.maintenanceEntity.mileage.toString(),
-             progressIndicator = progressIndicator.toFloat(),
-             description = description,
-             ) })
+                    var progressIndicator= 0.0f
+                    var description: String = ""
+                    when (entretien.maintenanceEntity.serviceType) {
+                        is MaintenanceService.Freins -> {
+                            description = entretien.maintenanceEntity.serviceType.name
+                            progressIndicator = ((entretien.maintenanceEntity.mileage.toFloat() / MaintenanceActScheddule.valueOf(
+                                entretien.maintenanceEntity.serviceType.name.uppercase()
+                            ).km.toFloat()) * 100).toFloat()
+                        }
+
+                        is MaintenanceService.Pneus -> {
+                            println(2563 / 3000)
+                            description = entretien.maintenanceEntity.serviceType.name
+                            progressIndicator = ((entretien.maintenanceEntity.mileage .toFloat()/ MaintenanceActScheddule.valueOf(
+                                entretien.maintenanceEntity.serviceType.name.uppercase()
+                            ).km.toFloat()) * 100).toFloat()
+                        }
+
+                        is MaintenanceService.Vidange -> {
+                            description = entretien.maintenanceEntity.serviceType.name
+                            progressIndicator =((entretien.maintenanceEntity.mileage.toFloat() / MaintenanceActScheddule.valueOf(
+                                entretien.maintenanceEntity.serviceType.name.uppercase()
+                            ).km.toFloat()) * 100).toFloat()
+                        }
+                    }
+
+                    ServicingUIState(
+                        carName = entretien.carEntity.brand + " " + entretien.carEntity.model,
+                        mileage = entretien.maintenanceEntity.mileage.toString(),
+                        progressIndicator = progressIndicator.toFloat(),
+                        description = description,
+                    )
+                })
         }
 
-        }
+    }
 
 
     private fun listLoad() {
@@ -99,35 +113,40 @@ class ListMaintenanceViewModel : ViewModel(), KoinComponent {
     }
 
 
-        fun onEvent(event: onMaintenanceListEvent) {
-            when (event) {
-              is onMaintenanceListEvent.onButtonAddMaintenancePush -> {  navController?.navigate(R.id.addMaintenanceFragment) }
-                is onMaintenanceListEvent.onSortMethodChanged -> changeSortMethod(event)
+    fun onEvent(event: onMaintenanceListEvent) {
+        when (event) {
+            is onMaintenanceListEvent.onButtonAddMaintenancePush -> {
+                navController?.navigate(R.id.addMaintenanceFragment)
             }
+
+            is onMaintenanceListEvent.onSortMethodChanged -> changeSortMethod(event)
         }
-        private fun changeSortMethod(event: onMaintenanceListEvent.onSortMethodChanged) {
-            when(event.newMethod) {
-                SortType.croissant ->
-                    _uiState.update {
+    }
+
+    private fun changeSortMethod(event: onMaintenanceListEvent.onSortMethodChanged) {
+        when (event.newMethod) {
+            SortType.croissant ->
+                _uiState.update {
                     it.copy(
                         listUiState = it.listUiState.sortedBy { it.mileage }
                     )
                 }
-                SortType.décroissant ->
-                    _uiState.update {
+
+            SortType.décroissant ->
+                _uiState.update {
                     it.copy(
                         listUiState = it.listUiState.sortedByDescending { it.mileage }
                     )
                 }
-            }
-
         }
 
     }
 
-    sealed interface onMaintenanceListEvent {
-        object onButtonAddMaintenancePush : onMaintenanceListEvent
-        class onSortMethodChanged(val newMethod: SortType) : onMaintenanceListEvent
+}
 
-        }
+sealed interface onMaintenanceListEvent {
+    object onButtonAddMaintenancePush : onMaintenanceListEvent
+    class onSortMethodChanged(val newMethod: SortType) : onMaintenanceListEvent
+
+}
 

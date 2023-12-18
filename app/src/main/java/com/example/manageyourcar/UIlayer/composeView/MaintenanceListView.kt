@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
@@ -35,6 +36,7 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.composeView.UIState.MaintenanceListUiState
@@ -68,7 +70,7 @@ fun MaintenanceListView(
             }
         } else {
 
-        Button(onClick = { onEvent(onMaintenanceListEvent.onButtonAddMaintenancePush) }, colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.primaryContainer), contentColor = Color.Black)) {
+        Button(onClick = { onEvent(onMaintenanceListEvent.onButtonAddMaintenancePush) }, colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.primaryContainer), contentColor = Color.Black), modifier = Modifier.padding(bottom = 20.dp)) {
             Text(text = "Ajouter un acte d'entretien")
         }
             Row(
