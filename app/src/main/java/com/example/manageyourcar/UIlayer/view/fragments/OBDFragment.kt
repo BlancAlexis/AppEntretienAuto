@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.manageyourcar.UIlayer.viewmodel.OBDViewModel
 import com.example.manageyourcar.databinding.FragmentObdBinding
+import com.example.manageyourcar.domainLayer.bluetooth.ConnectedBluetoothDevice
 import com.github.aachartmodel.aainfographics.aachartcreator.AAChartModel
 import com.github.aachartmodel.aainfographics.aachartcreator.AAChartType
 import com.github.aachartmodel.aainfographics.aachartcreator.AASeriesElement
@@ -19,7 +20,10 @@ class OBDFragment : Fragment() {
     private val obdViewModel: OBDViewModel by viewModel()
     private lateinit var binding: FragmentObdBinding
 
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        obdViewModel.getRPM()
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
