@@ -15,18 +15,28 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.example.manageyourcar.R
+import com.example.manageyourcar.UIlayer.AppApplication
+import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.databinding.ActivityMainBinding
+import com.example.manageyourcar.domainLayer.useCaseBusiness.LogoutUserUseCase
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.elevation.SurfaceColors
 import com.google.android.material.navigation.NavigationView
+import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelectedListener, KoinComponent {
     private lateinit var navController: NavController
     private lateinit var binding: ActivityMainBinding
+    private val logoutUserUseCase by inject<LogoutUserUseCase>()
+
     private val bluetoothManager by lazy {
         applicationContext.getSystemService(BluetoothManager::class.java)
     }
@@ -126,7 +136,13 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             }
 
             R.id.nav_logout -> {
-                print("déco")
+                lifecycleScope.launch {
+                    when(logoutUserUseCase.logoutUser(AppApplication.instance.applicationContext)){
+                        is Ressource.Error -> println("error")
+                        is Ressource.Loading -> println("load")
+                        is Ressource.Success -> finish() //Faire une chose qui bloque si fail?
+                    }
+                }
             }
         }
         return true
