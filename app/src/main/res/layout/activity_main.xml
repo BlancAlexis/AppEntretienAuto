@@ -25,17 +25,21 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
+        app:backgroundTint="#ff565454"
         app:fabAlignmentMode="center"
-        app:labelVisibilityMode="selected"
-        >
+        app:labelVisibilityMode="selected">
+
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigationView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
+            android:background="#565454"
+            android:clickable="false"
+            app:itemIconTint="@color/onPrimary"
+            app:itemTextColor="#FFFFFF"
             app:labelVisibilityMode="labeled"
-            app:menu="@menu/bottom_bar_menu"
-            />
+            app:menu="@menu/bottom_bar_menu" />
     </com.google.android.material.bottomappbar.BottomAppBar>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
