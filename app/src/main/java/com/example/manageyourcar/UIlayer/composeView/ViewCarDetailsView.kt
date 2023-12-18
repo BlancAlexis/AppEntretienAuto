@@ -26,6 +26,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonColors
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -37,6 +39,7 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TileMode
@@ -63,6 +66,7 @@ import com.example.manageyourcar.UIlayer.composeView.common.InformationBox
 import com.example.manageyourcar.UIlayer.composeView.common.InformationRow
 import com.example.manageyourcar.UIlayer.viewmodel.UserSubscriptionEvent
 import com.example.manageyourcar.UIlayer.viewmodel.ViewCarDetailsEvent
+import com.example.manageyourcar.UIlayer.viewmodel.onCarRequest
 import com.example.manageyourcar.UIlayer.viewmodel.onMaintenanceEvent
 import com.example.manageyourcar.dataLayer.model.Car
 import java.text.DateFormat
@@ -71,6 +75,10 @@ import java.time.ZoneOffset.UTC
 import java.util.Calendar
 import java.util.Date
 import java.util.TimeZone
+
+fun IconButton(onClick: () -> Unit) {
+
+}
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -217,24 +225,28 @@ fun ViewCarDetailsView(
                             Modifier.padding(top = 30.dp, bottom = 30.dp),
                         ) {
                             if (pagerState.currentPage != 0) {
-                                Icon(
-                                    modifier = Modifier.size(36.dp),
-                                    painter = painterResource(R.drawable.baseline_arrow_back_24),
-                                    contentDescription = "",
-                                    tint = Color(0, 29, 54),
-                                )
+                                IconButton(onClick = {}) {
+                                    Icon(
+                                        painter = painterResource(R.drawable.baseline_arrow_back_24),
+                                        contentDescription = "",
+                                        tint = Color(0, 29, 54),
+                                        modifier = Modifier.size(36.dp)
+                                    )
+                                }
                             }
                             Box(
                                 Modifier.width(200.dp)
                             ) {
                             }
                             if (pagerState.currentPage != uiState.cars.size - 1) {
-                                Icon(
-                                    modifier = Modifier.size(36.dp),
-                                    painter = painterResource(R.drawable.baseline_arrow_forward_24),
-                                    contentDescription = "",
-                                    tint = Color(0, 29, 54),
-                                )
+                                IconButton(onClick = { /* do something */ }) {
+                                    Icon(
+                                        painter = painterResource(R.drawable.baseline_arrow_forward_24),
+                                        contentDescription = "",
+                                        tint = Color(0, 29, 54),
+                                        modifier = Modifier.size(36.dp)
+                                    )
+                                }
                             }
                         }
                     }
