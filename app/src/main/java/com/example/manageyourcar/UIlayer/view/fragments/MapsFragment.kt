@@ -43,8 +43,8 @@ class MapsFragment : Fragment(), LocationListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        if (accessLocationPermissionStatus(context)) setupLocationProviderClient(context)
+//        locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+//        if (accessLocationPermissionStatus(context)) setupLocationProviderClient(context)
     }
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -97,17 +97,5 @@ class MapsFragment : Fragment(), LocationListener {
 
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray,
-    ) {
-        when (requestCode) {
-            LOCATION_REQUEST_CODE -> {
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                    context?.let { setupLocationProviderClient(it) }
-                else showSecondChangePositionRequest()
-            }
-        }
-    }
+
 }
