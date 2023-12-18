@@ -123,12 +123,12 @@ fun AddMaintenanceView(
                                 }
                             ,
                         ) {
-
-
                             Image(
+                                modifier = Modifier.padding(start = 15.dp),
                                 painter = painterResource(id = uiState.listMaintenance[page].image),
                                 contentDescription = ""
                             )
+                            Text(text = uiState.listMaintenance[page].name, fontSize = 25.sp, fontWeight = FontWeight.Bold, color = Color.White, modifier = Modifier.padding(start = 25.dp, top = 200.dp))
                         }
                     }
             Row(
@@ -142,10 +142,10 @@ fun AddMaintenanceView(
                     val color = if (pagerState.currentPage == iteration) Color.DarkGray else Color.LightGray
                     Box(
                         modifier = Modifier
-                            .padding(2.dp)
+                            .padding(bottom = 20.dp, top = 5.dp, start = 3.dp, end = 3.dp)
                             .clip(CircleShape)
                             .background(color)
-                            .size(10.dp)
+                            .size(6.dp)
                     )
                 }
             }
@@ -165,7 +165,7 @@ fun AddMaintenanceView(
                     },
                     textFieldValue = uiState.price.toString(),
                     label = "Prix",
-                    modifier = Modifier.fillMaxWidth(0.9f)
+                    modifier = Modifier.fillMaxWidth(0.9f).padding(bottom = 20.dp)
                 )
                 CustomTextField(
                     keyboardType = KeyboardType.Number,
