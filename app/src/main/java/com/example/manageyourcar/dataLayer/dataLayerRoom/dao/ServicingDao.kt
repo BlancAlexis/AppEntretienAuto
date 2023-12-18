@@ -35,7 +35,7 @@ interface ServicingDao {
     @Transaction
     suspend fun upsertServicing(maintenanceEntity: MaintenanceEntity) {
         val id = addNewServicing(maintenanceEntity)
-            updateServicing(maintenanceEntity)
+        updateServicing(maintenanceEntity)
     }
 
     @Query("SELECT * FROM servicing WHERE user_id = :userId")

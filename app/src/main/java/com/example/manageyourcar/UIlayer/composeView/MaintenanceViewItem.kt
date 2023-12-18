@@ -38,7 +38,7 @@ fun MaintenanceViewItem(
     Card(
         modifier = Modifier
             .wrapContentSize()
-            .padding(10.dp),
+            .padding(15.dp),
         shape = RoundedCornerShape(7.dp),
         elevation = CardDefaults.cardElevation()
     ) {
@@ -73,7 +73,7 @@ fun MaintenanceViewItem(
                     uiState.description?.let {
                         Text(
                             text = it,
-                            textAlign = TextAlign.Center,
+                            textAlign = TextAlign.Start,
                             modifier = Modifier.fillMaxWidth(0.7f)
                         )
                     }

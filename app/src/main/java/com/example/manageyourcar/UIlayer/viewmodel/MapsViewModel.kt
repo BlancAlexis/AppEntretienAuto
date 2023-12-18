@@ -24,4 +24,8 @@ class MapsViewModel : ViewModel(), KoinComponent {
             }
         }
     }
+
+    fun onLocationChanged(latitude: Double, longitude: Double) {
+
+    }
 }
