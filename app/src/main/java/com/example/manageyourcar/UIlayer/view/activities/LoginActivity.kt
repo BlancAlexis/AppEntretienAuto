@@ -13,5 +13,6 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        window.navigationBarColor = getColor(R.color.primaryColor)
     }
 }

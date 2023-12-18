@@ -1,6 +1,7 @@
 package com.example.manageyourcar.UIlayer.view.activities
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothManager
 import android.content.Intent
@@ -9,6 +10,8 @@ import android.os.Build
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -16,6 +19,7 @@ import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.example.manageyourcar.R
 import com.example.manageyourcar.databinding.ActivityMainBinding
 import com.google.android.gms.location.LocationServices
+import com.google.android.material.elevation.SurfaceColors
 
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
@@ -31,6 +35,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        window.navigationBarColor = getColor(R.color.darkGray)
 
         val enableBluetoothLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
