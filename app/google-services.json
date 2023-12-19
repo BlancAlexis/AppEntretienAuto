@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "1013761663908",
+    "firebase_url": "https://manageyourcar-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "manageyourcar",
     "storage_bucket": "manageyourcar.appspot.com"
   },
@@ -12,7 +13,20 @@
           "package_name": "com.example.manageyourcar"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1013761663908-slm6ne3tla3l7mk4i5i51mof50a6liia.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.manageyourcar",
+            "certificate_hash": "fda615624b9c0aa63b7f31fb36f1b955ba717156"
+          }
+        },
+        {
+          "client_id": "1013761663908-sdoe6887aa1h8cpvlvta387b68upioe9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDoMeEh35sLtn7Y6iCffQGfobLjvgMiZRg"
@@ -20,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1013761663908-sdoe6887aa1h8cpvlvta387b68upioe9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

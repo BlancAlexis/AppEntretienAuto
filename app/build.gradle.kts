@@ -110,8 +110,10 @@ android {
         implementation("com.google.android.libraries.places:places:3.2.0")
         implementation("com.google.maps.android:places-ktx:2.0.0")
 
-        //Firebase
-        implementation("com.google.firebase:firebase-database:20.3.0")
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+    implementation("com.google.firebase:firebase-auth:22.3.0")
 
         //Graphique
         implementation("com.github.AAChartModel:AAChartCore-Kotlin:7.1.0")
