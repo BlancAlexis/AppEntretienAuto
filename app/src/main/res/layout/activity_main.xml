@@ -9,12 +9,11 @@
     tools:openDrawer="start"
     tools:context=".UIlayer.view.activities.MainActivity"
     >
+    <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-  >
-        <androidx.appcompat.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbarMain"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
@@ -35,33 +34,27 @@
         app:navGraph="@navigation/navigation_main"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toTopOf="@id/toolbarMain"
+        app:layout_constraintBottom_toBottomOf="@id/bottomNavigationView"/>
 
-    <com.google.android.material.bottomappbar.BottomAppBar
-        android:id="@+id/bottomAppBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom"
-        app:backgroundTint="#ff565454"
-        app:fabAlignmentMode="center"
-        app:labelVisibilityMode="selected">
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigationView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             android:background="#565454"
             android:clickable="false"
             app:itemIconTint="@color/onPrimary"
             app:itemTextColor="#FFFFFF"
             app:labelVisibilityMode="labeled"
             app:menu="@menu/bottom_bar_menu" />
-    </com.google.android.material.bottomappbar.BottomAppBar>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"

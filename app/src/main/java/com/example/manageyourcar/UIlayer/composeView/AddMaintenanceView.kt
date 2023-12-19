@@ -71,7 +71,6 @@ fun AddMaintenanceView(
         if (uiState.onInternetLost) {
             CustomDialog(title = "Internet perdu")
         } else {
-
             val showCalendar = remember { mutableStateOf(false) }
             val selectedDate = remember { mutableStateOf(Date.from(Instant.now())) }
 

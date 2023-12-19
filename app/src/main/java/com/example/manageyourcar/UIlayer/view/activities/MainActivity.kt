@@ -87,7 +87,6 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         val view = binding.root
         setContentView(view)
         navController = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment_login) as NavHostFragment).navController
-        setSupportActionBar(binding.bottomAppBar)
         setupWithNavController(binding.bottomNavigationView, navController)
         binding.toolbarMain.setBackgroundColor(getColor(R.color.darkGray))
         setSupportActionBar(binding.toolbarMain)
