@@ -9,33 +9,35 @@
     tools:openDrawer="start"
     tools:context=".UIlayer.view.activities.MainActivity"
     >
-    <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.Toolbar
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbarMain"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="@color/black"
             android:fitsSystemWindows="true"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/nav_host_fragment_login"
             app:titleTextColor="@color/black" />
 
 
-    <androidx.fragment.app.FragmentContainerView
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:id="@+id/nav_host_fragment_login"
-        app:defaultNavHost="true"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        app:navGraph="@navigation/navigation_main"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/toolbarMain"
-        app:layout_constraintBottom_toBottomOf="@id/bottomNavigationView"/>
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/nav_host_fragment_login"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:defaultNavHost="true"
+            app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbarMain"
+            app:navGraph="@navigation/navigation_main" />
 
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -53,9 +55,7 @@
             app:menu="@menu/bottom_bar_menu" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
