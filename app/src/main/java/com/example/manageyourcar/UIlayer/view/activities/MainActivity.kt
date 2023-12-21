@@ -49,7 +49,9 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        window.navigationBarColor = getColor(R.color.darkGray)
+        window.navigationBarColor = getColor(R.color.darkGray) // Espace sous bottomAppBar en gris
+        window.statusBarColor = getColor(R.color.darkGray) // Espace au dessus de Toolbar en gris
+
 
         val enableBluetoothLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
