@@ -21,7 +21,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.manageyourcar.R
-import com.example.manageyourcar.UIlayer.composeView.UIState.ViewCarDetailsUIState
 import java.util.Calendar
 
 @Composable

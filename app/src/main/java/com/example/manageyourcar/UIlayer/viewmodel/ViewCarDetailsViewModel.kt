@@ -8,7 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.composeView.UIState.AddVehiculeMaintenanceUiState
-import com.example.manageyourcar.UIlayer.composeView.UIState.ViewCarDetailsUIState
+import com.example.manageyourcar.UIlayer.composeView.UIState.ViewCarDetailsState
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.dataLayer.model.Car
 import com.example.manageyourcar.dataLayer.model.MaintenanceServiceType
@@ -23,7 +23,7 @@ import org.koin.core.component.inject
 
 class ViewCarDetailsViewModel : ViewModel(), KoinComponent {
     private val getUserCarsUseCase by inject<GetUserCarsUseCase>()
-    private val _uiState = MutableStateFlow(ViewCarDetailsUIState())
+    private val _uiState = MutableStateFlow<ViewCarDetailsState>(ViewCarDetailsState.Loading)
     val uiState = _uiState.asStateFlow()
     private lateinit var navController: NavController
 
@@ -55,7 +55,7 @@ class ViewCarDetailsViewModel : ViewModel(), KoinComponent {
 
     private fun updateListCar(data: List<Car>) {
         _uiState.update {
-            it.copy(
+            ViewCarDetailsState.ViewCarDetailsStateDetailsUIState(
                 cars = data
             )
         }

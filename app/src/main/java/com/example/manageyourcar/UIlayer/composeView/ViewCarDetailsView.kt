@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -25,6 +26,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonColors
@@ -59,7 +61,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.composeView.UIState.SignInUiState
-import com.example.manageyourcar.UIlayer.composeView.UIState.ViewCarDetailsUIState
+import com.example.manageyourcar.UIlayer.composeView.UIState.ViewCarDetailsState
 import com.example.manageyourcar.UIlayer.composeView.common.CustomDialog
 import com.example.manageyourcar.UIlayer.composeView.common.CustomTextField
 import com.example.manageyourcar.UIlayer.composeView.common.InformationBox
@@ -83,169 +85,185 @@ fun IconButton(onClick: () -> Unit) {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ViewCarDetailsView(
-    uiState: ViewCarDetailsUIState,
+    uiState: ViewCarDetailsState,
     onEvent: (ViewCarDetailsEvent) -> Unit = {}
 ) {
     val juraFamily = FontFamily(
         Font(R.font.jura, FontWeight.Medium)
     )
-
-    Column(
-        modifier = Modifier
-            .fillMaxHeight()
-            .fillMaxWidth()
-            .background(Color(0, 97, 162))
-
-    ) {
-        Text(
-            text = "Vos Véhicules",
+    if (uiState is ViewCarDetailsState.Loading){
+        Column (
+            modifier = Modifier.fillMaxSize()){
+            
+        }
+        CircularProgressIndicator(
             modifier = Modifier
+                .size(50.dp))
+    }
+else {
+    uiState as ViewCarDetailsState.ViewCarDetailsStateDetailsUIState
+        Column(
+            modifier = Modifier
+                .fillMaxHeight()
                 .fillMaxWidth()
-                .padding(top = 20.dp),
-            textAlign = TextAlign.Center,
-            fontFamily = juraFamily,
-            fontSize = 36.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.White,
-        )
-        TextButton(
-            colors = ButtonDefaults.outlinedButtonColors(containerColor = Color(209, 228, 255)),
-            onClick = {
-                onEvent(ViewCarDetailsEvent.OnClickAddCarButton)
-            },
-            shape = RoundedCornerShape(30.dp),
-            modifier = Modifier
-                .align(CenterHorizontally)
-                .padding(top = 20.dp)
-                .height(43.dp),
+                .background(Color(0, 97, 162))
+
         ) {
             Text(
-                text = "Ajouter une voiture",
+                text = "Vos Véhicules",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 20.dp),
                 textAlign = TextAlign.Center,
                 fontFamily = juraFamily,
-                fontSize = 20.sp,
+                fontSize = 36.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color(0, 29, 54),
+                color = Color.White,
             )
-        }
-
-        val pagerState = rememberPagerState(pageCount = { uiState.cars.size })
-        LaunchedEffect(pagerState) {
-            snapshotFlow { pagerState.currentPage }.collect { page ->
-                Log.d("Page change", "Page changed to $page")
-            }
-        }
-
-        HorizontalPager(state = pagerState) {
-            val realseDate = Calendar.getInstance();
-            realseDate.setTime(uiState.cars[pagerState.currentPage].releaseDate);
-
-            Column(
+            TextButton(
+                colors = ButtonDefaults.outlinedButtonColors(containerColor = Color(209, 228, 255)),
+                onClick = {
+                    onEvent(ViewCarDetailsEvent.OnClickAddCarButton)
+                },
+                shape = RoundedCornerShape(30.dp),
                 modifier = Modifier
-                    .fillMaxHeight()
-                    .fillMaxWidth()
-                    //.background(Color(209, 228, 255))
-                    .padding(start = 20.dp, end = 20.dp, top = 15.dp),
-                verticalArrangement = Arrangement.Top,
-                horizontalAlignment = CenterHorizontally
+                    .align(CenterHorizontally)
+                    .padding(top = 20.dp)
+                    .height(43.dp),
             ) {
-                Image(
-                    contentScale = ContentScale.Crop,
-                    painter = painterResource(id = R.drawable.citroen),
-                    contentDescription = "",
-                    modifier = Modifier
-                        .clip(
-                            shape = RoundedCornerShape(
-                                topStart = 20.dp,
-                                topEnd = 20.dp
-                            )
-                        )
-                        .fillMaxWidth()
-                        .height(138.dp),
+                Text(
+                    text = "Ajouter une voiture",
+                    textAlign = TextAlign.Center,
+                    fontFamily = juraFamily,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0, 29, 54),
                 )
-                Box(
-                    modifier = Modifier.padding(0.dp)
+            }
+
+            val pagerState = rememberPagerState(pageCount = {    uiState.cars.size })
+            LaunchedEffect(pagerState) {
+                snapshotFlow { pagerState.currentPage }.collect { page ->
+                    Log.d("Page change", "Page changed to $page")
+                }
+            }
+
+            HorizontalPager(state = pagerState) {
+                val realseDate = Calendar.getInstance();
+                realseDate.setTime(uiState.cars[pagerState.currentPage].releaseDate);
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .fillMaxWidth()
+                        //.background(Color(209, 228, 255))
+                        .padding(start = 20.dp, end = 20.dp, top = 15.dp),
+                    verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = CenterHorizontally
                 ) {
-                    Column(
-                        Modifier
-                            .background(
-                                Color(209, 228, 255),
-                                shape = RoundedCornerShape(bottomStart = 20.dp, bottomEnd = 20.dp)
+                    Image(
+                        contentScale = ContentScale.Crop,
+                        painter = painterResource(id = R.drawable.citroen),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .clip(
+                                shape = RoundedCornerShape(
+                                    topStart = 20.dp,
+                                    topEnd = 20.dp
+                                )
                             )
-                            .fillMaxWidth(),
-                        horizontalAlignment = CenterHorizontally,
+                            .fillMaxWidth()
+                            .height(138.dp),
+                    )
+                    Box(
+                        modifier = Modifier.padding(0.dp)
                     ) {
-                        Text(
-                            uiState.cars[pagerState.currentPage].brand + " " + uiState.cars[pagerState.currentPage].model,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 30.dp, bottom = 30.dp),
-                            color = Color(0, 29, 54),
-                            textAlign = TextAlign.Center,
-                            fontFamily = juraFamily,
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.Bold,
-                        )
-                        InformationRow(
-                            title1 = "Parution",
-                            content1 = realseDate.get(Calendar.YEAR).toString(),
-                            icon1 = painterResource(R.drawable.outline_calendar_month_24),
-                            title2 = "Carburant",
-                            content2 = uiState.cars[pagerState.currentPage].fuel ?: "N/A",
-                            icon2 = painterResource(R.drawable.baseline_oil_barrel_24)
-                        )
-                        InformationRow(
-                            title1 = "Transmission",
-                            content1 = uiState.cars[pagerState.currentPage].transmission ?: "N/A",
-                            icon1 = painterResource(R.drawable.auto_transmission),
-                            title2 = "Motorisation",
-                            content2 = uiState.cars[pagerState.currentPage].motorization ?: "N/A",
-                            icon2 = painterResource(R.drawable.baseline_directions_car_24),
-                            modifier = Modifier.padding(top = 10.dp),
-                        )
-                        InformationRow(
-                            title1 = "Puissance",
-                            content1 = uiState.cars[pagerState.currentPage].power.toString() + "ch",
-                            icon1 = painterResource(R.drawable.baseline_bolt_24),
-                            title2 = "Couple",
-                            content2 = uiState.cars[pagerState.currentPage].torque.toString() + "nm",
-                            icon2 = painterResource(R.drawable.baseline_fast_forward_24),
-                            modifier = Modifier.padding(top = 10.dp),
-                        )
-                        InformationRow(
-                            title1 = "Vitesse Max.",
-                            content1 = uiState.cars[pagerState.currentPage].maxSpeed.toString() + "km/h",
-                            icon1 = painterResource(R.drawable.outline_speed_24),
-                            title2 = "Kilométrage",
-                            content2 = uiState.cars[pagerState.currentPage].mileage.toString() + "km",
-                            icon2 = painterResource(R.drawable.baseline_auto_graph_24),
-                            modifier = Modifier.padding(top = 10.dp, bottom = 10.dp),
-                        )
-                        Row(
-                            Modifier.padding(top = 30.dp, bottom = 30.dp),
+                        Column(
+                            Modifier
+                                .background(
+                                    Color(209, 228, 255),
+                                    shape = RoundedCornerShape(
+                                        bottomStart = 20.dp,
+                                        bottomEnd = 20.dp
+                                    )
+                                )
+                                .fillMaxWidth(),
+                            horizontalAlignment = CenterHorizontally,
                         ) {
-                            if (pagerState.currentPage != 0) {
-                                IconButton(onClick = {}) {
-                                    Icon(
-                                        painter = painterResource(R.drawable.baseline_arrow_back_24),
-                                        contentDescription = "",
-                                        tint = Color(0, 29, 54),
-                                        modifier = Modifier.size(36.dp)
-                                    )
-                                }
-                            }
-                            Box(
-                                Modifier.width(200.dp)
+                            Text(
+                                uiState.cars[pagerState.currentPage].brand + " " + uiState.cars[pagerState.currentPage].model,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 30.dp, bottom = 30.dp),
+                                color = Color(0, 29, 54),
+                                textAlign = TextAlign.Center,
+                                fontFamily = juraFamily,
+                                fontSize = 24.sp,
+                                fontWeight = FontWeight.Bold,
+                            )
+                            InformationRow(
+                                title1 = "Parution",
+                                content1 = realseDate.get(Calendar.YEAR).toString(),
+                                icon1 = painterResource(R.drawable.outline_calendar_month_24),
+                                title2 = "Carburant",
+                                content2 = uiState.cars[pagerState.currentPage].fuel ?: "N/A",
+                                icon2 = painterResource(R.drawable.baseline_oil_barrel_24)
+                            )
+                            InformationRow(
+                                title1 = "Transmission",
+                                content1 = uiState.cars[pagerState.currentPage].transmission
+                                    ?: "N/A",
+                                icon1 = painterResource(R.drawable.auto_transmission),
+                                title2 = "Motorisation",
+                                content2 = uiState.cars[pagerState.currentPage].motorization
+                                    ?: "N/A",
+                                icon2 = painterResource(R.drawable.baseline_directions_car_24),
+                                modifier = Modifier.padding(top = 10.dp),
+                            )
+                            InformationRow(
+                                title1 = "Puissance",
+                                content1 = uiState.cars[pagerState.currentPage].power.toString() + "ch",
+                                icon1 = painterResource(R.drawable.baseline_bolt_24),
+                                title2 = "Couple",
+                                content2 = uiState.cars[pagerState.currentPage].torque.toString() + "nm",
+                                icon2 = painterResource(R.drawable.baseline_fast_forward_24),
+                                modifier = Modifier.padding(top = 10.dp),
+                            )
+                            InformationRow(
+                                title1 = "Vitesse Max.",
+                                content1 = uiState.cars[pagerState.currentPage].maxSpeed.toString() + "km/h",
+                                icon1 = painterResource(R.drawable.outline_speed_24),
+                                title2 = "Kilométrage",
+                                content2 = uiState.cars[pagerState.currentPage].mileage.toString() + "km",
+                                icon2 = painterResource(R.drawable.baseline_auto_graph_24),
+                                modifier = Modifier.padding(top = 10.dp, bottom = 10.dp),
+                            )
+                            Row(
+                                Modifier.padding(top = 30.dp, bottom = 30.dp),
                             ) {
-                            }
-                            if (pagerState.currentPage != uiState.cars.size - 1) {
-                                IconButton(onClick = { /* do something */ }) {
-                                    Icon(
-                                        painter = painterResource(R.drawable.baseline_arrow_forward_24),
-                                        contentDescription = "",
-                                        tint = Color(0, 29, 54),
-                                        modifier = Modifier.size(36.dp)
-                                    )
+                                if (pagerState.currentPage != 0) {
+                                    IconButton(onClick = {}) {
+                                        Icon(
+                                            painter = painterResource(R.drawable.baseline_arrow_back_24),
+                                            contentDescription = "",
+                                            tint = Color(0, 29, 54),
+                                            modifier = Modifier.size(36.dp)
+                                        )
+                                    }
+                                }
+                                Box(
+                                    Modifier.width(200.dp)
+                                ) {
+                                }
+                                if (pagerState.currentPage != uiState.cars.size - 1) {
+                                    IconButton(onClick = { /* do something */ }) {
+                                        Icon(
+                                            painter = painterResource(R.drawable.baseline_arrow_forward_24),
+                                            contentDescription = "",
+                                            tint = Color(0, 29, 54),
+                                            modifier = Modifier.size(36.dp)
+                                        )
+                                    }
                                 }
                             }
                         }
@@ -287,9 +305,4 @@ fun PreviewViewCarDetailsView() {
         transmission = "Manuelle",
     )
 
-    ViewCarDetailsView(
-        uiState = ViewCarDetailsUIState(
-            carstest
-        )
-    )
 }
