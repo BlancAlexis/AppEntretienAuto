@@ -2,8 +2,9 @@ package com.example.manageyourcar.UIlayer.view.fragments
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.location.Location
 import android.os.Bundle
+import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,19 +14,26 @@ import androidx.fragment.app.viewModels
 import com.example.manageyourcar.BuildConfig
 import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.viewmodel.MapsViewModel
-import com.google.android.gms.location.LocationListener
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
-class MapsFragment : Fragment(), LocationListener {
-   // val navController by lazy { findNavController() }
-    val key = BuildConfig.MAPS_API_KEY
+class MapsFragment : Fragment() {
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+
+    private val key = BuildConfig.MAPS_API_KEY
     val mapsViewModel by viewModels<MapsViewModel>()
+    private lateinit var googleMap: GoogleMap
     private val callback = OnMapReadyCallback { googleMap ->
+        this.googleMap = googleMap
         /**
          * Manipulates the map once available.
          * This callback is triggered when the map is ready to be used.
@@ -36,16 +44,99 @@ class MapsFragment : Fragment(), LocationListener {
          * user has installed Google Play services and returned to the app.
          */
 
-        val sydney = LatLng(-34.0, 151.0)
-        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-//        locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-//        if (accessLocationPermissionStatus(context)) setupLocationProviderClient(context)
+    private fun getLocationUpdates() {
+
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return
+        }
+
+
+        var fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+        var locationRequest: LocationRequest = LocationRequest.create()
+        locationRequest.interval = 10
+
+        val onLocationChanged: LocationCallback = object : LocationCallback() {
+            override fun onLocationResult(p0: LocationResult) {
+                p0 ?: return
+
+                if (p0.locations.isNotEmpty()) {
+                    Log.i(
+                        "TAG",
+                        "onLocationResult: ${p0.locations[0].latitude} ${p0.locations[0].longitude}"
+                    )
+                    val sydney = LatLng(
+                        p0.locations[0].latitude,
+                        p0.locations[0].longitude
+                    )
+                    googleMap.addMarker(
+                        MarkerOptions().position(
+                     sydney
+                        ).title("Marker in Sydney")
+
+                    )
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+
+                    // get latest location
+                    val location =
+                        p0.lastLocation
+                    // use your location object
+                    // get latitude , longitude and other info from this
+                }
+            }
+        }
+
+        fusedLocationProviderClient.requestLocationUpdates(
+            LocationRequest.create()
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                .setInterval(1000)
+                .setFastestInterval(500), onLocationChanged, Looper.getMainLooper()
+        )
     }
+
+
+    //start location updates
+    override fun onStart() {
+        super.onStart()
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+        getLocationUpdates()
+
+    }
+
+
+    // stop location updates
+    private fun stopLocationUpdates() {
+      //  fusedLocationClient.removeLocationUpdates(locationCallback)
+    }
+
+    // stop receiving location update when activity not visible/foreground
+    override fun onPause() {
+        super.onPause()
+        stopLocationUpdates()
+    }
+
+    // start receiving location update when activity  visible/foreground
+    override fun onResume() {
+        super.onResume()
+    }
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -60,42 +151,17 @@ class MapsFragment : Fragment(), LocationListener {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
 
-        mapsViewModel.getCarRepairShop(46.258545, 5.231658)
+        // Obtenir le fournisseur de localisation GPS
 
     }
 
-    private fun fetchUserLocation() {
-        val fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return
-        }
-        fusedLocationClient.lastLocation.addOnSuccessListener {
-            if (it != null) {
-                println("Latitude : " + it.latitude)
-                println("Longitude : " + it.longitude)
-            }
-        }
-    }
     companion object {
         fun newInstance(): MapsFragment {
             return MapsFragment()
         }
     }
 
-    override fun onLocationChanged(location: Location) {
-        mapsViewModel.onLocationChanged(location.latitude, location.longitude)
-
+    override fun onDestroy() {
+        super.onDestroy()
     }
-
-
 }

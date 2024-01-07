@@ -70,7 +70,18 @@
             app:popExitAnim="@anim/slide_out_right"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"/>
+        <action
+        android:id="@+id/action_viewCarDetailsFragment_to_UpdateCarMileage"
+            app:destination="@id/UpdateCarMileage"
+      />
     </fragment>
 
+
+
+
+    <dialog
+        android:id="@+id/UpdateCarMileage"
+        android:name="com.example.manageyourcar.UIlayer.view.fragments.UpdateCarMileage"
+        android:label="fragment_update_car_mileage" />
 
 </navigation>

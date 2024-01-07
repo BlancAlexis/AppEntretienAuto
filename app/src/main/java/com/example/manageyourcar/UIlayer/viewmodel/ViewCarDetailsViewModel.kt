@@ -46,6 +46,9 @@ class ViewCarDetailsViewModel : ViewModel(), KoinComponent {
             is ViewCarDetailsEvent.OnClickAddCarButton -> {
                 navController?.navigate(R.id.action_viewCarDetailsFragment_to_AddCarFragment)
             }
+            is ViewCarDetailsEvent.OnUpdateMileage -> {
+                navController?.navigate(R.id.action_viewCarDetailsFragment_to_UpdateCarMileage)
+            }
         }
     }
 
@@ -65,4 +68,5 @@ class ViewCarDetailsViewModel : ViewModel(), KoinComponent {
 
 sealed interface ViewCarDetailsEvent {
     object OnClickAddCarButton : ViewCarDetailsEvent
+    object OnUpdateMileage : ViewCarDetailsEvent
 }

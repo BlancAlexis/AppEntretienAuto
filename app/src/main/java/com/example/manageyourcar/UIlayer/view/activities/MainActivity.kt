@@ -6,8 +6,11 @@ import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothManager
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Build
 import android.os.Bundle
+import android.os.Looper
+import android.util.Log
 import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -25,6 +28,9 @@ import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.databinding.ActivityMainBinding
 import com.example.manageyourcar.domainLayer.useCaseBusiness.LogoutUserUseCase
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.elevation.SurfaceColors
 import com.google.android.material.navigation.NavigationView
@@ -60,18 +66,18 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         val permissionLauncher = registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()
         ) { perms ->
-            val canEnableBluetooth = if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val canEnableBluetooth = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 perms[Manifest.permission.BLUETOOTH_CONNECT] == true
             } else true
 
-            if(canEnableBluetooth && !isBluetoothEnabled) {
+            if (canEnableBluetooth && !isBluetoothEnabled) {
                 enableBluetoothLauncher.launch(
                     Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
                 )
             }
         }
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             permissionLauncher.launch(
                 arrayOf(
                     Manifest.permission.BLUETOOTH_SCAN,
@@ -88,40 +94,21 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        navController = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment_login) as NavHostFragment).navController
+        navController =
+            (supportFragmentManager.findFragmentById(R.id.nav_host_fragment_login) as NavHostFragment).navController
         setupWithNavController(binding.bottomNavigationView, navController)
         binding.toolbarMain.setBackgroundColor(getColor(R.color.darkGray))
         setSupportActionBar(binding.toolbarMain)
         binding.navView.setNavigationItemSelectedListener(this)
-        val toggle = ActionBarDrawerToggle(this, binding.drawer, binding.toolbarMain, R.string.user_id, R.string.app_name)
+        val toggle = ActionBarDrawerToggle(
+            this,
+            binding.drawer,
+            binding.toolbarMain,
+            R.string.user_id,
+            R.string.app_name
+        )
         binding.drawer.addDrawerListener(toggle)
         toggle.syncState()
-
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return
-        }
-        var fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-        fusedLocationProviderClient.lastLocation.addOnSuccessListener {
-            if (it != null) {
-                println("Latitude : " + it.latitude)
-                println("Longitude : " + it.longitude)
-            }
-        }
 
     }
 

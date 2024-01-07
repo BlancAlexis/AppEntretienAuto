@@ -27,6 +27,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonColors
@@ -102,46 +103,26 @@ fun ViewCarDetailsView(
     }
 else {
     uiState as ViewCarDetailsState.ViewCarDetailsStateDetailsUIState
+
         Column(
             modifier = Modifier
-                .fillMaxHeight()
-                .fillMaxWidth()
-                .background(Color(0, 97, 162))
+                .fillMaxSize()
+                .background(Color(0, 97, 162)),
+            verticalArrangement = Arrangement.Top,
 
         ) {
             Text(
                 text = "Vos Véhicules",
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 20.dp),
+                    .fillMaxWidth(),
                 textAlign = TextAlign.Center,
                 fontFamily = juraFamily,
                 fontSize = 36.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.White,
             )
-            TextButton(
-                colors = ButtonDefaults.outlinedButtonColors(containerColor = Color(209, 228, 255)),
-                onClick = {
-                    onEvent(ViewCarDetailsEvent.OnClickAddCarButton)
-                },
-                shape = RoundedCornerShape(30.dp),
-                modifier = Modifier
-                    .align(CenterHorizontally)
-                    .padding(top = 20.dp)
-                    .height(43.dp),
-            ) {
-                Text(
-                    text = "Ajouter une voiture",
-                    textAlign = TextAlign.Center,
-                    fontFamily = juraFamily,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0, 29, 54),
-                )
-            }
 
-            val pagerState = rememberPagerState(pageCount = {    uiState.cars.size })
+            val pagerState = rememberPagerState(pageCount = { uiState.cars.size })
             LaunchedEffect(pagerState) {
                 snapshotFlow { pagerState.currentPage }.collect { page ->
                     Log.d("Page change", "Page changed to $page")
@@ -194,7 +175,7 @@ else {
                                 uiState.cars[pagerState.currentPage].brand + " " + uiState.cars[pagerState.currentPage].model,
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(top = 30.dp, bottom = 30.dp),
+                                    .padding(top = 5.dp, bottom = 10.dp),
                                 color = Color(0, 29, 54),
                                 textAlign = TextAlign.Center,
                                 fontFamily = juraFamily,
@@ -239,10 +220,11 @@ else {
                                 modifier = Modifier.padding(top = 10.dp, bottom = 10.dp),
                             )
                             Row(
-                                Modifier.padding(top = 30.dp, bottom = 30.dp),
+                                Modifier.padding(top = 5.dp, bottom = 5.dp).fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly
                             ) {
-                                if (pagerState.currentPage != 0) {
-                                    IconButton(onClick = {}) {
+
+                                    IconButton(onClick = {}){
+                                if (pagerState.currentPage != 0)  {
                                         Icon(
                                             painter = painterResource(R.drawable.baseline_arrow_back_24),
                                             contentDescription = "",
@@ -250,10 +232,6 @@ else {
                                             modifier = Modifier.size(36.dp)
                                         )
                                     }
-                                }
-                                Box(
-                                    Modifier.width(200.dp)
-                                ) {
                                 }
                                 if (pagerState.currentPage != uiState.cars.size - 1) {
                                     IconButton(onClick = { /* do something */ }) {
@@ -266,12 +244,43 @@ else {
                                     }
                                 }
                             }
+
                         }
                     }
                 }
             }
-        }
+            Row(modifier = Modifier.fillMaxWidth().background(Color.Black), horizontalArrangement = Arrangement.Center ) {
+                FloatingActionButton(onClick = {
+                    onEvent(ViewCarDetailsEvent.OnUpdateMileage)
+                }) {
+                    Icon(
+                        painter = painterResource(R.drawable.baseline_auto_graph_24),
+                        contentDescription = "",
+                        tint = Color(0, 29, 54),
+                        modifier = Modifier.size(36.dp)
+                    )
+                }
+
+                TextButton(
+                    colors = ButtonDefaults.outlinedButtonColors(containerColor = Color(209, 228, 255)),
+                    onClick = {
+                        onEvent(ViewCarDetailsEvent.OnClickAddCarButton)
+                    },
+                    shape = RoundedCornerShape(30.dp),
+                ) {
+                    Text(
+                        text = "Ajouter une voiture",
+                        textAlign = TextAlign.Center,
+                        fontFamily = juraFamily,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0, 29, 54),
+                    )
+                }
+            }
+
     }
+}
 
 }
 
