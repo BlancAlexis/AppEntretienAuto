@@ -39,6 +39,7 @@ class BluetoothViewModel : ViewModel(), KoinComponent {
     private val bluetoothController by inject<BluetoothController>()
 
 
+
     private val _state = MutableStateFlow(BluetoothUiState())
     val state = combine(
         bluetoothController.scannedDevices,
