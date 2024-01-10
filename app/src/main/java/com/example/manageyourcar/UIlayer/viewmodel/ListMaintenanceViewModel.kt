@@ -129,6 +129,7 @@ fun onBackPressed(){
     fun onEvent(event: onMaintenanceListEvent) {
         when (event) {
             is onMaintenanceListEvent.onButtonAddMaintenancePush -> {
+
                 navController?.navigate(R.id.addMaintenanceFragment)
             }
 

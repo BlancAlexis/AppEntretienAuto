@@ -41,8 +41,11 @@ class AddMaintenanceViewModel : ViewModel(), KoinComponent {
                     is Ressource.Error -> TODO()
                     is Ressource.Loading -> TODO()
                     is Ressource.Success -> result.data?.let {
+                        if(it.isEmpty()){
+                            isMaintenanceAdd.postValue(true)
+                        }
                         updateListCar(it)
-                        if(it.isNotEmpty()){
+                        if (it.isNotEmpty()) {
                             selectedCar = it[0]
                         }
                     }

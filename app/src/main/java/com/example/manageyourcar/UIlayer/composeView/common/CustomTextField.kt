@@ -1,7 +1,6 @@
 package com.example.manageyourcar.UIlayer.composeView.common
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,17 +29,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.manageyourcar.R
 
 
 @Composable
@@ -61,24 +56,26 @@ fun CustomTextField(
     textStyle: TextStyle = TextStyle.Default,
     labelTextStyle: TextStyle = TextStyle.Default,
 ) {
-    val juraFamily = FontFamily(
-        Font(R.font.jura, FontWeight.Medium)
-    )
     Column(
         modifier = modifier,
     ) {
         var localVisualTransformation by remember {
             mutableStateOf(visualTransformation)
         }
+        Row(modifier = Modifier.fillMaxWidth()) {
+            Text(label, style = labelTextStyle) }
+
+        Spacer(modifier = Modifier.height(8.dp))
         Card(
             modifier = Modifier.fillMaxWidth(),
             border = if (!error.isNullOrBlank()) BorderStroke(2.dp, Color.Red) else null,
             shape = RoundedCornerShape(10.dp),
-            colors = CardDefaults.cardColors(containerColor = Color.Transparent)
+            elevation = CardDefaults.cardElevation(8.dp),
+            colors = CardDefaults.cardColors(containerColor = Color.White)
         ) {
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.Start),
-                verticalAlignment = Alignment.CenterVertically,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Box(
                     modifier = Modifier
@@ -88,6 +85,7 @@ fun CustomTextField(
                     contentAlignment = Alignment.TopStart
                 ) {
                     BasicTextField(
+
                         enabled = enabled,
                         readOnly = readOnly,
                         value = textFieldValue,
@@ -98,9 +96,11 @@ fun CustomTextField(
                             imeAction = imeAction,
                             keyboardType = keyboardType
                         ),
-
                         keyboardActions = keyboardActions,
-                        textStyle = textStyle,
+                        textStyle = TextStyle(
+                            color = Color.Black,
+                            fontSize = 16.sp
+                        ),
                         visualTransformation = localVisualTransformation,
                         modifier = Modifier
                             .height(IntrinsicSize.Max)
@@ -110,8 +110,7 @@ fun CustomTextField(
                         Text(
                             text = placeholder,
                             style = textStyle,
-                            color = Color.White,
-                            fontFamily = juraFamily,
+                            color = Color.LightGray
                         )
                     }
                 }
@@ -120,8 +119,9 @@ fun CustomTextField(
                 Text(
                     it,
                     color = Color.Red,
-                    fontSize = 8.sp,
-                    fontStyle = FontStyle.Italic
+                    fontSize = 10.sp,
+                    fontStyle = FontStyle.Italic,
+                    modifier = Modifier.padding(start = 12.dp, bottom = 4.dp)
                 )
             }
         }
@@ -134,7 +134,7 @@ fun CustomTextField(
 fun PreviewCustomDialogCenterd() {
     CustomTextField(
         keyboardType = KeyboardType.Password,
-        placeholder = "Identifiant",
+        label = "password",
         textFieldValue = ""
     )
 }
