@@ -1,5 +1,6 @@
 package com.example.manageyourcar.UIlayer.viewmodel
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.manageyourcar.UIlayer.composeView.UIState.AddCarUIState
@@ -20,6 +21,7 @@ class AddCarViewModel : ViewModel(), KoinComponent {
     private val addCarRoomUseCase by inject<AddCarRoomUseCase>()
     private val getVehiculeBySivNetworkUseCase by inject<GetVehiculeByNetworkUseCase>()
     private val getVehiculeByImmatNetworkUseCase by inject<GetVehiculeByNetworkImmatUseCase>()
+    val dismissFragment : MutableLiveData<Boolean> = MutableLiveData(false)
 
 
     private val _uiState = MutableStateFlow(AddCarUIState())
@@ -30,6 +32,7 @@ class AddCarViewModel : ViewModel(), KoinComponent {
             is onCarRequest.onClickButton -> onValidation()
             is onCarRequest.onImmatChanged -> onChangedImmat(event)
             is onCarRequest.onVINChanged -> onChangedVIN(event)
+            is onCarRequest.onDismiss -> dismissFragment.postValue(true)
         }
     }
 
@@ -131,6 +134,8 @@ class AddCarViewModel : ViewModel(), KoinComponent {
 
 sealed interface onCarRequest {
     object onClickButton : onCarRequest
+    object onDismiss : onCarRequest
+
     data class onVINChanged(val newValue: String) : onCarRequest
     data class onImmatChanged(val newValue: String) : onCarRequest
 }

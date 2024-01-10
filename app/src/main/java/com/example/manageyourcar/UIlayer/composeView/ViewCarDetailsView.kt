@@ -1,6 +1,7 @@
 package com.example.manageyourcar.UIlayer.composeView
 
 import android.util.Log
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -92,16 +93,21 @@ fun ViewCarDetailsView(
     val juraFamily = FontFamily(
         Font(R.font.jura, FontWeight.Medium)
     )
-    if (uiState is ViewCarDetailsState.Loading){
-        Column (
-            modifier = Modifier.fillMaxSize()){
-            
+    AnimatedVisibility(visible = uiState is ViewCarDetailsState.Loading) {
+        Column(
+            modifier = Modifier.fillMaxSize()
+        ) {
+
         }
         CircularProgressIndicator(
             modifier = Modifier
-                .size(50.dp))
+                .size(50.dp)
+        )
     }
-else {
+
+    AnimatedVisibility(visible = uiState is ViewCarDetailsState.ViewCarDetailsStateDetailsUIState) {
+
+
     uiState as ViewCarDetailsState.ViewCarDetailsStateDetailsUIState
 
         Column(
@@ -220,7 +226,9 @@ else {
                                 modifier = Modifier.padding(top = 10.dp, bottom = 10.dp),
                             )
                             Row(
-                                Modifier.padding(top = 5.dp, bottom = 5.dp).fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly
+                                Modifier
+                                    .padding(top = 5.dp, bottom = 5.dp)
+                                    .fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly
                             ) {
 
                                     IconButton(onClick = {}){
@@ -249,7 +257,9 @@ else {
                     }
                 }
             }
-            Row(modifier = Modifier.fillMaxWidth().background(Color.Black), horizontalArrangement = Arrangement.Center ) {
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .background(Color.Black), horizontalArrangement = Arrangement.Center ) {
                 FloatingActionButton(onClick = {
                     onEvent(ViewCarDetailsEvent.OnUpdateMileage)
                 }) {
@@ -281,7 +291,6 @@ else {
 
     }
 }
-
 }
 
 @Preview(showBackground = true)

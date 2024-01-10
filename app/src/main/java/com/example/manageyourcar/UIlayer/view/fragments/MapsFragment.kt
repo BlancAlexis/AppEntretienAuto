@@ -2,7 +2,6 @@ package com.example.manageyourcar.UIlayer.view.fragments
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
@@ -25,7 +24,6 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
@@ -69,13 +67,12 @@ class MapsFragment : Fragment() {
 
 
         val onLocationChanged: LocationCallback = object : LocationCallback() {
-            override fun onLocationResult(p0: LocationResult) {
-                p0 ?: return
+            override fun onLocationResult(location: LocationResult) {
+                location ?: return
 
-                if (p0.locations.isNotEmpty()) {
-                    val bitmap = BitmapFactory.decodeResource(requireActivity().resources, R.drawable.voiture_de_course)
-                    Log.i("TAG", "onLocationResult: ${p0.locations[0].latitude} ${p0.locations[0].longitude}")
-                    val currentPosition = LatLng(p0.locations[0].latitude, p0.locations[0].longitude)
+                if (location.locations.isNotEmpty()) {
+                    Log.i("TAG", "onLocationResult: ${location.locations[0].latitude} ${location.locations[0].longitude}")
+                    val currentPosition = LatLng(location.locations[0].latitude, location.locations[0].longitude)
                     googleMap.addMarker(MarkerOptions().position(currentPosition).title("Vous êtes ici!"))
                 //.icon(BitmapDescriptorFactory.fromBitmap(BitmapUtils.decodeResource(requireActivity().resources,R.drawable.voiture_de_course))))
 
@@ -85,7 +82,7 @@ class MapsFragment : Fragment() {
 
         val locationManager = fusedLocationProviderClient.requestLocationUpdates(
             LocationRequest.create()
-                .setPriority(Priority.PRIORITY_LOW_POWER)
+                .setPriority(Priority.PRIORITY_LOW_POWER) //Pas besoin d'une grosse précision pour ce que l'on fait
                 .setInterval(1000)
                 .setFastestInterval(500), onLocationChanged, Looper.getMainLooper()
         )

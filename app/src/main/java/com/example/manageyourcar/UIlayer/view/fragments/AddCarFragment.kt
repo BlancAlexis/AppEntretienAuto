@@ -8,6 +8,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.example.manageyourcar.UIlayer.composeView.AddCarView
 import com.example.manageyourcar.UIlayer.viewmodel.AddCarViewModel
 import com.example.manageyourcar.dataLayer.ListenerInternet
@@ -55,6 +57,11 @@ class AddCarFragment : Fragment() {
         super.onResume()
         listenerInternet.mutableLiveData.observe(viewLifecycleOwner){
             addCarViewModel.onInternetLost(it)
+        }
+        addCarViewModel.dismissFragment.observe(viewLifecycleOwner){
+            if(it){
+                findNavController().popBackStack()
+            }
         }
     }
 }

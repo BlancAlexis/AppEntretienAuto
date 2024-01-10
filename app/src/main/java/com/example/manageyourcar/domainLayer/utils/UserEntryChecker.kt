@@ -44,8 +44,6 @@ object UserEntryChecker {
             "ErrorMessage.TOO_SHORT"
         } else if (newPassword.length > 12) {
             "ErrorMessage.TOO_LONG"
-        } else if (!newPassword.matches(Regex("(0|\\+33)[1-9]( *[0-9]{2}){4}"))) {
-            "ErrorMessage.ILLEGAL_ARGUMENT"
         } else {
             ""
         }

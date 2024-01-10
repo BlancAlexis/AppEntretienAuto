@@ -1,11 +1,17 @@
 package com.example.manageyourcar.UIlayer.composeView
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -24,6 +30,8 @@ import com.example.manageyourcar.UIlayer.composeView.UIState.AddCarUIState
 import com.example.manageyourcar.UIlayer.composeView.common.CustomDialog
 import com.example.manageyourcar.UIlayer.composeView.common.CustomPlaqueImmat
 import com.example.manageyourcar.UIlayer.composeView.common.CustomTextField
+import androidx.compose.material3.IconButton
+import androidx.compose.ui.unit.dp
 import com.example.manageyourcar.UIlayer.viewmodel.onCarRequest
 
 @Composable
@@ -38,14 +46,22 @@ fun AddCarView(
     if (openDialog) {
         CustomDialog(
             title = "Numéro VIN",
-            content = "Le numéro VIN est un identifiant unique de la voiture, il peut généralement être trouvé dans la baie moteur ou sur la carte grise du véhicule"
+            content = "Le numéro VIN est un identifiant unique de la voiture, il peut généralement être trouvé dans la baie moteur ou sur la carte grise du véhicule",
+            onDismiss = { openDialog = false }
         )
     }
     Column(
         modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Row ( modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
+            IconButton(
+                onClick = { onEvent(onCarRequest.onDismiss) }
+            ) {
+                Icon(imageVector = Icons.Filled.Close, contentDescription = "Close")
+            }
+        }
+
         Text(text = "Merci d'entrer votre plaque d'immatriculation")
         CustomPlaqueImmat(
             registration = uiState.inputImmat,
@@ -55,9 +71,15 @@ fun AddCarView(
             textAlign = TextAlign.Center, text = "OU", fontSize = 30.sp
         )
 
-        Row(
-            modifier = Modifier.fillMaxWidth(0.9f), horizontalArrangement = Arrangement.Center
+        Box(
+            modifier = Modifier.fillMaxWidth(1f)
         ) {
+            IconButton(
+            onClick = { openDialog = true },
+                modifier = Modifier.align(Alignment.TopEnd).padding(bottom = 40.dp)
+        ) {
+            Icon(imageVector = Icons.Filled.Info, contentDescription = "Close")
+        }
             CustomTextField(
                 onValueChange = { onEvent(onCarRequest.onVINChanged(it)) },
                 textFieldValue = uiState.inputVIN ?: "",
@@ -66,9 +88,11 @@ fun AddCarView(
                 keyboardType = KeyboardType.Text,
                 labelTextStyle = TextStyle(
                     color = Color.Black,
-                )
-
+                ),
+                modifier = Modifier.align(Alignment.BottomCenter)
             )
+
+
         }
 
         Button(onClick = { onEvent(onCarRequest.onClickButton) }) {
