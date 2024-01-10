@@ -8,6 +8,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import com.example.manageyourcar.UIlayer.composeView.AddMaintenanceView
+import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
 import com.example.manageyourcar.UIlayer.viewmodel.AddMaintenanceViewModel
 import com.example.manageyourcar.dataLayer.ListenerInternet
 import com.example.manageyourcar.databinding.FragmentAddMaintenanceCarBinding
@@ -46,10 +47,12 @@ class AddMaintenanceFragment : BottomSheetDialogFragment() {
                 setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
 
                 val maintenanceUiState by addMaintenanceViewModel.uiState.collectAsState()
-                AddMaintenanceView(
-                    uiState = maintenanceUiState,
-                    onEvent = addMaintenanceViewModel::onEvent
-                )
+                ManageYourCarTheme {
+                    AddMaintenanceView(
+                        uiState = maintenanceUiState,
+                        onEvent = addMaintenanceViewModel::onEvent
+                    )
+                }
             }
         }
     }

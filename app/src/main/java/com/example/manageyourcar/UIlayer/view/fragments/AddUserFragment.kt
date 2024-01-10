@@ -10,6 +10,7 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.manageyourcar.UIlayer.composeView.SignInUserView
+import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
 import com.example.manageyourcar.UIlayer.viewmodel.AddUserViewModel
 import com.example.manageyourcar.dataLayer.ListenerInternet
 import com.example.manageyourcar.databinding.FragmentAddUserBinding
@@ -39,10 +40,12 @@ class AddUserFragment : Fragment() {
                 setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
 
                 val addUserUiState by addUserViewModel.uiState.collectAsState()
-                SignInUserView(
-                    uiState = addUserUiState,
-                    onEvent = addUserViewModel::onEvent
-                )
+                ManageYourCarTheme {
+                    SignInUserView(
+                        uiState = addUserUiState,
+                        onEvent = addUserViewModel::onEvent
+                    )
+                }
             }
         }
     }

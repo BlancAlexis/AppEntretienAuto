@@ -15,6 +15,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import com.example.manageyourcar.UIlayer.composeView.BluetoothDeviceView
+import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
 import com.example.manageyourcar.UIlayer.viewmodel.BluetoothViewModel
 import com.example.manageyourcar.databinding.FragmentConnectObdBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -84,10 +85,12 @@ class ConnectObdFragment : Fragment() {
             setContent {
                 setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
                 val bluetoothUiState by connectObdViewModel.state.collectAsState()
-                BluetoothDeviceView(
-                    uiState = bluetoothUiState,
-                    onEvent = connectObdViewModel::onEvent
-                )
+                ManageYourCarTheme {
+                    BluetoothDeviceView(
+                        uiState = bluetoothUiState,
+                        onEvent = connectObdViewModel::onEvent
+                    )
+                }
             }
         }
     }

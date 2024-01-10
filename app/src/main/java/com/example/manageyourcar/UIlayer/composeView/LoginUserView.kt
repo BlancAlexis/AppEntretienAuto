@@ -18,6 +18,7 @@ import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -50,6 +51,7 @@ import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.composeView.UIState.LoginUiState
 import com.example.manageyourcar.UIlayer.composeView.common.CustomDialog
 import com.example.manageyourcar.UIlayer.composeView.common.CustomTextField
+import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
 import com.example.manageyourcar.UIlayer.viewmodel.UserLoginEvent
 import com.example.manageyourcar.dataLayer.model.Car
 import java.util.Calendar
@@ -80,7 +82,7 @@ fun LoginUserView(
             modifier = Modifier
                 .fillMaxSize()
                 .fillMaxWidth()
-                .background(Color(0, 97, 162)),
+                .background(colorScheme.primary),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
@@ -138,7 +140,7 @@ fun LoginUserView(
                 onClick = { onEvent(UserLoginEvent.OnClickSendButton) },
                 modifier = Modifier
                     .width(208.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(209, 228, 255))
+                colors = ButtonDefaults.buttonColors(colorScheme.onSecondary)
             ) {
                 Text(
                     text = "Connexion",

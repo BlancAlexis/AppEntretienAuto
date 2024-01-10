@@ -10,6 +10,7 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import com.example.manageyourcar.UIlayer.composeView.LoginUserView
 import com.example.manageyourcar.UIlayer.composeView.ViewCarDetailsView
+import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
 import com.example.manageyourcar.UIlayer.viewmodel.ViewCarDetailsViewModel
 import com.example.manageyourcar.dataLayer.ListenerInternet
 import com.example.manageyourcar.databinding.ViewCarDetailsBinding
@@ -43,10 +44,12 @@ class ViewCarDetailsFragment: Fragment() {
                 setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
 
                 val viewCarDetailsUIState by viewCarDetailsViewModel.uiState.collectAsState()
-                ViewCarDetailsView(
-                    uiState = viewCarDetailsUIState,
-                    onEvent = viewCarDetailsViewModel::onEvent,
-                )
+                ManageYourCarTheme {
+                    ViewCarDetailsView(
+                        uiState = viewCarDetailsUIState,
+                        onEvent = viewCarDetailsViewModel::onEvent,
+                    )
+                }
             }
         }
     }

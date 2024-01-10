@@ -8,14 +8,13 @@ import android.view.ViewGroup
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.manageyourcar.UIlayer.composeView.LoginUserView
 import com.example.manageyourcar.UIlayer.view.activities.MainActivity
+import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
 import com.example.manageyourcar.UIlayer.viewmodel.LogUserViewModel
 import com.example.manageyourcar.dataLayer.ListenerInternet
 import com.example.manageyourcar.databinding.FragmentLoginUserBinding
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -46,20 +45,23 @@ class LoginUserFragment : Fragment() {
                 setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
 
                 val loginUserUiState by logUserViewModel.uiState.collectAsState()
-                LoginUserView(
-                    uiState = loginUserUiState,
-                    onEvent = logUserViewModel::onEvent
-                )
+                ManageYourCarTheme {
+                    LoginUserView(
+                        uiState = loginUserUiState,
+                        onEvent = logUserViewModel::onEvent
+                    )
+                }
             }
         }
     }
 
     override fun onResume() {
         super.onResume()
-        listenerInternet.mutableLiveData.observe(viewLifecycleOwner){
+        listenerInternet.mutableLiveData.observe(viewLifecycleOwner) {
             logUserViewModel.onInternetLost(it)
         }
     }
+
     companion object {
         fun newInstance(): LoginUserFragment {
             return LoginUserFragment()

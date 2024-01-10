@@ -10,6 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import com.example.manageyourcar.UIlayer.composeView.MaintenanceListView
+import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
 import com.example.manageyourcar.UIlayer.viewmodel.ListMaintenanceViewModel
 import com.example.manageyourcar.dataLayer.ListenerInternet
 import com.example.manageyourcar.dataLayer.model.Car
@@ -51,10 +52,12 @@ class ViewListMaintenanceFragment : Fragment() {
                 setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
 
                 val maintenancesPlannedUIState by listMaintenanceViewModel.uiState.collectAsState()
-                MaintenanceListView(
-                    uiState = maintenancesPlannedUIState,
-                    onEvent = listMaintenanceViewModel::onEvent
-                )
+                ManageYourCarTheme {
+                    MaintenanceListView(
+                        uiState = maintenancesPlannedUIState,
+                        onEvent = listMaintenanceViewModel::onEvent
+                    )
+                }
             }
         }
     }

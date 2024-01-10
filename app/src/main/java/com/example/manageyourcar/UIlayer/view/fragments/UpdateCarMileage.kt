@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import com.example.manageyourcar.UIlayer.composeView.common.CustomDialogKM
+import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class UpdateCarMileage : BottomSheetDialogFragment() {
@@ -21,7 +22,9 @@ class UpdateCarMileage : BottomSheetDialogFragment() {
     ): View? {
         return ComposeView(requireContext()).apply {
             setContent {
-                CustomDialogKM()
+                ManageYourCarTheme {
+                    CustomDialogKM()
+                }
             }
         }
     }
