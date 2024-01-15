@@ -13,7 +13,7 @@ import com.example.manageyourcar.dataLayer.dataLayerRoom.entities.CarEntity
 import com.example.manageyourcar.dataLayer.dataLayerRoom.entities.MaintenanceEntity
 import com.example.manageyourcar.dataLayer.dataLayerRoom.entities.UserEntity
 
-@Database(entities = [CarEntity::class, UserEntity::class, MaintenanceEntity::class], version = 1)
+@Database(entities = [CarEntity::class, UserEntity::class, MaintenanceEntity::class], version = 1, exportSchema = false)
 @TypeConverters(DateConverter::class, MaintenanceServiceConverter::class,CarConverter::class)
 abstract class Database : RoomDatabase() {
     abstract fun getCarDAO(): CarDao

@@ -39,6 +39,7 @@ interface ServicingDao {
     }
 
     @Query("SELECT * FROM servicing WHERE user_id = :userId")
+    @Transaction
     fun getMaintenceActWithCar(userId: Int): Flow<List<MaintenanceWithCarEntity>>
 }
 

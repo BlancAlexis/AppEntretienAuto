@@ -18,8 +18,8 @@ import java.util.Date
 ))
 data class MaintenanceEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    @ColumnInfo(name = "user_id") val userID: Int?=null,
-    @ColumnInfo(name = "car_id") val carID: Int?=null,
+    @ColumnInfo(name = "user_id", index = true) val userID: Int?=null,
+    @ColumnInfo(name = "car_id", index = true) val carID: Int?=null,
     @ColumnInfo(name = "price") val price: Int,
     @ColumnInfo(name = "mileage") val mileage: Int,
     @ColumnInfo(name = "date") val date: Date,

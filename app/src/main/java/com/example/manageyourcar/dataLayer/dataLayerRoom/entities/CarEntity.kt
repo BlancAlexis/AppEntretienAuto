@@ -13,7 +13,7 @@ import java.util.Date
 
 data class CarEntity(
     @PrimaryKey(autoGenerate = true) val carID: Int = 0,
-    @ColumnInfo(name = "owner_id") val ownerID: Int?=null,
+    @ColumnInfo(name = "owner_id", index = true) val ownerID: Int?=null,
     @ColumnInfo(name = "brand") val brand: String,
     @ColumnInfo(name = "model") val model: String,
     @ColumnInfo(name = "releaseDate") val releaseDate: Date,
