@@ -23,5 +23,5 @@ data class CarEntity(
     @ColumnInfo(name = "power") val power: Int,
     @ColumnInfo(name = "torque") val torque: Int,
     @ColumnInfo(name = "maxSpeed") val maxSpeed: Int,
-    @ColumnInfo(name = "mileage") val mileage: Int,
+    @ColumnInfo(name = "mileage") val mileage: List<Int>,
 )

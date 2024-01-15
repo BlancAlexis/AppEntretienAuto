@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ViewCompositionStrategy
@@ -53,6 +54,7 @@ class ViewCarDetailsFragment: Fragment() {
 
     override fun onResume() {
         super.onResume()
+
     }
     companion object {
         fun newInstance(): LoginUserFragment {

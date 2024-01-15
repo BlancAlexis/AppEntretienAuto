@@ -9,6 +9,7 @@ import androidx.navigation.Navigation
 import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.composeView.UIState.AddVehiculeMaintenanceUiState
 import com.example.manageyourcar.UIlayer.composeView.UIState.ViewCarDetailsState
+import com.example.manageyourcar.UIlayer.view.fragments.ViewCarDetailsFragmentDirections
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.dataLayer.model.Car
 import com.example.manageyourcar.dataLayer.model.MaintenanceServiceType
@@ -43,13 +44,20 @@ class ViewCarDetailsViewModel : ViewModel(), KoinComponent {
 
     fun onEvent(event: ViewCarDetailsEvent) {
         when (event) {
-            is ViewCarDetailsEvent.OnClickAddCarButton -> {
-                navController?.navigate(R.id.action_viewCarDetailsFragment_to_AddCarFragment)
-            }
-            is ViewCarDetailsEvent.OnUpdateMileage -> {
-                navController?.navigate(R.id.action_viewCarDetailsFragment_to_UpdateCarMileage)
-            }
+        is ViewCarDetailsEvent.OnClickAddCarButton -> {
+            navController?.navigate(R.id.action_viewCarDetailsFragment_to_AddCarFragment)
         }
+        is ViewCarDetailsEvent.OnUpdateMileage -> {
+            val action = ViewCarDetailsFragmentDirections.actionViewCarDetailsFragmentToUpdateCarMileage(myArg = _uiState.value.let {
+                it.let {
+                    it as ViewCarDetailsState.ViewCarDetailsStateDetailsUIState
+                }.cars[0]
+            })
+            navController?.navigate(action)
+        }
+    }
+
+
     }
 
     fun setNavController(view: View) {
