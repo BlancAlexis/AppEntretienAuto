@@ -40,8 +40,8 @@ class CarRepositoryImpl(private val carDao: CarDao) : CarRepository, KoinCompone
         carDao.updateCar(car.toCarEntity())
     }
 
-    override fun updateCarMileage(car: Car) {
-        carDao.updateCarMileage(car.toCarEntity())
+    override fun updateCarMileage(ListMileage: List<Int>, idCar: Int) {
+        carDao.updateCarMileage(ListMileage, idCar)
     }
 
     override fun deleteCar(idCar: Int) {

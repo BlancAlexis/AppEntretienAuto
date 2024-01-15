@@ -6,12 +6,12 @@ import com.example.manageyourcar.domainLayer.repository.room.CarRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class UpdateCarMileageUseCase : KoinComponent {
+class UpsertCarMileageUseCase : KoinComponent {
     val roomRepository by inject<CarRepository>()
 
     suspend fun updateCarMileage(car: Car): Ressource<Unit> {
         return try {
-            roomRepository.updateCar(car)
+            roomRepository.updateCarMileage(car.mileage, car.carID?:1)
             Ressource.Success(Unit)
         } catch (e: Exception) {
             Ressource.Error(exception = e)

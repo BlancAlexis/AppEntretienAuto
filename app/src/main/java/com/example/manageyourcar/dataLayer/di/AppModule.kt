@@ -44,6 +44,7 @@ import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetwor
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.AddCarRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.DeleteCarRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.GetUserCarsUseCase
+import com.example.manageyourcar.domainLayer.useCaseRoom.car.UpsertCarMileageUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.AddCarMaintenanceUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.DeleteMaintenanceRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.GetAllUserMaintenanceUseCase
@@ -139,6 +140,7 @@ val useCaseModule = module {
     factory { GetUserRoomUseCase() }
     factory { GetUsersRoomUseCase() }
     factory { UpdateUserRoomUseCase() }
+    factory { UpsertCarMileageUseCase() }
     factory { DeleteUserRoomUseCase() }
 
     factory { UpdateMaintenanceRoomUseCase() }

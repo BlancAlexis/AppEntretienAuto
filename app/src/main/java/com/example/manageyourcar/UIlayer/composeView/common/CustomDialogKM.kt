@@ -2,7 +2,9 @@ package com.example.manageyourcar.UIlayer.composeView.common
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -26,8 +28,10 @@ fun CustomDialogKM(
     UpdateMileageCarDetailsUIState: UpdateMileage,
     onEvent: (UpdateCatEvent) -> Unit = {}
 ) {
-    Column (modifier = Modifier.fillMaxSize(0.4f), horizontalAlignment = Alignment.CenterHorizontally){
-        Text(text = "Le kilométrage du véhicule est-il à jour?", fontSize = 20.sp, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, modifier = Modifier.padding(10.dp))
+    Column (
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.wrapContentSize(Alignment.Center).padding(vertical = 10.dp)){
+        Text(text = "Le kilométrage de votre ${UpdateMileageCarDetailsUIState.car?.model?: "véhicule"} est-il à jour?", fontSize = 20.sp, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, modifier = Modifier.padding(10.dp))
 
             TextField(
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -37,12 +41,14 @@ fun CustomDialogKM(
                 placeholder = { Text(text = UpdateMileageCarDetailsUIState.car?.mileage?.last().toString()) },
                 modifier = Modifier.padding(10.dp)
             )
-        }
-        Button(onClick = { onEvent(UpdateCatEvent.OnUpdateMileage)}) {
+
+        Button(
+            modifier = Modifier.fillMaxWidth(0.6f),
+            onClick = { onEvent(UpdateCatEvent.OnUpdateMileage)}) {
             Text(text = "Valider")
 
         }
-
+}
 }
 @Preview(showBackground = true)
 @Composable
