@@ -1,10 +1,10 @@
 package com.example.manageyourcar.dataLayer.dataLayerRoom.repositoryImpl
 
 import com.example.manageyourcar.dataLayer.dataLayerRoom.dao.CarDao
-import com.example.manageyourcar.domainLayer.repository.room.CarRepository
 import com.example.manageyourcar.dataLayer.model.Car
 import com.example.manageyourcar.domainLayer.mappers.CarMappers.toCar
 import com.example.manageyourcar.domainLayer.mappers.CarMappers.toCarEntity
+import com.example.manageyourcar.domainLayer.repository.room.CarRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
@@ -38,6 +38,10 @@ class CarRepositoryImpl(private val carDao: CarDao) : CarRepository, KoinCompone
 
     override fun updateCar(car: Car) {
         carDao.updateCar(car.toCarEntity())
+    }
+
+    override fun updateCarMileage(car: Car) {
+        carDao.updateCarMileage(car.toCarEntity())
     }
 
     override fun deleteCar(idCar: Int) {

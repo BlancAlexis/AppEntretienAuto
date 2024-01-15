@@ -5,7 +5,6 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import com.example.manageyourcar.dataLayer.model.MaintenanceService
-import com.example.manageyourcar.dataLayer.model.MaintenanceServiceType
 import java.util.Date
 
 @Entity(tableName = "servicing", foreignKeys = arrayOf( ForeignKey(entity = UserEntity::class,

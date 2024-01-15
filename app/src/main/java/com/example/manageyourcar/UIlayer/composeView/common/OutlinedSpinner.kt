@@ -13,8 +13,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.manageyourcar.UIlayer.composeView.AddVehiculeMaintenanceView
-import com.example.manageyourcar.UIlayer.composeView.UIState.AddVehiculeMaintenanceUiState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

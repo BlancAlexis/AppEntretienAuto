@@ -7,11 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.manageyourcar.UIlayer.viewmodel.OBDViewModel
 import com.example.manageyourcar.databinding.FragmentObdBinding
-import com.example.manageyourcar.domainLayer.bluetooth.ConnectedBluetoothDevice
 import com.github.aachartmodel.aainfographics.aachartcreator.AAChartModel
 import com.github.aachartmodel.aainfographics.aachartcreator.AAChartType
 import com.github.aachartmodel.aainfographics.aachartcreator.AASeriesElement
-
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class OBDFragment : Fragment() {

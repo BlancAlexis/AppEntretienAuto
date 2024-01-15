@@ -6,11 +6,8 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.util.Log
 import com.example.manageyourcar.dataLayer.di.injectFeature
-import com.example.manageyourcar.dataLayer.model.Entretien
-import com.example.manageyourcar.dataLayer.model.MaintenanceService
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.GlobalContext.startKoin
-import java.util.Date
 
 class AppApplication : Application() {
     val TAG: String = "AppApplication"

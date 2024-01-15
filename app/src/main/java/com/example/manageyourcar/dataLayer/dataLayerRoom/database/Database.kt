@@ -2,7 +2,6 @@ package com.example.manageyourcar.dataLayer.dataLayerRoom.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import com.example.manageyourcar.dataLayer.dataLayerRoom.converter.CarConverter
 import com.example.manageyourcar.dataLayer.dataLayerRoom.converter.DateConverter

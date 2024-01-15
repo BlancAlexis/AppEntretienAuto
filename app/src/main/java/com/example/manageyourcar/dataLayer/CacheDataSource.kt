@@ -1,7 +1,6 @@
 package com.example.manageyourcar.dataLayer
 
 import android.content.Context
-import android.content.SharedPreferences
 import com.example.manageyourcar.R
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 

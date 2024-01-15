@@ -1,7 +1,6 @@
 package com.example.manageyourcar.UIlayer.view.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,14 +15,14 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class UpdateCarMileage : BottomSheetDialogFragment() {
     private val updateCarMileageViewModel: UpdateCarViewModel by viewModel()
+
     val args : UpdateCarMileageArgs by navArgs()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        args.myArg.let {
-            it.toString()
-            it?.let { it1 -> Log.i("UpdateCarMileage", it1.model) }
+        args.myArg?.let {
+           updateCarMileageViewModel.setCar(it)
         }
     }
 
@@ -34,10 +33,10 @@ class UpdateCarMileage : BottomSheetDialogFragment() {
     ): View? {
         return ComposeView(requireContext()).apply {
 
+
             setContent {
                 val UpdateMileageCarDetailsUIState by updateCarMileageViewModel.uiState.collectAsState()
-                CustomDialogKM(UpdateMileageCarDetailsUIState)
-            }
+                CustomDialogKM(UpdateMileageCarDetailsUIState = UpdateMileageCarDetailsUIState, onEvent = updateCarMileageViewModel::onEvent)
+            }  }
         }
-    }
 }

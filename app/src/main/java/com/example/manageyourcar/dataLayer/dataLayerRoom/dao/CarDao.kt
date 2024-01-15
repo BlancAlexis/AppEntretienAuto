@@ -24,6 +24,9 @@ interface CarDao {
     @Update
     fun updateCar(carEntity: CarEntity)
 
+    @Update
+    fun updateCarMileage(carEntity: CarEntity)
+
     @Query("DELETE FROM cars WHERE carID = :idUser")
     fun deleteCar(idUser: Int)
 }

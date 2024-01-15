@@ -9,5 +9,6 @@ interface CarRepository {
     fun getCars(): List<Car>
     fun getCar(idCar: Int): Car
     fun updateCar(car: Car)
+    fun updateCarMileage(car: Car)
     fun deleteCar(idCar: Int)
 }
