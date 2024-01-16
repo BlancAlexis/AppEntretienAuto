@@ -52,13 +52,14 @@ class AddCarFragment : Fragment() {
             }
         }
     }
+
     override fun onResume() {
         super.onResume()
-        listenerInternet.mutableLiveData.observe(viewLifecycleOwner){
+        listenerInternet.mutableLiveData.observe(viewLifecycleOwner) {
             addCarViewModel.onInternetLost(it)
         }
-        addCarViewModel.dismissFragment.observe(viewLifecycleOwner){
-            if(it){
+        addCarViewModel.dismissFragment.observe(viewLifecycleOwner) {
+            if (it) {
                 findNavController().popBackStack()
             }
         }

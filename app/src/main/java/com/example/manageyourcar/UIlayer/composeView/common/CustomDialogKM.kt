@@ -1,7 +1,6 @@
 package com.example.manageyourcar.UIlayer.composeView.common
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
@@ -25,31 +24,41 @@ import com.example.manageyourcar.UIlayer.viewmodel.UpdateCatEvent
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomDialogKM(
-    UpdateMileageCarDetailsUIState: UpdateMileage,
+    uiState: UpdateMileage,
     onEvent: (UpdateCatEvent) -> Unit = {}
 ) {
-    Column (
+    Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.wrapContentSize(Alignment.Center).padding(vertical = 10.dp)){
-        Text(text = "Le kilométrage de votre ${UpdateMileageCarDetailsUIState.car?.model?: "véhicule"} est-il à jour?", fontSize = 20.sp, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, modifier = Modifier.padding(10.dp))
+        modifier = Modifier
+            .wrapContentSize(Alignment.Center)
+            .padding(vertical = 10.dp)
+    ) {
+        Text(
+            text = "Le kilométrage de votre ${uiState.car?.model ?: "véhicule"} est-il à jour?",
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(10.dp)
+        )
 
-            TextField(
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                value = UpdateMileageCarDetailsUIState.newMileage ?: "",
-                onValueChange = { onEvent(UpdateCatEvent.newMileage(it)) },
-                label = { Text(text = "Kilométrage") },
-                placeholder = { Text(text = UpdateMileageCarDetailsUIState.car?.mileage?.last().toString()) },
-                modifier = Modifier.padding(10.dp)
-            )
+        TextField(
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            value = uiState.newMileage ?: "",
+            onValueChange = { onEvent(UpdateCatEvent.newMileage(it)) },
+            label = { Text(text = "Kilométrage") },
+            placeholder = { Text(text = uiState.car?.mileage?.last().toString()) },
+            modifier = Modifier.padding(10.dp)
+        )
 
         Button(
             modifier = Modifier.fillMaxWidth(0.6f),
-            onClick = { onEvent(UpdateCatEvent.OnUpdateMileage)}) {
+            onClick = { onEvent(UpdateCatEvent.OnUpdateMileage) }) {
             Text(text = "Valider")
 
         }
+    }
 }
-}
+
 @Preview(showBackground = true)
 @Composable
 fun previewCustomDialogKM() {

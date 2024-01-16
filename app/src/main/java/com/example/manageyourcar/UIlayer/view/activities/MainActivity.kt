@@ -18,7 +18,8 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelectedListener, KoinComponent {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
+    KoinComponent {
     private lateinit var navController: NavController
     private lateinit var binding: ActivityMainBinding
     private val logoutUserUseCase by inject<LogoutUserUseCase>()
@@ -28,9 +29,6 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
         window.navigationBarColor = getColor(R.color.darkGray) // Espace sous bottomAppBar en gris
         window.statusBarColor = getColor(R.color.darkGray) // Espace au dessus de Toolbar en gris
-
-
-
 
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -67,7 +65,7 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
             R.id.nav_logout -> {
                 lifecycleScope.launch {
-                    when(logoutUserUseCase.logoutUser(AppApplication.instance.applicationContext)){
+                    when (logoutUserUseCase.logoutUser(AppApplication.instance.applicationContext)) {
                         is Ressource.Error -> println("error")
                         is Ressource.Loading -> println("load")
                         is Ressource.Success -> finish() //Faire une chose qui bloque si fail?

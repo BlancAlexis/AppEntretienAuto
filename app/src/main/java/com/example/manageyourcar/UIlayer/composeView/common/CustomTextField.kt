@@ -60,7 +60,8 @@ fun CustomTextField(
             mutableStateOf(visualTransformation)
         }
         Row(modifier = Modifier.fillMaxWidth()) {
-            Text(label, style = labelTextStyle) }
+            Text(label, style = labelTextStyle)
+        }
 
         Spacer(modifier = Modifier.height(8.dp))
         Card(

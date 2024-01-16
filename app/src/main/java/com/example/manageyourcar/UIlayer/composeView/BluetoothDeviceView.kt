@@ -21,7 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.example.manageyourcar.UIlayer.composeView.UIState.BluetoothUiState
-import com.example.manageyourcar.UIlayer.viewmodel.onBluetoothDeviceEvent
+import com.example.manageyourcar.UIlayer.viewmodel.OnBluetoothDeviceEvent
 import com.example.manageyourcar.domainLayer.bluetooth.BluetoothDevice
 
 @Composable
@@ -32,60 +32,74 @@ fun BluetoothDeviceItemView(uiState: BluetoothDevice) {
                 uiState.name?.let { Text(text = it) }
                 Text(text = uiState.address)
             }
-}
+        }
     }
 }
 
 
 @Composable
-fun BluetoothDeviceView (
+fun BluetoothDeviceView(
     uiState: BluetoothUiState,
-    onEvent: (onBluetoothDeviceEvent) -> Unit = {})
-{
+    onEvent: (OnBluetoothDeviceEvent) -> Unit = {}
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Row (
+        Row(
             horizontalArrangement = Arrangement.SpaceEvenly,
             modifier = Modifier.fillMaxWidth()
-        ){
-            Button(onClick = { onEvent(onBluetoothDeviceEvent.OnBluetoothDeviceScanClick) }) {
+        ) {
+            Button(onClick = { onEvent(OnBluetoothDeviceEvent.OnBluetoothDeviceScanClick) }) {
                 Text(text = "Start scan")
             }
-            Button(onClick = { onEvent(onBluetoothDeviceEvent.OnBluetoothDeviceStopScanClick) }) {
+            Button(onClick = { onEvent(OnBluetoothDeviceEvent.OnBluetoothDeviceStopScanClick) }) {
                 Text(text = "End scan")
             }
         }
         LazyColumn(modifier = Modifier.fillMaxWidth()) {
             item {
-                Row (
+                Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(Color.Blue),
-                ){
-                    Text(text = "Available devices", fontSize = 18.sp, fontWeight = FontWeight.ExtraBold, color = Color.White)
+                ) {
+                    Text(
+                        text = "Available devices",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.ExtraBold,
+                        color = Color.White
+                    )
                 }
             }
             itemsIndexed(uiState.scannedDevices) { index, item ->
-                Button(modifier = Modifier.wrapContentSize(), onClick = { onEvent(onBluetoothDeviceEvent.OnBluetoothDeviceClick(item)) }) {
-                BluetoothDeviceItemView(item )}
+                Button(
+                    modifier = Modifier.wrapContentSize(),
+                    onClick = { onEvent(OnBluetoothDeviceEvent.OnBluetoothDeviceClick(item)) }) {
+                    BluetoothDeviceItemView(item)
+                }
                 Divider(modifier = Modifier.fillMaxWidth())
             }
             item {
-                Row (
+                Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(Color.Blue),
-                    ){
-                    Text(text = "Paired devices", fontSize = 18.sp, fontWeight = FontWeight.ExtraBold, color = Color.White)
+                ) {
+                    Text(
+                        text = "Paired devices",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.ExtraBold,
+                        color = Color.White
+                    )
                 }
             }
             itemsIndexed(uiState.pairedDevices) { index, item ->
-                Button(onClick = { onEvent(onBluetoothDeviceEvent.OnBluetoothDeviceClick(item)) }) {
-                    BluetoothDeviceItemView(item)}
+                Button(onClick = { onEvent(OnBluetoothDeviceEvent.OnBluetoothDeviceClick(item)) }) {
+                    BluetoothDeviceItemView(item)
+                }
                 Divider(modifier = Modifier.fillMaxWidth())
             }
         }

@@ -32,76 +32,79 @@ import com.example.manageyourcar.UIlayer.composeView.UIState.AddCarUIState
 import com.example.manageyourcar.UIlayer.composeView.common.CustomDialog
 import com.example.manageyourcar.UIlayer.composeView.common.CustomPlaqueImmat
 import com.example.manageyourcar.UIlayer.composeView.common.CustomTextField
-import com.example.manageyourcar.UIlayer.viewmodel.onCarRequest
+import com.example.manageyourcar.UIlayer.viewmodel.OnCarRequest
 
 @Composable
 fun AddCarView(
     uiState: AddCarUIState,
-    onEvent: (onCarRequest) -> Unit = {}
+    onEvent: (OnCarRequest) -> Unit = {}
 ) {
     if (uiState.onInternetLost) {
         CustomDialog(title = "Internet perdu")
     } else {
-    var openDialog by remember { mutableStateOf(false) }
-    if (openDialog) {
-        CustomDialog(
-            title = "Numéro VIN",
-            content = "Le numéro VIN est un identifiant unique de la voiture, il peut généralement être trouvé dans la baie moteur ou sur la carte grise du véhicule",
-            onDismiss = { openDialog = false }
-        )
-    }
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Row ( modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
-            IconButton(
-                onClick = { onEvent(onCarRequest.onDismiss) }
+        var openDialog by remember { mutableStateOf(false) }
+        if (openDialog) {
+            CustomDialog(
+                title = "Numéro VIN",
+                content = "Le numéro VIN est un identifiant unique de la voiture, il peut généralement être trouvé dans la baie moteur ou sur la carte grise du véhicule",
+                onDismiss = { openDialog = false }
+            )
+        }
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
+                IconButton(
+                    onClick = { onEvent(OnCarRequest.OnDismissAddCarFragment) }
+                ) {
+                    Icon(imageVector = Icons.Filled.Close, contentDescription = "Close")
+                }
+            }
+
+            Text(text = "Merci d'entrer votre plaque d'immatriculation")
+            CustomPlaqueImmat(
+                registration = uiState.inputImmat,
+                onImmatEvent = { onEvent(OnCarRequest.OnImmatChanged(it ?: "")) }
+            )
+            Text(
+                textAlign = TextAlign.Center, text = "OU", fontSize = 30.sp
+            )
+
+            Box(
+                modifier = Modifier.fillMaxWidth(1f)
             ) {
-                Icon(imageVector = Icons.Filled.Close, contentDescription = "Close")
+                IconButton(
+                    onClick = { openDialog = true },
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(bottom = 40.dp)
+                ) {
+                    Icon(imageVector = Icons.Filled.Info, contentDescription = "Close")
+                }
+                CustomTextField(
+                    onValueChange = { onEvent(OnCarRequest.OnVINChanged(it)) },
+                    textFieldValue = uiState.inputVIN ?: "",
+                    label = "Rechercher par numéro VIN",
+                    readOnly = false,
+                    keyboardType = KeyboardType.Text,
+                    labelTextStyle = TextStyle(
+                        color = Color.Black,
+                    ),
+                    modifier = Modifier.align(Alignment.BottomCenter)
+                )
+
+
+            }
+
+            Button(onClick = { onEvent(OnCarRequest.OnClickAddCarButton) }) {
+                Text(
+                    text = "Rechercher", fontSize = 20.sp
+                )
             }
         }
-
-        Text(text = "Merci d'entrer votre plaque d'immatriculation")
-        CustomPlaqueImmat(
-            registration = uiState.inputImmat,
-            onImmatEvent = { onEvent(onCarRequest.onImmatChanged(it ?: "")) }
-        )
-        Text(
-            textAlign = TextAlign.Center, text = "OU", fontSize = 30.sp
-        )
-
-        Box(
-            modifier = Modifier.fillMaxWidth(1f)
-        ) {
-            IconButton(
-            onClick = { openDialog = true },
-                modifier = Modifier.align(Alignment.TopEnd).padding(bottom = 40.dp)
-        ) {
-            Icon(imageVector = Icons.Filled.Info, contentDescription = "Close")
-        }
-            CustomTextField(
-                onValueChange = { onEvent(onCarRequest.onVINChanged(it)) },
-                textFieldValue = uiState.inputVIN ?: "",
-                label = "Rechercher par numéro VIN",
-                readOnly = false,
-                keyboardType = KeyboardType.Text,
-                labelTextStyle = TextStyle(
-                    color = Color.Black,
-                ),
-                modifier = Modifier.align(Alignment.BottomCenter)
-            )
-
-
-        }
-
-        Button(onClick = { onEvent(onCarRequest.onClickButton) }) {
-            Text(
-                text = "Rechercher", fontSize = 20.sp
-            )
-        }
     }
-}}
+}
 
 @Preview(showBackground = true)
 @Composable

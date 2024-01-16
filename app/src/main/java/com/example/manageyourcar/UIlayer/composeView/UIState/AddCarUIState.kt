@@ -8,7 +8,5 @@ data class AddCarUIState(
     val errorVIN: String? = null,
     val errorImmat: String? = null,
 
-    val onInternetLost: Boolean=false
-    ) {
-
-}
+    val onInternetLost: Boolean = false
+)

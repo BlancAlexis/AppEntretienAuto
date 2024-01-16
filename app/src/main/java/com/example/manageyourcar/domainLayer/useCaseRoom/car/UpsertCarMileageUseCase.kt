@@ -11,7 +11,7 @@ class UpsertCarMileageUseCase : KoinComponent {
 
     suspend fun updateCarMileage(car: Car): Ressource<Unit> {
         return try {
-            roomRepository.updateCarMileage(car.mileage, car.carID?:1)
+            roomRepository.updateCarMileage(car.mileage, car.carID ?: 1)
             Ressource.Success(Unit)
         } catch (e: Exception) {
             Ressource.Error(exception = e)

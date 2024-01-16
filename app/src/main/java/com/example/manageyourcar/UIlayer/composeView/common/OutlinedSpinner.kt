@@ -17,10 +17,10 @@ import androidx.compose.ui.tooling.preview.Preview
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OutlinedSpinner(
-    modifier : Modifier? = null,
-    listMaintenanceName : List<String>,
-    textLabel : String,
-    onItemSelect : (String) -> Unit = {}
+    modifier: Modifier? = null,
+    listMaintenanceName: List<String>,
+    textLabel: String,
+    onItemSelect: (String) -> Unit = {}
 ) {
     var expanded by remember { mutableStateOf(false) }
     var selectedOptionText by remember { mutableStateOf(listMaintenanceName[0]) }
@@ -50,7 +50,7 @@ fun OutlinedSpinner(
                 expanded = false
             }
         ) {
-            listMaintenanceName.forEach { selectionOption : String ->
+            listMaintenanceName.forEach { selectionOption: String ->
                 DropdownMenuItem(
                     text = { Text(text = selectionOption) },
                     onClick = {

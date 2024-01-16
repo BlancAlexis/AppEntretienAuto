@@ -8,7 +8,7 @@ import org.koin.core.component.inject
 class DeleteUserRoomUseCase : KoinComponent {
     val roomRepository by inject<UserRepository>()
 
-    suspend fun deleteUserFromRoom(idUser: Int) : Ressource<Unit> {
+    suspend fun deleteUserFromRoom(idUser: Int): Ressource<Unit> {
         return try {
             roomRepository.deleteUser(idUser)
             Ressource.Success(Unit)

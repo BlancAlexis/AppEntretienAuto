@@ -5,7 +5,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import androidx.room.Upsert
 import com.example.manageyourcar.dataLayer.dataLayerRoom.entities.CarEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -15,7 +14,7 @@ interface CarDao {
     fun addNewCar(carEntity: CarEntity)
 
     @Query("SELECT * FROM cars WHERE owner_id=:idUser")
-    fun getCars(idUser : Int): Flow<List<CarEntity>>
+    fun getCars(idUser: Int): Flow<List<CarEntity>>
 
     @Query("SELECT * FROM cars")
     fun getCars(): List<CarEntity>
@@ -23,10 +22,11 @@ interface CarDao {
     @Query("SELECT * FROM cars WHERE carID = :idCar")
     fun getCar(idCar: Int): CarEntity
 
-    @Update(onConflict =  OnConflictStrategy.REPLACE )
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     fun updateCar(carEntity: CarEntity)
-    @Query("UPDATE cars SET mileage = :ListMileage WHERE carID = :idCar")
-    fun updateCarMileage(ListMileage: List<Int>, idCar: Int)
+
+    @Query("UPDATE cars SET mileage = :listMileages WHERE carID = :idCar")
+    fun updateCarMileage(listMileages: List<Int>, idCar: Int)
 
     @Query("DELETE FROM cars WHERE carID = :idUser")
     fun deleteCar(idUser: Int)

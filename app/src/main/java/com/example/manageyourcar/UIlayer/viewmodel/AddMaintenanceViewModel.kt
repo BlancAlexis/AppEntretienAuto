@@ -22,7 +22,7 @@ import java.util.Date
 
 class AddMaintenanceViewModel : ViewModel(), KoinComponent {
     private val getUserCarsUseCase by inject<GetUserCarsUseCase>()
- val isMaintenanceAdd= MutableLiveData<Boolean>(false)
+    val isMaintenanceAdd = MutableLiveData<Boolean>(false)
 
     private val _uiState = MutableStateFlow(AddVehiculeMaintenanceUiState())
     val uiState = _uiState.asStateFlow()
@@ -35,12 +35,12 @@ class AddMaintenanceViewModel : ViewModel(), KoinComponent {
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            getUserCarsUseCase.invoke().collect{ result ->
-                when(result) {
+            getUserCarsUseCase.invoke().collect { result ->
+                when (result) {
                     is Ressource.Error -> TODO()
                     is Ressource.Loading -> TODO()
                     is Ressource.Success -> result.data?.let {
-                        if(it.isEmpty()){
+                        if (it.isEmpty()) {
                             isMaintenanceAdd.postValue(true)
                         }
                         updateListCar(it)
@@ -49,46 +49,26 @@ class AddMaintenanceViewModel : ViewModel(), KoinComponent {
                         }
                     }
                 }
-                    _uiState.update {
-                        it.copy(
-                            listMaintenance = MaintenanceServiceType.values().toList()
-                        )
-                    }
-                selectedMaintenance = MaintenanceServiceType.values()[0]
+                _uiState.update {
+                    it.copy(
+                        listMaintenance = MaintenanceServiceType.values().toList()
+                    )
                 }
+                selectedMaintenance = MaintenanceServiceType.values()[0]
             }
         }
-
-/*
-    private fun populateMaintenancePlaceholder(index : Int){
-        val a=MaintenanceServiceType.values()[index].toMaintenanceService()
-        when(a){
-            is MaintenanceService.Freins -> ui(a.defaultPrice, a.reminder)
-            is MaintenanceService.Pneus -> TODO()
-            is MaintenanceService.Vidange -> TODO()
-        }
-        //fill placeholder and background color
     }
-*/
 
-    private fun ui(){
-        _uiState.update {
-            it.copy(
-                pricePlahlder = "Prix",
-                mileagePlahlder = "Kilométrage"
-            )
-        }
-    }
     private fun addMaintenanceAct() {
         viewModelScope.launch(Dispatchers.IO) {
-            when(addCarMaintenanceUseCase.addMaintenanceOperation(
+            when (addCarMaintenanceUseCase.addMaintenanceOperation(
                 Entretien(
-                userID = null,
-                carID = selectedCar.carID,
-                mileage = uiState.value.mileage.toInt(),
-                price = uiState.value.price.toInt(),
-                date = uiState.value.date?: Date(),
-                service = selectedMaintenance.toMaintenanceService()
+                    userID = null,
+                    carID = selectedCar.carID,
+                    mileage = uiState.value.mileage.toInt(),
+                    price = uiState.value.price.toInt(),
+                    date = uiState.value.date ?: Date(),
+                    service = selectedMaintenance.toMaintenanceService()
                 )
             )) {
                 is Ressource.Error -> TODO()
@@ -108,40 +88,45 @@ class AddMaintenanceViewModel : ViewModel(), KoinComponent {
         }
     }
 
-    fun onEvent(event: onMaintenanceEvent) {
+    fun onEvent(event: OnMaintenanceEvent) {
         when (event) {
-            is onMaintenanceEvent.onCarChanged -> OnCarChanged(event.newValue)
-            is onMaintenanceEvent.onMaintenanceChanged -> OnMaintenanceChanged(event.newValue)
-            is onMaintenanceEvent.onMileageChanged -> OnMileageChanged(event.newValue)
-            is onMaintenanceEvent.onDateChanged -> OnDateChanged(Date(event.newDate))
-            onMaintenanceEvent.onValidatePressed -> { addMaintenanceAct()}
-            is onMaintenanceEvent.onPriceChanged -> OnPriceChanged(event.newValue)
+            is OnMaintenanceEvent.OnCarSelectedChanged -> OnCarChanged(event.newValue)
+            is OnMaintenanceEvent.OnMaintenanceSelectedChanged -> OnMaintenanceChanged(event.newValue)
+            is OnMaintenanceEvent.OnMileageChanged -> OnMileageChanged(event.newValue)
+            is OnMaintenanceEvent.OnDateChanged -> OnDateChanged(Date(event.newDate))
+            OnMaintenanceEvent.OnClickAddMaintenanceButton -> {
+                addMaintenanceAct()
+            }
+
+            is OnMaintenanceEvent.OnPriceChanged -> OnPriceChanged(event.newValue)
         }
 
     }
 
     private fun OnCarChanged(newValue: Car) {
-        selectedCar=newValue
+        selectedCar = newValue
     }
+
     private fun OnPriceChanged(newValue: Int) {
-            _uiState.update {
-                it.copy(
-                    price = newValue.toString()
-                )
-            }
+        _uiState.update {
+            it.copy(
+                price = newValue.toString()
+            )
         }
+    }
 
 
     private fun OnMaintenanceChanged(newValue: MaintenanceServiceType) {
-        selectedMaintenance = newValue  }
+        selectedMaintenance = newValue
+    }
 
     private fun OnMileageChanged(newValue: Int) {
-            _uiState.update {
-                it.copy(
-                    mileage = newValue.toString()
-                )
-            }
+        _uiState.update {
+            it.copy(
+                mileage = newValue.toString()
+            )
         }
+    }
 
     private fun OnDateChanged(newDate: Date) {
         _uiState.update {
@@ -162,13 +147,15 @@ class AddMaintenanceViewModel : ViewModel(), KoinComponent {
 
 }
 
-sealed interface onMaintenanceEvent {
-    object onValidatePressed : onMaintenanceEvent
-    data class onDateChanged(val newDate: String) : onMaintenanceEvent
-    data class onMileageChanged(val newValue: Int) : onMaintenanceEvent
-    data class onPriceChanged(val newValue: Int) : onMaintenanceEvent
-    data class onMaintenanceChanged(val newValue: MaintenanceServiceType) : onMaintenanceEvent
-    data class onCarChanged(val newValue: Car) : onMaintenanceEvent
+sealed interface OnMaintenanceEvent {
+    object OnClickAddMaintenanceButton : OnMaintenanceEvent
+    data class OnDateChanged(val newDate: String) : OnMaintenanceEvent
+    data class OnMileageChanged(val newValue: Int) : OnMaintenanceEvent
+    data class OnPriceChanged(val newValue: Int) : OnMaintenanceEvent
+    data class OnMaintenanceSelectedChanged(val newValue: MaintenanceServiceType) :
+        OnMaintenanceEvent
+
+    data class OnCarSelectedChanged(val newValue: Car) : OnMaintenanceEvent
 
 }
 

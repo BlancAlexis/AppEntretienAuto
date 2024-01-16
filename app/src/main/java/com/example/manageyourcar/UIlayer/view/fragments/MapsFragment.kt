@@ -62,19 +62,25 @@ class MapsFragment : Fragment() {
         }
 
 
-        var fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-
+        var fusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(requireActivity())
 
 
         val onLocationChanged: LocationCallback = object : LocationCallback() {
             override fun onLocationResult(location: LocationResult) {
-                location ?: return
+                location
 
                 if (location.locations.isNotEmpty()) {
-                    Log.i("TAG", "onLocationResult: ${location.locations[0].latitude} ${location.locations[0].longitude}")
-                    val currentPosition = LatLng(location.locations[0].latitude, location.locations[0].longitude)
-                    googleMap.addMarker(MarkerOptions().position(currentPosition).title("Vous êtes ici!"))
-                //.icon(BitmapDescriptorFactory.fromBitmap(BitmapUtils.decodeResource(requireActivity().resources,R.drawable.voiture_de_course))))
+                    Log.i(
+                        "TAG",
+                        "onLocationResult: ${location.locations[0].latitude} ${location.locations[0].longitude}"
+                    )
+                    val currentPosition =
+                        LatLng(location.locations[0].latitude, location.locations[0].longitude)
+                    googleMap.addMarker(
+                        MarkerOptions().position(currentPosition).title("Vous êtes ici!")
+                    )
+                    //.icon(BitmapDescriptorFactory.fromBitmap(BitmapUtils.decodeResource(requireActivity().resources,R.drawable.voiture_de_course))))
 
                 }
             }
@@ -89,7 +95,7 @@ class MapsFragment : Fragment() {
 
     }
 
-    fun getPosition(){
+    fun getPosition() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         if (ActivityCompat.checkSelfPermission(
                 requireActivity(),
@@ -111,17 +117,12 @@ class MapsFragment : Fragment() {
         fusedLocationClient.lastLocation.addOnSuccessListener { location ->
             if (location != null) {
                 val currentPosition = LatLng(location.latitude, location.longitude)
-                googleMap.addMarker(MarkerOptions().position(currentPosition).title("Vous êtes ici!"))
+                googleMap.addMarker(
+                    MarkerOptions().position(currentPosition).title("Vous êtes ici!")
+                )
                 googleMap.moveCamera(CameraUpdateFactory.newLatLng(currentPosition))
             }
         }
-    }
-
-
-    //start location updates
-    override fun onStart() {
-        super.onStart()
-
     }
 
 
@@ -134,11 +135,6 @@ class MapsFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         stopLocationUpdates()
-    }
-
-    // start receiving location update when activity  visible/foreground
-    override fun onResume() {
-        super.onResume()
     }
 
 
@@ -166,7 +162,4 @@ class MapsFragment : Fragment() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
 }

@@ -10,20 +10,21 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
 
-class ServicingRepositoryImpl(private val servicingDao: ServicingDao) : ServicingRepository,KoinComponent {
+class ServicingRepositoryImpl(private val servicingDao: ServicingDao) : ServicingRepository,
+    KoinComponent {
     override fun addNewServicing(entretien: Entretien) {
         servicingDao.addNewServicing(entretien.toMaintenanceEntity())
     }
 
     override fun getAllServicing(): List<Entretien> {
-        return servicingDao.getServicing().map { it ->
+        return servicingDao.getServicing().map {
             it.toEntretien()
         }
     }
 
     override fun getAllUserMaintenance(): Flow<List<Entretien>> {
-        return servicingDao.getUserServicing().map { it ->
-            it.map{ it.toEntretien() }
+        return servicingDao.getUserServicing().map {
+            it.map { it.toEntretien() }
         }
     }
 

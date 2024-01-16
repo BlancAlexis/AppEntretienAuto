@@ -8,10 +8,10 @@ import org.koin.core.component.inject
 class DeleteCarRoomUseCase : KoinComponent {
     val roomRepository by inject<CarRepository>()
 
-    suspend fun deleteCarToRoom(idCar: Int) : Ressource<Unit> {
+    suspend fun deleteCarToRoom(idCar: Int): Ressource<Unit> {
         return try {
-                    roomRepository.deleteCar(idCar)
-                    Ressource.Success(Unit)
+            roomRepository.deleteCar(idCar)
+            Ressource.Success(Unit)
         } catch (e: Exception) {
             Ressource.Error(exception = e)
         }

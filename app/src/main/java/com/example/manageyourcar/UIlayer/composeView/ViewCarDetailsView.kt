@@ -60,15 +60,16 @@ fun ViewCarDetailsView(
     val juraFamily = FontFamily(
         Font(R.font.jura, FontWeight.Medium)
     )
-    Column (
-        horizontalAlignment = Alignment.CenterHorizontally,
+    Column(
+        horizontalAlignment = CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0, 97, 162))
-    ){
+    ) {
         AnimatedVisibility(visible = uiState is ViewCarDetailsState.Loading) {
-                CircularProgressIndicator(color = colorResource(id = R.color.black)) }
+            CircularProgressIndicator(color = colorResource(id = R.color.black))
+        }
 
 
         AnimatedVisibility(visible = uiState is ViewCarDetailsState.ViewCarDetailsStateDetailsUIState) {
@@ -91,9 +92,11 @@ fun ViewCarDetailsView(
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
                 )
-                Row(modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Color.Black), horizontalArrangement = Arrangement.Center ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(Color.Black), horizontalArrangement = Arrangement.Center
+                ) {
                     FloatingActionButton(onClick = {
                         onEvent(ViewCarDetailsEvent.OnUpdateMileage)
                     }) {
@@ -106,7 +109,13 @@ fun ViewCarDetailsView(
                     }
 
                     TextButton(
-                        colors = ButtonDefaults.outlinedButtonColors(containerColor = Color(209, 228, 255)),
+                        colors = ButtonDefaults.outlinedButtonColors(
+                            containerColor = Color(
+                                209,
+                                228,
+                                255
+                            )
+                        ),
                         onClick = {
                             onEvent(ViewCarDetailsEvent.OnClickAddCarButton)
                         },
@@ -131,8 +140,8 @@ fun ViewCarDetailsView(
                 }
 
                 HorizontalPager(state = pagerState) {
-                    val realseDate = Calendar.getInstance();
-                    realseDate.setTime(uiState.cars[pagerState.currentPage].releaseDate);
+                    val realseDate = Calendar.getInstance()
+                    realseDate.time = uiState.cars[pagerState.currentPage].releaseDate
 
                     Column(
                         modifier = Modifier
@@ -188,17 +197,15 @@ fun ViewCarDetailsView(
                                     content1 = realseDate.get(Calendar.YEAR).toString(),
                                     icon1 = painterResource(R.drawable.outline_calendar_month_24),
                                     title2 = "Carburant",
-                                    content2 = uiState.cars[pagerState.currentPage].fuel ?: "N/A",
+                                    content2 = uiState.cars[pagerState.currentPage].fuel,
                                     icon2 = painterResource(R.drawable.baseline_oil_barrel_24)
                                 )
                                 InformationRow(
                                     title1 = "Transmission",
-                                    content1 = uiState.cars[pagerState.currentPage].transmission
-                                        ?: "N/A",
+                                    content1 = uiState.cars[pagerState.currentPage].transmission,
                                     icon1 = painterResource(R.drawable.auto_transmission),
                                     title2 = "Motorisation",
-                                    content2 = uiState.cars[pagerState.currentPage].motorization
-                                        ?: "N/A",
+                                    content2 = uiState.cars[pagerState.currentPage].motorization,
                                     icon2 = painterResource(R.drawable.baseline_directions_car_24),
                                     modifier = Modifier.padding(top = 10.dp),
                                 )
@@ -216,18 +223,20 @@ fun ViewCarDetailsView(
                                     content1 = uiState.cars[pagerState.currentPage].maxSpeed.toString() + " km/h",
                                     icon1 = painterResource(R.drawable.outline_speed_24),
                                     title2 = "Kilométrage",
-                                    content2 = uiState.cars[pagerState.currentPage].mileage.last().toString() + " km",
+                                    content2 = uiState.cars[pagerState.currentPage].mileage.last()
+                                        .toString() + " km",
                                     icon2 = painterResource(R.drawable.baseline_auto_graph_24),
                                     modifier = Modifier.padding(top = 10.dp, bottom = 10.dp),
                                 )
                                 Row(
                                     Modifier
                                         .padding(top = 5.dp, bottom = 5.dp)
-                                        .fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly
+                                        .fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceEvenly
                                 ) {
 
-                                    IconButton(onClick = {}){
-                                        if (pagerState.currentPage != 0)  {
+                                    IconButton(onClick = {}) {
+                                        if (pagerState.currentPage != 0) {
                                             Icon(
                                                 painter = painterResource(R.drawable.baseline_arrow_back_24),
                                                 contentDescription = "",
@@ -255,13 +264,13 @@ fun ViewCarDetailsView(
             }
         }
     }
-    }
+}
 
 
 @Preview(showBackground = true)
 @Composable
 fun PreviewViewCarDetailsView() {
-    var carstest = listOf<Car>();
+    var carstest = listOf<Car>()
     carstest = carstest + Car(
         brand = "Citroën",
         model = "C4 VTS",
@@ -270,7 +279,7 @@ fun PreviewViewCarDetailsView() {
         mileage = arrayListOf(200547),
         motorization = "1.6 HDI FAP",
         power = 180,
-        releaseDate = Calendar.getInstance().getTime(),
+        releaseDate = Calendar.getInstance().time,
         torque = 280,
         transmission = "Manuelle",
     )
@@ -283,7 +292,7 @@ fun PreviewViewCarDetailsView() {
         mileage = arrayListOf(200547),
         motorization = "1.6 HDI FAP",
         power = 180,
-        releaseDate = Calendar.getInstance().getTime(),
+        releaseDate = Calendar.getInstance().time,
         torque = 280,
         transmission = "Manuelle",
     )

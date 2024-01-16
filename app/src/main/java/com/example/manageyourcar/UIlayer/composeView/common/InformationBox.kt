@@ -29,7 +29,7 @@ fun InformationBox(
 ) {
     val juraFamily = FontFamily(
         Font(R.font.jura, FontWeight.Medium)
-    );
+    )
 
     Row(
         Modifier

@@ -11,14 +11,16 @@ import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class GetAllUserMaintenanceUseCase: KoinComponent {
+class GetAllUserMaintenanceUseCase : KoinComponent {
     private val roomRepository by inject<ServicingRepository>()
     private val cacheManagerRepository by inject<CacheManagerRepository>()
 
     suspend fun invoke(): Flow<Ressource<List<MaintenanceWithCarEntity>>> {
         return try {
             when (val result = cacheManagerRepository.getUserId(AppApplication.instance)) {
-                is Ressource.Success -> roomRepository.getMaintenceActWithCar(result.data!!).map { it -> Ressource.Success(it) }
+                is Ressource.Success -> roomRepository.getMaintenceActWithCar(result.data!!)
+                    .map { Ressource.Success(it) }
+
                 is Ressource.Error -> flowOf(Ressource.Error(exception = result.error))
                 is Ressource.Loading -> flowOf(Ressource.Loading())
             }

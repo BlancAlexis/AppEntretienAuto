@@ -42,7 +42,22 @@ class ListMaintenanceViewModel : ViewModel(), KoinComponent {
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-             addCarRoomUseCase.addCarToRoom(Car(null, "BMW", "X5", Date(), "d", "Diesel", "123456789", 150,300,250,listOf(25623),null))
+            addCarRoomUseCase.addCarToRoom(
+                Car(
+                    null,
+                    "BMW",
+                    "X5",
+                    Date(),
+                    "d",
+                    "Diesel",
+                    "123456789",
+                    150,
+                    300,
+                    250,
+                    listOf(25623),
+                    null
+                )
+            )
 
             getAllUserMaintenanceUseCase.invoke().collect { result ->
                 when (result) {
@@ -62,15 +77,17 @@ class ListMaintenanceViewModel : ViewModel(), KoinComponent {
             )
         }
     }
-fun onBackPressed(){
-    viewModelScope.launch {
-        when(logoutUserUseCase.logoutUser(AppApplication.instance.applicationContext)){
-            is Ressource.Error -> println("error")
-            is Ressource.Loading -> println("load")
-            is Ressource.Success -> return@launch //Faire une chose qui bloque si fail?
+
+    fun onBackPressed() {
+        viewModelScope.launch {
+            when (logoutUserUseCase.logoutUser(AppApplication.instance.applicationContext)) {
+                is Ressource.Error -> println("error")
+                is Ressource.Loading -> println("load")
+                is Ressource.Success -> return@launch //Faire une chose qui bloque si fail?
+            }
         }
     }
-}
+
     fun setNavController(view: View) {
         navController = Navigation.findNavController(view)
     }
@@ -80,29 +97,32 @@ fun onBackPressed(){
             it.copy(
                 isLoading = false,
                 listUiState = newData.map { entretien ->
-                    var progressIndicator= 0.0f
+                    var progressIndicator = 0.0f
                     var description: String = ""
                     when (entretien.maintenanceEntity.serviceType) {
                         is MaintenanceService.Freins -> {
                             description = entretien.maintenanceEntity.serviceType.name
-                            progressIndicator = ((entretien.maintenanceEntity.mileage.toFloat() / MaintenanceActScheddule.valueOf(
-                                entretien.maintenanceEntity.serviceType.name.uppercase()
-                            ).km.toFloat()) * 100).toFloat()
+                            progressIndicator =
+                                ((entretien.maintenanceEntity.mileage.toFloat() / MaintenanceActScheddule.valueOf(
+                                    entretien.maintenanceEntity.serviceType.name.uppercase()
+                                ).km.toFloat()) * 100).toFloat()
                         }
 
                         is MaintenanceService.Pneus -> {
                             println(2563 / 3000)
                             description = entretien.maintenanceEntity.serviceType.name
-                            progressIndicator = ((entretien.maintenanceEntity.mileage .toFloat()/ MaintenanceActScheddule.valueOf(
-                                entretien.maintenanceEntity.serviceType.name.uppercase()
-                            ).km.toFloat()) * 100).toFloat()
+                            progressIndicator =
+                                ((entretien.maintenanceEntity.mileage.toFloat() / MaintenanceActScheddule.valueOf(
+                                    entretien.maintenanceEntity.serviceType.name.uppercase()
+                                ).km.toFloat()) * 100).toFloat()
                         }
 
                         is MaintenanceService.Vidange -> {
                             description = entretien.maintenanceEntity.serviceType.name
-                            progressIndicator =((entretien.maintenanceEntity.mileage.toFloat() / MaintenanceActScheddule.valueOf(
-                                entretien.maintenanceEntity.serviceType.name.uppercase()
-                            ).km.toFloat()) * 100).toFloat()
+                            progressIndicator =
+                                ((entretien.maintenanceEntity.mileage.toFloat() / MaintenanceActScheddule.valueOf(
+                                    entretien.maintenanceEntity.serviceType.name.uppercase()
+                                ).km.toFloat()) * 100).toFloat()
                         }
                     }
 
@@ -127,18 +147,18 @@ fun onBackPressed(){
     }
 
 
-    fun onEvent(event: onMaintenanceListEvent) {
+    fun onEvent(event: OnMaintenanceListEvent) {
         when (event) {
-            is onMaintenanceListEvent.onButtonAddMaintenancePush -> {
+            is OnMaintenanceListEvent.OnButtonAddMaintenancePush -> {
 
-                navController?.navigate(R.id.addMaintenanceFragment)
+                navController.navigate(R.id.addMaintenanceFragment)
             }
 
-            is onMaintenanceListEvent.onSortMethodChanged -> changeSortMethod(event)
+            is OnMaintenanceListEvent.OnSortMethodChanged -> changeSortMethod(event)
         }
     }
 
-    private fun changeSortMethod(event: onMaintenanceListEvent.onSortMethodChanged) {
+    private fun changeSortMethod(event: OnMaintenanceListEvent.OnSortMethodChanged) {
         when (event.newMethod) {
             SortType.croissant ->
                 _uiState.update {
@@ -159,9 +179,9 @@ fun onBackPressed(){
 
 }
 
-sealed interface onMaintenanceListEvent {
-    object onButtonAddMaintenancePush : onMaintenanceListEvent
-    class onSortMethodChanged(val newMethod: SortType) : onMaintenanceListEvent
+sealed interface OnMaintenanceListEvent {
+    object OnButtonAddMaintenancePush : OnMaintenanceListEvent
+    class OnSortMethodChanged(val newMethod: SortType) : OnMaintenanceListEvent
 
 }
 

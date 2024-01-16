@@ -161,7 +161,7 @@ fun LoginUserView(
             )
             Spacer(modifier = Modifier.height(100.dp))
             OutlinedButton(
-                border = BorderStroke(5.dp,Color(209, 228, 255)),
+                border = BorderStroke(5.dp, Color(209, 228, 255)),
                 shape = CircleShape,
                 onClick = {
                     onEvent(UserLoginEvent.OnSignInButton)

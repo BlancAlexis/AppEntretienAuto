@@ -12,7 +12,7 @@ class GetUserCarUseCase : KoinComponent {
     val cacheManagerRepository by inject<CacheManagerRepositoryImpl>()
 
     suspend fun invoke() {
-        when (val result= cacheManagerRepository.getUserId(AppApplication.instance)){
+        when (val result = cacheManagerRepository.getUserId(AppApplication.instance)) {
             is Ressource.Error -> TODO()
             is Ressource.Loading -> TODO()
             is Ressource.Success ->

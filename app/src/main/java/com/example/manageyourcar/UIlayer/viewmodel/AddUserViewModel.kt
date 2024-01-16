@@ -29,13 +29,14 @@ class AddUserViewModel : ViewModel(), KoinComponent {
     fun setNavController(view: View) {
         navController = Navigation.findNavController(view)
     }
+
     fun onEvent(event: UserSubscriptionEvent) {
         when (event) {
             is UserSubscriptionEvent.OnClickSendButton -> onCheckFields()
             is UserSubscriptionEvent.OnLoginChanged -> onLoginChanged(event)
             is UserSubscriptionEvent.OnPasswordChanged -> onPasswordChanged(event)
-            is UserSubscriptionEvent.OnFirstnameChanged ->onFirstnameChanged(event)
-            is UserSubscriptionEvent.OnLastNameChanged ->  onLastNameChanged(event)
+            is UserSubscriptionEvent.OnFirstnameChanged -> onFirstnameChanged(event)
+            is UserSubscriptionEvent.OnLastNameChanged -> onLastNameChanged(event)
             is UserSubscriptionEvent.OnConfirmPasswordChanged -> onConfirmPasswordChanged(event)
         }
 
@@ -44,7 +45,10 @@ class AddUserViewModel : ViewModel(), KoinComponent {
     private fun onConfirmPasswordChanged(event: UserSubscriptionEvent.OnConfirmPasswordChanged) {
         _uiState.update {
             it.copy(
-                userValidatePasswordError = UserEntryChecker.areTwoFieldPasswordTheSame(uiState.value.userPassword,event.newValue), //Pas fou
+                userValidatePasswordError = UserEntryChecker.areTwoFieldPasswordTheSame(
+                    uiState.value.userPassword,
+                    event.newValue
+                ), //Pas fou
                 userValidatePassword = event.newValue
             )
         }
@@ -72,10 +76,15 @@ class AddUserViewModel : ViewModel(), KoinComponent {
         //SmsSender.sendSMS("dd","e")
         viewModelScope.launch(Dispatchers.IO) {
             if (uiState.value.userPassword == uiState.value.userValidatePassword) {
-                addUserRoomUseCase.invoke(uiState.value.userLogin!!, uiState.value.userPassword!!, uiState.value.userFirstName!!, uiState.value.userLastName!!)
-              withContext(Dispatchers.Main) {
-                  navController.popBackStack()
-              }
+                addUserRoomUseCase.invoke(
+                    uiState.value.userLogin,
+                    uiState.value.userPassword,
+                    uiState.value.userFirstName,
+                    uiState.value.userLastName
+                )
+                withContext(Dispatchers.Main) {
+                    navController.popBackStack()
+                }
             } else {
                 _uiState.update {
                     it.copy(
@@ -105,8 +114,7 @@ class AddUserViewModel : ViewModel(), KoinComponent {
     }
 
 
-
-    fun onInternetLost(bool : Boolean) {
+    fun onInternetLost(bool: Boolean) {
         _uiState.update {
             it.copy(
                 onInternetLost = bool

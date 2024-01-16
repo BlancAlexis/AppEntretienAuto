@@ -6,14 +6,20 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import java.util.Date
 
-@Entity(tableName = "cars", foreignKeys = arrayOf( ForeignKey(entity = UserEntity::class,
-    parentColumns = arrayOf("userID"),
-    childColumns = arrayOf("owner_id"),
-    onDelete = ForeignKey.CASCADE)))
+@Entity(
+    tableName = "cars", foreignKeys = arrayOf(
+        ForeignKey(
+            entity = UserEntity::class,
+            parentColumns = arrayOf("userID"),
+            childColumns = arrayOf("owner_id"),
+            onDelete = ForeignKey.CASCADE
+        )
+    )
+)
 
 data class CarEntity(
     @PrimaryKey(autoGenerate = true) val carID: Int = 0,
-    @ColumnInfo(name = "owner_id", index = true) val ownerID: Int?=null,
+    @ColumnInfo(name = "owner_id", index = true) val ownerID: Int? = null,
     @ColumnInfo(name = "brand") val brand: String,
     @ColumnInfo(name = "model") val model: String,
     @ColumnInfo(name = "releaseDate") val releaseDate: Date,

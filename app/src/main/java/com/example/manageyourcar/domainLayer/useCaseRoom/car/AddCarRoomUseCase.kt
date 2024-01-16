@@ -8,7 +8,7 @@ import com.example.manageyourcar.domainLayer.repository.room.CarRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class AddCarRoomUseCase : KoinComponent{
+class AddCarRoomUseCase : KoinComponent {
     private val roomRepository by inject<CarRepository>()
     private val cacheManagerRepository by inject<CacheManagerRepository>()
 
@@ -18,7 +18,7 @@ class AddCarRoomUseCase : KoinComponent{
                 is Ressource.Error -> Ressource.Error(result.error)
                 is Ressource.Loading -> Ressource.Error()
                 is Ressource.Success -> {
-                    val carWithOwnerID : Car = car.copy(
+                    val carWithOwnerID: Car = car.copy(
                         ownerID = result.data
                     )
                     roomRepository.addNewCar(carWithOwnerID)

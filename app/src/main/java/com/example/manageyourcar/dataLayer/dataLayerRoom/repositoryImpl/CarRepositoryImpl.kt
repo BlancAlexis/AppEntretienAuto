@@ -17,8 +17,8 @@ class CarRepositoryImpl(private val carDao: CarDao) : CarRepository, KoinCompone
     }
 
     override fun getCars(idUser: Int): Flow<List<Car>> {
-        return carDao.getCars(idUser).map { it ->
-            it.map { it.toCar() }
+        return carDao.getCars(idUser).map { carEntitys ->
+            carEntitys.map { it.toCar() }
         }
     }
 
@@ -40,8 +40,8 @@ class CarRepositoryImpl(private val carDao: CarDao) : CarRepository, KoinCompone
         carDao.updateCar(car.toCarEntity())
     }
 
-    override fun updateCarMileage(ListMileage: List<Int>, idCar: Int) {
-        carDao.updateCarMileage(ListMileage, idCar)
+    override fun updateCarMileage(listMileages: List<Int>, idCar: Int) {
+        carDao.updateCarMileage(listMileages, idCar)
     }
 
     override fun deleteCar(idCar: Int) {

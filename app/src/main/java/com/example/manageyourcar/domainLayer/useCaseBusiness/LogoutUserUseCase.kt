@@ -8,7 +8,7 @@ import org.koin.core.component.inject
 
 class LogoutUserUseCase : KoinComponent {
     private val cacheManager by inject<CacheManagerRepository>()
-    suspend fun logoutUser(context : Context): Ressource<Boolean> {
+    suspend fun logoutUser(context: Context): Ressource<Boolean> {
         return try {
             when (val resultWhen = cacheManager.resetUserId(context)) {
                 is Ressource.Success -> Ressource.Success(resultWhen.data)
@@ -17,7 +17,7 @@ class LogoutUserUseCase : KoinComponent {
                     Ressource.Error(resultWhen.error)
                 }
             }
-        }catch (e: Exception) {
+        } catch (e: Exception) {
             Ressource.Error(e)
         }
     }

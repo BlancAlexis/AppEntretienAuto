@@ -30,13 +30,13 @@ fun SignInUserView(
     if (uiState.onInternetLost) {
         CustomDialog(title = "Internet perdu")
     } else {
-    Column(
-        modifier = Modifier
-            .fillMaxHeight()
-            .padding(top = 100.dp),
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxHeight()
+                .padding(top = 100.dp),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             CustomTextField(
                 textFieldValue = uiState.userLogin,
                 error = uiState.userLoginError,
@@ -51,21 +51,21 @@ fun SignInUserView(
                 }
             )
 
-        CustomTextField(
-            textFieldValue = uiState.userFirstName,
-            error = uiState.userFirstNameError,
-            modifier = Modifier
-                .fillMaxWidth(0.95f)
-                .padding(10.dp),
-            label = "Firstname",
-            readOnly = false,
-            keyboardType = KeyboardType.Text,
-            onValueChange = {
-                onEvent(UserSubscriptionEvent.OnFirstnameChanged(it))
-            }
-        )
             CustomTextField(
-                textFieldValue =  uiState.userLastName,
+                textFieldValue = uiState.userFirstName,
+                error = uiState.userFirstNameError,
+                modifier = Modifier
+                    .fillMaxWidth(0.95f)
+                    .padding(10.dp),
+                label = "Firstname",
+                readOnly = false,
+                keyboardType = KeyboardType.Text,
+                onValueChange = {
+                    onEvent(UserSubscriptionEvent.OnFirstnameChanged(it))
+                }
+            )
+            CustomTextField(
+                textFieldValue = uiState.userLastName,
                 error = uiState.userLastNameError,
                 modifier = Modifier
                     .fillMaxWidth(0.95f)
@@ -106,20 +106,21 @@ fun SignInUserView(
                 }
             )
 
-        Spacer(modifier = Modifier.height(20.dp))
-        Button(
-            onClick = { onEvent(UserSubscriptionEvent.OnClickSendButton) },
-            modifier = Modifier.fillMaxWidth(0.5f)
-        ) {
-            Text(
-                text = "Valider",
-                fontSize = 20.sp
-            )
-        }
-        Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(20.dp))
+            Button(
+                onClick = { onEvent(UserSubscriptionEvent.OnClickSendButton) },
+                modifier = Modifier.fillMaxWidth(0.5f)
+            ) {
+                Text(
+                    text = "Valider",
+                    fontSize = 20.sp
+                )
+            }
+            Spacer(modifier = Modifier.height(20.dp))
 
+        }
     }
-}}
+}
 
 @Preview(showBackground = true)
 @Composable

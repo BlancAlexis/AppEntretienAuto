@@ -34,13 +34,13 @@ import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.composeView.UIState.MaintenanceListUiState
 import com.example.manageyourcar.UIlayer.composeView.UIState.SortType
 import com.example.manageyourcar.UIlayer.composeView.common.CustomDialog
-import com.example.manageyourcar.UIlayer.viewmodel.onMaintenanceListEvent
+import com.example.manageyourcar.UIlayer.viewmodel.OnMaintenanceListEvent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MaintenanceListView(
     uiState: MaintenanceListUiState,
-    onEvent: (onMaintenanceListEvent) -> Unit = {}
+    onEvent: (OnMaintenanceListEvent) -> Unit = {}
 ) {
     var openSortChoice by remember { mutableStateOf(false) }
     Column(
@@ -63,7 +63,7 @@ fun MaintenanceListView(
             } else {
 
                 Button(
-                    onClick = { onEvent(onMaintenanceListEvent.onButtonAddMaintenancePush) },
+                    onClick = { onEvent(OnMaintenanceListEvent.OnButtonAddMaintenancePush) },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = colorResource(R.color.primaryContainer),
                         contentColor = Color.Black
@@ -89,7 +89,7 @@ fun MaintenanceListView(
                             SortType.values().forEach {
                                 DropdownMenuItem(text = { Text(text = it.name) }, onClick = {
                                     openSortChoice = false
-                                    onEvent(onMaintenanceListEvent.onSortMethodChanged(it))
+                                    onEvent(OnMaintenanceListEvent.OnSortMethodChanged(it))
                                 })
 
                             }

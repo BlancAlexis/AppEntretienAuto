@@ -45,9 +45,10 @@ class AddUserFragment : Fragment() {
             }
         }
     }
+
     override fun onResume() {
         super.onResume()
-        listenerInternet.mutableLiveData.observe(viewLifecycleOwner){
+        listenerInternet.mutableLiveData.observe(viewLifecycleOwner) {
             addUserViewModel.onInternetLost(it)
         }
     }

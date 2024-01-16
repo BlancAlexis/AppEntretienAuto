@@ -86,7 +86,7 @@ class AndroidBluetoothController(
 
     override fun startDiscovery() {
         if (!hasPermission(Manifest.permission.BLUETOOTH_SCAN)) {
-            Log.w("AndroidBluetoothController","No BLUETOOTH_SCAN permission")
+            Log.w("AndroidBluetoothController", "No BLUETOOTH_SCAN permission")
             return
         }
 
@@ -102,7 +102,7 @@ class AndroidBluetoothController(
 
     override fun stopDiscovery() {
         if (!hasPermission(Manifest.permission.BLUETOOTH_SCAN)) {
-            Log.w("AndroidBluetoothController","No BLUETOOTH_SCAN permission")
+            Log.w("AndroidBluetoothController", "No BLUETOOTH_SCAN permission")
             return
         }
 
@@ -126,7 +126,13 @@ class AndroidBluetoothController(
             currentClientSocket?.let { socket ->
                 try {
                     socket.connect()
-                    emit(ConnectionResult.ConnectionEstablished(device,socket.inputStream, socket.outputStream))
+                    emit(
+                        ConnectionResult.ConnectionEstablished(
+                            device,
+                            socket.inputStream,
+                            socket.outputStream
+                        )
+                    )
                 } catch (e: IOException) {
                     socket.close()
                     Log.e("AndroidBluetoothController", "Error while connecting to device", e)

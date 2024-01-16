@@ -66,7 +66,7 @@ fun MaintenanceViewItem(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(color = colorResource(id =R.color.primaryContainer))
+                    .background(color = colorResource(id = R.color.primaryContainer))
             ) {
                 Row(
                     modifier = Modifier
@@ -81,7 +81,7 @@ fun MaintenanceViewItem(
                             modifier = Modifier.fillMaxWidth(0.7f)
                         )
                     }
-                    uiState.mileage?.let { Text(text = it+ " km") }
+                    uiState.mileage?.let { Text(text = it + " km") }
                 }
 
                 uiState.progressIndicator?.let {

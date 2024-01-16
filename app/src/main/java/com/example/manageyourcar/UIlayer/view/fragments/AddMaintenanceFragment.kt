@@ -36,8 +36,8 @@ class AddMaintenanceFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        addMaintenanceViewModel.isMaintenanceAdd.observe(viewLifecycleOwner){
-            if(it){
+        addMaintenanceViewModel.isMaintenanceAdd.observe(viewLifecycleOwner) {
+            if (it) {
                 dismiss()
             }
         }
@@ -56,7 +56,7 @@ class AddMaintenanceFragment : BottomSheetDialogFragment() {
 
     override fun onResume() {
         super.onResume()
-        listenerInternet.mutableLiveData.observe(viewLifecycleOwner){
+        listenerInternet.mutableLiveData.observe(viewLifecycleOwner) {
             addMaintenanceViewModel.onInternetLost(it)
         }
     }

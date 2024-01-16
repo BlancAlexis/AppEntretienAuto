@@ -26,7 +26,7 @@ class LogUserViewModel : ViewModel(), KoinComponent {
     private val logUseCase by inject<LoginUserUseCase>()
     private val cacheManagerRepository by inject<CacheManagerRepository>()
     private lateinit var navController: NavController
-    val isConnected : MutableLiveData<Boolean> = MutableLiveData(false)
+    val isConnected: MutableLiveData<Boolean> = MutableLiveData(false)
     private val _uiState = MutableStateFlow(LoginUiState())
     val uiState = _uiState.asStateFlow()
 
@@ -39,10 +39,13 @@ class LogUserViewModel : ViewModel(), KoinComponent {
             is UserLoginEvent.OnClickSendButton -> {
                 onTryLog()
             }
+
             is UserLoginEvent.OnLoginChanged -> onLoginChanged(event)
             is UserLoginEvent.OnPasswordChanged -> onPasswordChanged(event)
-            is UserLoginEvent.OnSignInButton -> {                 Log.i("TAG", "onCheckFields: ${navController.currentBackStack.value.toString()}")
-                navController?.navigate(R.id.action_LoginUserFragment_to_AddUserFragment) }
+            is UserLoginEvent.OnSignInButton -> {
+                Log.i("TAG", "onCheckFields: ${navController.currentBackStack.value}")
+                navController.navigate(R.id.action_LoginUserFragment_to_AddUserFragment)
+            }
 
         }
     }
@@ -51,14 +54,15 @@ class LogUserViewModel : ViewModel(), KoinComponent {
         navController = Navigation.findNavController(view)
     }
 
-    private fun onTryLog(autoConnect : Boolean = false) {
+    private fun onTryLog(autoConnect: Boolean = false) {
         viewModelScope.launch(Dispatchers.IO) {
             if (autoConnect) {
-                    when(val result= cacheManagerRepository.getUserId(AppApplication.instance.applicationContext)){
-                        is Ressource.Success ->  isConnected.postValue(true)
-                        is Ressource.Error -> println("zzzz"+result.message+ result.error)
-                        else -> null
-                    }
+                when (val result =
+                    cacheManagerRepository.getUserId(AppApplication.instance.applicationContext)) {
+                    is Ressource.Success -> isConnected.postValue(true)
+                    is Ressource.Error -> println("zzzz" + result.message + result.error)
+                    else -> null
+                }
             } else {
                 when (val result = logUseCase.loginUser(
                     _uiState.value.userLogin!!,

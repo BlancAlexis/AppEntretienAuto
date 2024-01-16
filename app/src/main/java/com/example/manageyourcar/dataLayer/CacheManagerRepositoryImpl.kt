@@ -6,14 +6,9 @@ import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
 import org.koin.core.component.KoinComponent
 
 
-class CacheManagerRepositoryImpl(private val dataSource: CacheDataSource) : CacheManagerRepository, KoinComponent {
-    override fun getCachedListUserCar() {
-        dataSource.getCachedListUserCar()
-    }
+class CacheManagerRepositoryImpl(private val dataSource: CacheDataSource) : CacheManagerRepository,
+    KoinComponent {
 
-    override fun putListUserCarInCache() {
-        dataSource.putListUserCarInCache()
-    }
 
     override fun putUserId(context: Context, userId: Int): Ressource<Boolean> {
         return dataSource.putUserId(context, userId)

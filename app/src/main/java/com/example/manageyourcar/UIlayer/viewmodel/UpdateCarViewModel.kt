@@ -3,7 +3,6 @@ package com.example.manageyourcar.UIlayer.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.manageyourcar.UIlayer.composeView.UIState.UpdateMileage
-import com.example.manageyourcar.domainLayer.useCaseRoom.car.AddCarRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.UpsertCarMileageUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,13 +18,14 @@ class UpdateCarViewModel : ViewModel(), KoinComponent {
     private val _uiState = MutableStateFlow(UpdateMileage())
     val uiState = _uiState.asStateFlow()
 
-fun setCar(car: com.example.manageyourcar.dataLayer.model.Car) {
+    fun setCar(car: com.example.manageyourcar.dataLayer.model.Car) {
         _uiState.update {
             it.copy(
                 car = car
             )
         }
     }
+
     fun onEvent(event: UpdateCatEvent) {
         when (event) {
             UpdateCatEvent.OnUpdateMileage -> upsertCarMileage()
@@ -37,21 +37,22 @@ fun setCar(car: com.example.manageyourcar.dataLayer.model.Car) {
         }
     }
 
-   fun upsertCarMileage(){
+    fun upsertCarMileage() {
 
-       viewModelScope.launch(Dispatchers.IO) {
-           val car=_uiState.value.car
-           if (car != null) {
-               val updatedCar = car.copy(mileage = car.mileage + listOf(12346))
-               println(updatedCar.mileage)
-               upsertCarMileageUseCase.updateCarMileage(updatedCar)
-               println("tipar")
-           }
+        viewModelScope.launch(Dispatchers.IO) {
+            val car = _uiState.value.car
+            if (car != null) {
+                val updatedCar = car.copy(mileage = car.mileage + listOf(12346))
+                println(updatedCar.mileage)
+                upsertCarMileageUseCase.updateCarMileage(updatedCar)
+                println("tipar")
+            }
 
-       }
+        }
     }
 }
+
 sealed interface UpdateCatEvent {
-    object OnUpdateMileage :UpdateCatEvent
-    data class newMileage(val mileage : String) : UpdateCatEvent
+    object OnUpdateMileage : UpdateCatEvent
+    data class newMileage(val mileage: String) : UpdateCatEvent
 }

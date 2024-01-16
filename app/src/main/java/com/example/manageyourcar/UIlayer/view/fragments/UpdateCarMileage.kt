@@ -16,13 +16,13 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class UpdateCarMileage : BottomSheetDialogFragment() {
     private val updateCarMileageViewModel: UpdateCarViewModel by viewModel()
 
-    val args : UpdateCarMileageArgs by navArgs()
+    val args: UpdateCarMileageArgs by navArgs()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         args.myArg?.let {
-           updateCarMileageViewModel.setCar(it)
+            updateCarMileageViewModel.setCar(it)
         }
     }
 
@@ -30,13 +30,17 @@ class UpdateCarMileage : BottomSheetDialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         return ComposeView(requireContext()).apply {
 
 
             setContent {
-                val UpdateMileageCarDetailsUIState by updateCarMileageViewModel.uiState.collectAsState()
-                CustomDialogKM(UpdateMileageCarDetailsUIState = UpdateMileageCarDetailsUIState, onEvent = updateCarMileageViewModel::onEvent)
-            }  }
+                val updateMileageCarDetailsUIState by updateCarMileageViewModel.uiState.collectAsState()
+                CustomDialogKM(
+                    uiState = updateMileageCarDetailsUIState,
+                    onEvent = updateCarMileageViewModel::onEvent
+                )
+            }
         }
+    }
 }

@@ -41,18 +41,21 @@ class ViewCarDetailsViewModel : ViewModel(), KoinComponent {
 
     fun onEvent(event: ViewCarDetailsEvent) {
         when (event) {
-        is ViewCarDetailsEvent.OnClickAddCarButton -> {
-            navController?.navigate(R.id.action_viewCarDetailsFragment_to_AddCarFragment)
+            is ViewCarDetailsEvent.OnClickAddCarButton -> {
+                navController.navigate(R.id.action_viewCarDetailsFragment_to_AddCarFragment)
+            }
+
+            is ViewCarDetailsEvent.OnUpdateMileage -> {
+                val action =
+                    ViewCarDetailsFragmentDirections.actionViewCarDetailsFragmentToUpdateCarMileage(
+                        myArg = _uiState.value.let {
+                            it.let {
+                                it as ViewCarDetailsState.ViewCarDetailsStateDetailsUIState
+                            }.cars[0] // A changer
+                        })
+                navController.navigate(action)
+            }
         }
-        is ViewCarDetailsEvent.OnUpdateMileage -> {
-            val action = ViewCarDetailsFragmentDirections.actionViewCarDetailsFragmentToUpdateCarMileage(myArg = _uiState.value.let {
-                it.let {
-                    it as ViewCarDetailsState.ViewCarDetailsStateDetailsUIState
-                }.cars[0]
-            })
-            navController?.navigate(action)
-        }
-    }
 
 
     }
