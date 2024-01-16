@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.manageyourcar.R
 import com.example.manageyourcar.databinding.ActivityLoginBinding
-import com.example.manageyourcar.databinding.ActivityMainBinding
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding

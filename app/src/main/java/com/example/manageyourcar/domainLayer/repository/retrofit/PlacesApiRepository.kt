@@ -4,7 +4,7 @@ import com.example.manageyourcar.dataLayer.dataLayerRetrofit.model.Place
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import kotlinx.coroutines.flow.Flow
 
-interface GarageRepository {
+interface PlacesApiRepository {
     suspend fun getPlacesBy(
         latitude: Double,
         longitude: Double,

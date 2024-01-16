@@ -8,7 +8,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
-import com.example.manageyourcar.UIlayer.composeView.LoginUserView
 import com.example.manageyourcar.UIlayer.composeView.ViewCarDetailsView
 import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
 import com.example.manageyourcar.UIlayer.viewmodel.ViewCarDetailsViewModel
@@ -17,7 +16,7 @@ import com.example.manageyourcar.databinding.ViewCarDetailsBinding
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ViewCarDetailsFragment: Fragment() {
+class ViewCarDetailsFragment : Fragment() {
     private val listenerInternet by inject<ListenerInternet>()
     private val viewCarDetailsViewModel: ViewCarDetailsViewModel by viewModel()
     private lateinit var binding: ViewCarDetailsBinding
@@ -54,9 +53,6 @@ class ViewCarDetailsFragment: Fragment() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-    }
     companion object {
         fun newInstance(): LoginUserFragment {
             return LoginUserFragment()

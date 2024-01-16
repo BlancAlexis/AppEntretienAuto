@@ -1,25 +1,10 @@
 package com.example.manageyourcar.UIlayer.view.activities
 
-import android.Manifest
-import android.annotation.SuppressLint
-import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothManager
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.location.Location
-import android.os.Build
 import android.os.Bundle
-import android.os.Looper
-import android.util.Log
 import android.view.MenuItem
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
-import androidx.core.app.ActivityCompat
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
@@ -28,17 +13,13 @@ import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.databinding.ActivityMainBinding
 import com.example.manageyourcar.domainLayer.useCaseBusiness.LogoutUserUseCase
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationResult
-import com.google.android.gms.location.LocationServices
-import com.google.android.material.elevation.SurfaceColors
 import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelectedListener, KoinComponent {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
+    KoinComponent {
     private lateinit var navController: NavController
     private lateinit var binding: ActivityMainBinding
     private val logoutUserUseCase by inject<LogoutUserUseCase>()
@@ -48,9 +29,6 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
         window.navigationBarColor = getColor(R.color.darkGray) // Espace sous bottomAppBar en gris
         window.statusBarColor = getColor(R.color.darkGray) // Espace au dessus de Toolbar en gris
-
-
-
 
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -87,7 +65,7 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
             R.id.nav_logout -> {
                 lifecycleScope.launch {
-                    when(logoutUserUseCase.logoutUser(AppApplication.instance.applicationContext)){
+                    when (logoutUserUseCase.logoutUser(AppApplication.instance.applicationContext)) {
                         is Ressource.Error -> println("error")
                         is Ressource.Loading -> println("load")
                         is Ressource.Success -> finish() //Faire une chose qui bloque si fail?

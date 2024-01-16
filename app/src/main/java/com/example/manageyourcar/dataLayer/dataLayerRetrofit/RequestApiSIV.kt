@@ -7,7 +7,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 
-interface requestApiSIV {
+interface RequestApiSIV {
     @GET("vin/{siv}")
     suspend fun getVehiculeBySIV(
         @Path("siv") siv: String,

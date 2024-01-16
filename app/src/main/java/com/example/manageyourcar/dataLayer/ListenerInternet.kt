@@ -10,9 +10,11 @@ import com.example.manageyourcar.UIlayer.AppApplication
 class ListenerInternet {
 
     val mutableLiveData: MutableLiveData<Boolean> = MutableLiveData<Boolean>(false)
+
     init {
         registerInternetListener()
     }
+
     fun registerInternetListener() {
         val connectivityManager =
             AppApplication.instance.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

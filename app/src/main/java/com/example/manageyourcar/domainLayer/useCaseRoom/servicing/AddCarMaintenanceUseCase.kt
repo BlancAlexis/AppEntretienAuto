@@ -18,7 +18,7 @@ class AddCarMaintenanceUseCase : KoinComponent {
                 is Ressource.Error -> Ressource.Error(result.error)
                 is Ressource.Loading -> Ressource.Error()
                 is Ressource.Success -> {
-                    val maintenanceWithUserID : Entretien = entretien.copy(
+                    val maintenanceWithUserID: Entretien = entretien.copy(
                         userID = result.data
                     )
                     roomRepository.addNewServicing(maintenanceWithUserID)

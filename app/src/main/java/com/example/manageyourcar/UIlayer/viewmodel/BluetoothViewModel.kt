@@ -1,30 +1,20 @@
 package com.example.manageyourcar.UIlayer.viewmodel
 
 
-import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.composeView.UIState.BluetoothUiState
-import com.example.manageyourcar.UIlayer.composeView.UIState.SignInUiState
 import com.example.manageyourcar.domainLayer.ConnectionResult
 import com.example.manageyourcar.domainLayer.bluetooth.BluetoothController
 import com.example.manageyourcar.domainLayer.bluetooth.BluetoothDevice
 import com.example.manageyourcar.domainLayer.bluetooth.BluetoothDeviceDomain
 import com.example.manageyourcar.domainLayer.bluetooth.ConnectedBluetoothDevice
-import com.github.eltonvs.obd.command.ObdCommand
-import com.github.eltonvs.obd.command.control.VINCommand
-import com.github.eltonvs.obd.command.engine.RPMCommand
-import com.github.eltonvs.obd.command.engine.SpeedCommand
-import com.github.eltonvs.obd.connection.ObdDeviceConnection
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
@@ -37,7 +27,6 @@ import org.koin.core.component.inject
 class BluetoothViewModel : ViewModel(), KoinComponent {
     private lateinit var navController: NavController
     private val bluetoothController by inject<BluetoothController>()
-
 
 
     private val _state = MutableStateFlow(BluetoothUiState())
@@ -112,13 +101,13 @@ class BluetoothViewModel : ViewModel(), KoinComponent {
                     ConnectedBluetoothDevice.outputStream = result.outputStream
                     navController.navigate(R.id.action_connectObdFragment_to_OBDFragment)
 
-                  /*  _state.update {
-                        it.copy(
-                            isConnected = true,
-                            isConnecting = false,
-                            errorMessage = null
-                        )
-                    }*/
+                    /*  _state.update {
+                          it.copy(
+                              isConnected = true,
+                              isConnecting = false,
+                              errorMessage = null
+                          )
+                      }*/
                 }
 
                 is ConnectionResult.Error -> {
@@ -149,30 +138,34 @@ class BluetoothViewModel : ViewModel(), KoinComponent {
         bluetoothController.release()
     }
 
-    fun onEvent(onBluetoothDeviceEvent: onBluetoothDeviceEvent) {
-when (val result=onBluetoothDeviceEvent) {
-            is onBluetoothDeviceEvent.OnBluetoothDeviceClick -> connectToDevice(result.bluetoothDevice)
-            is onBluetoothDeviceEvent.OnBluetoothDeviceLongClick -> {
+    fun onEvent(onBluetoothDeviceEvent: OnBluetoothDeviceEvent) {
+        when (val result = onBluetoothDeviceEvent) {
+            is OnBluetoothDeviceEvent.OnBluetoothDeviceClick -> connectToDevice(result.bluetoothDevice)
+            is OnBluetoothDeviceEvent.OnBluetoothDeviceLongClick -> {
             }
-            is onBluetoothDeviceEvent.OnBluetoothDeviceConnectClick -> {
+
+            is OnBluetoothDeviceEvent.OnBluetoothDeviceConnectClick -> {
             }
-            is onBluetoothDeviceEvent.OnBluetoothDeviceDisconnectClick -> {
+
+            is OnBluetoothDeviceEvent.OnBluetoothDeviceDisconnectClick -> {
             }
-            is onBluetoothDeviceEvent.OnBluetoothDeviceScanClick -> {
+
+            is OnBluetoothDeviceEvent.OnBluetoothDeviceScanClick -> {
                 startScan()
             }
-            is onBluetoothDeviceEvent.OnBluetoothDeviceStopScanClick -> {
+
+            is OnBluetoothDeviceEvent.OnBluetoothDeviceStopScanClick -> {
                 stopScan()
             }
         }
     }
 }
 
-sealed interface onBluetoothDeviceEvent {
-    data class OnBluetoothDeviceClick(val bluetoothDevice : BluetoothDevice) : onBluetoothDeviceEvent
-    object OnBluetoothDeviceLongClick : onBluetoothDeviceEvent
-    object OnBluetoothDeviceConnectClick : onBluetoothDeviceEvent
-    object OnBluetoothDeviceDisconnectClick : onBluetoothDeviceEvent
-    object OnBluetoothDeviceScanClick : onBluetoothDeviceEvent
-    object OnBluetoothDeviceStopScanClick : onBluetoothDeviceEvent
+sealed interface OnBluetoothDeviceEvent {
+    data class OnBluetoothDeviceClick(val bluetoothDevice: BluetoothDevice) : OnBluetoothDeviceEvent
+    object OnBluetoothDeviceLongClick : OnBluetoothDeviceEvent
+    object OnBluetoothDeviceConnectClick : OnBluetoothDeviceEvent
+    object OnBluetoothDeviceDisconnectClick : OnBluetoothDeviceEvent
+    object OnBluetoothDeviceScanClick : OnBluetoothDeviceEvent
+    object OnBluetoothDeviceStopScanClick : OnBluetoothDeviceEvent
 }

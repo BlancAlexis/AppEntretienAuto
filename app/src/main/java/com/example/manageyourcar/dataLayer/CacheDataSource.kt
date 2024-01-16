@@ -1,7 +1,6 @@
 package com.example.manageyourcar.dataLayer
 
 import android.content.Context
-import android.content.SharedPreferences
 import com.example.manageyourcar.R
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 
@@ -20,7 +19,7 @@ class CacheDataSource {
             }
             Ressource.Success(userID)
         } catch (e: Error) {
-            Ressource.Error(e as Exception)
+            Ressource.Error(message = "Erreur lors de la récupération de l'userID")
         }
     }
 
@@ -31,29 +30,22 @@ class CacheDataSource {
                 Context.MODE_PRIVATE
             )
             with(sharedPref.edit()) {
-                putInt(context.getString(com.example.manageyourcar.R.string.user_id), userId)
+                putInt(context.getString(R.string.user_id), userId)
                 apply()
                 return Ressource.Success(true)
             }
         } catch (e: Error) {
-            return Ressource.Error(message = "Impossible de récupérer l'userID")
+            return Ressource.Error(message = "Erreur lors de l'écriture de l'userID")
         }
-
-    }
-
-    fun getCachedListUserCar() {
-
-    }
-
-    fun putListUserCarInCache() {
 
     }
 
     fun resetCurrentUserId(context: Context): Ressource<Boolean> {
         return try {
-            context.getSharedPreferences(context.getString(R.string.user_id), Context.MODE_PRIVATE).edit().clear().apply()
+            context.getSharedPreferences(context.getString(R.string.user_id), Context.MODE_PRIVATE)
+                .edit().clear().apply()
             Ressource.Success(true)
-        }catch(e : Exception){
+        } catch (e: Exception) {
             Ressource.Error(message = "Impossible de supprimer l'userID $e")
         }
     }

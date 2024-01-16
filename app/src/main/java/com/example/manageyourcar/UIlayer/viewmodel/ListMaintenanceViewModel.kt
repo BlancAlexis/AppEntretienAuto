@@ -12,6 +12,7 @@ import com.example.manageyourcar.UIlayer.composeView.UIState.ServicingUIState
 import com.example.manageyourcar.UIlayer.composeView.UIState.SortType
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.dataLayer.dataLayerRoom.dao.MaintenanceWithCarEntity
+import com.example.manageyourcar.dataLayer.model.Car
 import com.example.manageyourcar.dataLayer.model.MaintenanceService
 import com.example.manageyourcar.domainLayer.useCaseBusiness.LogoutUserUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.AddCarRoomUseCase
@@ -23,9 +24,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import java.util.Date
 
 class ListMaintenanceViewModel : ViewModel(), KoinComponent {
     private val _uiState = MutableStateFlow(MaintenanceListUiState())
@@ -41,7 +42,22 @@ class ListMaintenanceViewModel : ViewModel(), KoinComponent {
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            //  addCarRoomUseCase.addCarToRoom(Car(null, "BMW", "X5", Date(), "d", "Diesel", "123456789", 150,300,250,25623,null))
+            addCarRoomUseCase.addCarToRoom(
+                Car(
+                    null,
+                    "BMW",
+                    "X5",
+                    Date(),
+                    "d",
+                    "Diesel",
+                    "123456789",
+                    150,
+                    300,
+                    250,
+                    listOf(25623),
+                    null
+                )
+            )
 
             getAllUserMaintenanceUseCase.invoke().collect { result ->
                 when (result) {
@@ -61,15 +77,17 @@ class ListMaintenanceViewModel : ViewModel(), KoinComponent {
             )
         }
     }
-fun onBackPressed(){
-    viewModelScope.launch {
-        when(logoutUserUseCase.logoutUser(AppApplication.instance.applicationContext)){
-            is Ressource.Error -> println("error")
-            is Ressource.Loading -> println("load")
-            is Ressource.Success -> return@launch //Faire une chose qui bloque si fail?
+
+    fun onBackPressed() {
+        viewModelScope.launch {
+            when (logoutUserUseCase.logoutUser(AppApplication.instance.applicationContext)) {
+                is Ressource.Error -> println("error")
+                is Ressource.Loading -> println("load")
+                is Ressource.Success -> return@launch //Faire une chose qui bloque si fail?
+            }
         }
     }
-}
+
     fun setNavController(view: View) {
         navController = Navigation.findNavController(view)
     }
@@ -79,29 +97,32 @@ fun onBackPressed(){
             it.copy(
                 isLoading = false,
                 listUiState = newData.map { entretien ->
-                    var progressIndicator= 0.0f
+                    var progressIndicator = 0.0f
                     var description: String = ""
                     when (entretien.maintenanceEntity.serviceType) {
                         is MaintenanceService.Freins -> {
                             description = entretien.maintenanceEntity.serviceType.name
-                            progressIndicator = ((entretien.maintenanceEntity.mileage.toFloat() / MaintenanceActScheddule.valueOf(
-                                entretien.maintenanceEntity.serviceType.name.uppercase()
-                            ).km.toFloat()) * 100).toFloat()
+                            progressIndicator =
+                                ((entretien.maintenanceEntity.mileage.toFloat() / MaintenanceActScheddule.valueOf(
+                                    entretien.maintenanceEntity.serviceType.name.uppercase()
+                                ).km.toFloat()) * 100).toFloat()
                         }
 
                         is MaintenanceService.Pneus -> {
                             println(2563 / 3000)
                             description = entretien.maintenanceEntity.serviceType.name
-                            progressIndicator = ((entretien.maintenanceEntity.mileage .toFloat()/ MaintenanceActScheddule.valueOf(
-                                entretien.maintenanceEntity.serviceType.name.uppercase()
-                            ).km.toFloat()) * 100).toFloat()
+                            progressIndicator =
+                                ((entretien.maintenanceEntity.mileage.toFloat() / MaintenanceActScheddule.valueOf(
+                                    entretien.maintenanceEntity.serviceType.name.uppercase()
+                                ).km.toFloat()) * 100).toFloat()
                         }
 
                         is MaintenanceService.Vidange -> {
                             description = entretien.maintenanceEntity.serviceType.name
-                            progressIndicator =((entretien.maintenanceEntity.mileage.toFloat() / MaintenanceActScheddule.valueOf(
-                                entretien.maintenanceEntity.serviceType.name.uppercase()
-                            ).km.toFloat()) * 100).toFloat()
+                            progressIndicator =
+                                ((entretien.maintenanceEntity.mileage.toFloat() / MaintenanceActScheddule.valueOf(
+                                    entretien.maintenanceEntity.serviceType.name.uppercase()
+                                ).km.toFloat()) * 100).toFloat()
                         }
                     }
 
@@ -126,17 +147,18 @@ fun onBackPressed(){
     }
 
 
-    fun onEvent(event: onMaintenanceListEvent) {
+    fun onEvent(event: OnMaintenanceListEvent) {
         when (event) {
-            is onMaintenanceListEvent.onButtonAddMaintenancePush -> {
-                navController?.navigate(R.id.addMaintenanceFragment)
+            is OnMaintenanceListEvent.OnButtonAddMaintenancePush -> {
+
+                navController.navigate(R.id.addMaintenanceFragment)
             }
 
-            is onMaintenanceListEvent.onSortMethodChanged -> changeSortMethod(event)
+            is OnMaintenanceListEvent.OnSortMethodChanged -> changeSortMethod(event)
         }
     }
 
-    private fun changeSortMethod(event: onMaintenanceListEvent.onSortMethodChanged) {
+    private fun changeSortMethod(event: OnMaintenanceListEvent.OnSortMethodChanged) {
         when (event.newMethod) {
             SortType.croissant ->
                 _uiState.update {
@@ -157,9 +179,9 @@ fun onBackPressed(){
 
 }
 
-sealed interface onMaintenanceListEvent {
-    object onButtonAddMaintenancePush : onMaintenanceListEvent
-    class onSortMethodChanged(val newMethod: SortType) : onMaintenanceListEvent
+sealed interface OnMaintenanceListEvent {
+    object OnButtonAddMaintenancePush : OnMaintenanceListEvent
+    class OnSortMethodChanged(val newMethod: SortType) : OnMaintenanceListEvent
 
 }
 

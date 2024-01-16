@@ -13,14 +13,9 @@ import com.example.manageyourcar.UIlayer.composeView.MaintenanceListView
 import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
 import com.example.manageyourcar.UIlayer.viewmodel.ListMaintenanceViewModel
 import com.example.manageyourcar.dataLayer.ListenerInternet
-import com.example.manageyourcar.dataLayer.model.Car
 import com.example.manageyourcar.databinding.FragmentViewServicingBinding
-import com.example.manageyourcar.domainLayer.useCaseBusiness.LogoutUserUseCase
-import kotlinx.coroutines.coroutineScope
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.Date
-import kotlin.coroutines.coroutineContext
 
 class ViewListMaintenanceFragment : Fragment() {
     private val listMaintenanceViewModel: ListMaintenanceViewModel by viewModel()
@@ -64,7 +59,7 @@ class ViewListMaintenanceFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        listenerInternet.mutableLiveData.observe(viewLifecycleOwner){
+        listenerInternet.mutableLiveData.observe(viewLifecycleOwner) {
             listMaintenanceViewModel.onInternetLost(it)
         }
     }

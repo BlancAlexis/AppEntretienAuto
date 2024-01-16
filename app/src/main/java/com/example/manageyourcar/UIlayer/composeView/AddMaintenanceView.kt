@@ -50,7 +50,7 @@ import com.example.manageyourcar.UIlayer.composeView.common.CalendarView
 import com.example.manageyourcar.UIlayer.composeView.common.CustomDialog
 import com.example.manageyourcar.UIlayer.composeView.common.CustomTextField
 import com.example.manageyourcar.UIlayer.composeView.common.OutlinedSpinner
-import com.example.manageyourcar.UIlayer.viewmodel.onMaintenanceEvent
+import com.example.manageyourcar.UIlayer.viewmodel.OnMaintenanceEvent
 import java.text.SimpleDateFormat
 import java.time.Instant
 import java.util.Date
@@ -60,7 +60,7 @@ import kotlin.math.absoluteValue
 @Composable
 fun AddMaintenanceView(
     uiState: AddVehiculeMaintenanceUiState,
-    onEvent: (onMaintenanceEvent) -> Unit = {}
+    onEvent: (OnMaintenanceEvent) -> Unit = {}
 ) {
     Column(
         verticalArrangement = Arrangement.Top,
@@ -78,82 +78,88 @@ fun AddMaintenanceView(
                 CalendarView(
                     onDateSelected = { date ->
                         selectedDate.value = SimpleDateFormat("dd/MM/yyyy").parse(date)
-                        onMaintenanceEvent.onDateChanged(date)
+                        OnMaintenanceEvent.OnDateChanged(date)
                         showCalendar.value = false
                         checked = false
                     }
                 )
             }
-        Column(
+            Column(
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                val pagerState = rememberPagerState(pageCount = {uiState.listMaintenance.size})
+                val pagerState = rememberPagerState(pageCount = { uiState.listMaintenance.size })
                 LaunchedEffect(pagerState) {
                     snapshotFlow { pagerState.currentPage }.collect { page ->
-                        onMaintenanceEvent.onMaintenanceChanged(uiState.listMaintenance[page])
+                        OnMaintenanceEvent.OnMaintenanceSelectedChanged(uiState.listMaintenance[page])
                     }
                 }
 
                 Text(text = "Ajouter une opération", fontSize = 25.sp, fontWeight = FontWeight.Bold)
                 HorizontalPager(state = pagerState) { page ->
-                        Box(
-                            modifier = Modifier
-                                .wrapContentSize()
-                                .graphicsLayer {
-                                    val pageOffset = (
-                                            (pagerState.currentPage - page) + pagerState
-                                                .currentPageOffsetFraction
-                                            ).absoluteValue
-
-                                    alpha = lerp(
-                                        start = 0.5f,
-                                        stop = 1f,
-                                        fraction = 1f - pageOffset.coerceIn(0f, 1f)
-                                    )
-                                }
-                            ,
-                        ) {
-                            Image(
-                                modifier = Modifier.padding(start = 15.dp),
-                                painter = painterResource(id = uiState.listMaintenance[page].image),
-                                contentDescription = ""
-                            )
-                            Text(text = uiState.listMaintenance[page].name, fontSize = 25.sp, fontWeight = FontWeight.Bold, color = Color.White, modifier = Modifier.padding(start = 25.dp, top = 200.dp))
-                        }
-                    }
-            Row(
-                Modifier
-                    .wrapContentHeight()
-                    .fillMaxWidth()
-                    .align(Alignment.CenterHorizontally),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                repeat(pagerState.pageCount) { iteration ->
-                    val color = if (pagerState.currentPage == iteration) Color.DarkGray else Color.LightGray
                     Box(
                         modifier = Modifier
-                            .padding(bottom = 20.dp, top = 5.dp, start = 3.dp, end = 3.dp)
-                            .clip(CircleShape)
-                            .background(color)
-                            .size(6.dp)
-                    )
+                            .wrapContentSize()
+                            .graphicsLayer {
+                                val pageOffset = (
+                                        (pagerState.currentPage - page) + pagerState
+                                            .currentPageOffsetFraction
+                                        ).absoluteValue
+
+                                alpha = lerp(
+                                    start = 0.5f,
+                                    stop = 1f,
+                                    fraction = 1f - pageOffset.coerceIn(0f, 1f)
+                                )
+                            },
+                    ) {
+                        Image(
+                            modifier = Modifier.padding(start = 15.dp),
+                            painter = painterResource(id = uiState.listMaintenance[page].image),
+                            contentDescription = ""
+                        )
+                        Text(
+                            text = uiState.listMaintenance[page].name,
+                            fontSize = 25.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White,
+                            modifier = Modifier.padding(start = 25.dp, top = 200.dp)
+                        )
+                    }
                 }
-            }
+                Row(
+                    Modifier
+                        .wrapContentHeight()
+                        .fillMaxWidth()
+                        .align(Alignment.CenterHorizontally),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    repeat(pagerState.pageCount) { iteration ->
+                        val color =
+                            if (pagerState.currentPage == iteration) Color.DarkGray else Color.LightGray
+                        Box(
+                            modifier = Modifier
+                                .padding(bottom = 20.dp, top = 5.dp, start = 3.dp, end = 3.dp)
+                                .clip(CircleShape)
+                                .background(color)
+                                .size(6.dp)
+                        )
+                    }
+                }
                 OutlinedSpinner(
                     listMaintenanceName = uiState.listCars.map { it.model },
                     textLabel = "Votre véhicule",
                     onItemSelect = { nomCar ->
-                        uiState.listCars.find { it.model == nomCar   }
-                            ?.let { it1 -> onEvent(onMaintenanceEvent.onCarChanged(it1)) }
+                        uiState.listCars.find { it.model == nomCar }
+                            ?.let { it1 -> onEvent(OnMaintenanceEvent.OnCarSelectedChanged(it1)) }
                     })
 
                 CustomTextField(
                     keyboardType = KeyboardType.Number,
                     onValueChange = {
-                        onEvent(onMaintenanceEvent.onPriceChanged(it.toInt()))
+                        onEvent(OnMaintenanceEvent.OnPriceChanged(it.toInt()))
                     },
                     textFieldValue = uiState.price.toString(),
                     label = "Prix",
@@ -164,7 +170,7 @@ fun AddMaintenanceView(
                 CustomTextField(
                     keyboardType = KeyboardType.Number,
                     onValueChange = {
-                        onEvent(onMaintenanceEvent.onMileageChanged(it.toInt()))
+                        onEvent(OnMaintenanceEvent.OnMileageChanged(it.toInt()))
                     },
                     textFieldValue = uiState.mileage.toString(),
                     label = "Kilométrage",
@@ -173,9 +179,10 @@ fun AddMaintenanceView(
                 Row {
                     Checkbox(checked = checked, onCheckedChange = { isChecked ->
                         checked = isChecked
-                    if(checked){
-                        selectedDate.value = Date.from(Instant.now())
-                    }})
+                        if (checked) {
+                            selectedDate.value = Date.from(Instant.now())
+                        }
+                    })
                     IconButton(onClick = {
                         showCalendar.value = true
                     }) {
@@ -183,14 +190,17 @@ fun AddMaintenanceView(
                     }
                 }
                 Text(text = "Date : ${selectedDate.value}")
-                Button(colors = ButtonDefaults.buttonColors(colorResource(id = R.color.primaryColor)), onClick = {
-                    onEvent(onMaintenanceEvent.onValidatePressed)
-                }) {
+                Button(
+                    colors = ButtonDefaults.buttonColors(colorResource(id = R.color.primaryColor)),
+                    onClick = {
+                        onEvent(OnMaintenanceEvent.OnClickAddMaintenanceButton)
+                    }) {
                     Text(text = "Ajouter")
                 }
             }
-        }}
+        }
     }
+}
 
 @Preview(showBackground = true)
 @Composable

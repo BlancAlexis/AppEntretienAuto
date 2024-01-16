@@ -8,7 +8,8 @@ import android.util.Log
 class MyLocationListener : LocationListener {
 
     override fun onLocationChanged(location: Location) {
-        Log.i("TAG", "onLocationChanged: dddd ${location.latitude}${location.longitude}")    }
+        Log.i("TAG", "onLocationChanged: dddd ${location.latitude}${location.longitude}")
+    }
 
     override fun onStatusChanged(provider: String, status: Int, extras: Bundle?) {
         // Traiter le changement de statut du fournisseur de localisation

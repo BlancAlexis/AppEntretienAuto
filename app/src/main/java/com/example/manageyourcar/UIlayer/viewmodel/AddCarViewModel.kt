@@ -1,5 +1,6 @@
 package com.example.manageyourcar.UIlayer.viewmodel
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.manageyourcar.UIlayer.composeView.UIState.AddCarUIState
@@ -20,16 +21,18 @@ class AddCarViewModel : ViewModel(), KoinComponent {
     private val addCarRoomUseCase by inject<AddCarRoomUseCase>()
     private val getVehiculeBySivNetworkUseCase by inject<GetVehiculeByNetworkUseCase>()
     private val getVehiculeByImmatNetworkUseCase by inject<GetVehiculeByNetworkImmatUseCase>()
+    val dismissFragment: MutableLiveData<Boolean> = MutableLiveData(false)
 
 
     private val _uiState = MutableStateFlow(AddCarUIState())
     val uiState = _uiState.asStateFlow()
 
-    fun onEvent(event: onCarRequest) {
+    fun onEvent(event: OnCarRequest) {
         when (event) {
-            is onCarRequest.onClickButton -> onValidation()
-            is onCarRequest.onImmatChanged -> onChangedImmat(event)
-            is onCarRequest.onVINChanged -> onChangedVIN(event)
+            is OnCarRequest.OnClickAddCarButton -> onValidation()
+            is OnCarRequest.OnImmatChanged -> onChangedImmat(event)
+            is OnCarRequest.OnVINChanged -> onChangedVIN(event)
+            is OnCarRequest.OnDismissAddCarFragment -> dismissFragment.postValue(true)
         }
     }
 
@@ -43,7 +46,7 @@ class AddCarViewModel : ViewModel(), KoinComponent {
         }
     }
 
-    private fun onChangedImmat(event: onCarRequest.onImmatChanged) {
+    private fun onChangedImmat(event: OnCarRequest.OnImmatChanged) {
         _uiState.update {
             it.copy(
                 inputImmat = event.newValue
@@ -51,7 +54,7 @@ class AddCarViewModel : ViewModel(), KoinComponent {
         }
     }
 
-    private fun onChangedVIN(event: onCarRequest.onVINChanged) {
+    private fun onChangedVIN(event: OnCarRequest.OnVINChanged) {
         _uiState.update {
             it.copy(
                 inputVIN = event.newValue
@@ -59,9 +62,9 @@ class AddCarViewModel : ViewModel(), KoinComponent {
         }
     }
 
-    fun getCarBySIV(SIV: String) {
+    fun getCarBySIV(siv: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            getVehiculeBySivNetworkUseCase.getVehiculeBySiv(SIV).collect { result ->
+            getVehiculeBySivNetworkUseCase.getVehiculeBySiv(siv).collect { result ->
                 when (result) {
                     is Ressource.Loading -> {
                         println("load")
@@ -129,10 +132,12 @@ class AddCarViewModel : ViewModel(), KoinComponent {
 
 }
 
-sealed interface onCarRequest {
-    object onClickButton : onCarRequest
-    data class onVINChanged(val newValue: String) : onCarRequest
-    data class onImmatChanged(val newValue: String) : onCarRequest
+sealed interface OnCarRequest {
+    object OnClickAddCarButton : OnCarRequest
+    object OnDismissAddCarFragment : OnCarRequest
+
+    data class OnVINChanged(val newValue: String) : OnCarRequest
+    data class OnImmatChanged(val newValue: String) : OnCarRequest
 }
 
 

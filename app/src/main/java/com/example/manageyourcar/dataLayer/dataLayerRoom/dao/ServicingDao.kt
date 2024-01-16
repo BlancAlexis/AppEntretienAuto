@@ -18,8 +18,10 @@ interface ServicingDao {
 
     @Query("SELECT * FROM servicing")
     fun getServicing(): List<MaintenanceEntity>
+
     @Query("SELECT * FROM servicing")
     fun getUserServicing(): Flow<List<MaintenanceEntity>>
+
     @Query("SELECT * FROM servicing where user_id = :userID")
     fun getUserMaintenances(userID: Int): Flow<List<MaintenanceEntity>>
 
@@ -34,11 +36,12 @@ interface ServicingDao {
 
     @Transaction
     suspend fun upsertServicing(maintenanceEntity: MaintenanceEntity) {
-        val id = addNewServicing(maintenanceEntity)
+        addNewServicing(maintenanceEntity)
         updateServicing(maintenanceEntity)
     }
 
     @Query("SELECT * FROM servicing WHERE user_id = :userId")
+    @Transaction
     fun getMaintenceActWithCar(userId: Int): Flow<List<MaintenanceWithCarEntity>>
 }
 

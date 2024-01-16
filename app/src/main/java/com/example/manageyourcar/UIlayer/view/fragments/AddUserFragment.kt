@@ -8,7 +8,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.example.manageyourcar.UIlayer.composeView.SignInUserView
 import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
 import com.example.manageyourcar.UIlayer.viewmodel.AddUserViewModel
@@ -49,9 +48,10 @@ class AddUserFragment : Fragment() {
             }
         }
     }
+
     override fun onResume() {
         super.onResume()
-        listenerInternet.mutableLiveData.observe(viewLifecycleOwner){
+        listenerInternet.mutableLiveData.observe(viewLifecycleOwner) {
             addUserViewModel.onInternetLost(it)
         }
     }

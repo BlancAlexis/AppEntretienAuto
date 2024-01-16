@@ -1,9 +1,7 @@
 package com.example.manageyourcar.dataLayer.dataLayerRoom.converter
 
 import androidx.room.TypeConverter
-import com.example.manageyourcar.dataLayer.dataLayerRoom.entities.MaintenanceServiceEntitiy
 import com.example.manageyourcar.dataLayer.model.MaintenanceService
-import com.example.manageyourcar.dataLayer.model.MaintenanceServiceType
 
 class MaintenanceServiceConverter {
 

@@ -1,6 +1,8 @@
 package com.example.manageyourcar.dataLayer.model
 
+import java.io.Serializable
 import java.util.Date
+
 
 data class Car(
     val carID: Int? = null,
@@ -13,8 +15,6 @@ data class Car(
     val power: Int,
     val torque: Int,
     val maxSpeed: Int,
-    val mileage: Int,
+    val mileage: List<Int>,
     val ownerID: Int? = null
-) {
-
-}
+) : Serializable

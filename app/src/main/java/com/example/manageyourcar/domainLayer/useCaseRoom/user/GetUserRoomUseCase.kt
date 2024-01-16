@@ -11,8 +11,8 @@ class GetUserRoomUseCase : KoinComponent {
 
     suspend fun getUserFromRoom(idUser: Int): Ressource<User> {
         return try {
-         val user= roomRepository.getUser(idUser)
-        Ressource.Success(user)
+            val user = roomRepository.getUser(idUser)
+            Ressource.Success(user)
         } catch (e: Exception) {
             Ressource.Error(exception = e)
         }

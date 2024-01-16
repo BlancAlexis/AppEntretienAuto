@@ -1,6 +1,6 @@
 package com.example.manageyourcar.domainLayer.utils
 
-enum class MaintenanceActScheddule( val km: Int){
+enum class MaintenanceActScheddule(val km: Int) {
     PNEUS(3000),
     FREINS(30000),
     VIDANGE(30000),

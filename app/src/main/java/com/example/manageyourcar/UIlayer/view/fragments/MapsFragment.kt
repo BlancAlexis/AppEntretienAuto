@@ -2,7 +2,6 @@ package com.example.manageyourcar.UIlayer.view.fragments
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
@@ -25,7 +24,6 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
@@ -64,20 +62,25 @@ class MapsFragment : Fragment() {
         }
 
 
-        var fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-
+        var fusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(requireActivity())
 
 
         val onLocationChanged: LocationCallback = object : LocationCallback() {
-            override fun onLocationResult(p0: LocationResult) {
-                p0 ?: return
+            override fun onLocationResult(location: LocationResult) {
+                location
 
-                if (p0.locations.isNotEmpty()) {
-                    val bitmap = BitmapFactory.decodeResource(requireActivity().resources, R.drawable.voiture_de_course)
-                    Log.i("TAG", "onLocationResult: ${p0.locations[0].latitude} ${p0.locations[0].longitude}")
-                    val currentPosition = LatLng(p0.locations[0].latitude, p0.locations[0].longitude)
-                    googleMap.addMarker(MarkerOptions().position(currentPosition).title("Vous êtes ici!"))
-                //.icon(BitmapDescriptorFactory.fromBitmap(BitmapUtils.decodeResource(requireActivity().resources,R.drawable.voiture_de_course))))
+                if (location.locations.isNotEmpty()) {
+                    Log.i(
+                        "TAG",
+                        "onLocationResult: ${location.locations[0].latitude} ${location.locations[0].longitude}"
+                    )
+                    val currentPosition =
+                        LatLng(location.locations[0].latitude, location.locations[0].longitude)
+                    googleMap.addMarker(
+                        MarkerOptions().position(currentPosition).title("Vous êtes ici!")
+                    )
+                    //.icon(BitmapDescriptorFactory.fromBitmap(BitmapUtils.decodeResource(requireActivity().resources,R.drawable.voiture_de_course))))
 
                 }
             }
@@ -85,14 +88,14 @@ class MapsFragment : Fragment() {
 
         val locationManager = fusedLocationProviderClient.requestLocationUpdates(
             LocationRequest.create()
-                .setPriority(Priority.PRIORITY_LOW_POWER)
+                .setPriority(Priority.PRIORITY_LOW_POWER) //Pas besoin d'une grosse précision pour ce que l'on fait
                 .setInterval(1000)
                 .setFastestInterval(500), onLocationChanged, Looper.getMainLooper()
         )
 
     }
 
-    fun getPosition(){
+    fun getPosition() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         if (ActivityCompat.checkSelfPermission(
                 requireActivity(),
@@ -114,17 +117,12 @@ class MapsFragment : Fragment() {
         fusedLocationClient.lastLocation.addOnSuccessListener { location ->
             if (location != null) {
                 val currentPosition = LatLng(location.latitude, location.longitude)
-                googleMap.addMarker(MarkerOptions().position(currentPosition).title("Vous êtes ici!"))
+                googleMap.addMarker(
+                    MarkerOptions().position(currentPosition).title("Vous êtes ici!")
+                )
                 googleMap.moveCamera(CameraUpdateFactory.newLatLng(currentPosition))
             }
         }
-    }
-
-
-    //start location updates
-    override fun onStart() {
-        super.onStart()
-
     }
 
 
@@ -137,11 +135,6 @@ class MapsFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         stopLocationUpdates()
-    }
-
-    // start receiving location update when activity  visible/foreground
-    override fun onResume() {
-        super.onResume()
     }
 
 
@@ -169,7 +162,4 @@ class MapsFragment : Fragment() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
 }

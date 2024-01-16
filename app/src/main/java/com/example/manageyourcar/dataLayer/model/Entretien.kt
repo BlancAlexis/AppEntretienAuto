@@ -6,12 +6,12 @@ import com.example.manageyourcar.dataLayer.dataLayerRoom.converter.MaintenanceSe
 import java.util.Date
 
 data class Entretien(
-    val userID : Int?=null,
-    val carID : Int?=null,
-    val mileage : Int,
-    val price : Int,
+    val userID: Int? = null,
+    val carID: Int? = null,
+    val mileage: Int,
+    val price: Int,
     val date: Date,
     @TypeConverters(MaintenanceServiceConverter::class)
     @Embedded
-    val service : MaintenanceService,
+    val service: MaintenanceService,
 )

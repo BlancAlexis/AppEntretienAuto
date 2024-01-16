@@ -9,7 +9,7 @@ import org.koin.core.component.inject
 class UpdateUserRoomUseCase : KoinComponent {
     val roomRepository by inject<UserRepository>()
 
-    suspend fun getUpdateFromRoom(user: User) : Ressource<Unit> {
+    suspend fun getUpdateFromRoom(user: User): Ressource<Unit> {
         return try {
             roomRepository.updateUser(user)
             Ressource.Success(Unit)

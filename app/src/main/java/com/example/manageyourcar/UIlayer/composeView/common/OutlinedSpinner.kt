@@ -13,16 +13,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.manageyourcar.UIlayer.composeView.AddVehiculeMaintenanceView
-import com.example.manageyourcar.UIlayer.composeView.UIState.AddVehiculeMaintenanceUiState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OutlinedSpinner(
-    modifier : Modifier? = null,
-    listMaintenanceName : List<String>,
-    textLabel : String,
-    onItemSelect : (String) -> Unit = {}
+    modifier: Modifier? = null,
+    listMaintenanceName: List<String>,
+    textLabel: String,
+    onItemSelect: (String) -> Unit = {}
 ) {
     var expanded by remember { mutableStateOf(false) }
     var selectedOptionText by remember { mutableStateOf(listMaintenanceName[0]) }
@@ -52,7 +50,7 @@ fun OutlinedSpinner(
                 expanded = false
             }
         ) {
-            listMaintenanceName.forEach { selectionOption : String ->
+            listMaintenanceName.forEach { selectionOption: String ->
                 DropdownMenuItem(
                     text = { Text(text = selectionOption) },
                     onClick = {

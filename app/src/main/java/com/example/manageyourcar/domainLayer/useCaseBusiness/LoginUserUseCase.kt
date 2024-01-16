@@ -22,11 +22,12 @@ class LoginUserUseCase : KoinComponent {
                         Ressource.Error(message = "Identifiant non valide")
                     }
                 }
+
                 else -> {
                     Ressource.Error(resultWhen.error)
                 }
             }
-        }catch (e: Exception) {
+        } catch (e: Exception) {
             Ressource.Error(e)
         }
     }
