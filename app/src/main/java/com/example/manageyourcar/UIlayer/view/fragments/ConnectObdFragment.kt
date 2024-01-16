@@ -12,17 +12,15 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import com.example.manageyourcar.UIlayer.composeView.BluetoothDeviceView
 import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
-import com.example.manageyourcar.UIlayer.viewmodel.BluetoothViewModel
-import com.example.manageyourcar.databinding.FragmentConnectObdBinding
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.example.manageyourcar.UIlayer.viewmodel.BluetoothViewModel import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ConnectObdFragment : Fragment() {
     val connectObdViewModel: BluetoothViewModel by viewModel()
-    private lateinit var binding: FragmentConnectObdBinding
 
 
     private val bluetoothManager by lazy {
@@ -39,8 +37,21 @@ class ConnectObdFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         connectObdViewModel.startScan()
-        binding = FragmentConnectObdBinding.inflate(layoutInflater)
-        return binding.root
+        return ComposeView(requireContext()).apply {
+            setContent {
+                ManageYourCarTheme {
+                    setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+
+                    val bluetoothUiState by connectObdViewModel.state.collectAsState()
+                    ManageYourCarTheme {
+                        BluetoothDeviceView(
+                            uiState = bluetoothUiState,
+                            onEvent = connectObdViewModel::onEvent
+                        )
+                    }
+                }
+            }
+        }
     }
 
     companion object {
@@ -80,18 +91,9 @@ class ConnectObdFragment : Fragment() {
                 )
             )
         }
-
-        binding.listOBDDevice.apply {
-            setContent {
-                setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-                val bluetoothUiState by connectObdViewModel.state.collectAsState()
-                ManageYourCarTheme {
-                    BluetoothDeviceView(
-                        uiState = bluetoothUiState,
-                        onEvent = connectObdViewModel::onEvent
-                    )
-                }
-            }
-        }
     }
+
+
+
+
 }

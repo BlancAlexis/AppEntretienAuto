@@ -7,27 +7,39 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import com.example.manageyourcar.UIlayer.composeView.MaintenanceListView
 import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
 import com.example.manageyourcar.UIlayer.viewmodel.ListMaintenanceViewModel
 import com.example.manageyourcar.dataLayer.ListenerInternet
-import com.example.manageyourcar.databinding.FragmentViewServicingBinding
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ViewListMaintenanceFragment : Fragment() {
     private val listMaintenanceViewModel: ListMaintenanceViewModel by viewModel()
     private val listenerInternet by inject<ListenerInternet>()
-    private lateinit var binding: FragmentViewServicingBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentViewServicingBinding.inflate(inflater, container, false)
-        return binding.root
+        return ComposeView(requireContext()).apply {
+            setContent {
+                ManageYourCarTheme {
+                    setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+
+                    val maintenancesPlannedUIState by listMaintenanceViewModel.uiState.collectAsState()
+                    ManageYourCarTheme {
+                        MaintenanceListView(
+                            uiState = maintenancesPlannedUIState,
+                            onEvent = listMaintenanceViewModel::onEvent
+                        )
+                    }
+                }
+            }
+        }
     }
 
 
@@ -42,19 +54,7 @@ class ViewListMaintenanceFragment : Fragment() {
                     requireActivity().finish()
                 }
             })
-        binding.viewMaintenance.apply {
-            setContent {
-                setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
 
-                val maintenancesPlannedUIState by listMaintenanceViewModel.uiState.collectAsState()
-                ManageYourCarTheme {
-                    MaintenanceListView(
-                        uiState = maintenancesPlannedUIState,
-                        onEvent = listMaintenanceViewModel::onEvent
-                    )
-                }
-            }
-        }
     }
 
     override fun onResume() {

@@ -18,9 +18,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -28,7 +30,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.snapshotFlow
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -67,6 +68,7 @@ fun ViewCarDetailsView(
             .fillMaxSize()
             .background(Color(0, 97, 162))
     ) {
+
         AnimatedVisibility(visible = uiState is ViewCarDetailsState.Loading) {
             CircularProgressIndicator(color = colorResource(id = R.color.black))
         }
@@ -74,7 +76,7 @@ fun ViewCarDetailsView(
 
         AnimatedVisibility(visible = uiState is ViewCarDetailsState.ViewCarDetailsStateDetailsUIState) {
             uiState as ViewCarDetailsState.ViewCarDetailsStateDetailsUIState
-
+            val pagerState = rememberPagerState(pageCount = { uiState.cars.size })
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -97,11 +99,21 @@ fun ViewCarDetailsView(
                         .fillMaxWidth()
                         .background(Color.Black), horizontalArrangement = Arrangement.Center
                 ) {
-                    FloatingActionButton(onClick = {
+                    Button(onClick = {
                         onEvent(ViewCarDetailsEvent.OnUpdateMileage)
                     }) {
                         Icon(
                             painter = painterResource(R.drawable.baseline_auto_graph_24),
+                            contentDescription = "",
+                            tint = Color(0, 29, 54),
+                            modifier = Modifier.size(36.dp)
+                        )
+                    }
+                    Button(onClick = {
+                        onEvent(ViewCarDetailsEvent.OnDeleteCar(uiState.cars[pagerState.currentPage]))
+                    }) {
+                        Icon(
+                            imageVector = Icons.Filled.Delete,
                             contentDescription = "",
                             tint = Color(0, 29, 54),
                             modifier = Modifier.size(36.dp)
@@ -132,7 +144,6 @@ fun ViewCarDetailsView(
                     }
                 }
 
-                val pagerState = rememberPagerState(pageCount = { uiState.cars.size })
                 LaunchedEffect(pagerState) {
                     snapshotFlow { pagerState.currentPage }.collect { page ->
                         Log.d("Page change", "Page changed to $page")
