@@ -1,6 +1,7 @@
 package com.example.manageyourcar.dataLayer.dataLayerRoom.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -28,6 +29,6 @@ interface CarDao {
     @Query("UPDATE cars SET mileage = :listMileages WHERE carID = :idCar")
     fun updateCarMileage(listMileages: List<Int>, idCar: Int)
 
-    @Query("DELETE FROM cars WHERE carID = :idUser")
-    fun deleteCar(idUser: Int)
+    @Delete
+    fun deleteCar(car : CarEntity)
 }
