@@ -10,6 +10,7 @@ import com.example.manageyourcar.UIlayer.composeView.UIState.ViewCarDetailsState
 import com.example.manageyourcar.UIlayer.view.fragments.ViewCarDetailsFragmentDirections
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.dataLayer.model.Car
+import com.example.manageyourcar.domainLayer.useCaseRoom.car.DeleteCarRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.GetUserCarsUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,6 +22,7 @@ import org.koin.core.component.inject
 
 class ViewCarDetailsViewModel : ViewModel(), KoinComponent {
     private val getUserCarsUseCase by inject<GetUserCarsUseCase>()
+    private val deleteCarRoomUseCase by inject<DeleteCarRoomUseCase>()
     private val _uiState = MutableStateFlow<ViewCarDetailsState>(ViewCarDetailsState.Loading)
     val uiState = _uiState.asStateFlow()
     private lateinit var navController: NavController
@@ -55,6 +57,11 @@ class ViewCarDetailsViewModel : ViewModel(), KoinComponent {
                         })
                 navController.navigate(action)
             }
+
+            is ViewCarDetailsEvent.OnDeleteCar ->
+                viewModelScope.launch(Dispatchers.IO) {
+                    deleteCarRoomUseCase.deleteCar(event.idCar)
+                }
         }
 
 
@@ -77,4 +84,5 @@ class ViewCarDetailsViewModel : ViewModel(), KoinComponent {
 sealed interface ViewCarDetailsEvent {
     object OnClickAddCarButton : ViewCarDetailsEvent
     object OnUpdateMileage : ViewCarDetailsEvent
+    data class OnDeleteCar(val idCar: Car) : ViewCarDetailsEvent
 }
