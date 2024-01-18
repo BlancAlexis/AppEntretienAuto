@@ -29,6 +29,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -49,6 +50,8 @@ import com.example.manageyourcar.UIlayer.composeView.UIState.ViewCarDetailsState
 import com.example.manageyourcar.UIlayer.composeView.common.InformationRow
 import com.example.manageyourcar.UIlayer.viewmodel.ViewCarDetailsEvent
 import com.example.manageyourcar.dataLayer.model.Car
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import java.util.Calendar
 
 
@@ -68,7 +71,7 @@ fun ViewCarDetailsView(
             .fillMaxSize()
             .background(Color(0, 97, 162))
     ) {
-
+        val coroutineScope = rememberCoroutineScope()
         AnimatedVisibility(visible = uiState is ViewCarDetailsState.Loading) {
             CircularProgressIndicator(color = colorResource(id = R.color.black))
         }
@@ -111,6 +114,9 @@ fun ViewCarDetailsView(
                     }
                     Button(onClick = {
                         onEvent(ViewCarDetailsEvent.OnDeleteCar(uiState.cars[pagerState.currentPage]))
+                        coroutineScope.launch {
+                                pagerState.animateScrollToPage(pagerState.currentPage-1)
+                            }
                     }) {
                         Icon(
                             imageVector = Icons.Filled.Delete,
