@@ -174,7 +174,7 @@ fun SignInUserView(
                         readOnly = false,
                         keyboardType = KeyboardType.Password,
                         onValueChange = {
-                            onEvent(UserSubscriptionEvent.OnValidatePasswordChanged(it))
+                            onEvent(UserSubscriptionEvent.OnConfirmPasswordChanged(it))
                         }
                     )
                 }
