@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.dp
 import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.composeView.UIState.MaintenanceListUiState
 import com.example.manageyourcar.UIlayer.composeView.UIState.SortType
-import com.example.manageyourcar.UIlayer.composeView.common.CustomDialog
+import com.example.manageyourcar.UIlayer.view.common.CustomDialog
 import com.example.manageyourcar.UIlayer.viewmodel.OnMaintenanceListEvent
 
 @OptIn(ExperimentalMaterial3Api::class)

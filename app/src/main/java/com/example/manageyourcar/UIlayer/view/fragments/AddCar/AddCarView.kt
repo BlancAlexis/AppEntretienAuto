@@ -29,9 +29,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.manageyourcar.UIlayer.composeView.UIState.AddCarUIState
-import com.example.manageyourcar.UIlayer.composeView.common.CustomDialog
-import com.example.manageyourcar.UIlayer.composeView.common.CustomPlaqueImmat
-import com.example.manageyourcar.UIlayer.composeView.common.CustomTextField
+import com.example.manageyourcar.UIlayer.view.common.CustomDialog
+import com.example.manageyourcar.UIlayer.view.common.CustomPlaqueImmat
+import com.example.manageyourcar.UIlayer.view.common.CustomTextField
 import com.example.manageyourcar.UIlayer.viewmodel.OnCarRequest
 
 @Composable

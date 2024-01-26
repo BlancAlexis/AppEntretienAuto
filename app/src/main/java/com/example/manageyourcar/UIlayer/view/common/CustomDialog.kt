@@ -1,4 +1,4 @@
-package com.example.manageyourcar.UIlayer.composeView.common
+package com.example.manageyourcar.UIlayer.view.common
 
 
 import androidx.compose.foundation.border

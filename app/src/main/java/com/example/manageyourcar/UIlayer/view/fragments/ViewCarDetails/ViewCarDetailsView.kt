@@ -46,7 +46,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.composeView.UIState.ViewCarDetailsState
-import com.example.manageyourcar.UIlayer.composeView.common.InformationRow
+import com.example.manageyourcar.UIlayer.view.common.InformationRow
 import com.example.manageyourcar.UIlayer.viewmodel.ViewCarDetailsEvent
 import com.example.manageyourcar.dataLayer.model.Car
 import java.util.Calendar

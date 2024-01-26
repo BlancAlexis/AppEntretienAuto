@@ -7,7 +7,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.composeView.UIState.ViewCarDetailsState
-import com.example.manageyourcar.UIlayer.view.fragments.ViewCarDetailsFragmentDirections
+import com.example.manageyourcar.UIlayer.view.fragments.ViewCarDetails.ViewCarDetailsFragmentDirections
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.dataLayer.model.Car
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.GetUserCarsUseCase
