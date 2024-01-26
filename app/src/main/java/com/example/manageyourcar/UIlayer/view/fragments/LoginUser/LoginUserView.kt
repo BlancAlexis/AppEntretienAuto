@@ -1,4 +1,4 @@
-package com.example.manageyourcar.UIlayer.composeView
+package com.example.manageyourcar.UIlayer.view.fragments.LoginUser
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -43,7 +43,6 @@ import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.composeView.UIState.LoginUiState
 import com.example.manageyourcar.UIlayer.composeView.common.CustomDialog
 import com.example.manageyourcar.UIlayer.composeView.common.CustomTextField
-import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
 import com.example.manageyourcar.UIlayer.viewmodel.UserLoginEvent
 
 @Composable

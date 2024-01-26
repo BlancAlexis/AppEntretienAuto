@@ -1,4 +1,4 @@
-package com.example.manageyourcar.UIlayer.view.fragments
+package com.example.manageyourcar.UIlayer.view.fragments.AddMaintenance
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import com.example.manageyourcar.UIlayer.composeView.AddMaintenanceView
 import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
 import com.example.manageyourcar.UIlayer.viewmodel.AddMaintenanceViewModel
 import com.example.manageyourcar.dataLayer.ListenerInternet

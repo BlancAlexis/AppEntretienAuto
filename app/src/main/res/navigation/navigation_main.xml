@@ -7,15 +7,15 @@
 
         <fragment
             android:id="@+id/AddCarFragment"
-            android:name="com.example.manageyourcar.UIlayer.view.fragments.AddCarFragment"
+            android:name="com.example.manageyourcar.UIlayer.view.fragments.AddCar.AddCarFragment"
             android:label="MainActivity"/>
     <fragment
             android:id="@+id/MapsFragment"
-            android:name="com.example.manageyourcar.UIlayer.view.fragments.MapsFragment"
+            android:name="com.example.manageyourcar.UIlayer.view.fragments.Maps.MapsFragment"
             android:label="MainActivity"/>
         <fragment
             android:id="@+id/viewMaintenance"
-            android:name="com.example.manageyourcar.UIlayer.view.fragments.ViewListMaintenanceFragment"
+            android:name="com.example.manageyourcar.UIlayer.view.fragments.ViewListMaintenance.ViewListMaintenanceFragment"
             android:label="fragment_view_servicing"
             tools:layout="@layout/fragment_view_servicing" >
             <action
@@ -46,7 +46,7 @@
             tools:layout="@layout/fragment_add_maintenance_car" />
     <fragment
         android:id="@+id/BluetoothConnectFragment"
-        android:name="com.example.manageyourcar.UIlayer.view.fragments.ConnectObdFragment"
+        android:name="com.example.manageyourcar.UIlayer.view.fragments.ConnectOBD.ConnectObdFragment"
         android:label="fragment_connect_obd"
         tools:layout="@layout/fragment_connect_obd" >
         <action
@@ -55,12 +55,12 @@
     </fragment>
     <fragment
         android:id="@+id/OBDFragment"
-        android:name="com.example.manageyourcar.UIlayer.view.fragments.OBDFragment"
+        android:name="com.example.manageyourcar.UIlayer.view.fragments.OBD.OBDFragment"
         android:label="fragment_obd"
         tools:layout="@layout/fragment_obd" />
     <fragment
         android:id="@+id/viewCarDetailsFragment"
-        android:name="com.example.manageyourcar.UIlayer.view.fragments.ViewCarDetailsFragment"
+        android:name="com.example.manageyourcar.UIlayer.view.fragments.ViewCarDetails.ViewCarDetailsFragment"
         android:label="view_car_details"
         tools:layout="@layout/view_car_details" >
         <action

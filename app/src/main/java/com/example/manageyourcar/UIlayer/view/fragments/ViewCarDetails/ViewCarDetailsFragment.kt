@@ -1,4 +1,4 @@
-package com.example.manageyourcar.UIlayer.view.fragments
+package com.example.manageyourcar.UIlayer.view.fragments.ViewCarDetails
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,8 +10,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
-import com.example.manageyourcar.UIlayer.composeView.ViewCarDetailsView
 import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
+import com.example.manageyourcar.UIlayer.view.fragments.LoginUser.LoginUserFragment
 import com.example.manageyourcar.UIlayer.viewmodel.ViewCarDetailsViewModel
 import com.example.manageyourcar.dataLayer.ListenerInternet
 import org.koin.android.ext.android.inject

@@ -1,4 +1,4 @@
-package com.example.manageyourcar.UIlayer.view.fragments
+package com.example.manageyourcar.UIlayer.view.fragments.ViewListMaintenance
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
-import com.example.manageyourcar.UIlayer.composeView.MaintenanceListView
 import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
 import com.example.manageyourcar.UIlayer.viewmodel.ListMaintenanceViewModel
 import com.example.manageyourcar.dataLayer.ListenerInternet
@@ -32,7 +31,7 @@ class ViewListMaintenanceFragment : Fragment() {
 
                     val maintenancesPlannedUIState by listMaintenanceViewModel.uiState.collectAsState()
                     ManageYourCarTheme {
-                        MaintenanceListView(
+                        ViewListMaintenanceView(
                             uiState = maintenancesPlannedUIState,
                             onEvent = listMaintenanceViewModel::onEvent
                         )

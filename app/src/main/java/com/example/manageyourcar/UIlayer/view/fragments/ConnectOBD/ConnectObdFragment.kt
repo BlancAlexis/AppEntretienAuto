@@ -1,4 +1,4 @@
-package com.example.manageyourcar.UIlayer.view.fragments
+package com.example.manageyourcar.UIlayer.view.fragments.ConnectOBD
 
 import android.Manifest
 import android.bluetooth.BluetoothAdapter
@@ -15,7 +15,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
-import com.example.manageyourcar.UIlayer.composeView.BluetoothDeviceView
 import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
 import com.example.manageyourcar.UIlayer.viewmodel.BluetoothViewModel import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -44,7 +43,7 @@ class ConnectObdFragment : Fragment() {
 
                     val bluetoothUiState by connectObdViewModel.state.collectAsState()
                     ManageYourCarTheme {
-                        BluetoothDeviceView(
+                        ConnectObdView(
                             uiState = bluetoothUiState,
                             onEvent = connectObdViewModel::onEvent
                         )

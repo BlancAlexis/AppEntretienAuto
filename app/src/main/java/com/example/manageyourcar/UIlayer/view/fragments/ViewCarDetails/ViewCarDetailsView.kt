@@ -1,4 +1,4 @@
-package com.example.manageyourcar.UIlayer.composeView
+package com.example.manageyourcar.UIlayer.view.fragments.ViewCarDetails
 
 import android.util.Log
 import androidx.compose.animation.AnimatedVisibility

@@ -1,4 +1,4 @@
-package com.example.manageyourcar.UIlayer.view.fragments
+package com.example.manageyourcar.UIlayer.view.fragments.AddUser
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
-import com.example.manageyourcar.UIlayer.composeView.SignInUserView
 import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
 import com.example.manageyourcar.UIlayer.viewmodel.AddUserViewModel
 import com.example.manageyourcar.dataLayer.ListenerInternet
@@ -32,7 +31,7 @@ class AddUserFragment : Fragment() {
 
                     val addUserUiState by addUserViewModel.uiState.collectAsState()
                     ManageYourCarTheme {
-                        SignInUserView(
+                        AddUserView(
                             uiState = addUserUiState,
                             onEvent = addUserViewModel::onEvent
                         )

@@ -1,4 +1,4 @@
-package com.example.manageyourcar.UIlayer.composeView
+package com.example.manageyourcar.UIlayer.view.fragments.AddCar
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

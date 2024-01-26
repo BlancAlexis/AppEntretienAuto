@@ -7,11 +7,11 @@
 
     <fragment
         android:id="@+id/AddUserFragment"
-        android:name="com.example.manageyourcar.UIlayer.view.fragments.AddUserFragment"
+        android:name="com.example.manageyourcar.UIlayer.view.fragments.AddUser.AddUserFragment"
         android:label="MainActivity"/>
     <fragment
         android:id="@+id/LoginUserFragment"
-        android:name="com.example.manageyourcar.UIlayer.view.fragments.LoginUserFragment"
+        android:name="com.example.manageyourcar.UIlayer.view.fragments.LoginUser.LoginUserFragment"
         android:label="MainActivity">
         <action
             android:id="@+id/action_LoginUserFragment_to_AddUserFragment"
@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/viewServicingFragment"
-        android:name="com.example.manageyourcar.UIlayer.view.fragments.ViewListMaintenanceFragment"
+        android:name="com.example.manageyourcar.UIlayer.view.fragments.ViewListMaintenance.ViewListMaintenanceFragment"
         android:label="fragment_view_servicing"
         tools:layout="@layout/fragment_view_servicing" />
 

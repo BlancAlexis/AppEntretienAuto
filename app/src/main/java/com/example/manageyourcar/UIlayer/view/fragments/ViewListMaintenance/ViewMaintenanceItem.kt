@@ -31,7 +31,7 @@ import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.composeView.UIState.ServicingUIState
 
 @Composable
-fun MaintenanceViewItem(
+fun ViewMaintenanceItem(
     uiState: ServicingUIState
 ) {
     var linearProgressColor by remember {
@@ -113,7 +113,7 @@ fun MaintenanceViewItem(
 @Preview(showBackground = true)
 @Composable
 fun PreviewServicingItem() {
-    MaintenanceViewItem(
+    ViewMaintenanceItem(
         ServicingUIState(
             "Citroen C4 VTS 1.6 VTS 1.6 HDI 110CH",
             "123333km",

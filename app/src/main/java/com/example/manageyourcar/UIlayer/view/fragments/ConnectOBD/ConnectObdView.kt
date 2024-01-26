@@ -25,7 +25,7 @@ import com.example.manageyourcar.UIlayer.viewmodel.OnBluetoothDeviceEvent
 import com.example.manageyourcar.domainLayer.bluetooth.BluetoothDevice
 
 @Composable
-fun BluetoothDeviceItemView(uiState: BluetoothDevice) {
+fun ObdItemView(uiState: BluetoothDevice) {
     Card {
         Column {
             Column {
@@ -38,7 +38,7 @@ fun BluetoothDeviceItemView(uiState: BluetoothDevice) {
 
 
 @Composable
-fun BluetoothDeviceView(
+fun ConnectObdView(
     uiState: BluetoothUiState,
     onEvent: (OnBluetoothDeviceEvent) -> Unit = {}
 ) {
@@ -78,7 +78,7 @@ fun BluetoothDeviceView(
                 Button(
                     modifier = Modifier.wrapContentSize(),
                     onClick = { onEvent(OnBluetoothDeviceEvent.OnBluetoothDeviceClick(item)) }) {
-                    BluetoothDeviceItemView(item)
+                    ObdItemView(item)
                 }
                 Divider(modifier = Modifier.fillMaxWidth())
             }
@@ -98,7 +98,7 @@ fun BluetoothDeviceView(
             }
             itemsIndexed(uiState.pairedDevices) { index, item ->
                 Button(onClick = { onEvent(OnBluetoothDeviceEvent.OnBluetoothDeviceClick(item)) }) {
-                    BluetoothDeviceItemView(item)
+                    ObdItemView(item)
                 }
                 Divider(modifier = Modifier.fillMaxWidth())
             }
@@ -110,7 +110,7 @@ fun BluetoothDeviceView(
 @Preview(showBackground = true)
 @Composable
 fun PreviewBluetoothDevice() {
-    BluetoothDeviceView(
+    ConnectObdView(
         uiState = BluetoothUiState(),
         onEvent = {})
 }

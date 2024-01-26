@@ -36,7 +36,7 @@ import com.example.manageyourcar.UIlayer.composeView.common.CustomTextField
 import com.example.manageyourcar.UIlayer.viewmodel.UserSubscriptionEvent
 
 @Composable
-fun SignInUserView(
+fun AddUserView(
     uiState: SignInUiState,
     onEvent: (UserSubscriptionEvent) -> Unit = {}
 ) {
@@ -195,5 +195,5 @@ fun SignInUserView(
 @Preview(showBackground = true)
 @Composable
 fun PreviewLogin() {
-    SignInUserView(uiState = SignInUiState(), onEvent = {})
+    AddUserView(uiState = SignInUiState(), onEvent = {})
 }

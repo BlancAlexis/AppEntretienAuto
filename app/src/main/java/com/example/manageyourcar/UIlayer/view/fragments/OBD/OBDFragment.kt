@@ -1,4 +1,4 @@
-package com.example.manageyourcar.UIlayer.view.fragments
+package com.example.manageyourcar.UIlayer.view.fragments.OBD
 
 import android.os.Bundle
 import android.view.LayoutInflater

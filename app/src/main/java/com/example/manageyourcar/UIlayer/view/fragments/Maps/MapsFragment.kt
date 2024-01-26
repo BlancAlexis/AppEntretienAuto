@@ -1,4 +1,4 @@
-package com.example.manageyourcar.UIlayer.view.fragments
+package com.example.manageyourcar.UIlayer.view.fragments.Maps
 
 import android.Manifest
 import android.content.pm.PackageManager
