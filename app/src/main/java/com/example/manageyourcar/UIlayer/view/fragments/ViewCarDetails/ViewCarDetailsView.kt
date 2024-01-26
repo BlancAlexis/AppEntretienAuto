@@ -46,6 +46,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.UIState.ViewCarDetailsState
+import com.example.manageyourcar.UIlayer.view.activities.ui.theme.Blue
 import com.example.manageyourcar.UIlayer.view.common.InformationRow
 import com.example.manageyourcar.UIlayer.viewmodel.ViewCarDetailsEvent
 import com.example.manageyourcar.dataLayer.model.Car
@@ -80,7 +81,7 @@ fun ViewCarDetailsView(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color(0, 97, 162)),
+                    .background(Blue),
                 verticalArrangement = Arrangement.Top,
 
                 ) {
