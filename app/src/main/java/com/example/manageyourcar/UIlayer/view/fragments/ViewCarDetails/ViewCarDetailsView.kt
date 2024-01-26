@@ -25,6 +25,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -46,7 +47,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.UIState.ViewCarDetailsState
-import com.example.manageyourcar.UIlayer.view.activities.ui.theme.Blue
 import com.example.manageyourcar.UIlayer.view.common.InformationRow
 import com.example.manageyourcar.UIlayer.viewmodel.ViewCarDetailsEvent
 import com.example.manageyourcar.dataLayer.model.Car
@@ -67,7 +67,7 @@ fun ViewCarDetailsView(
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0, 97, 162))
+            .background(MaterialTheme.colorScheme.primary)
     ) {
 
         AnimatedVisibility(visible = uiState is ViewCarDetailsState.Loading) {
@@ -81,24 +81,26 @@ fun ViewCarDetailsView(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Blue),
+                    .background(MaterialTheme.colorScheme.primary),
                 verticalArrangement = Arrangement.Top,
 
                 ) {
                 Text(
                     text = "Vos Véhicules",
                     modifier = Modifier
+                        .padding(vertical = 15.dp)
                         .fillMaxWidth(),
                     textAlign = TextAlign.Center,
                     fontFamily = juraFamily,
                     fontSize = 36.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onPrimary,
                 )
                 Row(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .background(Color.Black), horizontalArrangement = Arrangement.Center
+                        .padding(vertical = 10.dp)
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center,
                 ) {
                     Button(onClick = {
                         onEvent(ViewCarDetailsEvent.OnUpdateMileage)
@@ -106,7 +108,7 @@ fun ViewCarDetailsView(
                         Icon(
                             painter = painterResource(R.drawable.baseline_auto_graph_24),
                             contentDescription = "",
-                            tint = Color(0, 29, 54),
+                            tint = MaterialTheme.colorScheme.primaryContainer,
                             modifier = Modifier.size(36.dp)
                         )
                     }
@@ -116,18 +118,14 @@ fun ViewCarDetailsView(
                         Icon(
                             imageVector = Icons.Filled.Delete,
                             contentDescription = "",
-                            tint = Color(0, 29, 54),
+                            tint = MaterialTheme.colorScheme.primaryContainer,
                             modifier = Modifier.size(36.dp)
                         )
                     }
 
                     TextButton(
                         colors = ButtonDefaults.outlinedButtonColors(
-                            containerColor = Color(
-                                209,
-                                228,
-                                255
-                            )
+                            containerColor = MaterialTheme.colorScheme.primaryContainer
                         ),
                         onClick = {
                             onEvent(ViewCarDetailsEvent.OnClickAddCarButton)
@@ -140,7 +138,7 @@ fun ViewCarDetailsView(
                             fontFamily = juraFamily,
                             fontSize = 20.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Color(0, 29, 54),
+                            color = MaterialTheme.colorScheme.onPrimaryContainer,
                         )
                     }
                 }
@@ -184,7 +182,7 @@ fun ViewCarDetailsView(
                             Column(
                                 Modifier
                                     .background(
-                                        Color(209, 228, 255),
+                                        MaterialTheme.colorScheme.primaryContainer,
                                         shape = RoundedCornerShape(
                                             bottomStart = 20.dp,
                                             bottomEnd = 20.dp
@@ -198,7 +196,7 @@ fun ViewCarDetailsView(
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .padding(top = 5.dp, bottom = 10.dp),
-                                    color = Color(0, 29, 54),
+                                    color = MaterialTheme.colorScheme.onPrimaryContainer,
                                     textAlign = TextAlign.Center,
                                     fontFamily = juraFamily,
                                     fontSize = 24.sp,
@@ -252,7 +250,7 @@ fun ViewCarDetailsView(
                                             Icon(
                                                 painter = painterResource(R.drawable.baseline_arrow_back_24),
                                                 contentDescription = "",
-                                                tint = Color(0, 29, 54),
+                                                tint = MaterialTheme.colorScheme.onPrimaryContainer,
                                                 modifier = Modifier.size(36.dp)
                                             )
                                         }
@@ -262,7 +260,7 @@ fun ViewCarDetailsView(
                                             Icon(
                                                 painter = painterResource(R.drawable.baseline_arrow_forward_24),
                                                 contentDescription = "",
-                                                tint = Color(0, 29, 54),
+                                                tint = MaterialTheme.colorScheme.onPrimaryContainer,
                                                 modifier = Modifier.size(36.dp)
                                             )
                                         }
@@ -309,4 +307,5 @@ fun PreviewViewCarDetailsView() {
         transmission = "Manuelle",
     )
 
+    ViewCarDetailsView(onEvent = {}, uiState =  ViewCarDetailsState.ViewCarDetailsStateDetailsUIState(carstest));
 }

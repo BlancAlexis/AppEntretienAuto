@@ -55,7 +55,8 @@ fun ViewListMaintenanceView(
         } else {
             if (uiState.isLoading) {
                 Column(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxSize()
+                        .background(MaterialTheme.colorScheme.primary),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
@@ -66,17 +67,20 @@ fun ViewListMaintenanceView(
                 Button(
                     onClick = { onEvent(OnMaintenanceListEvent.OnButtonAddMaintenancePush) },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = colorResource(R.color.primaryContainer),
+                        containerColor = MaterialTheme.colorScheme.primaryContainer,
                         contentColor = Color.Black
                     ),
                     modifier = Modifier.padding(bottom = 20.dp)
                 ) {
-                    Text(text = "Ajouter un acte d'entretien")
+                    Text(
+                        text = "Ajouter un acte d'entretien",
+                        color = MaterialTheme.colorScheme.onPrimaryContainer,
+                        )
                 }
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(color = colorResource(id = R.color.primaryContainer)),
+                        .background(color = MaterialTheme.colorScheme.primaryContainer),
                     horizontalArrangement = Arrangement.End
                 ) {
                     Column {
@@ -100,7 +104,7 @@ fun ViewListMaintenanceView(
                 }
             }
             if (uiState.listUiState.isEmpty()) {
-                Text(text = "Aucun acte d'entretien pour le moment")
+                Text(text = "Aucun acte d'entretien pour le moment", color = MaterialTheme.colorScheme.onPrimary,)
             } else {
                 LazyColumn(modifier = Modifier.fillMaxWidth()) {
                     items(uiState.listUiState.size) { item ->
@@ -117,5 +121,5 @@ fun ViewListMaintenanceView(
 fun PreviewServicing() {
     ViewListMaintenanceView(
         uiState = MaintenanceListUiState(listUiState = listOf(), isLoading = true),
-        onEvent = {})
+        onEvent = {},)
 }
