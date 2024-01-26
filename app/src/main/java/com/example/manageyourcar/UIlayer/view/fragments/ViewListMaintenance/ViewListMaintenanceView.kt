@@ -1,4 +1,4 @@
-package com.example.manageyourcar.UIlayer.composeView
+package com.example.manageyourcar.UIlayer.view.fragments.ViewListMaintenance
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -39,7 +39,7 @@ import com.example.manageyourcar.UIlayer.viewmodel.OnMaintenanceListEvent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MaintenanceListView(
+fun ViewListMaintenanceView(
     uiState: MaintenanceListUiState,
     onEvent: (OnMaintenanceListEvent) -> Unit = {}
 ) {
@@ -104,7 +104,7 @@ fun MaintenanceListView(
             } else {
                 LazyColumn(modifier = Modifier.fillMaxWidth()) {
                     items(uiState.listUiState.size) { item ->
-                        MaintenanceViewItem(uiState.listUiState[item])
+                        ViewMaintenanceItem(uiState.listUiState[item])
                     }
                 }
             }
@@ -115,7 +115,7 @@ fun MaintenanceListView(
 @Preview(showBackground = true)
 @Composable
 fun PreviewServicing() {
-    MaintenanceListView(
+    ViewListMaintenanceView(
         uiState = MaintenanceListUiState(listUiState = listOf(), isLoading = true),
         onEvent = {})
 }
