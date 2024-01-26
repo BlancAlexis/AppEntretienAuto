@@ -16,10 +16,10 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
-import com.example.manageyourcar.UIlayer.viewmodel.BluetoothViewModel import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.example.manageyourcar.UIlayer.viewmodel.ConnectObdViewModel import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ConnectObdFragment : Fragment() {
-    val connectObdViewModel: BluetoothViewModel by viewModel()
+    val connectObdViewModel: ConnectObdViewModel by viewModel()
 
 
     private val bluetoothManager by lazy {

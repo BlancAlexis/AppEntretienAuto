@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import com.example.manageyourcar.UIlayer.composeView.UIState.SignInUiState
+import com.example.manageyourcar.UIlayer.UIState.SignInUiState
 import com.example.manageyourcar.domainLayer.useCaseRoom.user.AddUserRoomUseCase
 import com.example.manageyourcar.domainLayer.utils.UserEntryChecker
 import kotlinx.coroutines.Dispatchers

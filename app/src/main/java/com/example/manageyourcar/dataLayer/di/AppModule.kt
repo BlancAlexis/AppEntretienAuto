@@ -5,12 +5,12 @@ import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.UIlayer.viewmodel.AddCarViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.AddMaintenanceViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.AddUserViewModel
-import com.example.manageyourcar.UIlayer.viewmodel.BluetoothViewModel
+import com.example.manageyourcar.UIlayer.viewmodel.ConnectObdViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.ListMaintenanceViewModel
-import com.example.manageyourcar.UIlayer.viewmodel.LogUserViewModel
+import com.example.manageyourcar.UIlayer.viewmodel.LoginUserViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.MapsViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.OBDViewModel
-import com.example.manageyourcar.UIlayer.viewmodel.UpdateCarViewModel
+import com.example.manageyourcar.UIlayer.viewmodel.UpdateCarMileageViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.ViewCarDetailsViewModel
 import com.example.manageyourcar.dataLayer.AndroidBluetoothController
 import com.example.manageyourcar.dataLayer.CacheDataSource
@@ -202,13 +202,13 @@ val retrofitModule = module {
 
 val viewModelModule = module {
     viewModelOf(::AddUserViewModel)
-    viewModelOf(::LogUserViewModel)
+    viewModelOf(::LoginUserViewModel)
     viewModelOf(::AddCarViewModel)
     viewModelOf(::MapsViewModel)
     viewModelOf(::ListMaintenanceViewModel)
     viewModelOf(::AddMaintenanceViewModel)
     viewModelOf(::OBDViewModel)
-    viewModelOf(::BluetoothViewModel)
+    viewModelOf(::ConnectObdViewModel)
     viewModelOf(::ViewCarDetailsViewModel)
-    viewModelOf(::UpdateCarViewModel)
+    viewModelOf(::UpdateCarMileageViewModel)
 }

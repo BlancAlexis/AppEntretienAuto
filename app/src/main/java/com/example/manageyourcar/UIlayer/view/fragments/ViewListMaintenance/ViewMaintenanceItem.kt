@@ -28,7 +28,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.manageyourcar.R
-import com.example.manageyourcar.UIlayer.composeView.UIState.ServicingUIState
+import com.example.manageyourcar.UIlayer.UIState.ServicingUIState
 
 @Composable
 fun ViewMaintenanceItem(

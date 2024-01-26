@@ -45,7 +45,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.lerp
 import com.example.manageyourcar.R
-import com.example.manageyourcar.UIlayer.composeView.UIState.AddVehiculeMaintenanceUiState
+import com.example.manageyourcar.UIlayer.UIState.AddVehiculeMaintenanceUiState
 import com.example.manageyourcar.UIlayer.view.common.CalendarView
 import com.example.manageyourcar.UIlayer.view.common.CustomDialog
 import com.example.manageyourcar.UIlayer.view.common.CustomTextField

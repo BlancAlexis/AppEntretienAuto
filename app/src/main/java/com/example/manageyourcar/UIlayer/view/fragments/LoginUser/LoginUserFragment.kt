@@ -12,14 +12,14 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import com.example.manageyourcar.UIlayer.view.activities.MainActivity
 import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
-import com.example.manageyourcar.UIlayer.viewmodel.LogUserViewModel
+import com.example.manageyourcar.UIlayer.viewmodel.LoginUserViewModel
 import com.example.manageyourcar.dataLayer.ListenerInternet
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginUserFragment : Fragment() {
     private val listenerInternet by inject<ListenerInternet>()
-    private val logUserViewModel: LogUserViewModel by viewModel()
+    private val logUserViewModel: LoginUserViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

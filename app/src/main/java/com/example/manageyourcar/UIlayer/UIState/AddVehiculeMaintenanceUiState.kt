@@ -1,4 +1,4 @@
-package com.example.manageyourcar.UIlayer.composeView.UIState
+package com.example.manageyourcar.UIlayer.UIState
 
 import com.example.manageyourcar.dataLayer.model.Car
 import com.example.manageyourcar.dataLayer.model.MaintenanceServiceType

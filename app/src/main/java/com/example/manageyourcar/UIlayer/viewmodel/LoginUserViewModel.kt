@@ -9,7 +9,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.AppApplication
-import com.example.manageyourcar.UIlayer.composeView.UIState.LoginUiState
+import com.example.manageyourcar.UIlayer.UIState.LoginUiState
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
 import com.example.manageyourcar.domainLayer.useCaseBusiness.LoginUserUseCase
@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class LogUserViewModel : ViewModel(), KoinComponent {
+class LoginUserViewModel : ViewModel(), KoinComponent {
 
     private val logUseCase by inject<LoginUserUseCase>()
     private val cacheManagerRepository by inject<CacheManagerRepository>()

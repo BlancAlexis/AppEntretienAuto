@@ -7,9 +7,9 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.AppApplication
-import com.example.manageyourcar.UIlayer.composeView.UIState.MaintenanceListUiState
-import com.example.manageyourcar.UIlayer.composeView.UIState.ServicingUIState
-import com.example.manageyourcar.UIlayer.composeView.UIState.SortType
+import com.example.manageyourcar.UIlayer.UIState.MaintenanceListUiState
+import com.example.manageyourcar.UIlayer.UIState.ServicingUIState
+import com.example.manageyourcar.UIlayer.UIState.SortType
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.dataLayer.dataLayerRoom.dao.MaintenanceWithCarEntity
 import com.example.manageyourcar.dataLayer.model.Car

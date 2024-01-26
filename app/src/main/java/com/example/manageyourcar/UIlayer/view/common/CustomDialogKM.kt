@@ -18,7 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.manageyourcar.UIlayer.composeView.UIState.UpdateMileage
+import com.example.manageyourcar.UIlayer.UIState.UpdateMileage
 import com.example.manageyourcar.UIlayer.viewmodel.UpdateCatEvent
 
 @OptIn(ExperimentalMaterial3Api::class)

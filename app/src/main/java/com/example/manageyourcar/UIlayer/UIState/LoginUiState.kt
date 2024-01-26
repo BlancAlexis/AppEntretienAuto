@@ -1,4 +1,4 @@
-package com.example.manageyourcar.UIlayer.composeView.UIState
+package com.example.manageyourcar.UIlayer.UIState
 
 data class LoginUiState(
     val userLogin: String? = "",

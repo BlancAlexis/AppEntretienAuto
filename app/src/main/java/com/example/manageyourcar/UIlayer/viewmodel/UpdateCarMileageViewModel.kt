@@ -2,7 +2,7 @@ package com.example.manageyourcar.UIlayer.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.manageyourcar.UIlayer.composeView.UIState.UpdateMileage
+import com.example.manageyourcar.UIlayer.UIState.UpdateMileage
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.UpsertCarMileageUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class UpdateCarViewModel : ViewModel(), KoinComponent {
+class UpdateCarMileageViewModel : ViewModel(), KoinComponent {
     private val upsertCarMileageUseCase by inject<UpsertCarMileageUseCase>()
 
     private val _uiState = MutableStateFlow(UpdateMileage())

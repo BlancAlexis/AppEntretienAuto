@@ -11,12 +11,12 @@ import androidx.navigation.fragment.navArgs
 import com.example.manageyourcar.UIlayer.view.common.CustomDialogKM
 import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
 import com.example.manageyourcar.UIlayer.view.fragments.UpdateCarMileageArgs
-import com.example.manageyourcar.UIlayer.viewmodel.UpdateCarViewModel
+import com.example.manageyourcar.UIlayer.viewmodel.UpdateCarMileageViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class UpdateCarMileageFragment : BottomSheetDialogFragment() {
-    private val updateCarMileageViewModel: UpdateCarViewModel by viewModel()
+    private val updateCarMileageViewModel: UpdateCarMileageViewModel by viewModel()
 
     val args: UpdateCarMileageArgs by navArgs()
 

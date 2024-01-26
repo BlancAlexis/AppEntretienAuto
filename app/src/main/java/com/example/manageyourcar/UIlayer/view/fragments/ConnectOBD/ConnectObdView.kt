@@ -20,7 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import com.example.manageyourcar.UIlayer.composeView.UIState.BluetoothUiState
+import com.example.manageyourcar.UIlayer.UIState.BluetoothUiState
 import com.example.manageyourcar.UIlayer.viewmodel.OnBluetoothDeviceEvent
 import com.example.manageyourcar.domainLayer.bluetooth.BluetoothDevice
 
