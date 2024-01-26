@@ -82,7 +82,7 @@
 
     <dialog
         android:id="@+id/UpdateCarMileage"
-        android:name="com.example.manageyourcar.UIlayer.view.fragments.UpdateCarMileage"
+        android:name="com.example.manageyourcar.UIlayer.view.fragments.UpdateCarMileage.UpdateCarMileageFragment"
         android:label="fragment_update_car_mileage" >
     <argument
         android:name="myArg"

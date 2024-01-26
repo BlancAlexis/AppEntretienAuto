@@ -102,9 +102,7 @@ fun ViewCarDetailsView(
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center,
                 ) {
-                    Button(onClick = {
-                        onEvent(ViewCarDetailsEvent.OnUpdateMileage)
-                    }) {
+                    Button(onClick = { onEvent(ViewCarDetailsEvent.OnUpdateMileage(pagerState.currentPage)) }) {
                         Icon(
                             painter = painterResource(R.drawable.baseline_auto_graph_24),
                             contentDescription = "",

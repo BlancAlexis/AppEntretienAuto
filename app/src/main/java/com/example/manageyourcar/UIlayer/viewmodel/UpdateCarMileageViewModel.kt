@@ -38,16 +38,13 @@ class UpdateCarMileageViewModel : ViewModel(), KoinComponent {
     }
 
     fun upsertCarMileage() {
-
         viewModelScope.launch(Dispatchers.IO) {
             val car = _uiState.value.car
             if (car != null) {
-                val updatedCar = car.copy(mileage = car.mileage + listOf(12346))
-                println(updatedCar.mileage)
+                val updatedCar = car.copy(mileage = car.mileage + (uiState.value.newMileage?.toInt() ?: 0))
                 upsertCarMileageUseCase.updateCarMileage(updatedCar)
-                println("tipar")
+                //Géré les erreurs + newMileage inférieur à ancien
             }
-
         }
     }
 }

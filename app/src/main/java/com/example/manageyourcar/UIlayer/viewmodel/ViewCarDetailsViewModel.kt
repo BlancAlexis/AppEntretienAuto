@@ -46,12 +46,11 @@ class ViewCarDetailsViewModel : ViewModel(), KoinComponent {
             }
 
             is ViewCarDetailsEvent.OnUpdateMileage -> {
-                val action =
-                    ViewCarDetailsFragmentDirections.actionViewCarDetailsFragmentToUpdateCarMileage(
+                val action = ViewCarDetailsFragmentDirections.actionViewCarDetailsFragmentToUpdateCarMileage(
                         myArg = _uiState.value.let {
                             it.let {
                                 it as ViewCarDetailsState.ViewCarDetailsStateDetailsUIState
-                            }.cars[0] // A changer
+                            }.cars[event.position]
                         })
                 navController.navigate(action)
             }
@@ -76,5 +75,5 @@ class ViewCarDetailsViewModel : ViewModel(), KoinComponent {
 
 sealed interface ViewCarDetailsEvent {
     object OnClickAddCarButton : ViewCarDetailsEvent
-    object OnUpdateMileage : ViewCarDetailsEvent
+    data class OnUpdateMileage(val position : Int) : ViewCarDetailsEvent
 }
