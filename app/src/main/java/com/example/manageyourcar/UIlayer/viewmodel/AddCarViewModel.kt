@@ -18,6 +18,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class AddCarViewModel : ViewModel(), KoinComponent {
+    val mutableLiveData: MutableLiveData<Car> = MutableLiveData(null)
     private val addCarRoomUseCase by inject<AddCarRoomUseCase>()
     private val getVehiculeBySivNetworkUseCase by inject<GetVehiculeByNetworkUseCase>()
     private val getVehiculeByImmatNetworkUseCase by inject<GetVehiculeByNetworkImmatUseCase>()
