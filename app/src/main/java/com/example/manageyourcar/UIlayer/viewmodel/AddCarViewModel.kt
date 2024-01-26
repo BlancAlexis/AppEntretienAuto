@@ -1,11 +1,13 @@
 package com.example.manageyourcar.UIlayer.viewmodel
 
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.manageyourcar.UIlayer.UIState.AddCarUIState
-import com.example.manageyourcar.dataLayer.dataLayerRetrofit.model.Car
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
+import com.example.manageyourcar.dataLayer.model.Car
+import com.example.manageyourcar.domainLayer.mappers.CarRetrofitToCar.toCarGlobal
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkImmatUseCase
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.AddCarRoomUseCase
@@ -14,11 +16,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class AddCarViewModel : ViewModel(), KoinComponent {
-    val mutableLiveData: MutableLiveData<Car> = MutableLiveData(null)
     private val addCarRoomUseCase by inject<AddCarRoomUseCase>()
     private val getVehiculeBySivNetworkUseCase by inject<GetVehiculeByNetworkUseCase>()
     private val getVehiculeByImmatNetworkUseCase by inject<GetVehiculeByNetworkImmatUseCase>()
@@ -30,10 +32,12 @@ class AddCarViewModel : ViewModel(), KoinComponent {
 
     fun onEvent(event: OnCarRequest) {
         when (event) {
-            is OnCarRequest.OnClickAddCarButton -> onValidation()
+            is OnCarRequest.OnClickSearchCarButton -> onValidation()
             is OnCarRequest.OnImmatChanged -> onChangedImmat(event)
             is OnCarRequest.OnVINChanged -> onChangedVIN(event)
             is OnCarRequest.OnDismissAddCarFragment -> dismissFragment.postValue(true)
+            OnCarRequest.OnClickAddCarButton -> {
+                addCarToRoom()}
         }
     }
 
@@ -77,8 +81,7 @@ class AddCarViewModel : ViewModel(), KoinComponent {
                     }
 
                     is Ressource.Success -> {
-                        println("Ressource.Success" + result.data)
-                        checkIfUserRightCar(result.data)
+                        result.data?.let { setCar(it.toCarGlobal()) }
                         // Requete pour vérif si voiture existe puis enregistrement room
 
                     }
@@ -87,6 +90,13 @@ class AddCarViewModel : ViewModel(), KoinComponent {
         }
     }
 
+    fun setCar(car: Car) {
+       _uiState.update {
+           it.copy(
+               carFind = car
+           )
+       }
+    }
     fun getCarByImmat(immat: String) {
         viewModelScope.launch(Dispatchers.IO) {
             getVehiculeByImmatNetworkUseCase.getVehiculeByImmat(immat).collect { result ->
@@ -102,8 +112,8 @@ class AddCarViewModel : ViewModel(), KoinComponent {
 
                     is Ressource.Success -> {
                         println("Ressource.Success" + result.data)
-                        checkIfUserRightCar(result.data)
-                        // Requete pour vérif si voiture existe puis enregistrement room
+                        result.data?.let { setCar(it.toCarGlobal()) }
+                    // Requete pour vérif si voiture existe puis enregistrement room
 
                     }
                 }
@@ -111,14 +121,33 @@ class AddCarViewModel : ViewModel(), KoinComponent {
         }
     }
 
-    private fun checkIfUserRightCar(data: Car?) {
-        //Display BottomSheetFragDialog
-        addCarToRoom()
-    }
-
     private fun addCarToRoom() {
-        viewModelScope.launch {
-            //addCarToRoomUseCase.addCarToRoom()
+        viewModelScope.launch(Dispatchers.IO) {
+            when(addCarRoomUseCase.addCarToRoom(uiState.value.carFind!!)){
+                is Ressource.Success -> {
+                    withContext(Dispatchers.Main){
+                        Toast.makeText(
+                            com.example.manageyourcar.UIlayer.AppApplication.instance.applicationContext,
+                            "Voiture ajoutée avec succès",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        dismissFragment.postValue(true)
+                    }
+
+                }
+                is Ressource.Error -> {
+                    withContext(Dispatchers.Main){
+                        Toast.makeText(
+                            com.example.manageyourcar.UIlayer.AppApplication.instance.applicationContext,
+                            "Problème lors de l'ajout de la voiture",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        dismissFragment.postValue(true)
+                    }
+                }
+
+                is Ressource.Loading -> TODO()
+            }
         }
     }
 
@@ -134,6 +163,7 @@ class AddCarViewModel : ViewModel(), KoinComponent {
 }
 
 sealed interface OnCarRequest {
+    object OnClickSearchCarButton : OnCarRequest
     object OnClickAddCarButton : OnCarRequest
     object OnDismissAddCarFragment : OnCarRequest
 

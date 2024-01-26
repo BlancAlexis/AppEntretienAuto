@@ -21,10 +21,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.example.manageyourcar.UIlayer.viewmodel.OnCarRequest
 
 @Composable
 fun CustomDialog(
     onDismiss: () -> Unit = {},
+    onApprove: () -> Unit? = {},
     title: String? = null,
     content: String? = null,
 ) {
@@ -54,14 +56,33 @@ fun CustomDialog(
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }
-                Row(
-                    horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Button(
-                        onClick = { onDismiss() },
+                if (onApprove!= {}) {
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        modifier = Modifier.fillMaxWidth()
                     ) {
-                        Text("Fermer")
+                        Button(
+                            onClick = { onApprove() },
+                        ) {
+                            Text("Oui")
+                        }
+                        Button(
+                            onClick = { onDismiss() },
+                        ) {
+                            Text("Non")
+                        }
+                    }
+                }
+                else {
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Button(
+                            onClick = { onDismiss() },
+                        ) {
+                            Text("Fermer")
+                        }
                     }
                 }
 
