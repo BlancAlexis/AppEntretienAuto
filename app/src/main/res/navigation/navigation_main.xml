@@ -16,8 +16,7 @@
         <fragment
             android:id="@+id/viewMaintenance"
             android:name="com.example.manageyourcar.UIlayer.view.fragments.ViewListMaintenance.ViewListMaintenanceFragment"
-            android:label="fragment_view_servicing"
-            tools:layout="@layout/fragment_view_servicing" >
+            android:label="fragment_view_servicing">
             <action
                 android:id="@+id/action_viewServicingFragment_to_MapsFragment"
                 app:destination="@id/MapsFragment"
@@ -41,14 +40,14 @@
         </fragment>
         <dialog
             android:id="@+id/addMaintenanceFragment"
-            android:name="com.example.manageyourcar.UIlayer.view.fragments.AddMaintenanceFragment"
+            android:name="com.example.manageyourcar.UIlayer.view.fragments.AddMaintenance.AddMaintenanceFragment"
             android:label="fragment_add_maintenance_car"
-            tools:layout="@layout/fragment_add_maintenance_car" />
+           />
     <fragment
         android:id="@+id/BluetoothConnectFragment"
         android:name="com.example.manageyourcar.UIlayer.view.fragments.ConnectOBD.ConnectObdFragment"
         android:label="fragment_connect_obd"
-        tools:layout="@layout/fragment_connect_obd" >
+      >
         <action
             android:id="@+id/action_connectObdFragment_to_OBDFragment"
             app:destination="@id/OBDFragment" />
@@ -62,7 +61,7 @@
         android:id="@+id/viewCarDetailsFragment"
         android:name="com.example.manageyourcar.UIlayer.view.fragments.ViewCarDetails.ViewCarDetailsFragment"
         android:label="view_car_details"
-        tools:layout="@layout/view_car_details" >
+        >
         <action
             android:id="@+id/action_viewCarDetailsFragment_to_AddCarFragment"
             app:destination="@id/AddCarFragment"

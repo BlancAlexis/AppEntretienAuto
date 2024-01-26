@@ -44,7 +44,6 @@ class ViewCarDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewCarDetailsViewModel.setNavController(view)
-        Toast.makeText(requireContext(), "cccccccccccccc", Toast.LENGTH_LONG).show()
 //        logUserViewModel.isConnected.observe(viewLifecycleOwner) {
 //            if (it) {
 //                val intent = Intent(activity, MainActivity::class.java)

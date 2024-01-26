@@ -42,7 +42,7 @@ class ListMaintenanceViewModel : ViewModel(), KoinComponent {
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            addCarRoomUseCase.addCarToRoom(
+/*            addCarRoomUseCase.addCarToRoom(
                 Car(
                     null,
                     "BMW",
@@ -57,7 +57,7 @@ class ListMaintenanceViewModel : ViewModel(), KoinComponent {
                     listOf(25623),
                     null
                 )
-            )
+            )*/
 
             getAllUserMaintenanceUseCase.invoke().collect { result ->
                 when (result) {
