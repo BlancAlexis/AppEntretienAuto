@@ -36,6 +36,19 @@ android {
         buildConfigField("String", "PLACES_API_KEY", "\"$placesKey\"")
     }
 
+    flavorDimensions += "environnement"
+    productFlavors {
+        create("dev") {
+            dimension = "environnement"
+            versionNameSuffix = "-dev"
+
+                // BuildConfigField("String", "MAPS_API_KEY", "\"$mapsKey\"")
+        }
+        create("prod") {
+            dimension = "environnement"
+            versionNameSuffix = "-prod"
+        }
+    }
     buildTypes {
         release {
             isMinifyEnabled = false
