@@ -110,10 +110,13 @@ class MapsFragment : Fragment() {
         }
     }
 
-    override fun onStop() {
-        super.onStop()
-        fusedLocationClient.removeLocationUpdates(onLocationChanged)
+    override fun onPause() {
+        super.onPause()
+        if(::onLocationChanged.isInitialized) {
+            fusedLocationClient.removeLocationUpdates(onLocationChanged)
+        }
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -127,9 +130,6 @@ class MapsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
-
-        // Obtenir le fournisseur de localisation GPS
-
     }
 
     companion object {

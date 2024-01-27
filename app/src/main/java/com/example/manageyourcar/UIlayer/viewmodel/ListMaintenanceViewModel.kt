@@ -148,10 +148,8 @@ class ListMaintenanceViewModel : ViewModel(), KoinComponent {
     fun onEvent(event: OnMaintenanceListEvent) {
         when (event) {
             is OnMaintenanceListEvent.OnButtonAddMaintenancePush -> {
-
-                navController.navigate(R.id.addMaintenanceFragment)
+                    navController.navigate(R.id.addMaintenanceFragment)
             }
-
             is OnMaintenanceListEvent.OnSortMethodChanged -> changeSortMethod(event)
         }
     }

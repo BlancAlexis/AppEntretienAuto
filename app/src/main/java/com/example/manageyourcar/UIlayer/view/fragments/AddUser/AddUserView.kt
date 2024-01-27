@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -57,12 +58,14 @@ fun AddUserView(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center,
             ) {
-                Icon(
-                    painter = painterResource(R.drawable.baseline_arrow_back_24),
-                    contentDescription = "",
-                    tint = Color(0, 29, 54),
-                    modifier = Modifier.size(36.dp)
-                )
+                IconButton(onClick = {onEvent(UserSubscriptionEvent.OnBackIconClicked) }){
+                    Icon(
+                        painter = painterResource(R.drawable.baseline_arrow_back_24),
+                        contentDescription = "",
+                        tint = Color(0, 29, 54),
+                        modifier = Modifier.size(36.dp)
+                    )
+                }
                 Text(
                     fontFamily = juraFamily,
                     fontWeight = FontWeight.Bold,
@@ -88,17 +91,15 @@ fun AddUserView(
                         textFieldValue = it,
                         modifier = Modifier
                             .fillMaxWidth(0.95f)
-                            .padding(10.dp)
-                            .background(
-                                color = Color(54, 52, 59),
-                                shape = RoundedCornerShape(6.dp)
-                            ),
+                            .padding(10.dp),
+                        label = "Identifiant",
                         placeholder = "Identifiant",
                         readOnly = false,
                         keyboardType = KeyboardType.Text,
                         onValueChange = {
                             onEvent(UserSubscriptionEvent.OnLoginChanged(it))
-                        }
+                        },
+                        error = uiState.userLoginError ?: "",
                     )
                 }
                 uiState?.userFirstName?.let {
@@ -107,16 +108,15 @@ fun AddUserView(
                         modifier = Modifier
                             .fillMaxWidth(0.95f)
                             .padding(10.dp)
-                            .background(
-                                color = Color(54, 52, 59),
-                                shape = RoundedCornerShape(6.dp)
-                            ),
+                           ,
+                        label = "Firstname",
                         placeholder = "Firstname",
                         readOnly = false,
                         keyboardType = KeyboardType.Text,
                         onValueChange = {
                             onEvent(UserSubscriptionEvent.OnFirstnameChanged(it))
-                        }
+                        },
+                        error = uiState.userFirstNameError ?: "",
                     )
                 }
                 uiState.userLastName?.let {
@@ -125,16 +125,15 @@ fun AddUserView(
                         modifier = Modifier
                             .fillMaxWidth(0.95f)
                             .padding(10.dp)
-                            .background(
-                                color = Color(54, 52, 59),
-                                shape = RoundedCornerShape(6.dp)
-                            ),
+                           ,
+                        label = "Lastname",
                         placeholder = "Lastname",
                         readOnly = false,
                         keyboardType = KeyboardType.Text,
                         onValueChange = {
                             onEvent(UserSubscriptionEvent.OnLastNameChanged(it))
-                        }
+                        },
+                        error = uiState.userLastNameError ?: "",
                     )
                 }
                 uiState.userPassword?.let {
@@ -144,16 +143,15 @@ fun AddUserView(
                         modifier = Modifier
                             .fillMaxWidth(0.95f)
                             .padding(10.dp)
-                            .background(
-                                color = Color(54, 52, 59),
-                                shape = RoundedCornerShape(6.dp)
-                            ),
+                          ,
+                        label = "Mot de passe",
                         placeholder = "Mot de passe",
                         readOnly = false,
                         keyboardType = KeyboardType.Password,
                         onValueChange = {
                             onEvent(UserSubscriptionEvent.OnPasswordChanged(it))
-                        }
+                        },
+                        error = uiState.userPasswordError ?: "",
                     )
                 }
                 uiState.userValidatePassword?.let {
@@ -163,16 +161,15 @@ fun AddUserView(
                         modifier = Modifier
                             .fillMaxWidth(0.95f)
                             .padding(10.dp)
-                            .background(
-                                color = Color(54, 52, 59),
-                                shape = RoundedCornerShape(6.dp)
-                            ),
+                          ,
+                        label = "Confirmation mot de passe",
                         placeholder = "Confirmation du mot de passe",
                         readOnly = false,
                         keyboardType = KeyboardType.Password,
                         onValueChange = {
                             onEvent(UserSubscriptionEvent.OnConfirmPasswordChanged(it))
-                        }
+                        },
+                        error = uiState.userValidatePasswordError ?: "",
                     )
                 }
                 Spacer(modifier = Modifier.height(20.dp))

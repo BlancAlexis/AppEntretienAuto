@@ -1,10 +1,12 @@
 package com.example.manageyourcar.UIlayer.viewmodel
 
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.UIlayer.UIState.SignInUiState
 import com.example.manageyourcar.domainLayer.useCaseRoom.user.AddUserRoomUseCase
 import com.example.manageyourcar.domainLayer.utils.UserEntryChecker
@@ -38,6 +40,7 @@ class AddUserViewModel : ViewModel(), KoinComponent {
             is UserSubscriptionEvent.OnFirstnameChanged -> onFirstnameChanged(event)
             is UserSubscriptionEvent.OnLastNameChanged -> onLastNameChanged(event)
             is UserSubscriptionEvent.OnConfirmPasswordChanged -> onConfirmPasswordChanged(event)
+            UserSubscriptionEvent.OnBackIconClicked -> navController.popBackStack()
         }
 
     }
@@ -75,21 +78,14 @@ class AddUserViewModel : ViewModel(), KoinComponent {
     private fun onCheckFields() {
         //SmsSender.sendSMS("dd","e")
         viewModelScope.launch(Dispatchers.IO) {
-            if (uiState.value.userPassword == uiState.value.userValidatePassword) {
-                addUserRoomUseCase.invoke(
-                    uiState.value.userLogin,
-                    uiState.value.userPassword,
-                    uiState.value.userFirstName,
-                    uiState.value.userLastName
-                )
+            if ((uiState.value.userPassword == uiState.value.userValidatePassword) && uiState.value.userPassword != "" && uiState.value.userLogin != "" && uiState.value.userFirstName != "" && uiState.value.userLastName != "") {
+                addUserRoomUseCase.invoke(uiState.value.userLogin, uiState.value.userPassword, uiState.value.userFirstName, uiState.value.userLastName)
                 withContext(Dispatchers.Main) {
                     navController.popBackStack()
                 }
             } else {
-                _uiState.update {
-                    it.copy(
-                        userPasswordError = "Les mots de passe ne correspondent pas",
-                    )
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(AppApplication.instance.applicationContext, "Le formulaire contient une erreur", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -126,6 +122,7 @@ class AddUserViewModel : ViewModel(), KoinComponent {
 
 
 sealed interface UserSubscriptionEvent {
+    object OnBackIconClicked : UserSubscriptionEvent
     object OnClickSendButton : UserSubscriptionEvent
     data class OnLoginChanged(val newValue: String) : UserSubscriptionEvent
     data class OnPasswordChanged(val newValue: String) : UserSubscriptionEvent

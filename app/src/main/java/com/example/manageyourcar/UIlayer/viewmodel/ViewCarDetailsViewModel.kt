@@ -1,5 +1,6 @@
 package com.example.manageyourcar.UIlayer.viewmodel
 
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -29,7 +30,7 @@ class ViewCarDetailsViewModel : ViewModel(), KoinComponent {
         viewModelScope.launch(Dispatchers.IO) {
             getUserCarsUseCase.invoke().collect { result ->
                 when (result) {
-                    is Ressource.Error -> TODO()
+                    is Ressource.Error -> Log.e("ViewCarDetailsViewModel", "Utilisateur inconnu")
                     is Ressource.Loading -> TODO()
                     is Ressource.Success -> result.data?.let {
                         updateListCar(it)
