@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
 import com.example.manageyourcar.UIlayer.view.common.CustomDialogKM
@@ -25,6 +26,7 @@ class UpdateCarMileageFragment : BottomSheetDialogFragment() {
         args.myArg?.let {
             updateCarMileageViewModel.setCar(it)
         }
+        updateCarMileageViewModel.setNavController(this.findNavController())
     }
 
     override fun onCreateView(

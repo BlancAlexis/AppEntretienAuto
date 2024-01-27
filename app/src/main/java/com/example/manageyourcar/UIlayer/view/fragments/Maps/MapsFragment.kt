@@ -29,6 +29,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 
 class MapsFragment : Fragment() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var onLocationChanged: LocationCallback
 
     private val key = BuildConfig.MAPS_API_KEY
     val mapsViewModel by viewModels<MapsViewModel>()
@@ -66,7 +67,7 @@ class MapsFragment : Fragment() {
             LocationServices.getFusedLocationProviderClient(requireActivity())
 
 
-        val onLocationChanged: LocationCallback = object : LocationCallback() {
+         onLocationChanged = object : LocationCallback() {
             override fun onLocationResult(location: LocationResult) {
                 location
 
@@ -86,7 +87,7 @@ class MapsFragment : Fragment() {
             }
         }
 
-        val locationManager = fusedLocationProviderClient.requestLocationUpdates(
+        fusedLocationProviderClient.requestLocationUpdates(
             LocationRequest.create()
                 .setPriority(Priority.PRIORITY_LOW_POWER) //Pas besoin d'une grosse précision pour ce que l'on fait
                 .setInterval(1000)
@@ -137,6 +138,10 @@ class MapsFragment : Fragment() {
         stopLocationUpdates()
     }
 
+    override fun onStop() {
+        super.onStop()
+        fusedLocationClient.removeLocationUpdates(onLocationChanged)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
