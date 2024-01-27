@@ -12,7 +12,6 @@ import com.example.manageyourcar.UIlayer.UIState.ServicingUIState
 import com.example.manageyourcar.UIlayer.UIState.SortType
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.dataLayer.dataLayerRoom.dao.MaintenanceWithCarEntity
-import com.example.manageyourcar.dataLayer.model.Car
 import com.example.manageyourcar.dataLayer.model.MaintenanceService
 import com.example.manageyourcar.domainLayer.useCaseBusiness.LogoutUserUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.AddCarRoomUseCase
@@ -26,7 +25,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import java.util.Date
 
 class ListMaintenanceViewModel : ViewModel(), KoinComponent {
     private val _uiState = MutableStateFlow(MaintenanceListUiState())

@@ -21,7 +21,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.example.manageyourcar.UIlayer.viewmodel.OnCarRequest
 
 @Composable
 fun CustomDialog(
