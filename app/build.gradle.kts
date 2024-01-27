@@ -29,21 +29,21 @@ android {
         val mapsKey: String =
             gradleLocalProperties(project.rootProject.projectDir).getProperty("MAPS_API_KEY") ?: ""
         buildConfigField("String", "MAPS_API_KEY", "\"$mapsKey\"")
-
         val placesKey: String =
             gradleLocalProperties(project.rootProject.projectDir).getProperty("PLACES_API_KEY")
                 ?: ""
         buildConfigField("String", "PLACES_API_KEY", "\"$placesKey\"")
+        val autoDevKey: String =
+            gradleLocalProperties(project.rootProject.projectDir).getProperty("AUTO_DEV_API_KEY")
+                ?: ""
+        buildConfigField("String", "AUTO_DEV_API_KEY", "\"$autoDevKey\"")
     }
 
     flavorDimensions += "environnement"
     productFlavors {
         create("dev") {
             dimension = "environnement"
-            versionNameSuffix = "-dev"
-
-                // BuildConfigField("String", "MAPS_API_KEY", "\"$mapsKey\"")
-        }
+            versionNameSuffix = "-dev" }
         create("prod") {
             dimension = "environnement"
             versionNameSuffix = "-prod"

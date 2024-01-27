@@ -1,5 +1,6 @@
 package com.example.manageyourcar.dataLayer.dataLayerRetrofit
 
+import com.example.manageyourcar.BuildConfig
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.model.Car
 import retrofit2.Response
 import retrofit2.http.GET
@@ -11,6 +12,6 @@ interface RequestApiSIV {
     @GET("vin/{siv}")
     suspend fun getVehiculeBySIV(
         @Path("siv") siv: String,
-        @Query("apikey") apikey: String = "ZrQEPSkKbmFydXRvLmJsYW5jQGdtYWlsLmNvbQ=="
+        @Query("apikey") apikey: String = BuildConfig.AUTO_DEV_API_KEY
     ): Response<Car>
 }

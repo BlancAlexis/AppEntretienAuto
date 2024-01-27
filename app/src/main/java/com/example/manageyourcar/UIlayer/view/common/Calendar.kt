@@ -35,4 +35,5 @@ fun CalendarView(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewCalender() {
+    CalendarView(onDateSelected = {})
 }

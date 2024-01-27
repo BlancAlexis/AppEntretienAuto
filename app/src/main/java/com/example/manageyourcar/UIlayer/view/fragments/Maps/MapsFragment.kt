@@ -2,6 +2,7 @@ package com.example.manageyourcar.UIlayer.view.fragments.Maps
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
@@ -24,6 +25,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
@@ -50,14 +52,6 @@ class MapsFragment : Fragment() {
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             Log.e("MapsFragment", "getLocationUpdates: permission not granted")
             return
         }
@@ -72,17 +66,14 @@ class MapsFragment : Fragment() {
                 location
 
                 if (location.locations.isNotEmpty()) {
-                    Log.i(
-                        "TAG",
-                        "onLocationResult: ${location.locations[0].latitude} ${location.locations[0].longitude}"
-                    )
+                    Log.i("TAG", "onLocationResult: ${location.locations[0].latitude} ${location.locations[0].longitude}")
                     val currentPosition =
                         LatLng(location.locations[0].latitude, location.locations[0].longitude)
                     googleMap.addMarker(
-                        MarkerOptions().position(currentPosition).title("Vous êtes ici!")
+                                    MarkerOptions().position(currentPosition).title("Vous êtes ici!")
+                                        //.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(requireActivity().resources, R.drawable.eu)))
+                    //Marche pas avec svg
                     )
-                    //.icon(BitmapDescriptorFactory.fromBitmap(BitmapUtils.decodeResource(requireActivity().resources,R.drawable.voiture_de_course))))
-
                 }
             }
         }
@@ -90,7 +81,7 @@ class MapsFragment : Fragment() {
         fusedLocationProviderClient.requestLocationUpdates(
             LocationRequest.create()
                 .setPriority(Priority.PRIORITY_LOW_POWER) //Pas besoin d'une grosse précision pour ce que l'on fait
-                .setInterval(1000)
+                .setInterval(60000)
                 .setFastestInterval(500), onLocationChanged, Looper.getMainLooper()
         )
 
@@ -106,13 +97,6 @@ class MapsFragment : Fragment() {
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return
         }
         fusedLocationClient.lastLocation.addOnSuccessListener { location ->
@@ -124,18 +108,6 @@ class MapsFragment : Fragment() {
                 googleMap.moveCamera(CameraUpdateFactory.newLatLng(currentPosition))
             }
         }
-    }
-
-
-    // stop location updates
-    private fun stopLocationUpdates() {
-        //fusedLocationClient.removeLocationUpdates(locationCallback)
-    }
-
-    // stop receiving location update when activity not visible/foreground
-    override fun onPause() {
-        super.onPause()
-        stopLocationUpdates()
     }
 
     override fun onStop() {
@@ -153,7 +125,6 @@ class MapsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
 
