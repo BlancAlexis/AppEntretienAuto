@@ -20,11 +20,11 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/black"
             android:fitsSystemWindows="true"
+            app:layout_constraintBottom_toTopOf="@+id/nav_host_fragment_login"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/nav_host_fragment_login"
-            app:titleTextColor="@color/black" />
+            app:titleTextColor="@color/onPrimary" />
 
 
         <androidx.fragment.app.FragmentContainerView

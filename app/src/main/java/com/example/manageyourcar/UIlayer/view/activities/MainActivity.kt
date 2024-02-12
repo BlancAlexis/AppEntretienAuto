@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             (supportFragmentManager.findFragmentById(R.id.nav_host_fragment_login) as NavHostFragment).navController
         setupWithNavController(binding.bottomNavigationView, navController)
         binding.toolbarMain.setBackgroundColor(getColor(R.color.darkGray))
+        binding.toolbarMain.title = "Manage Your Car"
         setSupportActionBar(binding.toolbarMain)
         binding.navView.setNavigationItemSelectedListener(this)
         val toggle = ActionBarDrawerToggle(
