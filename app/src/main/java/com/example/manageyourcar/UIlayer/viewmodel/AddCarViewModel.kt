@@ -1,5 +1,6 @@
 package com.example.manageyourcar.UIlayer.viewmodel
 
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -42,13 +43,14 @@ class AddCarViewModel : ViewModel(), KoinComponent {
     }
 
     private fun onValidation() {
-        if (uiState.value.inputImmat?.matches(Regex("^([A-Z]{2})-([0-9]{3})-([A-Z]{2})$")) == true) {
+        getCarBySIV("ZPBUA1ZL9KLA00848")
+     /*   if (uiState.value.inputImmat?.matches(Regex("^([A-Z]{2})-([0-9]{3})-([A-Z]{2})$")) == true) {
             getCarByImmat(uiState.value.inputImmat!!)
         } else if (uiState.value.inputVIN?.length == 17) {
             getCarBySIV(uiState.value.inputVIN!!)
         } else {
             // Aucun des deux OK, affichage pop-up?
-        }
+        }*/
     }
 
     private fun onChangedImmat(event: OnCarRequest.OnImmatChanged) {
@@ -112,7 +114,7 @@ class AddCarViewModel : ViewModel(), KoinComponent {
 
                     is Ressource.Success -> {
                         println("Ressource.Success" + result.data)
-                        result.data?.let { setCar(it.toCarGlobal()) }
+                        result.data?.let { setCar(it) }
                     // Requete pour vérif si voiture existe puis enregistrement room
 
                     }
@@ -123,7 +125,7 @@ class AddCarViewModel : ViewModel(), KoinComponent {
 
     private fun addCarToRoom() {
         viewModelScope.launch(Dispatchers.IO) {
-            when(addCarRoomUseCase.addCarToRoom(uiState.value.carFind!!)){
+            when(val ressource = addCarRoomUseCase.addCarToRoom(uiState.value.carFind!!)){
                 is Ressource.Success -> {
                     withContext(Dispatchers.Main){
                         Toast.makeText(
@@ -142,6 +144,7 @@ class AddCarViewModel : ViewModel(), KoinComponent {
                             "Problème lors de l'ajout de la voiture",
                             Toast.LENGTH_SHORT
                         ).show()
+                        Log.e("AddCarViewModel", ressource.toString()+"")
                         dismissFragment.postValue(true)
                     }
                 }

@@ -1,8 +1,8 @@
 package com.example.manageyourcar.dataLayer.dataLayerRetrofit.repositoryImpl
 
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.dataSource.RemoteDataSource
-import com.example.manageyourcar.dataLayer.dataLayerRetrofit.model.Car
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
+import com.example.manageyourcar.dataLayer.model.Car
 import com.example.manageyourcar.domainLayer.repository.retrofit.ApiCarImmatRepository
 import kotlinx.coroutines.flow.Flow
 import org.koin.core.component.KoinComponent

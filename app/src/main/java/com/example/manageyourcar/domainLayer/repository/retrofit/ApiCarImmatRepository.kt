@@ -1,7 +1,7 @@
 package com.example.manageyourcar.domainLayer.repository.retrofit
 
-import com.example.manageyourcar.dataLayer.dataLayerRetrofit.model.Car
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
+import com.example.manageyourcar.dataLayer.model.Car
 import kotlinx.coroutines.flow.Flow
 
 interface ApiCarImmatRepository {

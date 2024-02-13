@@ -15,7 +15,7 @@ object CarRetrofitToCar : KoinComponent {
             carID = null,
             brand = this.make.name,
             model = this.model.name,
-            releaseDate = Date(),//this.years[0].year,
+            releaseDate = this.years[0].year.toString(),
             transmission = this.transmission.transmissionType,
             motorization = this.engine.fuelType,
             fuel = this.engine.fuelType,

@@ -1,5 +1,6 @@
 package com.example.manageyourcar.domainLayer.useCaseRoom.car
 
+import android.util.Log
 import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.dataLayer.model.Car
@@ -19,14 +20,15 @@ class AddCarRoomUseCase : KoinComponent {
                 is Ressource.Loading -> Ressource.Error()
                 is Ressource.Success -> {
                     val carWithOwnerID: Car = car.copy(
-                        ownerID = result.data
+                        ownerID = result.data,
+                        mileage = listOf(0)
                     )
                     roomRepository.addNewCar(carWithOwnerID)
                     Ressource.Success(Unit)
                 }
             }
         } catch (e: Exception) {
-            println(e.localizedMessage)
+            Log.e("AddCarRoomUseCase",e.localizedMessage)
             Ressource.Error(exception = e)
         }
     }

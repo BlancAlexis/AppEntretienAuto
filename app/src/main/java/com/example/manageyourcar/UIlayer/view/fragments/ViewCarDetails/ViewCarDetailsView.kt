@@ -50,6 +50,7 @@ import com.example.manageyourcar.UIlayer.view.common.InformationRow
 import com.example.manageyourcar.UIlayer.viewmodel.ViewCarDetailsEvent
 import com.example.manageyourcar.dataLayer.model.Car
 import java.util.Calendar
+import java.util.Date
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -160,8 +161,6 @@ fun ViewCarDetailsView(
                     }
 
                     HorizontalPager(state = pagerState) {
-                        val realseDate = Calendar.getInstance()
-                        realseDate.time = uiState.cars[pagerState.currentPage].releaseDate
 
                         Column(
                             modifier = Modifier
@@ -214,7 +213,7 @@ fun ViewCarDetailsView(
                                     )
                                     InformationRow(
                                         title1 = "Parution",
-                                        content1 = realseDate.get(Calendar.YEAR).toString(),
+                                        content1 = uiState.cars[pagerState.currentPage].releaseDate,
                                         icon1 = painterResource(R.drawable.outline_calendar_month_24),
                                         title2 = "Carburant",
                                         content2 = uiState.cars[pagerState.currentPage].fuel,
@@ -300,7 +299,7 @@ fun PreviewViewCarDetailsView() {
         mileage = arrayListOf(200547),
         motorization = "1.6 HDI FAP",
         power = 180,
-        releaseDate = Calendar.getInstance().time,
+        releaseDate = "2005-01-01",
         torque = 280,
         transmission = "Manuelle",
     )
@@ -313,7 +312,7 @@ fun PreviewViewCarDetailsView() {
         mileage = arrayListOf(200547),
         motorization = "1.6 HDI FAP",
         power = 180,
-        releaseDate = Calendar.getInstance().time,
+        releaseDate = "2005-01-01",
         torque = 280,
         transmission = "Manuelle",
     )
