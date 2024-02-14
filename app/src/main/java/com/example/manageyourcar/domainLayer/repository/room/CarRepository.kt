@@ -10,5 +10,5 @@ interface CarRepository {
     fun getCar(idCar: Int): CarLocal
     fun updateCar(carLocal: CarLocal)
     fun updateCarMileage(listMileages: List<Int>, idCar: Int)
-    fun deleteCar(idCar: Int)
+    fun deleteCar(car : CarLocal)
 }

@@ -7,6 +7,7 @@ import java.util.Date
 object CarMappers {
     fun CarLocal.toCarEntity(): CarEntity {
         return CarEntity(
+            carID = this.carID ?: 0,
             brand = this.brand,
             fuel = this.fuel,
             model = this.model,
