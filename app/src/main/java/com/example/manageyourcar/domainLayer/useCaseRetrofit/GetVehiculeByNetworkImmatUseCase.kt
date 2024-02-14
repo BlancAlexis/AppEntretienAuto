@@ -11,7 +11,7 @@ class GetVehiculeByNetworkImmatUseCase : KoinComponent {
     val api by inject<ApiCarImmatRepository>()
 
     suspend fun getVehiculeByImmat(immat: String): Flow<Ressource<CarLocal>> {
-        return api.getVehiculeByImmat("CP-370-YK")
+        return api.getVehiculeByImmat(immat)
     }
 
 }

@@ -72,9 +72,11 @@ fun AddCarView(
                 registration = uiState.inputImmat,
                 onImmatEvent = { onEvent(OnCarRequest.OnImmatChanged(it ?: "")) }
             )
-            Text(
-                textAlign = TextAlign.Center, text = "OU", fontSize = 30.sp
-            )
+            Button(onClick = { onEvent(OnCarRequest.OnClickSearchCarWithImmatButton) }) {
+                Text(
+                    text = "Rechercher", fontSize = 20.sp
+                )
+            }
 
             Box(
                 modifier = Modifier.fillMaxWidth(1f)
@@ -102,7 +104,7 @@ fun AddCarView(
 
             }
 
-            Button(onClick = { onEvent(OnCarRequest.OnClickSearchCarButton) }) {
+            Button(onClick = { onEvent(OnCarRequest.OnClickSearchCarWithSIVButton) }) {
                 Text(
                     text = "Rechercher", fontSize = 20.sp
                 )

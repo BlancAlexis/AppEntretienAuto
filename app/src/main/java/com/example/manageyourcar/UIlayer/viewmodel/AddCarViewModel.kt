@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.UIlayer.UIState.AddCarUIState
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.dataLayer.model.CarLocal
@@ -33,24 +34,38 @@ class AddCarViewModel : ViewModel(), KoinComponent {
 
     fun onEvent(event: OnCarRequest) {
         when (event) {
-            is OnCarRequest.OnClickSearchCarButton -> onValidation()
+            is OnCarRequest.OnClickSearchCarWithImmatButton -> searchCarWithImmat()
             is OnCarRequest.OnImmatChanged -> onChangedImmat(event)
             is OnCarRequest.OnVINChanged -> onChangedVIN(event)
             is OnCarRequest.OnDismissAddCarFragment -> dismissFragment.postValue(true)
             OnCarRequest.OnClickAddCarButton -> {
                 addCarToRoom()}
+
+            OnCarRequest.OnClickSearchCarWithSIVButton -> searchCarWithSIV()
         }
     }
 
-    private fun onValidation() {
-        getCarBySIV("ZPBUA1ZL9KLA00848")
-     /*   if (uiState.value.inputImmat?.matches(Regex("^([A-Z]{2})-([0-9]{3})-([A-Z]{2})$")) == true) {
-            getCarByImmat(uiState.value.inputImmat!!)
-        } else if (uiState.value.inputVIN?.length == 17) {
-            getCarBySIV(uiState.value.inputVIN!!)
-        } else {
-            // Aucun des deux OK, affichage pop-up?
-        }*/
+    private fun searchCarWithSIV() {
+        uiState.value.inputVIN?.let {
+            if (it.length == 17) {
+                getCarBySIV(it)
+            } else {
+                Toast.makeText(AppApplication.instance.applicationContext, "champs vide", Toast.LENGTH_SHORT).show()
+            }
+        } ?: run {
+            Toast.makeText(AppApplication.instance.applicationContext, "error vin", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun searchCarWithImmat() {
+        uiState.value.inputImmat?.let {immat ->
+            if (immat.matches(Regex("^([A-Z]{2})-([0-9]{3})-([A-Z]{2})$"))){
+            getCarByImmat(immat)
+            }else {
+                Toast.makeText(AppApplication.instance.applicationContext, "champs vide", Toast.LENGTH_SHORT).show()
+            }
+        } ?: run {
+            Toast.makeText(AppApplication.instance.applicationContext, "error immat", Toast.LENGTH_SHORT).show()        }
     }
 
     private fun onChangedImmat(event: OnCarRequest.OnImmatChanged) {
@@ -166,7 +181,8 @@ class AddCarViewModel : ViewModel(), KoinComponent {
 }
 
 sealed interface OnCarRequest {
-    object OnClickSearchCarButton : OnCarRequest
+    object OnClickSearchCarWithImmatButton : OnCarRequest
+    object OnClickSearchCarWithSIVButton : OnCarRequest
     object OnClickAddCarButton : OnCarRequest
     object OnDismissAddCarFragment : OnCarRequest
 
