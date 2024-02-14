@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.manageyourcar.UIlayer.UIState.AddVehiculeMaintenanceUiState
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
-import com.example.manageyourcar.dataLayer.model.Car
+import com.example.manageyourcar.dataLayer.model.CarLocal
 import com.example.manageyourcar.dataLayer.model.Entretien
 import com.example.manageyourcar.dataLayer.model.MaintenanceServiceType
 import com.example.manageyourcar.domainLayer.mappers.MapperMaintenanceView.toMaintenanceService
@@ -29,7 +29,7 @@ class AddMaintenanceViewModel : ViewModel(), KoinComponent {
 
     private val addCarMaintenanceUseCase by inject<AddCarMaintenanceUseCase>()
 
-    private lateinit var selectedCar: Car
+    private lateinit var selectedCarLocal: CarLocal
     private lateinit var selectedMaintenance: MaintenanceServiceType
 
 
@@ -45,7 +45,7 @@ class AddMaintenanceViewModel : ViewModel(), KoinComponent {
                         }
                         updateListCar(it)
                         if (it.isNotEmpty()) {
-                            selectedCar = it[0]
+                            selectedCarLocal = it[0]
                         }
                     }
                 }
@@ -64,7 +64,7 @@ class AddMaintenanceViewModel : ViewModel(), KoinComponent {
             when (addCarMaintenanceUseCase.addMaintenanceOperation(
                 Entretien(
                     userID = null,
-                    carID = selectedCar.carID,
+                    carID = selectedCarLocal.carID,
                     mileage = uiState.value.mileage.toInt(),
                     price = uiState.value.price.toInt(),
                     date = uiState.value.date ?: Date(),
@@ -80,10 +80,10 @@ class AddMaintenanceViewModel : ViewModel(), KoinComponent {
         }
     }
 
-    private fun updateListCar(data: List<Car>) {
+    private fun updateListCar(data: List<CarLocal>) {
         _uiState.update {
             it.copy(
-                listCars = data
+                listCarLocals = data
             )
         }
     }
@@ -94,17 +94,14 @@ class AddMaintenanceViewModel : ViewModel(), KoinComponent {
             is OnMaintenanceEvent.OnMaintenanceSelectedChanged -> OnMaintenanceChanged(event.newValue)
             is OnMaintenanceEvent.OnMileageChanged -> OnMileageChanged(event.newValue)
             is OnMaintenanceEvent.OnDateChanged -> OnDateChanged(Date(event.newDate))
-            OnMaintenanceEvent.OnClickAddMaintenanceButton -> {
-                addMaintenanceAct()
-            }
-
+            OnMaintenanceEvent.OnClickAddMaintenanceButton -> { addMaintenanceAct() }
             is OnMaintenanceEvent.OnPriceChanged -> OnPriceChanged(event.newValue)
         }
 
     }
 
-    private fun OnCarChanged(newValue: Car) {
-        selectedCar = newValue
+    private fun OnCarChanged(newValue: CarLocal) {
+        selectedCarLocal = newValue
     }
 
     private fun OnPriceChanged(newValue: Int) {
@@ -152,10 +149,9 @@ sealed interface OnMaintenanceEvent {
     data class OnDateChanged(val newDate: String) : OnMaintenanceEvent
     data class OnMileageChanged(val newValue: Int) : OnMaintenanceEvent
     data class OnPriceChanged(val newValue: Int) : OnMaintenanceEvent
-    data class OnMaintenanceSelectedChanged(val newValue: MaintenanceServiceType) :
-        OnMaintenanceEvent
+    data class OnMaintenanceSelectedChanged(val newValue: MaintenanceServiceType) : OnMaintenanceEvent
 
-    data class OnCarSelectedChanged(val newValue: Car) : OnMaintenanceEvent
+    data class OnCarSelectedChanged(val newValue: CarLocal) : OnMaintenanceEvent
 
 }
 

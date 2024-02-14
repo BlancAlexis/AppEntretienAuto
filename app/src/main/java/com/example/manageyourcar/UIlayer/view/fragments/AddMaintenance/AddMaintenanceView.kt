@@ -149,10 +149,10 @@ fun AddMaintenanceView(
                     }
                 }
                 OutlinedSpinner(
-                    listMaintenanceName = uiState.listCars.map { it.model },
+                    listMaintenanceName = uiState.listCarLocals.map { it.model },
                     textLabel = "Votre véhicule",
                     onItemSelect = { nomCar ->
-                        uiState.listCars.find { it.model == nomCar }
+                        uiState.listCarLocals.find { it.model == nomCar }
                             ?.let { it1 -> onEvent(OnMaintenanceEvent.OnCarSelectedChanged(it1)) }
                     })
 

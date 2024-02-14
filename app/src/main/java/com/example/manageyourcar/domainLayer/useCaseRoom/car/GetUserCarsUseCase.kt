@@ -2,7 +2,7 @@ package com.example.manageyourcar.domainLayer.useCaseRoom.car
 
 import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
-import com.example.manageyourcar.dataLayer.model.Car
+import com.example.manageyourcar.dataLayer.model.CarLocal
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
 import com.example.manageyourcar.domainLayer.repository.room.CarRepository
 import kotlinx.coroutines.flow.Flow
@@ -15,7 +15,7 @@ class GetUserCarsUseCase : KoinComponent {
     private val roomRepository by inject<CarRepository>()
     private val cacheManagerRepository by inject<CacheManagerRepository>()
 
-    suspend fun invoke(): Flow<Ressource<List<Car>>> {
+    suspend fun invoke(): Flow<Ressource<List<CarLocal>>> {
         return try {
             when (val result = cacheManagerRepository.getUserId(AppApplication.instance)) {
                 is Ressource.Success -> roomRepository.getCars(result.data!!)

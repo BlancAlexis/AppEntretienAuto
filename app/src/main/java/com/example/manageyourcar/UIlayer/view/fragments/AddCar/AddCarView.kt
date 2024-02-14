@@ -39,8 +39,8 @@ fun AddCarView(
     uiState: AddCarUIState,
     onEvent: (OnCarRequest) -> Unit = {}
 ) {
-    uiState.carFind?.let {
-    CustomDialog(title = "C'est bien votre voiture?", content = "${uiState.carFind.model}", onApprove = { onEvent(OnCarRequest.OnClickAddCarButton) }, onDismiss = { onEvent(OnCarRequest.OnDismissAddCarFragment) })
+    uiState.carLocalFind?.let {
+    CustomDialog(title = "C'est bien votre voiture?", content = "${uiState.carLocalFind.model}", onApprove = { onEvent(OnCarRequest.OnClickAddCarButton) }, onDismiss = { onEvent(OnCarRequest.OnDismissAddCarFragment) })
 }
     if (uiState.onInternetLost) {
         CustomDialog(title = "Internet perdu")

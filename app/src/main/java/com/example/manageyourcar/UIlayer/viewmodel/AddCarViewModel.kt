@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.manageyourcar.UIlayer.UIState.AddCarUIState
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
-import com.example.manageyourcar.dataLayer.model.Car
+import com.example.manageyourcar.dataLayer.model.CarLocal
 import com.example.manageyourcar.domainLayer.mappers.CarRetrofitToCar.toCarGlobal
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkImmatUseCase
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkUseCase
@@ -92,10 +92,10 @@ class AddCarViewModel : ViewModel(), KoinComponent {
         }
     }
 
-    fun setCar(car: Car) {
+    fun setCar(carLocal: CarLocal) {
        _uiState.update {
            it.copy(
-               carFind = car
+               carLocalFind = carLocal
            )
        }
     }
@@ -125,7 +125,7 @@ class AddCarViewModel : ViewModel(), KoinComponent {
 
     private fun addCarToRoom() {
         viewModelScope.launch(Dispatchers.IO) {
-            when(val ressource = addCarRoomUseCase.addCarToRoom(uiState.value.carFind!!)){
+            when(val ressource = addCarRoomUseCase.addCarToRoom(uiState.value.carLocalFind!!)){
                 is Ressource.Success -> {
                     withContext(Dispatchers.Main){
                         Toast.makeText(

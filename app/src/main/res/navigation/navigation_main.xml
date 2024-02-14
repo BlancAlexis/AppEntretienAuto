@@ -85,7 +85,7 @@
         android:label="fragment_update_car_mileage" >
     <argument
         android:name="myArg"
-        app:argType="com.example.manageyourcar.dataLayer.model.Car"
+        app:argType="com.example.manageyourcar.dataLayer.model.CarLocal"
         app:nullable="true"
         android:defaultValue="@null" />
     </dialog>

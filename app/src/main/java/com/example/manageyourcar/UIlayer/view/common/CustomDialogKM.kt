@@ -34,7 +34,7 @@ fun CustomDialogKM(
             .padding(vertical = 10.dp)
     ) {
         Text(
-            text = "Le kilométrage de votre ${uiState.car?.model ?: "véhicule"} est-il à jour?",
+            text = "Le kilométrage de votre ${uiState.carLocal?.model ?: "véhicule"} est-il à jour?",
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
@@ -46,7 +46,7 @@ fun CustomDialogKM(
             value = uiState.newMileage ?: "",
             onValueChange = { onEvent(UpdateCatEvent.newMileage(it)) },
             label = { Text(text = "Kilométrage") },
-            placeholder = { Text(text = uiState.car?.mileage?.last().toString()) },
+            placeholder = { Text(text = uiState.carLocal?.mileage?.last().toString()) },
             modifier = Modifier.padding(10.dp)
         )
 

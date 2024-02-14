@@ -2,10 +2,9 @@ package com.example.manageyourcar.dataLayer.model
 
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
-import java.util.Date
 
 
-data class Car(
+data class CarLocal(
     val carID: Int? = null,
     @SerializedName("marque")
     val brand: String,

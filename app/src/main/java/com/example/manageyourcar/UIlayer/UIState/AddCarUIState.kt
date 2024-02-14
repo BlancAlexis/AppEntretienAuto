@@ -1,6 +1,6 @@
 package com.example.manageyourcar.UIlayer.UIState
 
-import com.example.manageyourcar.dataLayer.model.Car
+import com.example.manageyourcar.dataLayer.model.CarLocal
 
 
 data class AddCarUIState(
@@ -12,5 +12,5 @@ data class AddCarUIState(
     val errorImmat: String? = null,
 
     val onInternetLost: Boolean = false,
-    val carFind: Car? = null
+    val carLocalFind: CarLocal? = null
 )

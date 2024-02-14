@@ -2,15 +2,17 @@ package com.example.manageyourcar.UIlayer.viewmodel
 
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.manageyourcar.R
+import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.UIlayer.UIState.ViewCarDetailsState
 import com.example.manageyourcar.UIlayer.view.fragments.ViewCarDetails.ViewCarDetailsFragmentDirections
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
-import com.example.manageyourcar.dataLayer.model.Car
+import com.example.manageyourcar.dataLayer.model.CarLocal
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.GetUserCarsUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -47,13 +49,17 @@ class ViewCarDetailsViewModel : ViewModel(), KoinComponent {
             }
 
             is ViewCarDetailsEvent.OnUpdateMileage -> {
+                if(event.position == 0){
+                    Toast.makeText(AppApplication.instance.applicationContext, "Vous n'avez encore aucune voiture", Toast.LENGTH_SHORT).show()
+                    return
+                }
                 val action = ViewCarDetailsFragmentDirections.actionViewCarDetailsFragmentToUpdateCarMileage(
-                        myArg = _uiState.value.let {
+                        myArg = _uiState.value?.let {
                             it.let {
                                 it as ViewCarDetailsState.ViewCarDetailsStateDetailsUIState
-                            }.cars[event.position]
+                            }.carLocals.getOrNull(event.position)
                         })
-                navController.navigate(action)
+                    navController.navigate(action)
             }
         }
 
@@ -64,10 +70,10 @@ class ViewCarDetailsViewModel : ViewModel(), KoinComponent {
         navController = Navigation.findNavController(view)
     }
 
-    private fun updateListCar(data: List<Car>) {
+    private fun updateListCar(data: List<CarLocal>) {
         _uiState.update {
             ViewCarDetailsState.ViewCarDetailsStateDetailsUIState(
-                cars = data
+                carLocals = data
             )
         }
     }

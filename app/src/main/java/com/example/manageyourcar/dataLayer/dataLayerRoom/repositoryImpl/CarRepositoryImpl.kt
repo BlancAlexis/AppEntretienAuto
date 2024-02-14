@@ -1,7 +1,7 @@
 package com.example.manageyourcar.dataLayer.dataLayerRoom.repositoryImpl
 
 import com.example.manageyourcar.dataLayer.dataLayerRoom.dao.CarDao
-import com.example.manageyourcar.dataLayer.model.Car
+import com.example.manageyourcar.dataLayer.model.CarLocal
 import com.example.manageyourcar.domainLayer.mappers.CarMappers.toCar
 import com.example.manageyourcar.domainLayer.mappers.CarMappers.toCarEntity
 import com.example.manageyourcar.domainLayer.repository.room.CarRepository
@@ -12,32 +12,32 @@ import org.koin.core.component.KoinComponent
 class CarRepositoryImpl(private val carDao: CarDao) : CarRepository, KoinComponent {
 
 
-    override fun addNewCar(car: Car) {
-        carDao.addNewCar(car.toCarEntity())
+    override fun addNewCar(carLocal: CarLocal) {
+        carDao.addNewCar(carLocal.toCarEntity())
     }
 
-    override fun getCars(idUser: Int): Flow<List<Car>> {
+    override fun getCars(idUser: Int): Flow<List<CarLocal>> {
         return carDao.getCars(idUser).map { carEntitys ->
             carEntitys.map { it.toCar() }
         }
     }
 
-    override fun getCar(idCar: Int): Car {
+    override fun getCar(idCar: Int): CarLocal {
         return carDao.getCar(idCar).toCar()
     }
 
-    override fun getCars(): List<Car> {
+    override fun getCars(): List<CarLocal> {
         val brutResult = carDao.getCars()
-        val resultCar: MutableList<Car> = arrayListOf()
+        val resultCarLocal: MutableList<CarLocal> = arrayListOf()
 
         for (element in brutResult) {
-            resultCar.add(element.toCar())
+            resultCarLocal.add(element.toCar())
         }
-        return resultCar
+        return resultCarLocal
     }
 
-    override fun updateCar(car: Car) {
-        carDao.updateCar(car.toCarEntity())
+    override fun updateCar(carLocal: CarLocal) {
+        carDao.updateCar(carLocal.toCarEntity())
     }
 
     override fun updateCarMileage(listMileages: List<Int>, idCar: Int) {

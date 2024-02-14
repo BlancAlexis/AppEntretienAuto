@@ -27,10 +27,10 @@ class UpdateCarMileageViewModel : ViewModel(), KoinComponent {
     private val _uiState = MutableStateFlow(UpdateMileage())
     val uiState = _uiState.asStateFlow()
 
-    fun setCar(car: com.example.manageyourcar.dataLayer.model.Car) {
+    fun setCar(carLocal: com.example.manageyourcar.dataLayer.model.CarLocal) {
         _uiState.update {
             it.copy(
-                car = car
+                carLocal = carLocal
             )
         }
     }
@@ -48,7 +48,7 @@ class UpdateCarMileageViewModel : ViewModel(), KoinComponent {
 
     fun upsertCarMileage() {
         viewModelScope.launch(Dispatchers.IO) {
-            val car = _uiState.value.car
+            val car = _uiState.value.carLocal
             if (car != null) {
                 val updatedCar = car.copy(mileage = car.mileage + (uiState.value.newMileage?.toInt() ?: 0))
                 when(upsertCarMileageUseCase.updateCarMileage(updatedCar)){
