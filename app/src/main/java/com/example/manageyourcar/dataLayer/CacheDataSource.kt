@@ -16,7 +16,7 @@ class CacheDataSource {
         }
     }
     fun setUserCarList(local: List<CarLocal>){
-        userCarList = userCarList + local
+        userCarList = local
 
     }
     fun getUserId(context: Context): Ressource<Int> {

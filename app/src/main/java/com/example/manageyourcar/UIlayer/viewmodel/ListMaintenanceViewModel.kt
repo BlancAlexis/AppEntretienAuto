@@ -1,6 +1,7 @@
 package com.example.manageyourcar.UIlayer.viewmodel
 
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
@@ -12,7 +13,9 @@ import com.example.manageyourcar.UIlayer.UIState.ServicingUIState
 import com.example.manageyourcar.UIlayer.UIState.SortType
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.dataLayer.dataLayerRoom.dao.MaintenanceWithCarEntity
+import com.example.manageyourcar.dataLayer.model.CarLocal
 import com.example.manageyourcar.dataLayer.model.MaintenanceService
+import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
 import com.example.manageyourcar.domainLayer.useCaseBusiness.LogoutUserUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.AddCarRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.AddCarMaintenanceUseCase
@@ -25,8 +28,10 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import org.koin.core.context.GlobalContext
+import java.util.Date
 
-class ListMaintenanceViewModel : ViewModel(), KoinComponent {
+class ListMaintenanceViewModel constructor(private val cacheManagerRepository: CacheManagerRepository): ViewModel(), KoinComponent {
     private val _uiState = MutableStateFlow(MaintenanceListUiState())
     val uiState = _uiState.asStateFlow()
 
@@ -40,23 +45,6 @@ class ListMaintenanceViewModel : ViewModel(), KoinComponent {
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-/*            addCarRoomUseCase.addCarToRoom(
-                Car(
-                    null,
-                    "BMW",
-                    "X5",
-                    Date(),
-                    "d",
-                    "Diesel",
-                    "123456789",
-                    150,
-                    300,
-                    250,
-                    listOf(25623),
-                    null
-                )
-            )*/
-
             getAllUserMaintenanceUseCase.invoke().collect { result ->
                 when (result) {
                     is Ressource.Error -> println("e")
@@ -148,7 +136,17 @@ class ListMaintenanceViewModel : ViewModel(), KoinComponent {
     fun onEvent(event: OnMaintenanceListEvent) {
         when (event) {
             is OnMaintenanceListEvent.OnButtonAddMaintenancePush -> {
-                    navController.navigate(R.id.addMaintenanceFragment)
+                when(val result = cacheManagerRepository.getUserCarList()){
+                    is Ressource.Error -> println("error")
+                    is Ressource.Loading -> println("loading")
+                    is Ressource.Success -> {
+                        if(result.data.isNullOrEmpty()){
+                            Toast.makeText(AppApplication.instance, "Ajouter d'abord une voiture!", Toast.LENGTH_SHORT).show()
+                            return
+                        }
+                        navController.navigate(R.id.addMaintenanceFragment)
+                    }
+                }
             }
             is OnMaintenanceListEvent.OnSortMethodChanged -> changeSortMethod(event)
         }

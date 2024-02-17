@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.koin.core.context.GlobalContext
@@ -46,7 +47,6 @@ class ViewCarDetailsViewModel constructor( val cacheManagerRepository: CacheMana
                     is Ressource.Success -> result.data?.let {
                         updateListCar(it)
                         cacheManagerRepository.saveUserCarList(it)
-                        cacheManagerRepository.getUserCarList()
                     }
                 }
             }
@@ -60,22 +60,55 @@ class ViewCarDetailsViewModel constructor( val cacheManagerRepository: CacheMana
             }
 
             is ViewCarDetailsEvent.OnUpdateMileage -> {
-                if(event.position == 0){
-                    Toast.makeText(AppApplication.instance.applicationContext, "Vous n'avez encore aucune voiture", Toast.LENGTH_SHORT).show()
-                    return
+                when( val result = cacheManagerRepository.getUserCarList()){
+                    is Ressource.Error -> {
+                        Toast.makeText(AppApplication.instance.applicationContext, "Erreur lors de la récupération des voitures", Toast.LENGTH_SHORT).show()
+                        return
+                    }
+                    is Ressource.Loading -> {
+                        Toast.makeText(AppApplication.instance.applicationContext, "Chargement des voitures", Toast.LENGTH_SHORT).show()
+                        return
+                    }
+                    is Ressource.Success -> {
+                        if(result.data.isNullOrEmpty()){
+                            Toast.makeText(AppApplication.instance.applicationContext, "Vous n'avez encore aucune voiture", Toast.LENGTH_SHORT).show()
+                            return
+                        }
+                        val action = ViewCarDetailsFragmentDirections.actionViewCarDetailsFragmentToUpdateCarMileage(myArg = result.data[event.position] )
+                        navController.navigate(action)
+                    }
                 }
-                val action = ViewCarDetailsFragmentDirections.actionViewCarDetailsFragmentToUpdateCarMileage(
-                        myArg = _uiState.value?.let {
-                            it.let {
-                                it as ViewCarDetailsState.ViewCarDetailsStateDetailsUIState
-                            }.carLocals.getOrNull(event.position)
-                        })
-                    navController.navigate(action)
+
             }
 
             is ViewCarDetailsEvent.OnDeleteCar ->
                 viewModelScope.launch(Dispatchers.IO) {
-                    deleteCarRoomUseCase.deleteCar(event.idCar)
+                    when( val result = cacheManagerRepository.getUserCarList()){
+                        is Ressource.Error -> {
+                            withContext(Dispatchers.Main){
+                            Toast.makeText(AppApplication.instance.applicationContext, "Erreur lors de la récupération des voitures", Toast.LENGTH_SHORT).show() }
+                    }
+                        is Ressource.Loading -> {
+                        }
+                        is Ressource.Success -> {
+                            if(result.data.isNullOrEmpty()){
+                                withContext(Dispatchers.Main) {
+
+                                    Toast.makeText(
+                                        AppApplication.instance.applicationContext,
+                                        "Vous n'avez encore aucune voiture",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    return@withContext
+                                }
+                                return@launch
+                            }
+                            else {
+                             deleteCarRoomUseCase.deleteCar(result.data[event.position])
+                            }
+
+                        }
+                    }
                 }
         }
 
@@ -112,5 +145,5 @@ class ViewCarDetailsViewModel constructor( val cacheManagerRepository: CacheMana
 sealed interface ViewCarDetailsEvent {
     object OnClickAddCarButton : ViewCarDetailsEvent
     data class OnUpdateMileage(val position : Int) : ViewCarDetailsEvent
-    data class OnDeleteCar(val idCar: CarLocal) : ViewCarDetailsEvent
+    data class OnDeleteCar(val position: Int) : ViewCarDetailsEvent
 }

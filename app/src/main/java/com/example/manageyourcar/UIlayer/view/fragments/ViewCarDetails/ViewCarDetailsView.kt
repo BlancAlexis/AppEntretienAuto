@@ -110,7 +110,7 @@ fun ViewCarDetailsView(
                             )
                         }
                         Button(onClick = {
-                             onEvent(ViewCarDetailsEvent.OnDeleteCar(uiState.carLocals[pagerState.currentPage]))
+                             onEvent(ViewCarDetailsEvent.OnDeleteCar(pagerState.currentPage))
                         }) {
                             Icon(
                                 imageVector = Icons.Filled.Delete,
