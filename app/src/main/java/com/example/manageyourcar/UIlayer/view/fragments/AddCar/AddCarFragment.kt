@@ -17,7 +17,7 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class AddCarFragment : test() {
+class AddCarFragment : Fragment() {
     private val listenerInternet by inject<ListenerInternet>()
 
     val addCarViewModel: AddCarViewModel by viewModel()
@@ -26,9 +26,6 @@ class AddCarFragment : test() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        this.f.observe(viewLifecycleOwner) {
-            addCarViewModel.onInternetLost(it)
-        }
         return ComposeView(requireContext()).apply {
             setContent {
                 ManageYourCarTheme {
@@ -55,9 +52,6 @@ class AddCarFragment : test() {
 
     override fun onResume() {
         super.onResume()
-        listenerInternet.mutableLiveData.observe(viewLifecycleOwner) {
-            addCarViewModel.onInternetLost(it)
-        }
         addCarViewModel.dismissFragment.observe(viewLifecycleOwner) {
             if (it) {
                 findNavController().popBackStack()

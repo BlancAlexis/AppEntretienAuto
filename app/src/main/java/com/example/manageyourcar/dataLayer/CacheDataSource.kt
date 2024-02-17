@@ -8,10 +8,14 @@ import com.example.manageyourcar.dataLayer.model.CarLocal
 
 class CacheDataSource {
     private var userCarList: List<CarLocal> = emptyList()
-    fun getUserCarList(): List<CarLocal> {
-        return userCarList
+    fun getUserCarList(): Ressource<List<CarLocal>> {
+        try {
+            return Ressource.Success(userCarList)
+        } catch (e: Exception) {
+            return Ressource.Error(message = "Erreur lors de la récupération de la liste de voiture")
+        }
     }
-    fun setUserCarList(local: CarLocal){
+    fun setUserCarList(local: List<CarLocal>){
         userCarList = userCarList + local
 
     }

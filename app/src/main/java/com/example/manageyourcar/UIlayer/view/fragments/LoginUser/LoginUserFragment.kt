@@ -56,9 +56,6 @@ class LoginUserFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        listenerInternet.mutableLiveData.observe(viewLifecycleOwner) {
-            logUserViewModel.onInternetLost(it)
-        }
     }
 
     companion object {

@@ -114,13 +114,15 @@ fun CustomTextField(
                 }
             }
             error?.let {
-                Text(
-                    it,
-                    color = Color.Red,
-                    fontSize = 10.sp,
-                    fontStyle = FontStyle.Italic,
-                    modifier = Modifier.padding(start = 12.dp, bottom = 4.dp)
-                )
+                if (it.isNotBlank()) {
+                    Text(
+                        it,
+                        color = Color.Red,
+                        fontSize = 10.sp,
+                        fontStyle = FontStyle.Italic,
+                        modifier = Modifier.padding(start = 12.dp, bottom = 4.dp)
+                    )
+                }
             }
         }
     }
@@ -133,6 +135,7 @@ fun PreviewCustomDialogCenterd() {
     CustomTextField(
         keyboardType = KeyboardType.Password,
         label = "password",
-        textFieldValue = ""
+        textFieldValue = "",
+        error = ""
     )
 }

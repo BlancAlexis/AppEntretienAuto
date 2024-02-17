@@ -6,11 +6,9 @@ import android.net.Network
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.manageyourcar.UIlayer.AppApplication
+import org.koin.core.component.KoinComponent
 
-class ListenerInternet {
-
-    val mutableLiveData: MutableLiveData<Boolean> = MutableLiveData<Boolean>(false)
-
+class ListenerInternet constructor(private val globalEvent: GlobalEvent) : KoinComponent{
     init {
         registerInternetListener()
     }
@@ -21,13 +19,12 @@ class ListenerInternet {
         connectivityManager.let {
             it.registerDefaultNetworkCallback(object : ConnectivityManager.NetworkCallback() {
                 override fun onAvailable(network: Network) {
-                    mutableLiveData.postValue(false)
                     Log.i("TAG", "onAvailable: Connecté à internet!")
+                    globalEvent.onInternetConnectionAvailable()
                 }
 
                 override fun onLost(network: Network) {
-                    mutableLiveData.postValue(true)
-                    Log.i("TAG", "onLost: Aucune connexion internet...")
+                    globalEvent.onInternetConnectionLost()
                 }
             })
         }

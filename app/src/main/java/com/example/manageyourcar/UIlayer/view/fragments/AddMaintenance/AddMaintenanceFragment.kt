@@ -55,9 +55,6 @@ class AddMaintenanceFragment : BottomSheetDialogFragment() {
 
     override fun onResume() {
         super.onResume()
-        listenerInternet.mutableLiveData.observe(viewLifecycleOwner) {
-            addMaintenanceViewModel.onInternetLost(it)
-        }
     }
 }
 

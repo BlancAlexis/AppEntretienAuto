@@ -58,9 +58,6 @@ class ViewListMaintenanceFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        listenerInternet.mutableLiveData.observe(viewLifecycleOwner) {
-            listMaintenanceViewModel.onInternetLost(it)
-        }
     }
 
     companion object {
