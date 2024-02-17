@@ -1,6 +1,7 @@
 package com.example.manageyourcar.UIlayer.view.fragments.Maps
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
@@ -9,7 +10,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.manageyourcar.BuildConfig
@@ -134,7 +138,45 @@ class MapsFragment : Fragment(), KoinComponent, GlobalEvent {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
+
+
+            val permissionLauncher = registerForActivityResult(
+                ActivityResultContracts.RequestMultiplePermissions()
+            ) { permissions ->
+                if (!allPermissionsGranted(permissions.toMutableMap())) {
+                    // Handle denied permissions
+                    Toast.makeText(requireContext(), "Location permissions required for maps", Toast.LENGTH_SHORT).show()
+                } else {
+                    // Proceed with map functionality
+                    // ...
+                }
+            }
+
+            val locationPermissions = arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+
+            if (!hasPermissions(requireContext(), locationPermissions)) {
+                permissionLauncher.launch(locationPermissions)
+            } else {
+                // Proceed with map functionality if permissions are already granted
+                // ...
+            }
+        }
+
+private fun hasPermissions(context: Context, permissions: Array<String>): Boolean {
+    for (permission in permissions) {
+        if (ContextCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+            return false
+        }
     }
+    return true
+}
+
+private fun allPermissionsGranted(permissions: MutableMap<String, Boolean>): Boolean {
+    return permissions.values.all { it }
+}
 
     companion object {
         fun newInstance(): MapsFragment {
