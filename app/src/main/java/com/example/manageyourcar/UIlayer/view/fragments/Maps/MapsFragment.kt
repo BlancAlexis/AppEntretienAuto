@@ -2,7 +2,7 @@ package com.example.manageyourcar.UIlayer.view.fragments.Maps
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
+import android.location.Location
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
@@ -15,6 +15,7 @@ import androidx.fragment.app.viewModels
 import com.example.manageyourcar.BuildConfig
 import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.viewmodel.MapsViewModel
+import com.example.manageyourcar.dataLayer.GlobalEvent
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -25,13 +26,13 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import org.koin.core.component.KoinComponent
 
-class MapsFragment : Fragment() {
+class MapsFragment : Fragment(), KoinComponent, GlobalEvent {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var onLocationChanged: LocationCallback
+    private lateinit var onUserLocationChanged: LocationCallback
 
     private val key = BuildConfig.MAPS_API_KEY
     val mapsViewModel by viewModels<MapsViewModel>()
@@ -61,7 +62,7 @@ class MapsFragment : Fragment() {
             LocationServices.getFusedLocationProviderClient(requireActivity())
 
 
-         onLocationChanged = object : LocationCallback() {
+         onUserLocationChanged = object : LocationCallback() {
             override fun onLocationResult(location: LocationResult) {
                 location
 
@@ -82,7 +83,7 @@ class MapsFragment : Fragment() {
             LocationRequest.create()
                 .setPriority(Priority.PRIORITY_LOW_POWER) //Pas besoin d'une grosse précision pour ce que l'on fait
                 .setInterval(60000)
-                .setFastestInterval(500), onLocationChanged, Looper.getMainLooper()
+                .setFastestInterval(500), onUserLocationChanged, Looper.getMainLooper()
         )
 
     }
@@ -112,8 +113,8 @@ class MapsFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        if(::onLocationChanged.isInitialized) {
-            fusedLocationClient.removeLocationUpdates(onLocationChanged)
+        if(::onUserLocationChanged.isInitialized) {
+            fusedLocationClient.removeLocationUpdates(onUserLocationChanged)
         }
     }
 
@@ -136,6 +137,18 @@ class MapsFragment : Fragment() {
         fun newInstance(): MapsFragment {
             return MapsFragment()
         }
+    }
+
+    override fun onInternetConnectionLost() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onInternetConnectionAvailable() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onLocationChanged(location: Location) {
+        TODO("Not yet implemented")
     }
 
 }

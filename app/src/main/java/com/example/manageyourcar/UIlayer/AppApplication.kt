@@ -26,26 +26,6 @@ class AppApplication : Application(), KoinComponent {
         }
 
         ListenerInternet(get<GlobalEvent>())
-
-    }
-
-    fun registerInternetListener( globalEvent: GlobalEvent) {
-        val connectivityManager =
-            applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        connectivityManager.let {
-            it.registerDefaultNetworkCallback(object : ConnectivityManager.NetworkCallback() {
-                override fun onAvailable(network: Network) {
-                    Log.i(TAG, "onAvailable: Connecté à internet!")
-                    globalEvent.onInternetConnectionLost()
-
-                }
-
-                override fun onLost(network: Network) {
-                    Log.i(TAG, "onLost: Aucune connexion internet...")
-                    globalEvent.onInternetConnectionLost()
-                }
-            })
-        }
     }
 
 

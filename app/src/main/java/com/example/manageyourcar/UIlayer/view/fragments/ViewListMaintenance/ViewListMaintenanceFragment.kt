@@ -1,5 +1,6 @@
 package com.example.manageyourcar.UIlayer.view.fragments.ViewListMaintenance
 
+import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,13 +13,14 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
 import com.example.manageyourcar.UIlayer.viewmodel.ListMaintenanceViewModel
+import com.example.manageyourcar.dataLayer.GlobalEvent
 import com.example.manageyourcar.dataLayer.ListenerInternet
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.component.KoinComponent
 
-class ViewListMaintenanceFragment : Fragment() {
+class ViewListMaintenanceFragment : Fragment(), KoinComponent, GlobalEvent {
     private val listMaintenanceViewModel: ListMaintenanceViewModel by viewModel()
-    private val listenerInternet by inject<ListenerInternet>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,5 +66,17 @@ class ViewListMaintenanceFragment : Fragment() {
         fun newInstance(): ViewListMaintenanceFragment {
             return ViewListMaintenanceFragment()
         }
+    }
+
+    override fun onInternetConnectionLost() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onInternetConnectionAvailable() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onLocationChanged(location: Location) {
+        TODO("Not yet implemented")
     }
 }

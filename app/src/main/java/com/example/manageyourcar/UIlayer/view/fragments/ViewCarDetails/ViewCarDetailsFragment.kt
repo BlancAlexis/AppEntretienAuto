@@ -6,22 +6,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.compose.material3.Snackbar
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
+import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
 import com.example.manageyourcar.UIlayer.view.fragments.LoginUser.LoginUserFragment
 import com.example.manageyourcar.UIlayer.viewmodel.ViewCarDetailsViewModel
 import com.example.manageyourcar.dataLayer.GlobalEvent
 import com.example.manageyourcar.dataLayer.ListenerInternet
+import com.google.android.material.snackbar.Snackbar
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.KoinComponent
 
-class ViewCarDetailsFragment: Fragment(),  GlobalEvent,KoinComponent{
-    private val listenerInternet by inject<ListenerInternet>()
+class ViewCarDetailsFragment: Fragment(),KoinComponent,GlobalEvent {
     private val viewCarDetailsViewModel: ViewCarDetailsViewModel by viewModel()
 
     override fun onCreateView(
@@ -47,8 +50,6 @@ class ViewCarDetailsFragment: Fragment(),  GlobalEvent,KoinComponent{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewCarDetailsViewModel.setNavController(view)
-        viewCarDetailsViewModel.a.observe(viewLifecycleOwner) {
-        }
     }
 
     companion object {
@@ -58,8 +59,9 @@ class ViewCarDetailsFragment: Fragment(),  GlobalEvent,KoinComponent{
     }
 
     override fun onInternetConnectionLost() {
-        println("conNNNNnNnnNnN")
-                var alertDialogBuilder = AlertDialog.Builder(requireActivity())
+       // Toast.makeText(AppApplication.instance, "Vous n'êtes pas connecté à internet", Toast.LENGTH_SHORT).show()
+        println("Internet lost")
+                var alertDialogBuilder = AlertDialog.Builder(this.context)
                 .setMessage("Vous n'êtes pas connecté à internet")
                 .setPositiveButton("Ok") { dialog, which -> dialog.dismiss() }
                 .create()
@@ -68,10 +70,10 @@ class ViewCarDetailsFragment: Fragment(),  GlobalEvent,KoinComponent{
 
 
     override fun onInternetConnectionAvailable() {
-        TODO("Not yet implemented")
+        println("yes")
     }
 
     override fun onLocationChanged(location: Location) {
-        TODO("Not yet implemented")
+        println("yes")
     }
 }

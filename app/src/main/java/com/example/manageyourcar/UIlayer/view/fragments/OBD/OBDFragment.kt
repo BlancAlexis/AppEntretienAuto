@@ -1,18 +1,21 @@
 package com.example.manageyourcar.UIlayer.view.fragments.OBD
 
+import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.manageyourcar.UIlayer.viewmodel.OBDViewModel
+import com.example.manageyourcar.dataLayer.GlobalEvent
 import com.example.manageyourcar.databinding.FragmentObdBinding
 import com.github.aachartmodel.aainfographics.aachartcreator.AAChartModel
 import com.github.aachartmodel.aainfographics.aachartcreator.AAChartType
 import com.github.aachartmodel.aainfographics.aachartcreator.AASeriesElement
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.component.KoinComponent
 
-class OBDFragment : Fragment() {
+class OBDFragment : Fragment(), KoinComponent, GlobalEvent {
 
 
     private val obdViewModel: OBDViewModel by viewModel()
@@ -66,5 +69,17 @@ class OBDFragment : Fragment() {
 
     companion object {
         fun newInstance() = OBDFragment()
+    }
+
+    override fun onInternetConnectionLost() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onInternetConnectionAvailable() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onLocationChanged(location: Location) {
+        TODO("Not yet implemented")
     }
 }

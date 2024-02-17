@@ -37,8 +37,6 @@ class ViewCarDetailsViewModel constructor( val cacheManagerRepository: CacheMana
     private val _uiState = MutableStateFlow<ViewCarDetailsState>(ViewCarDetailsState.Loading)
     val uiState = _uiState.asStateFlow()
     private lateinit var navController: NavController
-    val a : MutableLiveData<Boolean> = MutableLiveData(false)
-
     init {
         viewModelScope.launch(Dispatchers.IO) {
             getUserCarsUseCase.invoke().collect { result ->

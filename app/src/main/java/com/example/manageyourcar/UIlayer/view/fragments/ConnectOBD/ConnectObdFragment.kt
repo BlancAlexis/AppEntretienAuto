@@ -4,6 +4,7 @@ import android.Manifest
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothManager
 import android.content.Intent
+import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,9 +17,12 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
-import com.example.manageyourcar.UIlayer.viewmodel.ConnectObdViewModel import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.example.manageyourcar.UIlayer.viewmodel.ConnectObdViewModel
+import com.example.manageyourcar.dataLayer.GlobalEvent
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.component.KoinComponent
 
-class ConnectObdFragment : Fragment() {
+class ConnectObdFragment : Fragment(), KoinComponent, GlobalEvent {
     val connectObdViewModel: ConnectObdViewModel by viewModel()
 
 
@@ -92,7 +96,17 @@ class ConnectObdFragment : Fragment() {
         }
     }
 
+    override fun onInternetConnectionLost() {
+        TODO("Not yet implemented")
+    }
 
+    override fun onInternetConnectionAvailable() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onLocationChanged(location: Location) {
+        TODO("Not yet implemented")
+    }
 
 
 }

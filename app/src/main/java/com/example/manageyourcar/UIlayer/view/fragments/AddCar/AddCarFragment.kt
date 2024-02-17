@@ -1,5 +1,6 @@
 package com.example.manageyourcar.UIlayer.view.fragments.AddCar
 
+import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,13 +13,14 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
 import com.example.manageyourcar.UIlayer.viewmodel.AddCarViewModel
+import com.example.manageyourcar.dataLayer.GlobalEvent
 import com.example.manageyourcar.dataLayer.ListenerInternet
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.component.KoinComponent
 
 
-class AddCarFragment : Fragment() {
-    private val listenerInternet by inject<ListenerInternet>()
+class AddCarFragment : Fragment(), KoinComponent, GlobalEvent {
 
     val addCarViewModel: AddCarViewModel by viewModel()
 
@@ -57,5 +59,17 @@ class AddCarFragment : Fragment() {
                 findNavController().popBackStack()
             }
         }
+    }
+
+    override fun onInternetConnectionLost() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onInternetConnectionAvailable() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onLocationChanged(location: Location) {
+        TODO("Not yet implemented")
     }
 }

@@ -61,6 +61,7 @@ import com.google.firebase.database.database
 import okhttp3.OkHttpClient
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.context.loadKoinModules
+import org.koin.core.scope.get
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -85,7 +86,7 @@ private val loadFeature by lazy {
 }
 
 val utils = module {
-    factory<GlobalEvent> { ViewCarDetailsViewModel(get()) }
+    factory<GlobalEvent> { ViewCarDetailsFragment() }
     single { SmsSender }
     factory<BluetoothController> { AndroidBluetoothController(AppApplication.instance) }
 }

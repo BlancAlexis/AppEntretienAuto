@@ -1,4 +1,4 @@
-package com.example.manageyourcar.UIlayer.view.fragments
+package com.example.manageyourcar.UIlayer.view.fragments.OBD
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement

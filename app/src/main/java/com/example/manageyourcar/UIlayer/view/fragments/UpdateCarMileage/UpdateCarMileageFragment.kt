@@ -1,5 +1,6 @@
 package com.example.manageyourcar.UIlayer.view.fragments.UpdateCarMileage
 
+import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,10 +13,12 @@ import androidx.navigation.fragment.navArgs
 import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
 import com.example.manageyourcar.UIlayer.view.common.CustomDialogKM
 import com.example.manageyourcar.UIlayer.viewmodel.UpdateCarMileageViewModel
+import com.example.manageyourcar.dataLayer.GlobalEvent
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.component.KoinComponent
 
-class UpdateCarMileageFragment : BottomSheetDialogFragment() {
+class UpdateCarMileageFragment : BottomSheetDialogFragment(), KoinComponent, GlobalEvent {
     private val updateCarMileageViewModel: UpdateCarMileageViewModel by viewModel()
 
     val args: UpdateCarMileageFragmentArgs by navArgs()
@@ -45,5 +48,17 @@ class UpdateCarMileageFragment : BottomSheetDialogFragment() {
                }
             }
         }
+    }
+
+    override fun onInternetConnectionLost() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onInternetConnectionAvailable() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onLocationChanged(location: Location) {
+        TODO("Not yet implemented")
     }
 }
