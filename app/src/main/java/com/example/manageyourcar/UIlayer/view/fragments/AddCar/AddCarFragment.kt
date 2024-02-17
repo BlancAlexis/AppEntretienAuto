@@ -17,7 +17,7 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class AddCarFragment : Fragment() {
+class AddCarFragment : test() {
     private val listenerInternet by inject<ListenerInternet>()
 
     val addCarViewModel: AddCarViewModel by viewModel()
@@ -26,6 +26,9 @@ class AddCarFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        this.f.observe(viewLifecycleOwner) {
+            addCarViewModel.onInternetLost(it)
+        }
         return ComposeView(requireContext()).apply {
             setContent {
                 ManageYourCarTheme {

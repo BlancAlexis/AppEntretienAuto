@@ -15,6 +15,8 @@ import com.example.manageyourcar.UIlayer.viewmodel.ViewCarDetailsViewModel
 import com.example.manageyourcar.dataLayer.AndroidBluetoothController
 import com.example.manageyourcar.dataLayer.CacheDataSource
 import com.example.manageyourcar.dataLayer.CacheManagerRepositoryImpl
+import com.example.manageyourcar.dataLayer.GlobalEvent
+import com.example.manageyourcar.dataLayer.GlobalEventImp
 import com.example.manageyourcar.dataLayer.ListenerInternet
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.RequestApiImmat
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.RequestApiSIV
@@ -83,6 +85,7 @@ private val loadFeature by lazy {
 }
 
 val utils = module {
+    single<GlobalEvent> { GlobalEventImp(get()) }
     single { SmsSender }
     factory<BluetoothController> { AndroidBluetoothController(AppApplication.instance) }
 }

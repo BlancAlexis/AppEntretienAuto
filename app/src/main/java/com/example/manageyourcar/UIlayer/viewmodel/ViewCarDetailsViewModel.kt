@@ -1,5 +1,6 @@
 package com.example.manageyourcar.UIlayer.viewmodel
 
+import android.location.Location
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -11,6 +12,7 @@ import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.UIlayer.UIState.ViewCarDetailsState
 import com.example.manageyourcar.UIlayer.view.fragments.ViewCarDetails.ViewCarDetailsFragmentDirections
+import com.example.manageyourcar.dataLayer.GlobalEvent
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.dataLayer.model.CarLocal
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.DeleteCarRoomUseCase
@@ -23,7 +25,7 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class ViewCarDetailsViewModel : ViewModel(), KoinComponent {
+class ViewCarDetailsViewModel constructor( val globalEvent: GlobalEvent ): ViewModel(), KoinComponent {
     private val getUserCarsUseCase by inject<GetUserCarsUseCase>()
     private val deleteCarRoomUseCase by inject<DeleteCarRoomUseCase>()
     private val _uiState = MutableStateFlow<ViewCarDetailsState>(ViewCarDetailsState.Loading)
@@ -38,6 +40,7 @@ class ViewCarDetailsViewModel : ViewModel(), KoinComponent {
                     is Ressource.Loading -> TODO()
                     is Ressource.Success -> result.data?.let {
                         updateListCar(it)
+                        globalEvent.saveUserCarList(it)
                     }
                 }
             }
