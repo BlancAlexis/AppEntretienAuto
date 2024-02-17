@@ -14,7 +14,6 @@ import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.AddCarMainten
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
@@ -95,7 +94,10 @@ class AddMaintenanceViewModel : ViewModel(), KoinComponent {
             is OnMaintenanceEvent.OnMaintenanceSelectedChanged -> OnMaintenanceChanged(event.newValue)
             is OnMaintenanceEvent.OnMileageChanged -> OnMileageChanged(event.newValue)
             is OnMaintenanceEvent.OnDateChanged -> OnDateChanged(Date(event.newDate))
-            OnMaintenanceEvent.OnClickAddMaintenanceButton -> { addMaintenanceAct() }
+            OnMaintenanceEvent.OnClickAddMaintenanceButton -> {
+                addMaintenanceAct()
+            }
+
             is OnMaintenanceEvent.OnPriceChanged -> OnPriceChanged(event.newValue)
         }
 
@@ -150,7 +152,8 @@ sealed interface OnMaintenanceEvent {
     data class OnDateChanged(val newDate: String) : OnMaintenanceEvent
     data class OnMileageChanged(val newValue: Int) : OnMaintenanceEvent
     data class OnPriceChanged(val newValue: Int) : OnMaintenanceEvent
-    data class OnMaintenanceSelectedChanged(val newValue: MaintenanceServiceType) : OnMaintenanceEvent
+    data class OnMaintenanceSelectedChanged(val newValue: MaintenanceServiceType) :
+        OnMaintenanceEvent
 
     data class OnCarSelectedChanged(val newValue: CarLocal) : OnMaintenanceEvent
 

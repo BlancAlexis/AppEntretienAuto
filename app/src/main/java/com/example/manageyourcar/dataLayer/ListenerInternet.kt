@@ -4,11 +4,10 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import com.example.manageyourcar.UIlayer.AppApplication
 import org.koin.core.component.KoinComponent
 
-class ListenerInternet constructor(private val globalEvent: GlobalEvent) : KoinComponent{
+class ListenerInternet(private val globalEvent: GlobalEvent) : KoinComponent {
     init {
         registerInternetListener()
     }

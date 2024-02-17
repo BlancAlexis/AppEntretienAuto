@@ -55,7 +55,7 @@ fun CustomDialog(
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }
-                if (onApprove!= {}) {
+                if (onApprove != {}) {
                     Row(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         modifier = Modifier.fillMaxWidth()
@@ -71,8 +71,7 @@ fun CustomDialog(
                             Text("Non")
                         }
                     }
-                }
-                else {
+                } else {
                     Row(
                         horizontalArrangement = Arrangement.Center,
                         modifier = Modifier.fillMaxWidth()

@@ -15,8 +15,6 @@ import com.example.manageyourcar.UIlayer.view.activities.MainActivity
 import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
 import com.example.manageyourcar.UIlayer.viewmodel.LoginUserViewModel
 import com.example.manageyourcar.dataLayer.GlobalEvent
-import com.example.manageyourcar.dataLayer.ListenerInternet
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.KoinComponent
 
@@ -54,10 +52,6 @@ class LoginUserFragment : Fragment(), KoinComponent, GlobalEvent {
                 startActivity(intent)
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
     }
 
     companion object {

@@ -79,13 +79,22 @@ class AddUserViewModel : ViewModel(), KoinComponent {
         //SmsSender.sendSMS("dd","e")
         viewModelScope.launch(Dispatchers.IO) {
             if ((uiState.value.userPassword == uiState.value.userValidatePassword) && uiState.value.userPassword != "" && uiState.value.userLogin != "" && uiState.value.userFirstName != "" && uiState.value.userLastName != "") {
-                addUserRoomUseCase.invoke(uiState.value.userLogin, uiState.value.userPassword, uiState.value.userFirstName, uiState.value.userLastName)
+                addUserRoomUseCase.invoke(
+                    uiState.value.userLogin,
+                    uiState.value.userPassword,
+                    uiState.value.userFirstName,
+                    uiState.value.userLastName
+                )
                 withContext(Dispatchers.Main) {
                     navController.popBackStack()
                 }
             } else {
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(AppApplication.instance.applicationContext, "Le formulaire contient une erreur", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        AppApplication.instance.applicationContext,
+                        "Le formulaire contient une erreur",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }

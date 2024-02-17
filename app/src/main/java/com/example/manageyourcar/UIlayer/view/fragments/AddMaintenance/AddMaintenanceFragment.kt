@@ -12,9 +12,7 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
 import com.example.manageyourcar.UIlayer.viewmodel.AddMaintenanceViewModel
 import com.example.manageyourcar.dataLayer.GlobalEvent
-import com.example.manageyourcar.dataLayer.ListenerInternet
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.KoinComponent
 
@@ -38,7 +36,7 @@ class AddMaintenanceFragment : BottomSheetDialogFragment(), KoinComponent, Globa
                 }
             }
         }
-        }
+    }
 
     companion object {
         fun newInstance(): AddMaintenanceFragment {
@@ -53,10 +51,6 @@ class AddMaintenanceFragment : BottomSheetDialogFragment(), KoinComponent, Globa
                 dismiss()
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
     }
 
     override fun onInternetConnectionLost() {

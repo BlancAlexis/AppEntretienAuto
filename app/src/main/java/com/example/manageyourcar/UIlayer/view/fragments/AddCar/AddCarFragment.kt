@@ -14,8 +14,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
 import com.example.manageyourcar.UIlayer.viewmodel.AddCarViewModel
 import com.example.manageyourcar.dataLayer.GlobalEvent
-import com.example.manageyourcar.dataLayer.ListenerInternet
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.KoinComponent
 
@@ -43,7 +41,7 @@ class AddCarFragment : Fragment(), KoinComponent, GlobalEvent {
                 }
             }
         }
-        }
+    }
 
     companion object {
         fun newInstance(): AddCarFragment {

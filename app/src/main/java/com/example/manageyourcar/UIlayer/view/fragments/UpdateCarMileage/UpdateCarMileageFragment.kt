@@ -41,11 +41,11 @@ class UpdateCarMileageFragment : BottomSheetDialogFragment(), KoinComponent, Glo
             setContent {
                 ManageYourCarTheme {
                     val updateMileageCarDetailsUIState by updateCarMileageViewModel.uiState.collectAsState()
-                CustomDialogKM(
-                    uiState = updateMileageCarDetailsUIState,
-                    onEvent = updateCarMileageViewModel::onEvent
-                )
-               }
+                    CustomDialogKM(
+                        uiState = updateMileageCarDetailsUIState,
+                        onEvent = updateCarMileageViewModel::onEvent
+                    )
+                }
             }
         }
     }

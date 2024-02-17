@@ -62,18 +62,21 @@ class MapsFragment : Fragment(), KoinComponent, GlobalEvent {
             LocationServices.getFusedLocationProviderClient(requireActivity())
 
 
-         onUserLocationChanged = object : LocationCallback() {
+        onUserLocationChanged = object : LocationCallback() {
             override fun onLocationResult(location: LocationResult) {
                 location
 
                 if (location.locations.isNotEmpty()) {
-                    Log.i("TAG", "onLocationResult: ${location.locations[0].latitude} ${location.locations[0].longitude}")
+                    Log.i(
+                        "TAG",
+                        "onLocationResult: ${location.locations[0].latitude} ${location.locations[0].longitude}"
+                    )
                     val currentPosition =
                         LatLng(location.locations[0].latitude, location.locations[0].longitude)
                     googleMap.addMarker(
-                                    MarkerOptions().position(currentPosition).title("Vous êtes ici!")
-                                        //.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(requireActivity().resources, R.drawable.eu)))
-                    //Marche pas avec svg
+                        MarkerOptions().position(currentPosition).title("Vous êtes ici!")
+                        //.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(requireActivity().resources, R.drawable.eu)))
+                        //Marche pas avec svg
                     )
                 }
             }
@@ -113,7 +116,7 @@ class MapsFragment : Fragment(), KoinComponent, GlobalEvent {
 
     override fun onPause() {
         super.onPause()
-        if(::onUserLocationChanged.isInitialized) {
+        if (::onUserLocationChanged.isInitialized) {
             fusedLocationClient.removeLocationUpdates(onUserLocationChanged)
         }
     }

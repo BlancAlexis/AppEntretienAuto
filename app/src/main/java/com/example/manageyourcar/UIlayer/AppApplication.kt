@@ -1,11 +1,6 @@
 package com.example.manageyourcar.UIlayer
 
 import android.app.Application
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.Network
-import android.util.Log
-import com.example.manageyourcar.UIlayer.view.activities.MainActivity
 import com.example.manageyourcar.dataLayer.GlobalEvent
 import com.example.manageyourcar.dataLayer.ListenerInternet
 import com.example.manageyourcar.dataLayer.di.injectFeature

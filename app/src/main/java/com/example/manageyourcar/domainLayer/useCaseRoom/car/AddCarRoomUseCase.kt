@@ -28,7 +28,7 @@ class AddCarRoomUseCase : KoinComponent {
                 }
             }
         } catch (e: Exception) {
-            Log.e("AddCarRoomUseCase",e.localizedMessage)
+            Log.e("AddCarRoomUseCase", e.localizedMessage)
             Ressource.Error(exception = e)
         }
     }

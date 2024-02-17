@@ -14,8 +14,6 @@ import androidx.fragment.app.Fragment
 import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
 import com.example.manageyourcar.UIlayer.viewmodel.ListMaintenanceViewModel
 import com.example.manageyourcar.dataLayer.GlobalEvent
-import com.example.manageyourcar.dataLayer.ListenerInternet
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.KoinComponent
 
@@ -56,10 +54,6 @@ class ViewListMaintenanceFragment : Fragment(), KoinComponent, GlobalEvent {
                 }
             })
 
-    }
-
-    override fun onResume() {
-        super.onResume()
     }
 
     companion object {

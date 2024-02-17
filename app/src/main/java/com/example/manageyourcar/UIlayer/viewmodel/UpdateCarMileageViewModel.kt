@@ -50,16 +50,26 @@ class UpdateCarMileageViewModel : ViewModel(), KoinComponent {
         viewModelScope.launch(Dispatchers.IO) {
             val car = _uiState.value.carLocal
             if (car != null) {
-                val updatedCar = car.copy(mileage = car.mileage + (uiState.value.newMileage?.toInt() ?: 0))
-                when(upsertCarMileageUseCase.updateCarMileage(updatedCar)){
+                val updatedCar =
+                    car.copy(mileage = car.mileage + (uiState.value.newMileage?.toInt() ?: 0))
+                when (upsertCarMileageUseCase.updateCarMileage(updatedCar)) {
                     is Ressource.Error -> {
-                        Toast.makeText(AppApplication.instance.applicationContext, "Erreur lors de la mise à jour du kilométrage", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            AppApplication.instance.applicationContext,
+                            "Erreur lors de la mise à jour du kilométrage",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         navController.popBackStack()
                     }
+
                     is Ressource.Loading -> println("Loading")
                     is Ressource.Success -> {
                         withContext(Dispatchers.Main) {
-                            Toast.makeText(AppApplication.instance.applicationContext, "Kilométrage mis à jour avec succès", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                AppApplication.instance.applicationContext,
+                                "Kilométrage mis à jour avec succès",
+                                Toast.LENGTH_SHORT
+                            ).show()
                             navController.popBackStack()
                         }
 

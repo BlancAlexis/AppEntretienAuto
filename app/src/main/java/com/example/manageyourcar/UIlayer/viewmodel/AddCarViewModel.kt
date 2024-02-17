@@ -39,7 +39,8 @@ class AddCarViewModel : ViewModel(), KoinComponent {
             is OnCarRequest.OnVINChanged -> onChangedVIN(event)
             is OnCarRequest.OnDismissAddCarFragment -> dismissFragment.postValue(true)
             OnCarRequest.OnClickAddCarButton -> {
-                addCarToRoom()}
+                addCarToRoom()
+            }
 
             OnCarRequest.OnClickSearchCarWithSIVButton -> searchCarWithSIV()
         }
@@ -50,22 +51,39 @@ class AddCarViewModel : ViewModel(), KoinComponent {
             if (it.length == 17) {
                 getCarBySIV(it)
             } else {
-                Toast.makeText(AppApplication.instance.applicationContext, "champs vide", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    AppApplication.instance.applicationContext,
+                    "champs vide",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         } ?: run {
-            Toast.makeText(AppApplication.instance.applicationContext, "error vin", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                AppApplication.instance.applicationContext,
+                "error vin",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
     private fun searchCarWithImmat() {
-        uiState.value.inputImmat?.let {immat ->
-            if (immat.matches(Regex("^([A-Z]{2})-([0-9]{3})-([A-Z]{2})$"))){
-            getCarByImmat(immat)
-            }else {
-                Toast.makeText(AppApplication.instance.applicationContext, "champs vide", Toast.LENGTH_SHORT).show()
+        uiState.value.inputImmat?.let { immat ->
+            if (immat.matches(Regex("^([A-Z]{2})-([0-9]{3})-([A-Z]{2})$"))) {
+                getCarByImmat(immat)
+            } else {
+                Toast.makeText(
+                    AppApplication.instance.applicationContext,
+                    "champs vide",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         } ?: run {
-            Toast.makeText(AppApplication.instance.applicationContext, "error immat", Toast.LENGTH_SHORT).show()        }
+            Toast.makeText(
+                AppApplication.instance.applicationContext,
+                "error immat",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
     private fun onChangedImmat(event: OnCarRequest.OnImmatChanged) {
@@ -108,12 +126,13 @@ class AddCarViewModel : ViewModel(), KoinComponent {
     }
 
     fun setCar(carLocal: CarLocal) {
-       _uiState.update {
-           it.copy(
-               carLocalFind = carLocal
-           )
-       }
+        _uiState.update {
+            it.copy(
+                carLocalFind = carLocal
+            )
+        }
     }
+
     fun getCarByImmat(immat: String) {
         viewModelScope.launch(Dispatchers.IO) {
             getVehiculeByImmatNetworkUseCase.getVehiculeByImmat(immat).collect { result ->
@@ -130,7 +149,7 @@ class AddCarViewModel : ViewModel(), KoinComponent {
                     is Ressource.Success -> {
                         println("Ressource.Success" + result.data)
                         result.data?.let { setCar(it) }
-                    // Requete pour vérif si voiture existe puis enregistrement room
+                        // Requete pour vérif si voiture existe puis enregistrement room
 
                     }
                 }
@@ -140,11 +159,11 @@ class AddCarViewModel : ViewModel(), KoinComponent {
 
     private fun addCarToRoom() {
         viewModelScope.launch(Dispatchers.IO) {
-            when(val ressource = addCarRoomUseCase.addCarToRoom(uiState.value.carLocalFind!!)){
+            when (val ressource = addCarRoomUseCase.addCarToRoom(uiState.value.carLocalFind!!)) {
                 is Ressource.Success -> {
-                    withContext(Dispatchers.Main){
+                    withContext(Dispatchers.Main) {
                         Toast.makeText(
-                            com.example.manageyourcar.UIlayer.AppApplication.instance.applicationContext,
+                            AppApplication.instance.applicationContext,
                             "Voiture ajoutée avec succès",
                             Toast.LENGTH_SHORT
                         ).show()
@@ -152,14 +171,15 @@ class AddCarViewModel : ViewModel(), KoinComponent {
                     }
 
                 }
+
                 is Ressource.Error -> {
-                    withContext(Dispatchers.Main){
+                    withContext(Dispatchers.Main) {
                         Toast.makeText(
-                            com.example.manageyourcar.UIlayer.AppApplication.instance.applicationContext,
+                            AppApplication.instance.applicationContext,
                             "Problème lors de l'ajout de la voiture",
                             Toast.LENGTH_SHORT
                         ).show()
-                        Log.e("AddCarViewModel", ressource.toString()+"")
+                        Log.e("AddCarViewModel", ressource.toString() + "")
                         dismissFragment.postValue(true)
                     }
                 }

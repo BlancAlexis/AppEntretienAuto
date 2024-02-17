@@ -30,5 +30,5 @@ interface CarDao {
     fun updateCarMileage(listMileages: List<Int>, idCar: Int)
 
     @Delete
-    fun deleteCar(car : CarEntity)
+    fun deleteCar(car: CarEntity)
 }

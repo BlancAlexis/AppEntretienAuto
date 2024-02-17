@@ -76,82 +76,82 @@ fun ViewCarDetailsView(
         AnimatedVisibility(visible = uiState is ViewCarDetailsState.ViewCarDetailsStateDetailsUIState) {
             uiState as ViewCarDetailsState.ViewCarDetailsStateDetailsUIState
 
-                val pagerState = rememberPagerState(pageCount = { uiState.carLocals.size })
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(MaterialTheme.colorScheme.primary),
-                    verticalArrangement = Arrangement.Top,
+            val pagerState = rememberPagerState(pageCount = { uiState.carLocals.size })
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.primary),
+                verticalArrangement = Arrangement.Top,
 
+                ) {
+                Text(
+                    text = "Vos Véhicules",
+                    modifier = Modifier
+                        .padding(vertical = 15.dp)
+                        .fillMaxWidth(),
+                    textAlign = TextAlign.Center,
+                    fontFamily = juraFamily,
+                    fontSize = 36.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onPrimary,
+                )
+                Row(
+                    modifier = Modifier
+                        .padding(vertical = 10.dp)
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center,
+                ) {
+                    Button(onClick = { onEvent(ViewCarDetailsEvent.OnUpdateMileage(pagerState.currentPage)) }) {
+                        Icon(
+                            painter = painterResource(R.drawable.baseline_auto_graph_24),
+                            contentDescription = "",
+                            tint = MaterialTheme.colorScheme.primaryContainer,
+                            modifier = Modifier.size(36.dp)
+                        )
+                    }
+                    Button(onClick = {
+                        onEvent(ViewCarDetailsEvent.OnDeleteCar(pagerState.currentPage))
+                    }) {
+                        Icon(
+                            imageVector = Icons.Filled.Delete,
+                            contentDescription = "",
+                            tint = MaterialTheme.colorScheme.primaryContainer,
+                            modifier = Modifier.size(36.dp)
+                        )
+                    }
+
+                    TextButton(
+                        colors = ButtonDefaults.outlinedButtonColors(
+                            containerColor = MaterialTheme.colorScheme.primaryContainer
+                        ),
+                        onClick = {
+                            onEvent(ViewCarDetailsEvent.OnClickAddCarButton)
+                        },
+                        shape = RoundedCornerShape(30.dp),
                     ) {
+                        Text(
+                            text = "Ajouter une voiture",
+                            textAlign = TextAlign.Center,
+                            fontFamily = juraFamily,
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer,
+                        )
+                    }
+                }
+                if (uiState.carLocals.isEmpty()) {
                     Text(
-                        text = "Vos Véhicules",
+                        text = "Vous n'avez pas encore de voiture",
                         modifier = Modifier
-                            .padding(vertical = 15.dp)
+                            .padding(vertical = 15.dp, horizontal = 15.dp)
                             .fillMaxWidth(),
                         textAlign = TextAlign.Center,
                         fontFamily = juraFamily,
-                        fontSize = 36.sp,
+                        fontSize = 25.sp,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onPrimary,
                     )
-                    Row(
-                        modifier = Modifier
-                            .padding(vertical = 10.dp)
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.Center,
-                    ) {
-                        Button(onClick = { onEvent(ViewCarDetailsEvent.OnUpdateMileage(pagerState.currentPage)) }) {
-                            Icon(
-                                painter = painterResource(R.drawable.baseline_auto_graph_24),
-                                contentDescription = "",
-                                tint = MaterialTheme.colorScheme.primaryContainer,
-                                modifier = Modifier.size(36.dp)
-                            )
-                        }
-                        Button(onClick = {
-                             onEvent(ViewCarDetailsEvent.OnDeleteCar(pagerState.currentPage))
-                        }) {
-                            Icon(
-                                imageVector = Icons.Filled.Delete,
-                                contentDescription = "",
-                                tint = MaterialTheme.colorScheme.primaryContainer,
-                                modifier = Modifier.size(36.dp)
-                            )
-                        }
-
-                        TextButton(
-                            colors = ButtonDefaults.outlinedButtonColors(
-                                containerColor = MaterialTheme.colorScheme.primaryContainer
-                            ),
-                            onClick = {
-                                onEvent(ViewCarDetailsEvent.OnClickAddCarButton)
-                            },
-                            shape = RoundedCornerShape(30.dp),
-                        ) {
-                            Text(
-                                text = "Ajouter une voiture",
-                                textAlign = TextAlign.Center,
-                                fontFamily = juraFamily,
-                                fontSize = 20.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.onPrimaryContainer,
-                            )
-                        }
-                    }
-                    if (uiState.carLocals.isEmpty()) {
-                        Text(
-                            text = "Vous n'avez pas encore de voiture",
-                            modifier = Modifier
-                                .padding(vertical = 15.dp, horizontal = 15.dp)
-                                .fillMaxWidth(),
-                            textAlign = TextAlign.Center,
-                            fontFamily = juraFamily,
-                            fontSize = 25.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onPrimary,
-                        )
-                    } else {
+                } else {
                     LaunchedEffect(pagerState) {
                         snapshotFlow { pagerState.currentPage }.collect { page ->
                             Log.d("Page change", "Page changed to $page")
@@ -314,5 +314,8 @@ fun PreviewViewCarDetailsView() {
         transmission = "Manuelle",
     )
 
-    ViewCarDetailsView(onEvent = {}, uiState =  ViewCarDetailsState.ViewCarDetailsStateDetailsUIState(carstest));
+    ViewCarDetailsView(
+        onEvent = {},
+        uiState = ViewCarDetailsState.ViewCarDetailsStateDetailsUIState(carstest)
+    )
 }

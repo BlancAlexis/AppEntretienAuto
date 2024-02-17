@@ -53,7 +53,8 @@ fun ViewListMaintenanceView(
         } else {
             if (uiState.isLoading) {
                 Column(
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier
+                        .fillMaxSize()
                         .background(MaterialTheme.colorScheme.primary),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
@@ -73,7 +74,7 @@ fun ViewListMaintenanceView(
                     Text(
                         text = "Ajouter un acte d'entretien",
                         color = MaterialTheme.colorScheme.onPrimaryContainer,
-                        )
+                    )
                 }
                 Row(
                     modifier = Modifier
@@ -102,7 +103,10 @@ fun ViewListMaintenanceView(
                 }
             }
             if (uiState.listUiState.isEmpty()) {
-                Text(text = "Aucun acte d'entretien pour le moment", color = MaterialTheme.colorScheme.onPrimary,)
+                Text(
+                    text = "Aucun acte d'entretien pour le moment",
+                    color = MaterialTheme.colorScheme.onPrimary,
+                )
             } else {
                 LazyColumn(modifier = Modifier.fillMaxWidth()) {
                     items(uiState.listUiState.size) { item ->
@@ -119,5 +123,6 @@ fun ViewListMaintenanceView(
 fun PreviewServicing() {
     ViewListMaintenanceView(
         uiState = MaintenanceListUiState(listUiState = listOf(), isLoading = true),
-        onEvent = {},)
+        onEvent = {},
+    )
 }

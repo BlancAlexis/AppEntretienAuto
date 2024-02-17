@@ -15,10 +15,12 @@ class CacheDataSource {
             return Ressource.Error(message = "Erreur lors de la récupération de la liste de voiture")
         }
     }
-    fun setUserCarList(local: List<CarLocal>){
+
+    fun setUserCarList(local: List<CarLocal>) {
         userCarList = local
 
     }
+
     fun getUserId(context: Context): Ressource<Int> {
         return try {
             val sharedPref = context.getSharedPreferences(

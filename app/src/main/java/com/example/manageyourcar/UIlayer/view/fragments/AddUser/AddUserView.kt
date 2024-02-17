@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -58,7 +57,7 @@ fun AddUserView(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center,
             ) {
-                IconButton(onClick = {onEvent(UserSubscriptionEvent.OnBackIconClicked) }){
+                IconButton(onClick = { onEvent(UserSubscriptionEvent.OnBackIconClicked) }) {
                     Icon(
                         painter = painterResource(R.drawable.baseline_arrow_back_24),
                         contentDescription = "",
@@ -86,7 +85,7 @@ fun AddUserView(
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                uiState.userLogin?.let {
+                uiState.userLogin.let {
                     CustomTextField(
                         textFieldValue = it,
                         modifier = Modifier
@@ -99,16 +98,15 @@ fun AddUserView(
                         onValueChange = {
                             onEvent(UserSubscriptionEvent.OnLoginChanged(it))
                         },
-                        error = uiState.userLoginError ?: "",
+                        error = uiState.userLoginError,
                     )
                 }
-                uiState?.userFirstName?.let {
+                uiState.userFirstName?.let {
                     CustomTextField(
                         textFieldValue = it,
                         modifier = Modifier
                             .fillMaxWidth(0.95f)
-                            .padding(10.dp)
-                           ,
+                            .padding(10.dp),
                         label = "Firstname",
                         placeholder = "Firstname",
                         readOnly = false,
@@ -116,16 +114,15 @@ fun AddUserView(
                         onValueChange = {
                             onEvent(UserSubscriptionEvent.OnFirstnameChanged(it))
                         },
-                        error = uiState.userFirstNameError ?: "",
+                        error = uiState.userFirstNameError,
                     )
                 }
-                uiState.userLastName?.let {
+                uiState.userLastName.let {
                     CustomTextField(
                         textFieldValue = it,
                         modifier = Modifier
                             .fillMaxWidth(0.95f)
-                            .padding(10.dp)
-                           ,
+                            .padding(10.dp),
                         label = "Lastname",
                         placeholder = "Lastname",
                         readOnly = false,
@@ -133,17 +130,16 @@ fun AddUserView(
                         onValueChange = {
                             onEvent(UserSubscriptionEvent.OnLastNameChanged(it))
                         },
-                        error = uiState.userLastNameError ?: "",
+                        error = uiState.userLastNameError,
                     )
                 }
-                uiState.userPassword?.let {
+                uiState.userPassword.let {
                     CustomTextField(
                         visualTransformation = PasswordVisualTransformation(),
                         textFieldValue = it,
                         modifier = Modifier
                             .fillMaxWidth(0.95f)
-                            .padding(10.dp)
-                          ,
+                            .padding(10.dp),
                         label = "Mot de passe",
                         placeholder = "Mot de passe",
                         readOnly = false,
@@ -151,17 +147,16 @@ fun AddUserView(
                         onValueChange = {
                             onEvent(UserSubscriptionEvent.OnPasswordChanged(it))
                         },
-                        error = uiState.userPasswordError ?: "",
+                        error = uiState.userPasswordError,
                     )
                 }
-                uiState.userValidatePassword?.let {
+                uiState.userValidatePassword.let {
                     CustomTextField(
                         visualTransformation = PasswordVisualTransformation(),
                         textFieldValue = it,
                         modifier = Modifier
                             .fillMaxWidth(0.95f)
-                            .padding(10.dp)
-                          ,
+                            .padding(10.dp),
                         label = "Confirmation mot de passe",
                         placeholder = "Confirmation du mot de passe",
                         readOnly = false,
@@ -169,7 +164,7 @@ fun AddUserView(
                         onValueChange = {
                             onEvent(UserSubscriptionEvent.OnConfirmPasswordChanged(it))
                         },
-                        error = uiState.userValidatePasswordError ?: "",
+                        error = uiState.userValidatePasswordError,
                     )
                 }
                 Spacer(modifier = Modifier.height(20.dp))

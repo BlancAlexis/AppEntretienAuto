@@ -10,7 +10,8 @@ import org.koin.core.component.KoinComponent
 class CacheManagerRepositoryImpl(private val dataSource: CacheDataSource) : CacheManagerRepository,
     KoinComponent {
     override fun getUserCarList(): Ressource<List<CarLocal>> {
-return dataSource.getUserCarList()    }
+        return dataSource.getUserCarList()
+    }
 
     override fun saveUserCarList(local: List<CarLocal>) {
         dataSource.setUserCarList(local)

@@ -24,7 +24,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -40,13 +39,15 @@ fun AddCarView(
     onEvent: (OnCarRequest) -> Unit = {}
 ) {
     uiState.carLocalFind?.let {
-    CustomDialog(title = "C'est bien votre voiture?", content = "${uiState.carLocalFind.model}", onApprove = { onEvent(OnCarRequest.OnClickAddCarButton) }, onDismiss = { onEvent(OnCarRequest.OnDismissAddCarFragment) })
-}
+        CustomDialog(
+            title = "C'est bien votre voiture?",
+            content = "${uiState.carLocalFind.model}",
+            onApprove = { onEvent(OnCarRequest.OnClickAddCarButton) },
+            onDismiss = { onEvent(OnCarRequest.OnDismissAddCarFragment) })
+    }
     if (uiState.onInternetLost) {
         CustomDialog(title = "Internet perdu")
-    }
-
-    else {
+    } else {
         var openDialog by remember { mutableStateOf(false) }
         if (openDialog) {
             CustomDialog(
