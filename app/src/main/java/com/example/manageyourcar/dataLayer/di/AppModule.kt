@@ -51,10 +51,6 @@ import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.AddCarMainten
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.DeleteMaintenanceRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.GetAllUserMaintenanceUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.user.AddUserRoomUseCase
-import com.example.manageyourcar.domainLayer.useCaseRoom.user.DeleteUserRoomUseCase
-import com.example.manageyourcar.domainLayer.useCaseRoom.user.GetUserRoomUseCase
-import com.example.manageyourcar.domainLayer.useCaseRoom.user.GetUsersRoomUseCase
-import com.example.manageyourcar.domainLayer.useCaseRoom.user.UpdateUserRoomUseCase
 import com.example.manageyourcar.domainLayer.utils.SmsSender
 import com.google.firebase.Firebase
 import com.google.firebase.database.database
@@ -79,7 +75,6 @@ private val loadFeature by lazy {
             retrofitModule,
             mappersModule,
             utils,
-            firebaseModule
         )
     )
 }
@@ -90,9 +85,6 @@ val utils = module {
     factory<BluetoothController> { AndroidBluetoothController(AppApplication.instance) }
 }
 
-val firebaseModule = module {
-    single { Firebase.database }
-}
 val mappersModule = module {
     single { com.example.manageyourcar.domainLayer.mappers.UserMappers }
     single { com.example.manageyourcar.domainLayer.mappers.BluetoothDeviceMappers }
@@ -139,11 +131,7 @@ val useCaseModule = module {
     factory { DeleteCarRoomUseCase() }
 
     factory { AddUserRoomUseCase() }
-    factory { GetUserRoomUseCase() }
-    factory { GetUsersRoomUseCase() }
-    factory { UpdateUserRoomUseCase() }
     factory { UpsertCarMileageUseCase() }
-    factory { DeleteUserRoomUseCase() }
 
     factory { DeleteMaintenanceRoomUseCase() }
 
