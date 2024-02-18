@@ -8,7 +8,7 @@ import org.koin.core.component.inject
 object CarRetrofitToCar : KoinComponent {
     private val cacheManager by inject<CacheManagerRepository>()
 
-    fun Car.toCarGlobal(): com.example.manageyourcar.dataLayer.model.CarLocal {
+    fun Car.toCarGlobal(ownerId: Int): com.example.manageyourcar.dataLayer.model.CarLocal {
         return com.example.manageyourcar.dataLayer.model.CarLocal(
             carID = null,
             brand = this.make.name,

@@ -95,7 +95,10 @@ android {
 
 
 dependencies {
-
+    //Datastore
+    implementation("androidx.datastore:datastore:1.0.0")
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+//Timber
     implementation("com.jakewharton.timber:timber:5.0.1")
     //Crashanalytics
     implementation(platform("com.google.firebase:firebase-bom:32.7.0"))

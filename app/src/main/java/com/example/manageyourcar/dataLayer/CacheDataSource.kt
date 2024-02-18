@@ -1,12 +1,24 @@
 package com.example.manageyourcar.dataLayer
 
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
 import com.example.manageyourcar.R
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.dataLayer.model.CarLocal
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 
 
-class CacheDataSource(private val context: Context) {
+class CacheDataSource {
+    val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user_prefs")
+
+    val USER_ID_KEY = intPreferencesKey("user_id")
+
     private var userCarList: List<CarLocal> = emptyList()
     fun getUserCarList(): Ressource<List<CarLocal>> {
         try {
@@ -23,44 +35,39 @@ class CacheDataSource(private val context: Context) {
 
     fun getUserId(): Ressource<Int> {
         return try {
-            val sharedPref = context.getSharedPreferences(
-                context.getString(R.string.user_id),
-                Context.MODE_PRIVATE
-            ) ?: return Ressource.Error(message = "Impossible de récupérer l'userID")
-            val userID = sharedPref.getInt(context.getString(R.string.user_id), -1)
-            if (userID == -1) {
-                return Ressource.Error(message = "Problème lors de la lecture")
+            val userIdFlow: Flow<Int> = context.dataStore.data.map { preferences ->
+                preferences[USER_ID_KEY] ?: -1
             }
-            Ressource.Success(userID)
-        } catch (e: Error) {
-            Ressource.Error(message = "Erreur lors de la récupération de l'userID")
+            val userId = userIdFlow.first()
+            if (userId == -1) {
+                Ressource.Error(message = "Problem reading user ID")
+            } else {
+                Ressource.Success(userId)
+            }
+        } catch (e: Exception) {
+            Ressource.Error(message = "Error retrieving user ID: $e")
         }
     }
 
     fun putUserId(userId: Int): Ressource<Boolean> {
         return try {
-            val sharedPref = context.getSharedPreferences(
-                context.getString(R.string.user_id),
-                Context.MODE_PRIVATE
-            )
-            with(sharedPref.edit()) {
-                putInt(context.getString(R.string.user_id), userId)
-                apply()
-                return Ressource.Success(true)
+            context.dataStore.edit { preferences ->
+                preferences[USER_ID_KEY] = userId
             }
-        } catch (e: Error) {
-            return Ressource.Error(message = "Erreur lors de l'écriture de l'userID")
-        }
-
-    }
-
-    fun resetCurrentUserId(): Ressource<Boolean> {
-        return try {
-            context.getSharedPreferences(context.getString(R.string.user_id), Context.MODE_PRIVATE)
-                .edit().clear().apply()
             Ressource.Success(true)
         } catch (e: Exception) {
-            Ressource.Error(message = "Impossible de supprimer l'userID $e")
+            Ressource.Error(message = "Error storing user ID: $e")
+        }
+    }
+
+    suspend fun resetCurrentUserId(context: Context): Ressource<Boolean> {
+        return try {
+            context.dataStore.edit { preferences ->
+                preferences.clear()
+            }
+            Ressource.Success(true)
+        } catch (e: Exception) {
+            Ressource.Error(message = "Error clearing user ID: $e")
         }
     }
 }

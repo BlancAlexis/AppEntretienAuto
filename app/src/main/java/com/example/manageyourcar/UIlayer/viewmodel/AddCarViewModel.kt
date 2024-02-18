@@ -8,6 +8,7 @@ import com.example.manageyourcar.UIlayer.UIUtil
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.dataLayer.model.CarLocal
 import com.example.manageyourcar.domainLayer.mappers.CarRetrofitToCar.toCarGlobal
+import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkImmatUseCase
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.AddCarRoomUseCase
@@ -20,7 +21,7 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class AddCarViewModel : ViewModel(), KoinComponent {
+class AddCarViewModel constructor(private val cacheManager : CacheManagerRepository): ViewModel(), KoinComponent {
     private val addCarRoomUseCase by inject<AddCarRoomUseCase>()
     private val getVehiculeBySivNetworkUseCase by inject<GetVehiculeByNetworkUseCase>()
     private val getVehiculeByImmatNetworkUseCase by inject<GetVehiculeByNetworkImmatUseCase>()
@@ -90,7 +91,6 @@ class AddCarViewModel : ViewModel(), KoinComponent {
                     is Ressource.Error -> {
                         uIUtil.displayToastSuspend("Erreur lors de la requête ${result.message}")
                     }
-
                     is Ressource.Success -> {
                         result.data?.let { setCar(it.toCarGlobal()) }
                     }
