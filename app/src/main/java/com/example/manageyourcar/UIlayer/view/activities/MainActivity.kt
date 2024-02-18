@@ -55,14 +55,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_home -> {
-                print("do")
-            }
-
-            R.id.nav_about -> {
-                print("pr")
-            }
-
             R.id.nav_logout -> {
                 lifecycleScope.launch {
                     when (logoutUserUseCase.logoutUser(AppApplication.instance.applicationContext)) {

@@ -52,8 +52,6 @@ import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.DeleteMainten
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.GetAllUserMaintenanceUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.user.AddUserRoomUseCase
 import com.example.manageyourcar.domainLayer.utils.SmsSender
-import com.google.firebase.Firebase
-import com.google.firebase.database.database
 import okhttp3.OkHttpClient
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.context.loadKoinModules

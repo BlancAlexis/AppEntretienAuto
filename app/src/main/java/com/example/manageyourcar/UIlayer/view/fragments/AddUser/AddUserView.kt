@@ -101,7 +101,7 @@ fun AddUserView(
                         error = uiState.userLoginError,
                     )
                 }
-                uiState.userFirstName?.let {
+                uiState.userFirstName.let {
                     CustomTextField(
                         textFieldValue = it,
                         modifier = Modifier
