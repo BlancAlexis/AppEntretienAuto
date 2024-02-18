@@ -98,7 +98,7 @@ fun AddMaintenanceView(
                     }
                 }
 
-                Text(text = stringResource(R.string.ajouter_une_op_ration), fontSize = 25.sp, fontWeight = FontWeight.Bold)
+                Text(text = stringResource(R.string.add_an_operation), fontSize = 25.sp, fontWeight = FontWeight.Bold)
                 HorizontalPager(state = pagerState) { page ->
                     Box(
                         modifier = Modifier
@@ -151,7 +151,7 @@ fun AddMaintenanceView(
                 }
                 OutlinedSpinner(
                     listMaintenanceName = uiState.listCarLocals.map { it.model },
-                    textLabel = stringResource(R.string.votre_v_hicule),
+                    textLabel = stringResource(R.string.your_car),
                     onItemSelect = { nomCar ->
                         uiState.listCarLocals.find { it.model == nomCar }
                             ?.let { it1 -> onEvent(OnMaintenanceEvent.OnCarSelectedChanged(it1)) }
@@ -163,7 +163,7 @@ fun AddMaintenanceView(
                         onEvent(OnMaintenanceEvent.OnPriceChanged(it.toInt()))
                     },
                     textFieldValue = uiState.price.toString(),
-                    label = stringResource(R.string.prix),
+                    label = stringResource(R.string.price),
                     modifier = Modifier
                         .fillMaxWidth(0.9f)
                         .padding(bottom = 20.dp)
@@ -174,7 +174,7 @@ fun AddMaintenanceView(
                         onEvent(OnMaintenanceEvent.OnMileageChanged(it.toInt()))
                     },
                     textFieldValue = uiState.mileage.toString(),
-                    label = stringResource(R.string.kilom_trage),
+                    label = stringResource(R.string.mileage),
                     modifier = Modifier.fillMaxWidth(0.9f)
                 )
                 Row {
@@ -196,7 +196,7 @@ fun AddMaintenanceView(
                     onClick = {
                         onEvent(OnMaintenanceEvent.OnClickAddMaintenanceButton)
                     }) {
-                    Text(text = stringResource(R.string.ajouter))
+                    Text(text = stringResource(R.string.add))
                 }
             }
         }

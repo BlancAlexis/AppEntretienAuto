@@ -70,14 +70,14 @@ fun AddCarView(
                 }
             }
 
-            Text(text = stringResource(R.string.merci_d_entrer_votre_plaque_d_immatriculation))
+            Text(text = stringResource(R.string.enter_your_immat))
             CustomPlaqueImmat(
                 registration = uiState.inputImmat,
                 onImmatEvent = { onEvent(OnCarRequest.OnImmatChanged(it ?: "")) }
             )
             Button(onClick = { onEvent(OnCarRequest.OnClickSearchCarWithImmatButton) }) {
                 Text(
-                    text = stringResource(R.string.rechercher), fontSize = 20.sp
+                    text = stringResource(R.string.find), fontSize = 20.sp
                 )
             }
 
@@ -95,7 +95,7 @@ fun AddCarView(
                 CustomTextField(
                     onValueChange = { onEvent(OnCarRequest.OnVINChanged(it)) },
                     textFieldValue = uiState.inputVIN ?: "",
-                    label = stringResource(R.string.rechercher_par_num_ro_vin),
+                    label = stringResource(R.string.find_by_VIN),
                     readOnly = false,
                     keyboardType = KeyboardType.Text,
                     labelTextStyle = TextStyle(

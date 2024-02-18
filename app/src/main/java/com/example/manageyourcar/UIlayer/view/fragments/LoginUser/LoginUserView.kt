@@ -64,8 +64,8 @@ fun LoginUserView(
                 onDismiss = {
                     displayPopup = false
                 },
-                title = stringResource(R.string.mot_de_passe_oubli),
-                content = stringResource(R.string.la_flemme_d_y_g_r_maintenant_tchouss)
+                title = stringResource(R.string.password_forgot),
+                content = stringResource(R.string.password_forgot_text)
             )
         }
         Column(
@@ -78,7 +78,7 @@ fun LoginUserView(
         ) {
             Text(
                 textAlign = TextAlign.Center,
-                text = stringResource(R.string.connexion),
+                text = stringResource(R.string.connection),
                 fontSize = 32.sp,
                 fontFamily = juraFamily,
                 fontWeight = FontWeight.Bold,
@@ -97,7 +97,7 @@ fun LoginUserView(
                         .fillMaxWidth(0.95f)
                         .background(Color.Transparent),
                     textFieldValue = it,
-                    placeholder = stringResource(id = R.string.identifiant),
+                    placeholder = stringResource(id = R.string.id),
                     readOnly = false,
                     keyboardType = KeyboardType.Text,
                     onValueChange = {
@@ -115,7 +115,7 @@ fun LoginUserView(
                     error = uiState.userPasswordError ?: "",
                     modifier = Modifier
                         .fillMaxWidth(0.95f),
-                    placeholder = stringResource(id = R.string.mot_de_passe),
+                    placeholder = stringResource(id = R.string.password),
                     textFieldValue = it,
                     readOnly = false,
                     keyboardType = KeyboardType.Password,
@@ -133,7 +133,7 @@ fun LoginUserView(
                 colors = ButtonDefaults.buttonColors(colorScheme.onSecondary)
             ) {
                 Text(
-                    text = stringResource(id = R.string.connexion),
+                    text = stringResource(id = R.string.connection),
                     fontFamily = juraFamily,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
@@ -172,7 +172,7 @@ fun LoginUserView(
                     .width(245.dp)
             ) {
                 Text(
-                    text = stringResource(R.string.cr_er_un_compte),
+                    text = stringResource(R.string.create_account),
                     color = Color.White,
                     fontFamily = juraFamily,
                     fontSize = 20.sp,

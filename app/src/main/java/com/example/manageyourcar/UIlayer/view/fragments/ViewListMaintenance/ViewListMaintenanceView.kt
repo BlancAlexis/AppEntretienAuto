@@ -74,7 +74,7 @@ fun ViewListMaintenanceView(
                     modifier = Modifier.padding(bottom = 20.dp)
                 ) {
                     Text(
-                        text = stringResource(R.string.ajouter_un_acte_d_entretien),
+                        text = stringResource(R.string.add_entretien),
                         color = MaterialTheme.colorScheme.onPrimaryContainer,
                     )
                 }
@@ -106,7 +106,7 @@ fun ViewListMaintenanceView(
             }
             if (uiState.listUiState.isEmpty()) {
                 Text(
-                    text = stringResource(R.string.aucun_acte_d_entretien_pour_le_moment),
+                    text = stringResource(R.string.no_entretien),
                     color = MaterialTheme.colorScheme.onPrimary,
                 )
             } else {

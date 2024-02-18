@@ -71,7 +71,7 @@ fun AddUserView(
                     fontWeight = FontWeight.Bold,
                     fontSize = 24.sp,
                     color = Color.White,
-                    text = stringResource(R.string.cr_er_votre_compte),
+                    text = stringResource(R.string.create_your_account),
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -92,8 +92,8 @@ fun AddUserView(
                         modifier = Modifier
                             .fillMaxWidth(0.95f)
                             .padding(10.dp),
-                        label = stringResource(R.string.identifiant),
-                        placeholder = stringResource(R.string.identifiant),
+                        label = stringResource(R.string.id),
+                        placeholder = stringResource(R.string.id),
                         readOnly = false,
                         keyboardType = KeyboardType.Text,
                         onValueChange = {
@@ -141,8 +141,8 @@ fun AddUserView(
                         modifier = Modifier
                             .fillMaxWidth(0.95f)
                             .padding(10.dp),
-                        label = stringResource(R.string.mot_de_passe),
-                        placeholder = stringResource(R.string.mot_de_passe),
+                        label = stringResource(R.string.password),
+                        placeholder = stringResource(R.string.password),
                         readOnly = false,
                         keyboardType = KeyboardType.Password,
                         onValueChange = {
@@ -158,8 +158,8 @@ fun AddUserView(
                         modifier = Modifier
                             .fillMaxWidth(0.95f)
                             .padding(10.dp),
-                        label = stringResource(R.string.confirmation_mot_de_passe),
-                        placeholder = stringResource(R.string.confirmation_mot_de_passe),
+                        label = stringResource(R.string.password_conf),
+                        placeholder = stringResource(R.string.password_conf),
                         readOnly = false,
                         keyboardType = KeyboardType.Password,
                         onValueChange = {
@@ -174,7 +174,7 @@ fun AddUserView(
                     modifier = Modifier.fillMaxWidth(0.5f)
                 ) {
                     Text(
-                        text = stringResource(R.string.ajouter),
+                        text = stringResource(R.string.add),
                         fontSize = 20.sp
                     )
                 }
