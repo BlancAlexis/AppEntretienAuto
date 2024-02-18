@@ -28,8 +28,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.UIState.MaintenanceListUiState
 import com.example.manageyourcar.UIlayer.UIState.SortType
 import com.example.manageyourcar.UIlayer.view.common.CustomDialog
@@ -49,7 +51,7 @@ fun ViewListMaintenanceView(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         if (uiState.onInternetLost) {
-            CustomDialog(title = "Internet perdu")
+            CustomDialog(title = stringResource(R.string.connection_lost))
         } else {
             if (uiState.isLoading) {
                 Column(
@@ -72,7 +74,7 @@ fun ViewListMaintenanceView(
                     modifier = Modifier.padding(bottom = 20.dp)
                 ) {
                     Text(
-                        text = "Ajouter un acte d'entretien",
+                        text = stringResource(R.string.ajouter_un_acte_d_entretien),
                         color = MaterialTheme.colorScheme.onPrimaryContainer,
                     )
                 }
@@ -104,7 +106,7 @@ fun ViewListMaintenanceView(
             }
             if (uiState.listUiState.isEmpty()) {
                 Text(
-                    text = "Aucun acte d'entretien pour le moment",
+                    text = stringResource(R.string.aucun_acte_d_entretien_pour_le_moment),
                     color = MaterialTheme.colorScheme.onPrimary,
                 )
             } else {

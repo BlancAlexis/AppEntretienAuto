@@ -25,6 +25,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -54,7 +55,7 @@ fun LoginUserView(
         Font(R.font.jura, FontWeight.Medium)
     )
     if (uiState.onInternetLost) {
-        CustomDialog(title = "Internet perdu")
+        CustomDialog(title = stringResource(id =R.string.connection_lost) )
     } else {
         var displayPopup by remember { mutableStateOf(false) }
 
@@ -63,8 +64,8 @@ fun LoginUserView(
                 onDismiss = {
                     displayPopup = false
                 },
-                title = "Mot de passe oublié?",
-                content = "La flemme d'y géré maintenant tchouss"
+                title = stringResource(R.string.mot_de_passe_oubli),
+                content = stringResource(R.string.la_flemme_d_y_g_r_maintenant_tchouss)
             )
         }
         Column(
@@ -77,7 +78,7 @@ fun LoginUserView(
         ) {
             Text(
                 textAlign = TextAlign.Center,
-                text = "Connexion",
+                text = stringResource(R.string.connexion),
                 fontSize = 32.sp,
                 fontFamily = juraFamily,
                 fontWeight = FontWeight.Bold,
@@ -96,7 +97,7 @@ fun LoginUserView(
                         .fillMaxWidth(0.95f)
                         .background(Color.Transparent),
                     textFieldValue = it,
-                    placeholder = "Identifiant",
+                    placeholder = stringResource(id = R.string.identifiant),
                     readOnly = false,
                     keyboardType = KeyboardType.Text,
                     onValueChange = {
@@ -114,7 +115,7 @@ fun LoginUserView(
                     error = uiState.userPasswordError ?: "",
                     modifier = Modifier
                         .fillMaxWidth(0.95f),
-                    placeholder = "Mot de passe",
+                    placeholder = stringResource(id = R.string.mot_de_passe),
                     textFieldValue = it,
                     readOnly = false,
                     keyboardType = KeyboardType.Password,
@@ -132,7 +133,7 @@ fun LoginUserView(
                 colors = ButtonDefaults.buttonColors(colorScheme.onSecondary)
             ) {
                 Text(
-                    text = "Connexion",
+                    text = stringResource(id = R.string.connexion),
                     fontFamily = juraFamily,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
@@ -145,7 +146,7 @@ fun LoginUserView(
                         color = Color.Blue
                     )
                 ) {
-                    append("Forgot your password?")
+                    append(stringResource(R.string.forgot_your_password))
                 }
             }
             ClickableText(
@@ -171,7 +172,7 @@ fun LoginUserView(
                     .width(245.dp)
             ) {
                 Text(
-                    text = "Créer un compte",
+                    text = stringResource(R.string.cr_er_un_compte),
                     color = Color.White,
                     fontFamily = juraFamily,
                     fontSize = 20.sp,

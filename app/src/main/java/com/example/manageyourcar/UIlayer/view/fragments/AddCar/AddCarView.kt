@@ -22,11 +22,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.UIState.AddCarUIState
 import com.example.manageyourcar.UIlayer.view.common.CustomDialog
 import com.example.manageyourcar.UIlayer.view.common.CustomPlaqueImmat
@@ -40,19 +42,19 @@ fun AddCarView(
 ) {
     uiState.carLocalFind?.let {
         CustomDialog(
-            title = "C'est bien votre voiture?",
+            title = stringResource(id = R.string.if_your_car),
             content = "${uiState.carLocalFind.model}",
             onApprove = { onEvent(OnCarRequest.OnClickAddCarButton) },
             onDismiss = { onEvent(OnCarRequest.OnDismissAddCarFragment) })
     }
     if (uiState.onInternetLost) {
-        CustomDialog(title = "Internet perdu")
+        CustomDialog(title = stringResource(id = R.string.connection_lost))
     } else {
         var openDialog by remember { mutableStateOf(false) }
         if (openDialog) {
             CustomDialog(
-                title = "Numéro VIN",
-                content = "Le numéro VIN est un identifiant unique de la voiture, il peut généralement être trouvé dans la baie moteur ou sur la carte grise du véhicule",
+                title = stringResource(id = R.string.VIN_number),
+                content = stringResource(id = R.string.VIN_number_description),
                 onDismiss = { openDialog = false }
             )
         }
@@ -68,14 +70,14 @@ fun AddCarView(
                 }
             }
 
-            Text(text = "Merci d'entrer votre plaque d'immatriculation")
+            Text(text = stringResource(R.string.merci_d_entrer_votre_plaque_d_immatriculation))
             CustomPlaqueImmat(
                 registration = uiState.inputImmat,
                 onImmatEvent = { onEvent(OnCarRequest.OnImmatChanged(it ?: "")) }
             )
             Button(onClick = { onEvent(OnCarRequest.OnClickSearchCarWithImmatButton) }) {
                 Text(
-                    text = "Rechercher", fontSize = 20.sp
+                    text = stringResource(R.string.rechercher), fontSize = 20.sp
                 )
             }
 
@@ -93,7 +95,7 @@ fun AddCarView(
                 CustomTextField(
                     onValueChange = { onEvent(OnCarRequest.OnVINChanged(it)) },
                     textFieldValue = uiState.inputVIN ?: "",
-                    label = "Rechercher par numéro VIN",
+                    label = stringResource(R.string.rechercher_par_num_ro_vin),
                     readOnly = false,
                     keyboardType = KeyboardType.Text,
                     labelTextStyle = TextStyle(

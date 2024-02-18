@@ -1,17 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ManageYourCar</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="title_activity_main">MainActivity</string>
-    <string name="user_id">user_id</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <!-- Strings used for fragments for navigation -->
-
-    <string name="no_car">You don\'t have any car</string>
-    <string name="if_your_car">Its your car?</string>
-    <string name="connection_lost">Connection lost</string>
-    <string name="VIN_number">VIN number</string>
+    <string name="no_car">Vous n\'avez aucune voiture</string>
+    <string name="if_your_car">C\'est bien votre voiture?</string>
+    <string name="connection_lost">Connexion perdu</string>
+    <string name="VIN_number">Numéro VIN</string>
     <string name="VIN_number_description">Le numéro VIN est un identifiant unique de la voiture, il peut généralement être trouvé dans la baie moteur ou sur la carte grise du véhicule</string>
+
     <string name="merci_d_entrer_votre_plaque_d_immatriculation">Merci d\'entrer votre plaque d\'immatriculation</string>
     <string name="rechercher_par_num_ro_vin">Rechercher par numéro VIN</string>
     <string name="rechercher">Rechercher</string>
@@ -45,6 +39,4 @@
     <string name="vitesse_max">Vitesse Max.</string>
     <string name="ajouter_un_acte_d_entretien">Ajouter un acte d\'entretien</string>
     <string name="aucun_acte_d_entretien_pour_le_moment">Aucun acte d\'entretien pour le moment</string>
-
-
 </resources>
