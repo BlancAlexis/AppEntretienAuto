@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -46,7 +47,7 @@ fun AddUserView(
     )
 
     if (uiState.onInternetLost) {
-        CustomDialog(title = "Internet perdu")
+        CustomDialog(title = stringResource(id = R.string.connection_lost))
     } else {
         Box(
             modifier = Modifier
@@ -70,7 +71,7 @@ fun AddUserView(
                     fontWeight = FontWeight.Bold,
                     fontSize = 24.sp,
                     color = Color.White,
-                    text = "Créer votre compte",
+                    text = stringResource(R.string.create_your_account),
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -91,8 +92,8 @@ fun AddUserView(
                         modifier = Modifier
                             .fillMaxWidth(0.95f)
                             .padding(10.dp),
-                        label = "Identifiant",
-                        placeholder = "Identifiant",
+                        label = stringResource(R.string.id),
+                        placeholder = stringResource(R.string.id),
                         readOnly = false,
                         keyboardType = KeyboardType.Text,
                         onValueChange = {
@@ -107,8 +108,8 @@ fun AddUserView(
                         modifier = Modifier
                             .fillMaxWidth(0.95f)
                             .padding(10.dp),
-                        label = "Firstname",
-                        placeholder = "Firstname",
+                        label = stringResource(R.string.firstname),
+                        placeholder = stringResource(R.string.firstname),
                         readOnly = false,
                         keyboardType = KeyboardType.Text,
                         onValueChange = {
@@ -123,8 +124,8 @@ fun AddUserView(
                         modifier = Modifier
                             .fillMaxWidth(0.95f)
                             .padding(10.dp),
-                        label = "Lastname",
-                        placeholder = "Lastname",
+                        label = stringResource(R.string.lastname),
+                        placeholder = stringResource(R.string.lastname),
                         readOnly = false,
                         keyboardType = KeyboardType.Text,
                         onValueChange = {
@@ -140,8 +141,8 @@ fun AddUserView(
                         modifier = Modifier
                             .fillMaxWidth(0.95f)
                             .padding(10.dp),
-                        label = "Mot de passe",
-                        placeholder = "Mot de passe",
+                        label = stringResource(R.string.password),
+                        placeholder = stringResource(R.string.password),
                         readOnly = false,
                         keyboardType = KeyboardType.Password,
                         onValueChange = {
@@ -157,8 +158,8 @@ fun AddUserView(
                         modifier = Modifier
                             .fillMaxWidth(0.95f)
                             .padding(10.dp),
-                        label = "Confirmation mot de passe",
-                        placeholder = "Confirmation du mot de passe",
+                        label = stringResource(R.string.password_conf),
+                        placeholder = stringResource(R.string.password_conf),
                         readOnly = false,
                         keyboardType = KeyboardType.Password,
                         onValueChange = {
@@ -173,7 +174,7 @@ fun AddUserView(
                     modifier = Modifier.fillMaxWidth(0.5f)
                 ) {
                     Text(
-                        text = "Valider",
+                        text = stringResource(R.string.add),
                         fontSize = 20.sp
                     )
                 }

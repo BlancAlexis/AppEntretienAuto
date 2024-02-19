@@ -38,6 +38,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -69,7 +70,7 @@ fun AddMaintenanceView(
     ) {
         var checked by remember { mutableStateOf(false) }
         if (uiState.onInternetLost) {
-            CustomDialog(title = "Internet perdu")
+            CustomDialog(title = stringResource(id = R.string.connection_lost))
         } else {
             val showCalendar = remember { mutableStateOf(false) }
             val selectedDate = remember { mutableStateOf(Date.from(Instant.now())) }
@@ -97,7 +98,7 @@ fun AddMaintenanceView(
                     }
                 }
 
-                Text(text = "Ajouter une opération", fontSize = 25.sp, fontWeight = FontWeight.Bold)
+                Text(text = stringResource(R.string.add_an_operation), fontSize = 25.sp, fontWeight = FontWeight.Bold)
                 HorizontalPager(state = pagerState) { page ->
                     Box(
                         modifier = Modifier
@@ -150,7 +151,7 @@ fun AddMaintenanceView(
                 }
                 OutlinedSpinner(
                     listMaintenanceName = uiState.listCarLocals.map { it.model },
-                    textLabel = "Votre véhicule",
+                    textLabel = stringResource(R.string.your_car),
                     onItemSelect = { nomCar ->
                         uiState.listCarLocals.find { it.model == nomCar }
                             ?.let { it1 -> onEvent(OnMaintenanceEvent.OnCarSelectedChanged(it1)) }
@@ -162,7 +163,7 @@ fun AddMaintenanceView(
                         onEvent(OnMaintenanceEvent.OnPriceChanged(it.toInt()))
                     },
                     textFieldValue = uiState.price.toString(),
-                    label = "Prix",
+                    label = stringResource(R.string.price),
                     modifier = Modifier
                         .fillMaxWidth(0.9f)
                         .padding(bottom = 20.dp)
@@ -173,7 +174,7 @@ fun AddMaintenanceView(
                         onEvent(OnMaintenanceEvent.OnMileageChanged(it.toInt()))
                     },
                     textFieldValue = uiState.mileage.toString(),
-                    label = "Kilométrage",
+                    label = stringResource(R.string.mileage),
                     modifier = Modifier.fillMaxWidth(0.9f)
                 )
                 Row {
@@ -195,7 +196,7 @@ fun AddMaintenanceView(
                     onClick = {
                         onEvent(OnMaintenanceEvent.OnClickAddMaintenanceButton)
                     }) {
-                    Text(text = "Ajouter")
+                    Text(text = stringResource(R.string.add))
                 }
             }
         }

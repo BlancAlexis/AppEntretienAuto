@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="no_car">Vous n\'avez aucune voiture</string>
+    <string name="if_your_car">C\'est bien votre voiture?</string>
+    <string name="connection_lost">Connexion perdu</string>
+    <string name="VIN_number">Numéro VIN</string>
+    <string name="VIN_number_description">Le numéro VIN est un identifiant unique de la voiture, il peut généralement être trouvé dans la baie moteur ou sur la carte grise du véhicule</string>
+
+    <string name="enter_your_immat">Merci d\'entrer votre plaque d\'immatriculation</string>
+    <string name="find_by_VIN">Rechercher par numéro VIN</string>
+    <string name="find">Rechercher</string>
+    <string name="add_an_operation">Ajouter une opération</string>
+    <string name="your_car">Votre véhicule</string>
+    <string name="price">Prix</string>
+    <string name="mileage">Kilométrage</string>
+    <string name="add">Ajouter</string>
+    <string name="create_your_account">Créer votre compte</string>
+    <string name="id">Identifiant</string>
+    <string name="firstname">Prénom</string>
+    <string name="lastname">Nom de famille</string>
+    <string name="password">Mot de passe</string>
+    <string name="password_conf">Confirmation mot de passe</string>
+    <string name="available_devices">Appareils disponibles</string>
+    <string name="paired_devices">Appareils apparailés</string>
+    <string name="password_forgot">Mot de passe oublié?</string>
+    <string name="password_forgot_text">La flemme d\'y géré maintenant tchouss</string>
+    <string name="connection">Connexion</string>
+    <string name="create_account">Créer un compte</string>
+    <string name="forgot_your_password">Mot de passe oublié?</string>
+    <string name="your_cars">Vos Véhicules</string>
+    <string name="add_car">Ajouter une voiture</string>
+    <string name="parution">Parution</string>
+    <string name="fuel">Carburant</string>
+    <string name="transmission">Transmission</string>
+    <string name="engine">Motorisation</string>
+    <string name="horsepower">Puissance</string>
+    <string name="torque">Couple</string>
+    <string name="max_speed">Vitesse Max.</string>
+    <string name="add_entretien">Ajouter un acte d\'entretien</string>
+    <string name="no_entretien">Aucun acte d\'entretien pour le moment</string>
+</resources>

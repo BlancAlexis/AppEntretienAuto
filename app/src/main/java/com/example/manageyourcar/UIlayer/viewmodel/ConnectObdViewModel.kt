@@ -149,14 +149,6 @@ class ConnectObdViewModel : ViewModel(), KoinComponent {
 
             is OnBluetoothDeviceEvent.OnBluetoothDeviceDisconnectClick -> {
             }
-
-            is OnBluetoothDeviceEvent.OnBluetoothDeviceScanClick -> {
-                startScan()
-            }
-
-            is OnBluetoothDeviceEvent.OnBluetoothDeviceStopScanClick -> {
-                stopScan()
-            }
         }
     }
 }
@@ -166,6 +158,4 @@ sealed interface OnBluetoothDeviceEvent {
     object OnBluetoothDeviceLongClick : OnBluetoothDeviceEvent
     object OnBluetoothDeviceConnectClick : OnBluetoothDeviceEvent
     object OnBluetoothDeviceDisconnectClick : OnBluetoothDeviceEvent
-    object OnBluetoothDeviceScanClick : OnBluetoothDeviceEvent
-    object OnBluetoothDeviceStopScanClick : OnBluetoothDeviceEvent
 }

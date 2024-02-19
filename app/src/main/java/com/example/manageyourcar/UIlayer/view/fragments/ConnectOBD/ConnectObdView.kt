@@ -17,9 +17,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.UIState.BluetoothUiState
 import com.example.manageyourcar.UIlayer.viewmodel.OnBluetoothDeviceEvent
 import com.example.manageyourcar.domainLayer.bluetooth.BluetoothDevice
@@ -48,17 +50,6 @@ fun ConnectObdView(
             .background(Color.White),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Row(
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Button(onClick = { onEvent(OnBluetoothDeviceEvent.OnBluetoothDeviceScanClick) }) {
-                Text(text = "Start scan")
-            }
-            Button(onClick = { onEvent(OnBluetoothDeviceEvent.OnBluetoothDeviceStopScanClick) }) {
-                Text(text = "End scan")
-            }
-        }
         LazyColumn(modifier = Modifier.fillMaxWidth()) {
             item {
                 Row(
@@ -67,7 +58,7 @@ fun ConnectObdView(
                         .background(Color.Blue),
                 ) {
                     Text(
-                        text = "Available devices",
+                        text = stringResource(R.string.available_devices),
                         fontSize = 18.sp,
                         fontWeight = FontWeight.ExtraBold,
                         color = Color.White
@@ -89,7 +80,7 @@ fun ConnectObdView(
                         .background(Color.Blue),
                 ) {
                     Text(
-                        text = "Paired devices",
+                        text = stringResource(R.string.paired_devices),
                         fontSize = 18.sp,
                         fontWeight = FontWeight.ExtraBold,
                         color = Color.White

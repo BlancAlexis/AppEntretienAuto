@@ -37,6 +37,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -85,7 +86,7 @@ fun ViewCarDetailsView(
 
                 ) {
                 Text(
-                    text = "Vos Véhicules",
+                    text = stringResource(R.string.your_cars),
                     modifier = Modifier
                         .padding(vertical = 15.dp)
                         .fillMaxWidth(),
@@ -130,7 +131,7 @@ fun ViewCarDetailsView(
                         shape = RoundedCornerShape(30.dp),
                     ) {
                         Text(
-                            text = "Ajouter une voiture",
+                            text = stringResource(R.string.add_car),
                             textAlign = TextAlign.Center,
                             fontFamily = juraFamily,
                             fontSize = 20.sp,
@@ -141,7 +142,7 @@ fun ViewCarDetailsView(
                 }
                 if (uiState.carLocals.isEmpty()) {
                     Text(
-                        text = "Vous n'avez pas encore de voiture",
+                        text = stringResource(R.string.no_car),
                         modifier = Modifier
                             .padding(vertical = 15.dp, horizontal = 15.dp)
                             .fillMaxWidth(),
@@ -209,36 +210,36 @@ fun ViewCarDetailsView(
                                         fontWeight = FontWeight.Bold,
                                     )
                                     InformationRow(
-                                        title1 = "Parution",
+                                        title1 = stringResource(R.string.parution),
                                         content1 = uiState.carLocals[pagerState.currentPage].releaseDate,
                                         icon1 = painterResource(R.drawable.outline_calendar_month_24),
-                                        title2 = "Carburant",
+                                        title2 = stringResource(R.string.fuel),
                                         content2 = uiState.carLocals[pagerState.currentPage].fuel,
                                         icon2 = painterResource(R.drawable.baseline_oil_barrel_24)
                                     )
                                     InformationRow(
-                                        title1 = "Transmission",
+                                        title1 = stringResource(R.string.transmission),
                                         content1 = uiState.carLocals[pagerState.currentPage].transmission,
                                         icon1 = painterResource(R.drawable.auto_transmission),
-                                        title2 = "Motorisation",
+                                        title2 = stringResource(R.string.engine),
                                         content2 = uiState.carLocals[pagerState.currentPage].motorization,
                                         icon2 = painterResource(R.drawable.baseline_directions_car_24),
                                         modifier = Modifier.padding(top = 10.dp),
                                     )
                                     InformationRow(
-                                        title1 = "Puissance",
+                                        title1 = stringResource(R.string.horsepower),
                                         content1 = uiState.carLocals[pagerState.currentPage].power.toString() + " ch",
                                         icon1 = painterResource(R.drawable.baseline_bolt_24),
-                                        title2 = "Couple",
+                                        title2 = stringResource(R.string.torque),
                                         content2 = uiState.carLocals[pagerState.currentPage].torque.toString() + " nm",
                                         icon2 = painterResource(R.drawable.baseline_fast_forward_24),
                                         modifier = Modifier.padding(top = 10.dp),
                                     )
                                     InformationRow(
-                                        title1 = "Vitesse Max.",
+                                        title1 = stringResource(R.string.max_speed),
                                         content1 = uiState.carLocals[pagerState.currentPage].maxSpeed.toString() + " km/h",
                                         icon1 = painterResource(R.drawable.outline_speed_24),
-                                        title2 = "Kilométrage",
+                                        title2 = stringResource(R.string.mileage),
                                         content2 = uiState.carLocals[pagerState.currentPage].mileage.last()
                                             .toString() + " km",
                                         icon2 = painterResource(R.drawable.baseline_auto_graph_24),
