@@ -3,7 +3,6 @@ package com.example.manageyourcar.UIlayer.view.fragments.Maps
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
-import android.location.Location
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
@@ -19,7 +18,6 @@ import androidx.fragment.app.viewModels
 import com.example.manageyourcar.BuildConfig
 import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.viewmodel.MapsViewModel
-import com.example.manageyourcar.dataLayer.GlobalEvent
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -34,7 +32,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import org.koin.core.component.KoinComponent
 
-class MapsFragment : Fragment(), KoinComponent, GlobalEvent {
+class MapsFragment : Fragment(), KoinComponent {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var onUserLocationChanged: LocationCallback
 
@@ -140,60 +138,56 @@ class MapsFragment : Fragment(), KoinComponent, GlobalEvent {
         mapFragment?.getMapAsync(callback)
 
 
-            val permissionLauncher = registerForActivityResult(
-                ActivityResultContracts.RequestMultiplePermissions()
-            ) { permissions ->
-                if (!allPermissionsGranted(permissions.toMutableMap())) {
-                    // Handle denied permissions
-                    Toast.makeText(requireContext(), "Location permissions required for maps", Toast.LENGTH_SHORT).show()
-                } else {
-                    // Proceed with map functionality
-                    // ...
-                }
-            }
-
-            val locationPermissions = arrayOf(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            )
-
-            if (!hasPermissions(requireContext(), locationPermissions)) {
-                permissionLauncher.launch(locationPermissions)
+        val permissionLauncher = registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+            if (!allPermissionsGranted(permissions.toMutableMap())) {
+                // Handle denied permissions
+                Toast.makeText(
+                    requireContext(),
+                    "Location permissions required for maps",
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
-                // Proceed with map functionality if permissions are already granted
+                // Proceed with map functionality
                 // ...
             }
         }
 
-private fun hasPermissions(context: Context, permissions: Array<String>): Boolean {
-    for (permission in permissions) {
-        if (ContextCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
-            return false
+        val locationPermissions = arrayOf(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
+
+        if (!hasPermissions(requireContext(), locationPermissions)) {
+            permissionLauncher.launch(locationPermissions)
+        } else {
+            // Proceed with map functionality if permissions are already granted
+            // ...
         }
     }
-    return true
-}
 
-private fun allPermissionsGranted(permissions: MutableMap<String, Boolean>): Boolean {
-    return permissions.values.all { it }
-}
+    private fun hasPermissions(context: Context, permissions: Array<String>): Boolean {
+        for (permission in permissions) {
+            if (ContextCompat.checkSelfPermission(
+                    context,
+                    permission
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                return false
+            }
+        }
+        return true
+    }
+
+    private fun allPermissionsGranted(permissions: MutableMap<String, Boolean>): Boolean {
+        return permissions.values.all { it }
+    }
 
     companion object {
         fun newInstance(): MapsFragment {
             return MapsFragment()
         }
-    }
-
-    override fun onInternetConnectionLost() {
-        TODO("Not yet implemented")
-    }
-
-    override fun onInternetConnectionAvailable() {
-        TODO("Not yet implemented")
-    }
-
-    override fun onLocationChanged(location: Location) {
-        TODO("Not yet implemented")
     }
 
 }

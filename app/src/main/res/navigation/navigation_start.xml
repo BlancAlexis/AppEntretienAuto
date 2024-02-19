@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/AddUserFragment"
         android:name="com.example.manageyourcar.UIlayer.view.fragments.AddUser.AddUserFragment"
-        android:label="MainActivity"/>
+        android:label="MainActivity" />
     <fragment
         android:id="@+id/LoginUserFragment"
         android:name="com.example.manageyourcar.UIlayer.view.fragments.LoginUser.LoginUserFragment"
@@ -19,14 +19,14 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"/>
+            app:exitAnim="@anim/slide_out_left" />
         <action
             android:id="@+id/action_LoginUserFragment_to_viewServicingFragment"
             app:destination="@id/viewServicingFragment"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"/>
+            app:exitAnim="@anim/slide_out_left" />
     </fragment>
     <fragment
         android:id="@+id/viewServicingFragment"

@@ -1,12 +1,9 @@
 package com.example.manageyourcar.UIlayer
 
 import android.app.Application
-import com.example.manageyourcar.dataLayer.GlobalEvent
-import com.example.manageyourcar.dataLayer.ListenerInternet
 import com.example.manageyourcar.dataLayer.di.injectFeature
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.get
 import org.koin.core.context.GlobalContext.startKoin
 
 class AppApplication : Application(), KoinComponent {
@@ -19,8 +16,6 @@ class AppApplication : Application(), KoinComponent {
             androidContext(this@AppApplication)
             injectFeature()
         }
-
-        ListenerInternet(get<GlobalEvent>())
     }
 
 
@@ -28,4 +23,5 @@ class AppApplication : Application(), KoinComponent {
         lateinit var instance: AppApplication
             private set
     }
+
 }

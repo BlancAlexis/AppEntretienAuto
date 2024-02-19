@@ -112,7 +112,11 @@ class AddCarViewModel : ViewModel(), KoinComponent {
 
                     is Ressource.Error -> {
                         Timber.e("Ressource.Error" + result.message)
-                        Toast.makeText(AppApplication.instance.applicationContext, "Erreur lors de la requête ${result.message}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            AppApplication.instance.applicationContext,
+                            "Erreur lors de la requête ${result.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         // Faire une classe gestion erreur
                     }
 
@@ -143,7 +147,11 @@ class AddCarViewModel : ViewModel(), KoinComponent {
                     }
 
                     is Ressource.Error -> {
-                        Toast.makeText(AppApplication.instance.applicationContext, "Erreur lors de la requête ${result.message}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            AppApplication.instance.applicationContext,
+                            "Erreur lors de la requête ${result.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         // Faire une classe gestion erreur
                     }
 
@@ -161,7 +169,11 @@ class AddCarViewModel : ViewModel(), KoinComponent {
             when (addCarRoomUseCase.addCarToRoom(uiState.value.carLocalFind!!)) {
                 is Ressource.Success -> {
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(AppApplication.instance.applicationContext, "Voiture ajoutée avec succès", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            AppApplication.instance.applicationContext,
+                            "Voiture ajoutée avec succès",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         dismissFragment.postValue(true)
                         return@withContext
                     }
@@ -170,7 +182,11 @@ class AddCarViewModel : ViewModel(), KoinComponent {
 
                 is Ressource.Error -> {
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(AppApplication.instance.applicationContext, "Problème lors de l'ajout de la voiture", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            AppApplication.instance.applicationContext,
+                            "Problème lors de l'ajout de la voiture",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         dismissFragment.postValue(true)
                         return@withContext
                     }

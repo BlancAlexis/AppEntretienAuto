@@ -98,7 +98,11 @@ fun AddMaintenanceView(
                     }
                 }
 
-                Text(text = stringResource(R.string.add_an_operation), fontSize = 25.sp, fontWeight = FontWeight.Bold)
+                Text(
+                    text = stringResource(R.string.add_an_operation),
+                    fontSize = 25.sp,
+                    fontWeight = FontWeight.Bold
+                )
                 HorizontalPager(state = pagerState) { page ->
                     Box(
                         modifier = Modifier

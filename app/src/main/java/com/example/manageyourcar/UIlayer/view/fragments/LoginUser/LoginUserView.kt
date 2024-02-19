@@ -55,7 +55,7 @@ fun LoginUserView(
         Font(R.font.jura, FontWeight.Medium)
     )
     if (uiState.onInternetLost) {
-        CustomDialog(title = stringResource(id =R.string.connection_lost) )
+        CustomDialog(title = stringResource(id = R.string.connection_lost))
     } else {
         var displayPopup by remember { mutableStateOf(false) }
 

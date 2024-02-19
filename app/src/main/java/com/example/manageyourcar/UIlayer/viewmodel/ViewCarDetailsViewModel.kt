@@ -1,6 +1,5 @@
 package com.example.manageyourcar.UIlayer.viewmodel
 
-import android.location.Location
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -12,7 +11,6 @@ import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.UIlayer.UIState.ViewCarDetailsState
 import com.example.manageyourcar.UIlayer.view.fragments.ViewCarDetails.ViewCarDetailsFragmentDirections
-import com.example.manageyourcar.dataLayer.GlobalEvent
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.dataLayer.model.CarLocal
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
@@ -28,7 +26,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class ViewCarDetailsViewModel(val cacheManagerRepository: CacheManagerRepository) :
-    ViewModel(), KoinComponent, GlobalEvent {
+    ViewModel(), KoinComponent {
     private val getUserCarsUseCase by inject<GetUserCarsUseCase>()
     private val deleteCarRoomUseCase by inject<DeleteCarRoomUseCase>()
     private val _uiState = MutableStateFlow<ViewCarDetailsState>(ViewCarDetailsState.Loading)
@@ -146,19 +144,6 @@ class ViewCarDetailsViewModel(val cacheManagerRepository: CacheManagerRepository
             )
         }
     }
-
-    override fun onInternetConnectionLost() {
-        println("conNNNNnNnnNnN")
-    }
-
-    override fun onInternetConnectionAvailable() {
-        println("conNNNNnNnnNnN")
-    }
-
-    override fun onLocationChanged(location: Location) {
-        println("conNNNNnNnnNnN")
-    }
-
 
 }
 

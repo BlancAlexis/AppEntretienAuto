@@ -1,7 +1,6 @@
 package com.example.manageyourcar.UIlayer.view.fragments.LoginUser
 
 import android.content.Intent
-import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,11 +13,10 @@ import androidx.fragment.app.Fragment
 import com.example.manageyourcar.UIlayer.view.activities.MainActivity
 import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
 import com.example.manageyourcar.UIlayer.viewmodel.LoginUserViewModel
-import com.example.manageyourcar.dataLayer.GlobalEvent
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.KoinComponent
 
-class LoginUserFragment : Fragment(), KoinComponent, GlobalEvent {
+class LoginUserFragment : Fragment(), KoinComponent {
     private val logUserViewModel: LoginUserViewModel by viewModel()
 
     override fun onCreateView(
@@ -58,17 +56,5 @@ class LoginUserFragment : Fragment(), KoinComponent, GlobalEvent {
         fun newInstance(): LoginUserFragment {
             return LoginUserFragment()
         }
-    }
-
-    override fun onInternetConnectionLost() {
-        TODO("Not yet implemented")
-    }
-
-    override fun onInternetConnectionAvailable() {
-        TODO("Not yet implemented")
-    }
-
-    override fun onLocationChanged(location: Location) {
-        TODO("Not yet implemented")
     }
 }

@@ -5,7 +5,6 @@ import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothManager
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -21,11 +20,10 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
 import com.example.manageyourcar.UIlayer.viewmodel.ConnectObdViewModel
-import com.example.manageyourcar.dataLayer.GlobalEvent
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.KoinComponent
 
-class ConnectObdFragment : Fragment(), KoinComponent, GlobalEvent {
+class ConnectObdFragment : Fragment(), KoinComponent {
     val connectObdViewModel: ConnectObdViewModel by viewModel()
 
 
@@ -87,7 +85,7 @@ class ConnectObdFragment : Fragment(), KoinComponent, GlobalEvent {
                 )
             }
         }
-        val c=arrayOf(
+        val c = arrayOf(
             Manifest.permission.BLUETOOTH_SCAN,
             Manifest.permission.BLUETOOTH_CONNECT,
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -100,9 +98,14 @@ class ConnectObdFragment : Fragment(), KoinComponent, GlobalEvent {
             )
         }
     }
+
     private fun hasPermissions(permissions: Array<String>): Boolean {
         for (permission in permissions) {
-            if (ContextCompat.checkSelfPermission(requireContext(), permission) != PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    permission
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
                 return false
             }
         }
@@ -112,18 +115,4 @@ class ConnectObdFragment : Fragment(), KoinComponent, GlobalEvent {
     private fun allPermissionsGranted(permissions: MutableMap<String, Boolean>): Boolean {
         return permissions.values.all { it }
     }
-
-    override fun onInternetConnectionLost() {
-        TODO("Not yet implemented")
-    }
-
-    override fun onInternetConnectionAvailable() {
-        TODO("Not yet implemented")
-    }
-
-    override fun onLocationChanged(location: Location) {
-        TODO("Not yet implemented")
-    }
-
-
 }

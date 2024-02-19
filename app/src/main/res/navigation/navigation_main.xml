@@ -5,49 +5,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     app:startDestination="@id/viewCarDetailsFragment">
 
-        <fragment
-            android:id="@+id/AddCarFragment"
-            android:name="com.example.manageyourcar.UIlayer.view.fragments.AddCar.AddCarFragment"
-            android:label="MainActivity"/>
     <fragment
-            android:id="@+id/MapsFragment"
-            android:name="com.example.manageyourcar.UIlayer.view.fragments.Maps.MapsFragment"
-            android:label="MainActivity"/>
-        <fragment
-            android:id="@+id/viewMaintenance"
-            android:name="com.example.manageyourcar.UIlayer.view.fragments.ViewListMaintenance.ViewListMaintenanceFragment"
-            android:label="fragment_view_servicing">
-            <action
-                android:id="@+id/action_viewServicingFragment_to_MapsFragment"
-                app:destination="@id/MapsFragment"
-                app:popEnterAnim="@anim/slide_in_left"
-                app:popExitAnim="@anim/slide_out_right"
-                app:enterAnim="@anim/slide_in_right"
-                app:exitAnim="@anim/slide_out_left"/>
-            <action
-                android:id="@+id/action_viewServicingFragment_to_addMaintenanceFragment"
-                app:destination="@id/addMaintenanceFragment"
-                app:popEnterAnim="@anim/slide_in_left"
-                app:popExitAnim="@anim/slide_out_right"
-                app:enterAnim="@anim/slide_in_right"
-                app:exitAnim="@anim/slide_out_left"/>
-            <action
-                android:id="@+id/action_viewMaintenance_to_connectObdFragment2"
-                app:destination="@id/BluetoothConnectFragment" />
-            <action
-                android:id="@+id/action_viewMaintenance_to_viewCarDetailsFragment"
-                app:destination="@id/viewCarDetailsFragment" />
-        </fragment>
-        <dialog
-            android:id="@+id/addMaintenanceFragment"
-            android:name="com.example.manageyourcar.UIlayer.view.fragments.AddMaintenance.AddMaintenanceFragment"
-            android:label="fragment_add_maintenance_car"
-           />
+        android:id="@+id/AddCarFragment"
+        android:name="com.example.manageyourcar.UIlayer.view.fragments.AddCar.AddCarFragment"
+        android:label="MainActivity" />
+    <fragment
+        android:id="@+id/MapsFragment"
+        android:name="com.example.manageyourcar.UIlayer.view.fragments.Maps.MapsFragment"
+        android:label="MainActivity" />
+    <fragment
+        android:id="@+id/viewMaintenance"
+        android:name="com.example.manageyourcar.UIlayer.view.fragments.ViewListMaintenance.ViewListMaintenanceFragment"
+        android:label="fragment_view_servicing">
+        <action
+            android:id="@+id/action_viewServicingFragment_to_MapsFragment"
+            app:destination="@id/MapsFragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_viewServicingFragment_to_addMaintenanceFragment"
+            app:destination="@id/addMaintenanceFragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_viewMaintenance_to_connectObdFragment2"
+            app:destination="@id/BluetoothConnectFragment" />
+        <action
+            android:id="@+id/action_viewMaintenance_to_viewCarDetailsFragment"
+            app:destination="@id/viewCarDetailsFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/addMaintenanceFragment"
+        android:name="com.example.manageyourcar.UIlayer.view.fragments.AddMaintenance.AddMaintenanceFragment"
+        android:label="fragment_add_maintenance_car" />
     <fragment
         android:id="@+id/BluetoothConnectFragment"
         android:name="com.example.manageyourcar.UIlayer.view.fragments.ConnectOBD.ConnectObdFragment"
-        android:label="fragment_connect_obd"
-      >
+        android:label="fragment_connect_obd">
         <action
             android:id="@+id/action_connectObdFragment_to_OBDFragment"
             app:destination="@id/OBDFragment" />
@@ -60,34 +58,31 @@
     <fragment
         android:id="@+id/viewCarDetailsFragment"
         android:name="com.example.manageyourcar.UIlayer.view.fragments.ViewCarDetails.ViewCarDetailsFragment"
-        android:label="view_car_details"
-        >
+        android:label="view_car_details">
         <action
             android:id="@+id/action_viewCarDetailsFragment_to_AddCarFragment"
             app:destination="@id/AddCarFragment"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"/>
+            app:exitAnim="@anim/slide_out_left" />
         <action
-        android:id="@+id/action_viewCarDetailsFragment_to_UpdateCarMileage"
+            android:id="@+id/action_viewCarDetailsFragment_to_UpdateCarMileage"
             app:destination="@id/UpdateCarMileage"
 
-      />
+            />
     </fragment>
-
-
 
 
     <dialog
         android:id="@+id/UpdateCarMileage"
         android:name="com.example.manageyourcar.UIlayer.view.fragments.UpdateCarMileage.UpdateCarMileageFragment"
-        android:label="fragment_update_car_mileage" >
-    <argument
-        android:name="myArg"
-        app:argType="com.example.manageyourcar.dataLayer.model.CarLocal"
-        app:nullable="true"
-        android:defaultValue="@null" />
+        android:label="fragment_update_car_mileage">
+        <argument
+            android:name="myArg"
+            app:argType="com.example.manageyourcar.dataLayer.model.CarLocal"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </dialog>
 
 </navigation>

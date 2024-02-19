@@ -2,7 +2,6 @@ package com.example.manageyourcar.dataLayer.di
 
 import androidx.room.Room
 import com.example.manageyourcar.UIlayer.AppApplication
-import com.example.manageyourcar.UIlayer.view.fragments.ViewCarDetails.ViewCarDetailsFragment
 import com.example.manageyourcar.UIlayer.viewmodel.AddCarViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.AddMaintenanceViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.AddUserViewModel
@@ -16,7 +15,6 @@ import com.example.manageyourcar.UIlayer.viewmodel.ViewCarDetailsViewModel
 import com.example.manageyourcar.dataLayer.AndroidBluetoothController
 import com.example.manageyourcar.dataLayer.CacheDataSource
 import com.example.manageyourcar.dataLayer.CacheManagerRepositoryImpl
-import com.example.manageyourcar.dataLayer.GlobalEvent
 import com.example.manageyourcar.dataLayer.ListenerInternet
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.RequestApiImmat
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.RequestApiSIV
@@ -78,7 +76,7 @@ private val loadFeature by lazy {
 }
 
 val utils = module {
-    factory<GlobalEvent> { ViewCarDetailsFragment() }
+//    factory<GlobalEvent> { ViewCarDetailsFragment() }
     single { SmsSender }
     factory<BluetoothController> { AndroidBluetoothController(AppApplication.instance) }
 }
@@ -118,7 +116,6 @@ val repositoryModule = module {
 }
 
 val useCaseModule = module {
-    single { ListenerInternet(get()) }
     factory { AddCarMaintenanceUseCase() }
     factory { AddCarRoomUseCase() }
 

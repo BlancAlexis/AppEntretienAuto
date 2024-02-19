@@ -1,6 +1,5 @@
 package com.example.manageyourcar.UIlayer.view.fragments.AddMaintenance
 
-import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,12 +10,11 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
 import com.example.manageyourcar.UIlayer.viewmodel.AddMaintenanceViewModel
-import com.example.manageyourcar.dataLayer.GlobalEvent
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.KoinComponent
 
-class AddMaintenanceFragment : BottomSheetDialogFragment(), KoinComponent, GlobalEvent {
+class AddMaintenanceFragment : BottomSheetDialogFragment(), KoinComponent {
     val addMaintenanceViewModel: AddMaintenanceViewModel by viewModel()
 
     override fun onCreateView(
@@ -51,18 +49,6 @@ class AddMaintenanceFragment : BottomSheetDialogFragment(), KoinComponent, Globa
                 dismiss()
             }
         }
-    }
-
-    override fun onInternetConnectionLost() {
-        TODO("Not yet implemented")
-    }
-
-    override fun onInternetConnectionAvailable() {
-        TODO("Not yet implemented")
-    }
-
-    override fun onLocationChanged(location: Location) {
-        TODO("Not yet implemented")
     }
 }
 
