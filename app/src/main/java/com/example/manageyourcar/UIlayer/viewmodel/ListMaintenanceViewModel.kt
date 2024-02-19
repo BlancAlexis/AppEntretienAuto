@@ -11,6 +11,7 @@ import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.UIlayer.UIState.MaintenanceListUiState
 import com.example.manageyourcar.UIlayer.UIState.ServicingUIState
 import com.example.manageyourcar.UIlayer.UIState.SortType
+import com.example.manageyourcar.UIlayer.UIUtil
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.dataLayer.dataLayerRoom.dao.MaintenanceWithCarEntity
 import com.example.manageyourcar.dataLayer.model.MaintenanceService
@@ -28,7 +29,7 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class ListMaintenanceViewModel(private val cacheManagerRepository: CacheManagerRepository) :
+class ListMaintenanceViewModel(private val cacheManagerRepository: CacheManagerRepository, private val uiUtil: UIUtil) :
     ViewModel(), KoinComponent {
     private val _uiState = MutableStateFlow(MaintenanceListUiState())
     val uiState = _uiState.asStateFlow()
@@ -37,17 +38,13 @@ class ListMaintenanceViewModel(private val cacheManagerRepository: CacheManagerR
     private val getAllUserMaintenanceUseCase by inject<GetAllUserMaintenanceUseCase>()
     private val logoutUserUseCase by inject<LogoutUserUseCase>()
 
-    private val addCarMaintenanceUseCase by inject<AddCarMaintenanceUseCase>()
-    private val addCarRoomUseCase by inject<AddCarRoomUseCase>()
-
-
     init {
         viewModelScope.launch(Dispatchers.IO) {
             getAllUserMaintenanceUseCase.invoke().collect { result ->
                 when (result) {
-                    is Ressource.Error -> println("e")
-                    is Ressource.Loading -> listLoad()
+                    is Ressource.Error -> uiUtil.displayToastSuspend("erreur dans le chargement des entretiens")
                     is Ressource.Success -> result.data?.let { listLoading(it) }
+                    else -> {}
                 }
             }
         }
@@ -64,10 +61,10 @@ class ListMaintenanceViewModel(private val cacheManagerRepository: CacheManagerR
 
     fun onBackPressed() {
         viewModelScope.launch {
-            when (logoutUserUseCase.logoutUser(AppApplication.instance.applicationContext)) {
-                is Ressource.Error -> println("error")
-                is Ressource.Loading -> println("load")
+            when (val result = logoutUserUseCase.logoutUser(AppApplication.instance.applicationContext)) {
+                is Ressource.Error -> uiUtil.displayToastSuspend(result.error?.localizedMessage ?: "erreur")
                 is Ressource.Success -> return@launch //Faire une chose qui bloque si fail?
+                else -> {}
             }
         }
     }
@@ -93,7 +90,6 @@ class ListMaintenanceViewModel(private val cacheManagerRepository: CacheManagerR
                         }
 
                         is MaintenanceService.Pneus -> {
-                            println(2563 / 3000)
                             description = entretien.maintenanceEntity.serviceType.name
                             progressIndicator =
                                 ((entretien.maintenanceEntity.mileage.toFloat() / MaintenanceActScheddule.valueOf(
@@ -135,19 +131,15 @@ class ListMaintenanceViewModel(private val cacheManagerRepository: CacheManagerR
         when (event) {
             is OnMaintenanceListEvent.OnButtonAddMaintenancePush -> {
                 when (val result = cacheManagerRepository.getUserCarList()) {
-                    is Ressource.Error -> println("error")
-                    is Ressource.Loading -> println("loading")
+                    is Ressource.Error -> uiUtil.displayToast(result.error?.localizedMessage ?: "erreur")
                     is Ressource.Success -> {
                         if (result.data.isNullOrEmpty()) {
-                            Toast.makeText(
-                                AppApplication.instance,
-                                "Ajouter d'abord une voiture!",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            uiUtil.displayToast("Ajouter une voiture d'abord")
                             return
                         }
                         navController.navigate(R.id.addMaintenanceFragment)
                     }
+                    else -> {}
                 }
             }
 

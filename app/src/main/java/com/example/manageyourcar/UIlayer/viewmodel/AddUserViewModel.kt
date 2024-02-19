@@ -8,6 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.UIlayer.UIState.SignInUiState
+import com.example.manageyourcar.UIlayer.UIUtil
 import com.example.manageyourcar.domainLayer.useCaseRoom.user.AddUserRoomUseCase
 import com.example.manageyourcar.domainLayer.utils.UserEntryChecker
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +21,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 
-class AddUserViewModel : ViewModel(), KoinComponent {
+class AddUserViewModel constructor ( private val uiUtil: UIUtil): ViewModel(), KoinComponent {
     private val addUserRoomUseCase by inject<AddUserRoomUseCase>()
     private lateinit var navController: NavController
 
@@ -90,11 +91,7 @@ class AddUserViewModel : ViewModel(), KoinComponent {
                 }
             } else {
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(
-                        AppApplication.instance.applicationContext,
-                        "Le formulaire contient une erreur",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    uiUtil.displayToastSuspend("Le formulaire contient une erreur")
                 }
             }
         }

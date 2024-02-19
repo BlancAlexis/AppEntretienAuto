@@ -10,6 +10,7 @@ import androidx.navigation.Navigation
 import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.UIlayer.UIState.LoginUiState
+import com.example.manageyourcar.UIlayer.UIUtil
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
 import com.example.manageyourcar.domainLayer.useCaseBusiness.LoginUserUseCase
@@ -21,7 +22,7 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class LoginUserViewModel : ViewModel(), KoinComponent {
+class LoginUserViewModel constructor(private val uiUtil: UIUtil) : ViewModel(), KoinComponent {
 
     private val logUseCase by inject<LoginUserUseCase>()
     private val cacheManagerRepository by inject<CacheManagerRepository>()
@@ -43,7 +44,6 @@ class LoginUserViewModel : ViewModel(), KoinComponent {
             is UserLoginEvent.OnLoginChanged -> onLoginChanged(event)
             is UserLoginEvent.OnPasswordChanged -> onPasswordChanged(event)
             is UserLoginEvent.OnSignInButton -> {
-                Log.i("TAG", "onCheckFields: ${navController.currentBackStack.value}")
                 navController.navigate(R.id.action_LoginUserFragment_to_AddUserFragment)
             }
 
@@ -60,7 +60,7 @@ class LoginUserViewModel : ViewModel(), KoinComponent {
                 when (val result =
                     cacheManagerRepository.getUserId(AppApplication.instance.applicationContext)) {
                     is Ressource.Success -> isConnected.postValue(true)
-                    is Ressource.Error -> println("zzzz" + result.message + result.error)
+                    is Ressource.Error -> uiUtil.displayToastSuspend(result.error?.localizedMessage ?: "erreur")
                     else -> null
                 }
             } else {
@@ -86,13 +86,13 @@ class LoginUserViewModel : ViewModel(), KoinComponent {
                         }
                     }
 
-                    is Ressource.Loading -> TODO()
+                    else -> {}
                 }
             }
         }
     }
 
-    fun onLoginChanged(event: UserLoginEvent.OnLoginChanged) {
+    private fun onLoginChanged(event: UserLoginEvent.OnLoginChanged) {
         _uiState.update {
             it.copy(
                 userLogin = event.newValue
@@ -100,7 +100,7 @@ class LoginUserViewModel : ViewModel(), KoinComponent {
         }
     }
 
-    fun onPasswordChanged(event: UserLoginEvent.OnPasswordChanged) {
+    private fun onPasswordChanged(event: UserLoginEvent.OnPasswordChanged) {
         _uiState.update {
             it.copy(
                 userPassword = event.newValue

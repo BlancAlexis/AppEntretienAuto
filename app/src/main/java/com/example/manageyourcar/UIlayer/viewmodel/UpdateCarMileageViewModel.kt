@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.UIlayer.UIState.UpdateMileage
+import com.example.manageyourcar.UIlayer.UIUtil
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.UpsertCarMileageUseCase
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +18,9 @@ import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class UpdateCarMileageViewModel : ViewModel(), KoinComponent {
+class UpdateCarMileageViewModel constructor(
+    private val uiUtil: UIUtil
+) : ViewModel(), KoinComponent {
     private val upsertCarMileageUseCase by inject<UpsertCarMileageUseCase>()
     private lateinit var navController: NavController
     fun setNavController(view: NavController) {
@@ -54,24 +57,16 @@ class UpdateCarMileageViewModel : ViewModel(), KoinComponent {
                     car.copy(mileage = car.mileage + (uiState.value.newMileage?.toInt() ?: 0))
                 when (upsertCarMileageUseCase.updateCarMileage(updatedCar)) {
                     is Ressource.Error -> {
-                        Toast.makeText(
-                            AppApplication.instance.applicationContext,
-                            "Erreur lors de la mise à jour du kilométrage",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        uiUtil.displayToastSuspend("Erreur lors de la mise à jour du kilométrage")
                         navController.popBackStack()
                     }
-
-                    is Ressource.Loading -> println("Loading")
                     is Ressource.Success -> {
-                        withContext(Dispatchers.Main) {
-                            Toast.makeText(
-                                AppApplication.instance.applicationContext,
+                        uiUtil.displayToastSuspend(
                                 "Kilométrage mis à jour avec succès",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                        )
                             navController.popBackStack()
                         }
+                    else -> {}
 
                     }
                 }
@@ -79,7 +74,6 @@ class UpdateCarMileageViewModel : ViewModel(), KoinComponent {
             }
         }
     }
-}
 
 sealed interface UpdateCatEvent {
     object OnUpdateMileage : UpdateCatEvent

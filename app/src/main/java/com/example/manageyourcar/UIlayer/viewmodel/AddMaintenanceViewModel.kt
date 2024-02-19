@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.UIlayer.UIState.AddVehiculeMaintenanceUiState
+import com.example.manageyourcar.UIlayer.UIUtil
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.dataLayer.model.CarLocal
 import com.example.manageyourcar.dataLayer.model.Entretien
@@ -23,7 +24,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.util.Date
 
-class AddMaintenanceViewModel constructor(private val cacheManagerRepository: CacheManagerRepository): ViewModel(), KoinComponent {
+class AddMaintenanceViewModel constructor(private val cacheManagerRepository: CacheManagerRepository, private val uiUtil: UIUtil): ViewModel(), KoinComponent {
     private val getUserCarsUseCase by inject<GetUserCarsUseCase>()
     val isMaintenanceAdd = MutableLiveData<Boolean>(false)
 
@@ -42,8 +43,7 @@ class AddMaintenanceViewModel constructor(private val cacheManagerRepository: Ca
                 is Ressource.Error -> {
                     getUserCarsUseCase.invoke().collect { result ->
                         when (result) {
-                            is Ressource.Error -> Toast.makeText(
-                                AppApplication.instance.applicationContext, "Erreur lors du chargement des voitures", Toast.LENGTH_SHORT).show()
+                            is Ressource.Error ->uiUtil.displayToastSuspend("Erreur lors du chargement des voitures")
                             is Ressource.Success -> result.data?.let {
                                 if (it.isEmpty()) {
                                     isMaintenanceAdd.postValue(true)
@@ -95,11 +95,11 @@ class AddMaintenanceViewModel constructor(private val cacheManagerRepository: Ca
                     service = selectedMaintenance.toMaintenanceService()
                 )
             )) {
-                is Ressource.Error -> TODO()
-                is Ressource.Loading -> TODO()
+                is Ressource.Error -> uiUtil.displayToastSuspend("échec de l'ajout")
                 is Ressource.Success -> {
                     isMaintenanceAdd.postValue(true)
                 }
+                else -> {}
             }
         }
     }

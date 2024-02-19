@@ -11,6 +11,7 @@ import androidx.navigation.Navigation
 import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.UIlayer.UIState.ViewCarDetailsState
+import com.example.manageyourcar.UIlayer.UIUtil
 import com.example.manageyourcar.UIlayer.view.fragments.ViewCarDetails.ViewCarDetailsFragmentDirections
 import com.example.manageyourcar.dataLayer.GlobalEvent
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
@@ -27,7 +28,7 @@ import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class ViewCarDetailsViewModel(val cacheManagerRepository: CacheManagerRepository) :
+class ViewCarDetailsViewModel(val cacheManagerRepository: CacheManagerRepository, private val uiUtil: UIUtil) :
     ViewModel(), KoinComponent, GlobalEvent {
     private val getUserCarsUseCase by inject<GetUserCarsUseCase>()
     private val deleteCarRoomUseCase by inject<DeleteCarRoomUseCase>()
@@ -39,12 +40,12 @@ class ViewCarDetailsViewModel(val cacheManagerRepository: CacheManagerRepository
         viewModelScope.launch(Dispatchers.IO) {
             getUserCarsUseCase.invoke().collect { result ->
                 when (result) {
-                    is Ressource.Error -> Log.e("ViewCarDetailsViewModel", "Utilisateur inconnu")
-                    is Ressource.Loading -> TODO()
+                    is Ressource.Error -> uiUtil.displayToastSuspend(result.error?.localizedMessage ?: "erreur")
                     is Ressource.Success -> result.data?.let {
                         updateListCar(it)
                         cacheManagerRepository.saveUserCarList(it)
                     }
+                    else -> {}
                 }
             }
         }
@@ -59,30 +60,21 @@ class ViewCarDetailsViewModel(val cacheManagerRepository: CacheManagerRepository
             is ViewCarDetailsEvent.OnUpdateMileage -> {
                 when (val result = cacheManagerRepository.getUserCarList()) {
                     is Ressource.Error -> {
-                        Toast.makeText(
-                            AppApplication.instance.applicationContext,
-                            "Erreur lors de la récupération des voitures",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        uiUtil.displayToast(
+                            "Erreur lors de la récupération des voitures")
                         return
                     }
 
                     is Ressource.Loading -> {
-                        Toast.makeText(
-                            AppApplication.instance.applicationContext,
-                            "Chargement des voitures",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        uiUtil.displayToast(
+                            "Chargement des voitures")
                         return
                     }
 
                     is Ressource.Success -> {
                         if (result.data.isNullOrEmpty()) {
-                            Toast.makeText(
-                                AppApplication.instance.applicationContext,
-                                "Vous n'avez encore aucune voiture",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            uiUtil.displayToast(
+                                "Vous n'avez encore aucune voiture")
                             return
                         }
                         val action =
@@ -99,29 +91,16 @@ class ViewCarDetailsViewModel(val cacheManagerRepository: CacheManagerRepository
                 viewModelScope.launch(Dispatchers.IO) {
                     when (val result = cacheManagerRepository.getUserCarList()) {
                         is Ressource.Error -> {
-                            withContext(Dispatchers.Main) {
-                                Toast.makeText(
-                                    AppApplication.instance.applicationContext,
-                                    "Erreur lors de la récupération des voitures",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                uiUtil.displayToastSuspend(
+                                    "Erreur lors de la récupération des voitures")
                             }
-                        }
 
                         is Ressource.Loading -> {
                         }
 
                         is Ressource.Success -> {
                             if (result.data.isNullOrEmpty()) {
-                                withContext(Dispatchers.Main) {
-
-                                    Toast.makeText(
-                                        AppApplication.instance.applicationContext,
-                                        "Vous n'avez encore aucune voiture",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                    return@withContext
-                                }
+                                uiUtil.displayToastSuspend("Vous n'avez encore aucune voiture")
                                 return@launch
                             } else {
                                 deleteCarRoomUseCase.deleteCar(result.data[event.position])
