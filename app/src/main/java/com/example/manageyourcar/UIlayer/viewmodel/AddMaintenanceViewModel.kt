@@ -1,14 +1,17 @@
 package com.example.manageyourcar.UIlayer.viewmodel
 
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.UIlayer.UIState.AddVehiculeMaintenanceUiState
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.dataLayer.model.CarLocal
 import com.example.manageyourcar.dataLayer.model.Entretien
 import com.example.manageyourcar.dataLayer.model.MaintenanceServiceType
 import com.example.manageyourcar.domainLayer.mappers.MapperMaintenanceView.toMaintenanceService
+import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.GetUserCarsUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.AddCarMaintenanceUseCase
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +23,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.util.Date
 
-class AddMaintenanceViewModel : ViewModel(), KoinComponent {
+class AddMaintenanceViewModel constructor(private val cacheManagerRepository: CacheManagerRepository): ViewModel(), KoinComponent {
     private val getUserCarsUseCase by inject<GetUserCarsUseCase>()
     val isMaintenanceAdd = MutableLiveData<Boolean>(false)
 
@@ -35,26 +38,47 @@ class AddMaintenanceViewModel : ViewModel(), KoinComponent {
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            getUserCarsUseCase.invoke().collect { result ->
-                when (result) {
-                    is Ressource.Error -> TODO()
-                    is Ressource.Loading -> TODO()
-                    is Ressource.Success -> result.data?.let {
-                        if (it.isEmpty()) {
-                            isMaintenanceAdd.postValue(true)
-                        }
-                        updateListCar(it)
-                        if (it.isNotEmpty()) {
-                            selectedCarLocal = it[0]
+            when (val result = cacheManagerRepository.getUserCarList()) {
+                is Ressource.Error -> {
+                    getUserCarsUseCase.invoke().collect { result ->
+                        when (result) {
+                            is Ressource.Error -> Toast.makeText(
+                                AppApplication.instance.applicationContext, "Erreur lors du chargement des voitures", Toast.LENGTH_SHORT).show()
+                            is Ressource.Success -> result.data?.let {
+                                if (it.isEmpty()) {
+                                    isMaintenanceAdd.postValue(true)
+                                }
+                                updateListCar(it)
+                                if (it.isNotEmpty()) {
+                                    selectedCarLocal = it[0]
+                                }
+                                _uiState.update {
+                                    it.copy(
+                                        listMaintenance = MaintenanceServiceType.values().toList()
+                                    )
+                                }
+                                selectedMaintenance = MaintenanceServiceType.values()[0]
+                            }
+                            else -> {}
                         }
                     }
                 }
-                _uiState.update {
-                    it.copy(
-                        listMaintenance = MaintenanceServiceType.values().toList()
-                    )
+                is Ressource.Success -> result.data?.let {
+                    if (it.isEmpty()) {
+                        isMaintenanceAdd.postValue(true)
+                    }
+                    updateListCar(it)
+                    if (it.isNotEmpty()) {
+                        selectedCarLocal = it[0]
+                    }
+                    _uiState.update {
+                        it.copy(
+                            listMaintenance = MaintenanceServiceType.values().toList()
+                        )
+                    }
+                    selectedMaintenance = MaintenanceServiceType.values()[0]
                 }
-                selectedMaintenance = MaintenanceServiceType.values()[0]
+                else -> {}
             }
         }
     }
