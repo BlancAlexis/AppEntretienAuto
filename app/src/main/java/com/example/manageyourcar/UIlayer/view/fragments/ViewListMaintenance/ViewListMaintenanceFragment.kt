@@ -1,6 +1,5 @@
 package com.example.manageyourcar.UIlayer.view.fragments.ViewListMaintenance
 
-import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,16 +12,14 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
 import com.example.manageyourcar.UIlayer.viewmodel.ListMaintenanceViewModel
-import com.example.manageyourcar.dataLayer.GlobalEvent
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.KoinComponent
 
-class ViewListMaintenanceFragment : Fragment(), KoinComponent, GlobalEvent {
+class ViewListMaintenanceFragment : Fragment(), KoinComponent {
     private val listMaintenanceViewModel: ListMaintenanceViewModel by viewModel()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
@@ -60,17 +57,5 @@ class ViewListMaintenanceFragment : Fragment(), KoinComponent, GlobalEvent {
         fun newInstance(): ViewListMaintenanceFragment {
             return ViewListMaintenanceFragment()
         }
-    }
-
-    override fun onInternetConnectionLost() {
-        TODO("Not yet implemented")
-    }
-
-    override fun onInternetConnectionAvailable() {
-        TODO("Not yet implemented")
-    }
-
-    override fun onLocationChanged(location: Location) {
-        TODO("Not yet implemented")
     }
 }

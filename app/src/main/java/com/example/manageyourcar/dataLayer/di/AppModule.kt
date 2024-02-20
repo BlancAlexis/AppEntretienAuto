@@ -10,8 +10,6 @@ import com.example.manageyourcar.UIlayer.viewmodel.AddUserViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.ConnectObdViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.ListMaintenanceViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.LoginUserViewModel
-import com.example.manageyourcar.UIlayer.viewmodel.MapsViewModel
-import com.example.manageyourcar.UIlayer.viewmodel.OBDViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.UpdateCarMileageViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.ViewCarDetailsViewModel
 import com.example.manageyourcar.dataLayer.AndroidBluetoothController
@@ -83,7 +81,7 @@ val utils = module {
     single<UIUtil> { UIUtil(androidApplication()) }
     factory<GlobalEvent> { ViewCarDetailsFragment() }
     single { SmsSender }
-    factory<BluetoothController> { AndroidBluetoothController(AppApplication.instance) }
+    factory<BluetoothController> { AndroidBluetoothController( get(),AppApplication.instance) }
 }
 
 val mappersModule = module {
@@ -196,10 +194,8 @@ val viewModelModule = module {
     viewModelOf(::AddUserViewModel)
     viewModelOf(::LoginUserViewModel)
     viewModelOf(::AddCarViewModel)
-    viewModelOf(::MapsViewModel)
     viewModelOf(::ListMaintenanceViewModel)
     viewModelOf(::AddMaintenanceViewModel)
-    viewModelOf(::OBDViewModel)
     viewModelOf(::ConnectObdViewModel)
     viewModelOf(::ViewCarDetailsViewModel)
     viewModelOf(::UpdateCarMileageViewModel)

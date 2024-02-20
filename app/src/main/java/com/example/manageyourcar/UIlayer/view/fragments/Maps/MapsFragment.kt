@@ -18,7 +18,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.manageyourcar.BuildConfig
 import com.example.manageyourcar.R
-import com.example.manageyourcar.UIlayer.viewmodel.MapsViewModel
 import com.example.manageyourcar.dataLayer.GlobalEvent
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
@@ -38,8 +37,6 @@ class MapsFragment : Fragment(), KoinComponent, GlobalEvent {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var onUserLocationChanged: LocationCallback
 
-    private val key = BuildConfig.MAPS_API_KEY
-    val mapsViewModel by viewModels<MapsViewModel>()
     private lateinit var googleMap: GoogleMap
     private val callback = OnMapReadyCallback { googleMap ->
         this.googleMap = googleMap

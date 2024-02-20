@@ -34,7 +34,6 @@ import androidx.compose.ui.unit.dp
 import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.UIState.MaintenanceListUiState
 import com.example.manageyourcar.UIlayer.UIState.SortType
-import com.example.manageyourcar.UIlayer.view.common.CustomDialog
 import com.example.manageyourcar.UIlayer.viewmodel.OnMaintenanceListEvent
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -50,70 +49,66 @@ fun ViewListMaintenanceView(
             .background(MaterialTheme.colorScheme.primary),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        if (uiState.onInternetLost) {
-            CustomDialog(title = stringResource(R.string.connection_lost))
+        if (uiState.isLoading) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.primary),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                CircularProgressIndicator()
+            }
         } else {
-            if (uiState.isLoading) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(MaterialTheme.colorScheme.primary),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    CircularProgressIndicator()
-                }
-            } else {
 
-                Button(
-                    onClick = { onEvent(OnMaintenanceListEvent.OnButtonAddMaintenancePush) },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer,
-                        contentColor = Color.Black
-                    ),
-                    modifier = Modifier.padding(bottom = 20.dp)
-                ) {
-                    Text(
-                        text = stringResource(R.string.add_entretien),
-                        color = MaterialTheme.colorScheme.onPrimaryContainer,
-                    )
-                }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(color = MaterialTheme.colorScheme.primaryContainer),
-                    horizontalArrangement = Arrangement.End
-                ) {
-                    Column {
-                        IconButton(onClick = { openSortChoice = !openSortChoice }) {
-                            Icon(imageVector = Icons.Filled.Menu, contentDescription = "")
+            Button(
+                onClick = { onEvent(OnMaintenanceListEvent.OnButtonAddMaintenancePush) },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    contentColor = Color.Black
+                ),
+                modifier = Modifier.padding(bottom = 20.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.add_entretien),
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                )
+            }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(color = MaterialTheme.colorScheme.primaryContainer),
+                horizontalArrangement = Arrangement.End
+            ) {
+                Column {
+                    IconButton(onClick = { openSortChoice = !openSortChoice }) {
+                        Icon(imageVector = Icons.Filled.Menu, contentDescription = "")
 
-                        }
-                        DropdownMenu(
-                            expanded = openSortChoice,
-                            onDismissRequest = { openSortChoice = false }) {
-                            SortType.values().forEach {
-                                DropdownMenuItem(text = { Text(text = it.name) }, onClick = {
-                                    openSortChoice = false
-                                    onEvent(OnMaintenanceListEvent.OnSortMethodChanged(it))
-                                })
-
-                            }
+                    }
+                    DropdownMenu(
+                        expanded = openSortChoice,
+                        onDismissRequest = { openSortChoice = false }) {
+                        SortType.values().forEach {
+                            DropdownMenuItem(text = { Text(text = it.name) }, onClick = {
+                                openSortChoice = false
+                                onEvent(OnMaintenanceListEvent.OnSortMethodChanged(it))
+                            })
 
                         }
+
                     }
                 }
             }
-            if (uiState.listUiState.isEmpty()) {
-                Text(
-                    text = stringResource(R.string.no_entretien),
-                    color = MaterialTheme.colorScheme.onPrimary,
-                )
-            } else {
-                LazyColumn(modifier = Modifier.fillMaxWidth()) {
-                    items(uiState.listUiState.size) { item ->
-                        ViewMaintenanceItem(uiState.listUiState[item])
-                    }
+        }
+        if (uiState.listUiState.isEmpty()) {
+            Text(
+                text = stringResource(R.string.no_entretien),
+                color = MaterialTheme.colorScheme.onPrimary,
+            )
+        } else {
+            LazyColumn(modifier = Modifier.fillMaxWidth()) {
+                items(uiState.listUiState.size) { item ->
+                    ViewMaintenanceItem(uiState.listUiState[item])
                 }
             }
         }

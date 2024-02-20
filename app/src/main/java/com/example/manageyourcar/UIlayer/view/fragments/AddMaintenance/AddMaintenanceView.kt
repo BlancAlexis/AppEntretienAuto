@@ -69,9 +69,6 @@ fun AddMaintenanceView(
         modifier = Modifier.fillMaxSize()
     ) {
         var checked by remember { mutableStateOf(false) }
-        if (uiState.onInternetLost) {
-            CustomDialog(title = stringResource(id = R.string.connection_lost))
-        } else {
             val showCalendar = remember { mutableStateOf(false) }
             val selectedDate = remember { mutableStateOf(Date.from(Instant.now())) }
 
@@ -201,7 +198,6 @@ fun AddMaintenanceView(
             }
         }
     }
-}
 
 @Preview(showBackground = true)
 @Composable

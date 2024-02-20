@@ -47,9 +47,6 @@ fun AddCarView(
             onApprove = { onEvent(OnCarRequest.OnClickAddCarButton) },
             onDismiss = { onEvent(OnCarRequest.OnDismissAddCarFragment) })
     }
-    if (uiState.onInternetLost) {
-        CustomDialog(title = stringResource(id = R.string.connection_lost))
-    } else {
         var openDialog by remember { mutableStateOf(false) }
         if (openDialog) {
             CustomDialog(
@@ -73,9 +70,9 @@ fun AddCarView(
             Text(text = stringResource(R.string.enter_your_immat))
             CustomPlaqueImmat(
                 registration = uiState.inputImmat,
-                onImmatEvent = { onEvent(OnCarRequest.OnImmatChanged(it ?: "")) }
+                onImmatEvent = { onEvent(OnCarRequest.OnRegistrationNumberChanged(it ?: "")) }
             )
-            Button(onClick = { onEvent(OnCarRequest.OnClickSearchCarWithImmatButton) }) {
+            Button(onClick = { onEvent(OnCarRequest.OnClickSearchCarByRegistrationNumberButton) }) {
                 Text(
                     text = stringResource(R.string.find), fontSize = 20.sp
                 )
@@ -93,7 +90,7 @@ fun AddCarView(
                     Icon(imageVector = Icons.Filled.Info, contentDescription = "Close")
                 }
                 CustomTextField(
-                    onValueChange = { onEvent(OnCarRequest.OnVINChanged(it)) },
+                    onValueChange = { onEvent(OnCarRequest.OnVINNumberChanged(it)) },
                     textFieldValue = uiState.inputVIN ?: "",
                     label = stringResource(R.string.find_by_VIN),
                     readOnly = false,
@@ -114,7 +111,6 @@ fun AddCarView(
             }
         }
     }
-}
 
 @Preview(showBackground = true)
 @Composable

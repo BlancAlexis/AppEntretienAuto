@@ -1,50 +1,56 @@
 package com.example.manageyourcar.UIlayer.viewmodel
 
-import android.location.Location
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.manageyourcar.R
-import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.UIlayer.UIState.ViewCarDetailsState
 import com.example.manageyourcar.UIlayer.UIUtil
 import com.example.manageyourcar.UIlayer.view.fragments.ViewCarDetails.ViewCarDetailsFragmentDirections
-import com.example.manageyourcar.dataLayer.GlobalEvent
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.dataLayer.model.CarLocal
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.DeleteCarRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.GetUserCarsUseCase
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class ViewCarDetailsViewModel(val cacheManagerRepository: CacheManagerRepository, private val uiUtil: UIUtil) :
-    ViewModel(), KoinComponent, GlobalEvent {
+class ViewCarDetailsViewModel(
+    val cacheManagerRepository: CacheManagerRepository, private val uiUtil: UIUtil
+) : ViewModel(), KoinComponent {
     private val getUserCarsUseCase by inject<GetUserCarsUseCase>()
     private val deleteCarRoomUseCase by inject<DeleteCarRoomUseCase>()
     private val _uiState = MutableStateFlow<ViewCarDetailsState>(ViewCarDetailsState.Loading)
     val uiState = _uiState.asStateFlow()
     private lateinit var navController: NavController
 
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+
     init {
-        viewModelScope.launch(Dispatchers.IO) {
+        getCachedUser()
+    }
+
+    private fun getCachedUser() {
+        viewModelScope.launch(ioDispatcher) {
             getUserCarsUseCase.invoke().collect { result ->
                 when (result) {
-                    is Ressource.Error -> uiUtil.displayToastSuspend(result.error?.localizedMessage ?: "erreur")
+                    is Ressource.Error -> uiUtil.displayToastSuspend(
+                        result.error?.localizedMessage ?: "erreur"
+                    )
+
                     is Ressource.Success -> result.data?.let {
                         updateListCar(it)
                         cacheManagerRepository.saveUserCarList(it)
                     }
+
                     else -> {}
                 }
             }
@@ -59,86 +65,62 @@ class ViewCarDetailsViewModel(val cacheManagerRepository: CacheManagerRepository
 
             is ViewCarDetailsEvent.OnUpdateMileage -> {
                 when (val result = cacheManagerRepository.getUserCarList()) {
-                    is Ressource.Error -> {
-                        uiUtil.displayToast(
-                            "Erreur lors de la récupération des voitures")
+                    is Ressource.Error -> { uiUtil.displayToast("Erreur lors de la récupération des voitures")
                         return
                     }
-
                     is Ressource.Loading -> {
-                        uiUtil.displayToast(
-                            "Chargement des voitures")
+                        uiUtil.displayToast("Chargement des voitures")
                         return
                     }
-
                     is Ressource.Success -> {
                         if (result.data.isNullOrEmpty()) {
-                            uiUtil.displayToast(
-                                "Vous n'avez encore aucune voiture")
+                            uiUtil.displayToast("Vous n'avez encore aucune voiture")
                             return
                         }
-                        val action =
-                            ViewCarDetailsFragmentDirections.actionViewCarDetailsFragmentToUpdateCarMileage(
-                                myArg = result.data[event.position]
-                            )
+                        val action = ViewCarDetailsFragmentDirections.actionViewCarDetailsFragmentToUpdateCarMileage(myArg = result.data[event.position])
                         navController.navigate(action)
                     }
                 }
 
             }
 
-            is ViewCarDetailsEvent.OnDeleteCar ->
-                viewModelScope.launch(Dispatchers.IO) {
-                    when (val result = cacheManagerRepository.getUserCarList()) {
-                        is Ressource.Error -> {
-                                uiUtil.displayToastSuspend(
-                                    "Erreur lors de la récupération des voitures")
-                            }
+            is ViewCarDetailsEvent.OnDeleteCar -> getCachedUserCars(event) }
+    }
 
-                        is Ressource.Loading -> {
-                        }
+    private fun getCachedUserCars(
+        event : ViewCarDetailsEvent.OnDeleteCar
+    ) {
+        viewModelScope.launch(ioDispatcher) {
+            when (val result = cacheManagerRepository.getUserCarList()) {
+                is Ressource.Error -> {
+                    uiUtil.displayToastSuspend("Erreur lors de la récupération des voitures")
+                }
 
-                        is Ressource.Success -> {
-                            if (result.data.isNullOrEmpty()) {
-                                uiUtil.displayToastSuspend("Vous n'avez encore aucune voiture")
-                                return@launch
-                            } else {
-                                deleteCarRoomUseCase.deleteCar(result.data[event.position])
-                            }
-
-                        }
+                is Ressource.Success -> {
+                    if (result.data.isNullOrEmpty()) {
+                        uiUtil.displayToastSuspend("Vous n'avez encore aucune voiture")
+                        return@launch
+                    } else {
+                        deleteCarRoomUseCase.deleteCar(result.data[event.position])
                     }
                 }
+
+                else -> {}
+            }
         }
-
-
     }
 
     fun setNavController(view: View) {
         navController = Navigation.findNavController(view)
     }
 
-    private fun updateListCar(data: List<CarLocal>) {
+    private fun updateListCar(cars: List<CarLocal>) {
         _uiState.update {
             ViewCarDetailsState.ViewCarDetailsStateDetailsUIState(
-                carLocals = data
+                carLocals = cars
             )
         }
     }
-
-    override fun onInternetConnectionLost() {
-        println("conNNNNnNnnNnN")
-    }
-
-    override fun onInternetConnectionAvailable() {
-        println("conNNNNnNnnNnN")
-    }
-
-    override fun onLocationChanged(location: Location) {
-        println("conNNNNnNnnNnN")
-    }
-
-
 }
 
 sealed interface ViewCarDetailsEvent {

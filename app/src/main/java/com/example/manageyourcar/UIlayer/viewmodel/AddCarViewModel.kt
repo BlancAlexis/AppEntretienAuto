@@ -1,10 +1,8 @@
 package com.example.manageyourcar.UIlayer.viewmodel
 
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.UIlayer.UIState.AddCarUIState
 import com.example.manageyourcar.UIlayer.UIUtil
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
@@ -13,6 +11,7 @@ import com.example.manageyourcar.domainLayer.mappers.CarRetrofitToCar.toCarGloba
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkImmatUseCase
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.AddCarRoomUseCase
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -31,72 +30,76 @@ class AddCarViewModel : ViewModel(), KoinComponent {
     private val _uiState = MutableStateFlow(AddCarUIState())
     val uiState = _uiState.asStateFlow()
 
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+
     fun onEvent(event: OnCarRequest) {
         when (event) {
-            is OnCarRequest.OnClickSearchCarWithImmatButton -> searchCarWithImmat()
-            is OnCarRequest.OnImmatChanged -> onChangedImmat(event)
-            is OnCarRequest.OnVINChanged -> onChangedVIN(event)
+            is OnCarRequest.OnClickSearchCarByRegistrationNumberButton -> searchCarByRegistrationNumber()
+            is OnCarRequest.OnRegistrationNumberChanged -> onChangedRegistrationNumber(event)
+            is OnCarRequest.OnVINNumberChanged -> onChangedVINNumber(event)
             is OnCarRequest.OnDismissAddCarFragment -> dismissFragment.postValue(true)
-            OnCarRequest.OnClickAddCarButton -> addCarToRoom()
-            OnCarRequest.OnClickSearchCarWithSIVButton -> searchCarWithSIV()
+            OnCarRequest.OnClickAddCarButton -> addCarLocalStorage()
+            OnCarRequest.OnClickSearchCarWithSIVButton -> checkCarSIVNumber()
         }
     }
 
-    private fun searchCarWithSIV() {
-        uiState.value.inputVIN?.let {
-            if (it.length == 17) {
-                getCarBySIV(it)
+    private fun checkCarSIVNumber() {
+        uiState.value.inputVIN?.let { vinNumber ->
+            if (vinNumber.length == 17) {
+                getCarBySIVNumber(vinNumber)
             } else {
-                uIUtil.displayToast("Veuillez entre une plaque valide")
+                uIUtil.displayToast("Veuillez entre un VIN valide")
             }
         } ?: run {
             uIUtil.displayToast("Error vin")
         }
     }
 
-    private fun searchCarWithImmat() {
-        uiState.value.inputImmat?.let { immat ->
-            if (immat.matches(Regex("^([A-Z]{2})-([0-9]{3})-([A-Z]{2})$"))) {
-                getCarByImmat(immat)
+    private fun searchCarByRegistrationNumber() {
+        uiState.value.inputImmat?.let { registrationNumber ->
+            if (registrationNumber.matches(Regex("^([A-Z]{2})-([0-9]{3})-([A-Z]{2})$"))) {
+                getCarByRegistrationNumber(registrationNumber)
             } else {
-
-                Toast.makeText(AppApplication.instance.applicationContext, "champs vide", Toast.LENGTH_SHORT).show()
+                uIUtil.displayToast("champs vide")
             }
         } ?: run {
-            Toast.makeText(AppApplication.instance.applicationContext, "error immat", Toast.LENGTH_SHORT).show()
+            uIUtil.displayToast("error immat")
         }
     }
 
-    private fun onChangedImmat(event: OnCarRequest.OnImmatChanged) {
+    private fun onChangedRegistrationNumber(event: OnCarRequest.OnRegistrationNumberChanged) {
         _uiState.update {
             it.copy(
-                inputImmat = event.newValue
+                inputImmat = event.newRegistrationNumber
             )
         }
     }
 
-    private fun onChangedVIN(event: OnCarRequest.OnVINChanged) {
+    private fun onChangedVINNumber(event: OnCarRequest.OnVINNumberChanged) {
         _uiState.update {
             it.copy(
-                inputVIN = event.newValue
+                inputVIN = event.newVINNumber
             )
         }
     }
 
-    fun getCarBySIV(siv: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            getVehiculeBySivNetworkUseCase.getVehiculeBySiv(siv).collect { result ->
+    private fun getCarBySIVNumber(sivNumber: String) {
+        viewModelScope.launch(ioDispatcher) {
+            getVehiculeBySivNetworkUseCase.getVehiculeBySiv(sivNumber).collect { result ->
                 when (result) {
                     is Ressource.Error -> {
                         uIUtil.displayToastSuspend("Erreur lors de la requête ${result.message}")
                     }
+
                     is Ressource.Success -> {
                         result.data?.let { setCar(it.toCarGlobal()) }
                     }
+
                     else -> {}
                 }
             }
         }
+        //TODO: pas besoin de flow dans ce cas?
     }
 
     private fun setCar(carLocal: CarLocal) {
@@ -107,56 +110,54 @@ class AddCarViewModel : ViewModel(), KoinComponent {
         }
     }
 
-    private fun getCarByImmat(immat: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            getVehiculeByImmatNetworkUseCase.getVehiculeByImmat(immat).collect { result ->
-                when (result) {
-                    is Ressource.Error -> {
-                        uIUtil.displayToastSuspend("Erreur lors de la requête ${result.message}")
+    private fun getCarByRegistrationNumber(registrationNumber: String) {
+        viewModelScope.launch(ioDispatcher) {
+            getVehiculeByImmatNetworkUseCase.getVehiculeByImmat(registrationNumber)
+                .collect { result ->
+                    when (result) {
+                        is Ressource.Error -> {
+                            uIUtil.displayToastSuspend("Erreur lors de la requête ${result.message}")
+                        }
+
+                        is Ressource.Success -> {
+                            result.data?.let { setCar(it) }
+                        }
+
+                        else -> {}
                     }
+                }
+        }
+        //TODO: pas besoin de flow dans ce cas?
+    }
+
+    private fun addCarLocalStorage() {
+        viewModelScope.launch(ioDispatcher) {
+            uiState.value.carLocalFind?.let { car ->
+                when (addCarRoomUseCase.addCarToRoom(car)) {
                     is Ressource.Success -> {
-                        result.data?.let { setCar(it) }
+                        uIUtil.displayToastSuspend("Voiture ajoutée avec succès")
+                        dismissFragment.postValue(true)
                     }
+
+                    is Ressource.Error -> {
+                        uIUtil.displayToastSuspend("Problème lors de l'ajout de la voiture")
+                        dismissFragment.postValue(true)
+                    }
+
                     else -> {}
                 }
             }
         }
     }
-
-    private fun addCarToRoom() {
-        viewModelScope.launch(Dispatchers.IO) {
-            when (addCarRoomUseCase.addCarToRoom(uiState.value.carLocalFind!!)) {
-                is Ressource.Success -> {
-                        uIUtil.displayToastSuspend("Voiture ajoutée avec succès")
-                        dismissFragment.postValue(true)
-                    }
-                is Ressource.Error -> {
-                    uIUtil.displayToastSuspend("Problème lors de l'ajout de la voiture")
-                    dismissFragment.postValue(true)
-                }
-                else -> {}
-            }
-        }
-    }
-
-    fun onInternetLost(bool: Boolean) {
-        _uiState.update {
-            it.copy(
-                onInternetLost = bool
-            )
-        }
-    }
-
-
 }
 
 sealed interface OnCarRequest {
-    object OnClickSearchCarWithImmatButton : OnCarRequest
+    object OnClickSearchCarByRegistrationNumberButton : OnCarRequest
     object OnClickSearchCarWithSIVButton : OnCarRequest
     object OnClickAddCarButton : OnCarRequest
     object OnDismissAddCarFragment : OnCarRequest
-    data class OnVINChanged(val newValue: String) : OnCarRequest
-    data class OnImmatChanged(val newValue: String) : OnCarRequest
+    data class OnVINNumberChanged(val newVINNumber: String) : OnCarRequest
+    data class OnRegistrationNumberChanged(val newRegistrationNumber: String) : OnCarRequest
 }
 
 

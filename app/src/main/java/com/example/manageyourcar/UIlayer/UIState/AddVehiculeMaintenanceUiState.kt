@@ -13,6 +13,4 @@ data class AddVehiculeMaintenanceUiState(
 
     val pricePlahlder: String = "Prix",
     val mileagePlahlder: String = "Kilométrage",
-
-    val onInternetLost: Boolean = false
 )

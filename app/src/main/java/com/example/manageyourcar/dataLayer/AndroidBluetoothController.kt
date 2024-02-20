@@ -11,21 +11,28 @@ import android.content.Context
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.util.Log
+import com.example.manageyourcar.UIlayer.UIUtil
 import com.example.manageyourcar.dataLayer.broadcastReceiver.BluetoothStateReceiver
 import com.example.manageyourcar.dataLayer.broadcastReceiver.FoundDeviceReceiver
 import com.example.manageyourcar.domainLayer.ConnectionResult
 import com.example.manageyourcar.domainLayer.bluetooth.BluetoothController
 import com.example.manageyourcar.domainLayer.bluetooth.BluetoothDeviceDomain
 import com.example.manageyourcar.domainLayer.mappers.BluetoothDeviceMappers.toBluetoothDeviceDomain
+import com.github.eltonvs.obd.command.control.VINCommand
+import com.github.eltonvs.obd.command.engine.RPMCommand
+import com.github.eltonvs.obd.command.engine.SpeedCommand
+import com.github.eltonvs.obd.connection.ObdDeviceConnection
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.io.IOException
 import java.util.*
 
 @SuppressLint("MissingPermission")
 class AndroidBluetoothController(
+    private val uiUtil: UIUtil,
     private val context: Context
 ) : BluetoothController {
 
@@ -126,22 +133,29 @@ class AndroidBluetoothController(
             currentClientSocket?.let { socket ->
                 try {
                     socket.connect()
-                    emit(
-                        ConnectionResult.ConnectionEstablished(
-                            device,
-                            socket.inputStream,
-                            socket.outputStream
+                        val obdConnection =
+                            ObdDeviceConnection(socket.inputStream, socket.outputStream)
+                        println(
+                            " vitesse  ${obdConnection.run(SpeedCommand())} vin ${
+                                obdConnection.run(
+                                    VINCommand()
+                                )
+                            }  rpm ${obdConnection.run(RPMCommand())}"
                         )
+                    
+                    emit(ConnectionResult.ConnectionEstablished(device, socket.inputStream, socket.outputStream)
                     )
                 } catch (e: IOException) {
-                    socket.close()
+                    println("passe dans catch ${e.localizedMessage}")
+                    uiUtil.displayToastSuspend("passe dans catch ${e.localizedMessage}")
+                 /*   socket.close()
                     Log.e("AndroidBluetoothController", "Error while connecting to device", e)
                     currentClientSocket = null
-                    emit(ConnectionResult.Error("Connection was interrupted"))
+                    emit(ConnectionResult.Error("Connection was interrupted"))*/
                 }
             }
         }.onCompletion {
-            closeConnection()
+            uiUtil.displayToastSuspend("passe dans onCompletion")
         }.flowOn(Dispatchers.IO)
     }
 

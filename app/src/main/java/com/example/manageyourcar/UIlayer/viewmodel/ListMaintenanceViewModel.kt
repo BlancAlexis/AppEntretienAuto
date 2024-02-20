@@ -1,7 +1,6 @@
 package com.example.manageyourcar.UIlayer.viewmodel
 
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
@@ -17,10 +16,9 @@ import com.example.manageyourcar.dataLayer.dataLayerRoom.dao.MaintenanceWithCarE
 import com.example.manageyourcar.dataLayer.model.MaintenanceService
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
 import com.example.manageyourcar.domainLayer.useCaseBusiness.LogoutUserUseCase
-import com.example.manageyourcar.domainLayer.useCaseRoom.car.AddCarRoomUseCase
-import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.AddCarMaintenanceUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.GetAllUserMaintenanceUseCase
 import com.example.manageyourcar.domainLayer.utils.MaintenanceActScheddule
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -29,8 +27,9 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class ListMaintenanceViewModel(private val cacheManagerRepository: CacheManagerRepository, private val uiUtil: UIUtil) :
-    ViewModel(), KoinComponent {
+class ListMaintenanceViewModel(
+    private val cacheManagerRepository: CacheManagerRepository, private val uiUtil: UIUtil
+) : ViewModel(), KoinComponent {
     private val _uiState = MutableStateFlow(MaintenanceListUiState())
     val uiState = _uiState.asStateFlow()
 
@@ -38,8 +37,15 @@ class ListMaintenanceViewModel(private val cacheManagerRepository: CacheManagerR
     private val getAllUserMaintenanceUseCase by inject<GetAllUserMaintenanceUseCase>()
     private val logoutUserUseCase by inject<LogoutUserUseCase>()
 
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+
+
     init {
-        viewModelScope.launch(Dispatchers.IO) {
+        getUserMaintenanceLocalStorage()
+    }
+
+    private fun getUserMaintenanceLocalStorage() {
+        viewModelScope.launch(ioDispatcher) {
             getAllUserMaintenanceUseCase.invoke().collect { result ->
                 when (result) {
                     is Ressource.Error -> uiUtil.displayToastSuspend("erreur dans le chargement des entretiens")
@@ -51,19 +57,15 @@ class ListMaintenanceViewModel(private val cacheManagerRepository: CacheManagerR
     }
 
 
-    fun onInternetLost(bool: Boolean) {
-        _uiState.update {
-            it.copy(
-                onInternetLost = bool
-            )
-        }
-    }
-
     fun onBackPressed() {
         viewModelScope.launch {
-            when (val result = logoutUserUseCase.logoutUser(AppApplication.instance.applicationContext)) {
-                is Ressource.Error -> uiUtil.displayToastSuspend(result.error?.localizedMessage ?: "erreur")
-                is Ressource.Success -> return@launch //Faire une chose qui bloque si fail?
+            when (val result =
+                logoutUserUseCase.logoutUser(AppApplication.instance.applicationContext)) {
+                is Ressource.Error -> uiUtil.displayToastSuspend(
+                    result.error?.localizedMessage ?: "erreur"
+                )
+
+                is Ressource.Success -> return@launch
                 else -> {}
             }
         }
@@ -75,44 +77,42 @@ class ListMaintenanceViewModel(private val cacheManagerRepository: CacheManagerR
 
     private fun listLoading(newData: List<MaintenanceWithCarEntity>) {
         _uiState.update {
-            it.copy(
-                isLoading = false,
-                listUiState = newData.map { entretien ->
-                    var progressIndicator = 0.0f
-                    var description: String = ""
-                    when (entretien.maintenanceEntity.serviceType) {
-                        is MaintenanceService.Freins -> {
-                            description = entretien.maintenanceEntity.serviceType.name
-                            progressIndicator =
-                                ((entretien.maintenanceEntity.mileage.toFloat() / MaintenanceActScheddule.valueOf(
-                                    entretien.maintenanceEntity.serviceType.name.uppercase()
-                                ).km.toFloat()) * 100).toFloat()
-                        }
-
-                        is MaintenanceService.Pneus -> {
-                            description = entretien.maintenanceEntity.serviceType.name
-                            progressIndicator =
-                                ((entretien.maintenanceEntity.mileage.toFloat() / MaintenanceActScheddule.valueOf(
-                                    entretien.maintenanceEntity.serviceType.name.uppercase()
-                                ).km.toFloat()) * 100).toFloat()
-                        }
-
-                        is MaintenanceService.Vidange -> {
-                            description = entretien.maintenanceEntity.serviceType.name
-                            progressIndicator =
-                                ((entretien.maintenanceEntity.mileage.toFloat() / MaintenanceActScheddule.valueOf(
-                                    entretien.maintenanceEntity.serviceType.name.uppercase()
-                                ).km.toFloat()) * 100).toFloat()
-                        }
+            it.copy(isLoading = false, listUiState = newData.map { entretien ->
+                var progressIndicator = 0.0f
+                var description: String = ""
+                when (entretien.maintenanceEntity.serviceType) {
+                    is MaintenanceService.Freins -> {
+                        description = entretien.maintenanceEntity.serviceType.name
+                        progressIndicator =
+                            ((entretien.maintenanceEntity.mileage.toFloat() / MaintenanceActScheddule.valueOf(
+                                entretien.maintenanceEntity.serviceType.name.uppercase()
+                            ).km.toFloat()) * 100).toFloat()
                     }
 
-                    ServicingUIState(
-                        carName = entretien.carEntity.brand + " " + entretien.carEntity.model,
-                        mileage = entretien.maintenanceEntity.mileage.toString(),
-                        progressIndicator = progressIndicator.toFloat(),
-                        description = description,
-                    )
-                })
+                    is MaintenanceService.Pneus -> {
+                        description = entretien.maintenanceEntity.serviceType.name
+                        progressIndicator =
+                            ((entretien.maintenanceEntity.mileage.toFloat() / MaintenanceActScheddule.valueOf(
+                                entretien.maintenanceEntity.serviceType.name.uppercase()
+                            ).km.toFloat()) * 100).toFloat()
+                    }
+
+                    is MaintenanceService.Vidange -> {
+                        description = entretien.maintenanceEntity.serviceType.name
+                        progressIndicator =
+                            ((entretien.maintenanceEntity.mileage.toFloat() / MaintenanceActScheddule.valueOf(
+                                entretien.maintenanceEntity.serviceType.name.uppercase()
+                            ).km.toFloat()) * 100).toFloat()
+                    }
+                }
+
+                ServicingUIState(
+                    carName = entretien.carEntity.brand + " " + entretien.carEntity.model,
+                    mileage = entretien.maintenanceEntity.mileage.toString(),
+                    progressIndicator = progressIndicator.toFloat(),
+                    description = description,
+                )
+            })
         }
 
     }
@@ -131,7 +131,10 @@ class ListMaintenanceViewModel(private val cacheManagerRepository: CacheManagerR
         when (event) {
             is OnMaintenanceListEvent.OnButtonAddMaintenancePush -> {
                 when (val result = cacheManagerRepository.getUserCarList()) {
-                    is Ressource.Error -> uiUtil.displayToast(result.error?.localizedMessage ?: "erreur")
+                    is Ressource.Error -> uiUtil.displayToast(
+                        result.error?.localizedMessage ?: "erreur"
+                    )
+
                     is Ressource.Success -> {
                         if (result.data.isNullOrEmpty()) {
                             uiUtil.displayToast("Ajouter une voiture d'abord")
@@ -139,6 +142,7 @@ class ListMaintenanceViewModel(private val cacheManagerRepository: CacheManagerR
                         }
                         navController.navigate(R.id.addMaintenanceFragment)
                     }
+
                     else -> {}
                 }
             }
@@ -149,19 +153,13 @@ class ListMaintenanceViewModel(private val cacheManagerRepository: CacheManagerR
 
     private fun changeSortMethod(event: OnMaintenanceListEvent.OnSortMethodChanged) {
         when (event.newMethod) {
-            SortType.croissant ->
-                _uiState.update {
-                    it.copy(
-                        listUiState = it.listUiState.sortedBy { it.mileage }
-                    )
-                }
+            SortType.croissant -> _uiState.update {
+                it.copy(listUiState = it.listUiState.sortedBy { it.mileage })
+            }
 
-            SortType.décroissant ->
-                _uiState.update {
-                    it.copy(
-                        listUiState = it.listUiState.sortedByDescending { it.mileage }
-                    )
-                }
+            SortType.décroissant -> _uiState.update {
+                it.copy(listUiState = it.listUiState.sortedByDescending { it.mileage })
+            }
         }
 
     }

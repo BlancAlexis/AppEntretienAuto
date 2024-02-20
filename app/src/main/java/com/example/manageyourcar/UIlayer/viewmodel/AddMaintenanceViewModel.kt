@@ -1,10 +1,8 @@
 package com.example.manageyourcar.UIlayer.viewmodel
 
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.UIlayer.UIState.AddVehiculeMaintenanceUiState
 import com.example.manageyourcar.UIlayer.UIUtil
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
@@ -15,6 +13,7 @@ import com.example.manageyourcar.domainLayer.mappers.MapperMaintenanceView.toMai
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.GetUserCarsUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.AddCarMaintenanceUseCase
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -24,7 +23,10 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.util.Date
 
-class AddMaintenanceViewModel constructor(private val cacheManagerRepository: CacheManagerRepository, private val uiUtil: UIUtil): ViewModel(), KoinComponent {
+class AddMaintenanceViewModel constructor(
+    private val cacheManagerRepository: CacheManagerRepository,
+    private val uiUtil: UIUtil
+) : ViewModel(), KoinComponent {
     private val getUserCarsUseCase by inject<GetUserCarsUseCase>()
     val isMaintenanceAdd = MutableLiveData<Boolean>(false)
 
@@ -35,71 +37,62 @@ class AddMaintenanceViewModel constructor(private val cacheManagerRepository: Ca
 
     private lateinit var selectedCarLocal: CarLocal
     private lateinit var selectedMaintenance: MaintenanceServiceType
+    //TODO: refactor
 
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 
     init {
-        viewModelScope.launch(Dispatchers.IO) {
+        getCachedUserCars()
+    }
+
+    private fun getCachedUserCars() {
+        viewModelScope.launch(ioDispatcher) {
             when (val result = cacheManagerRepository.getUserCarList()) {
                 is Ressource.Error -> {
-                    getUserCarsUseCase.invoke().collect { result ->
-                        when (result) {
-                            is Ressource.Error ->uiUtil.displayToastSuspend("Erreur lors du chargement des voitures")
-                            is Ressource.Success -> result.data?.let {
-                                if (it.isEmpty()) {
-                                    isMaintenanceAdd.postValue(true)
-                                }
-                                updateListCar(it)
-                                if (it.isNotEmpty()) {
-                                    selectedCarLocal = it[0]
-                                }
-                                _uiState.update {
-                                    it.copy(
-                                        listMaintenance = MaintenanceServiceType.values().toList()
-                                    )
-                                }
-                                selectedMaintenance = MaintenanceServiceType.values()[0]
-                            }
-                            else -> {}
-                        }
-                    }
+                    getUserCarsLocalStorage()
                 }
+
                 is Ressource.Success -> result.data?.let {
-                    if (it.isEmpty()) {
-                        isMaintenanceAdd.postValue(true)
-                    }
-                    updateListCar(it)
-                    if (it.isNotEmpty()) {
-                        selectedCarLocal = it[0]
-                    }
-                    _uiState.update {
-                        it.copy(
-                            listMaintenance = MaintenanceServiceType.values().toList()
-                        )
-                    }
-                    selectedMaintenance = MaintenanceServiceType.values()[0]
+                    checkCars(it)
                 }
+
                 else -> {}
             }
         }
     }
 
-    private fun addMaintenanceAct() {
-        viewModelScope.launch(Dispatchers.IO) {
-            when (addCarMaintenanceUseCase.addMaintenanceOperation(
-                Entretien(
-                    userID = null,
-                    carID = selectedCarLocal.carID,
-                    mileage = uiState.value.mileage.toInt(),
-                    price = uiState.value.price.toInt(),
-                    date = uiState.value.date ?: Date(),
-                    service = selectedMaintenance.toMaintenanceService()
-                )
-            )) {
+    private fun addMaintenanceLocalStorage() {
+        viewModelScope.launch(ioDispatcher) {
+            when (addCarMaintenanceUseCase.addMaintenanceOperation(Entretien(userID = null, carID = selectedCarLocal.carID, mileage = uiState.value.mileage.toInt(), price = uiState.value.price.toInt(), date = uiState.value.date ?: Date(), service = selectedMaintenance.toMaintenanceService()))) {
                 is Ressource.Error -> uiUtil.displayToastSuspend("échec de l'ajout")
-                is Ressource.Success -> {
-                    isMaintenanceAdd.postValue(true)
-                }
+                is Ressource.Success -> { isMaintenanceAdd.postValue(true) }
                 else -> {}
+            }
+        }
+    }
+    private fun checkCars(cars: List<CarLocal>) {
+            if (cars.isEmpty()) {
+                isMaintenanceAdd.postValue(true)
+            }
+            updateListCar(cars)
+            if (cars.isNotEmpty()) {
+                selectedCarLocal = cars[0]
+            }
+            _uiState.update {
+                it.copy(
+                    listMaintenance = MaintenanceServiceType.values().toList()
+                )
+            }
+            selectedMaintenance = MaintenanceServiceType.values()[0]
+    }
+    private fun getUserCarsLocalStorage() {
+        viewModelScope.launch(Dispatchers.IO) {
+            getUserCarsUseCase.invoke().collect { result ->
+                when (result) {
+                    is Ressource.Error -> uiUtil.displayToastSuspend(result.error?.localizedMessage ?: "erreur")
+                    is Ressource.Success -> checkCars(result.data ?: emptyList())
+                    else -> {}
+                }
             }
         }
     }
@@ -114,24 +107,21 @@ class AddMaintenanceViewModel constructor(private val cacheManagerRepository: Ca
 
     fun onEvent(event: OnMaintenanceEvent) {
         when (event) {
-            is OnMaintenanceEvent.OnCarSelectedChanged -> OnCarChanged(event.newValue)
-            is OnMaintenanceEvent.OnMaintenanceSelectedChanged -> OnMaintenanceChanged(event.newValue)
-            is OnMaintenanceEvent.OnMileageChanged -> OnMileageChanged(event.newValue)
-            is OnMaintenanceEvent.OnDateChanged -> OnDateChanged(Date(event.newDate))
-            OnMaintenanceEvent.OnClickAddMaintenanceButton -> {
-                addMaintenanceAct()
-            }
-
-            is OnMaintenanceEvent.OnPriceChanged -> OnPriceChanged(event.newValue)
+            is OnMaintenanceEvent.OnCarSelectedChanged -> onCarChanged(event.newCarSelected)
+            is OnMaintenanceEvent.OnMaintenanceSelectedChanged -> onMaintenanceChanged(event.newMaintenanceServiceType)
+            is OnMaintenanceEvent.OnMileageChanged -> onMileageChanged(event.newMileage)
+            is OnMaintenanceEvent.OnDateChanged -> onDateChanged(Date(event.newDate))
+            OnMaintenanceEvent.OnClickAddMaintenanceButton -> { addMaintenanceLocalStorage() }
+            is OnMaintenanceEvent.OnPriceChanged -> onPriceChanged(event.newPrice)
         }
 
     }
 
-    private fun OnCarChanged(newValue: CarLocal) {
+    private fun onCarChanged(newValue: CarLocal) {
         selectedCarLocal = newValue
     }
 
-    private fun OnPriceChanged(newValue: Int) {
+    private fun onPriceChanged(newValue: Int) {
         _uiState.update {
             it.copy(
                 price = newValue.toString()
@@ -140,11 +130,11 @@ class AddMaintenanceViewModel constructor(private val cacheManagerRepository: Ca
     }
 
 
-    private fun OnMaintenanceChanged(newValue: MaintenanceServiceType) {
+    private fun onMaintenanceChanged(newValue: MaintenanceServiceType) {
         selectedMaintenance = newValue
     }
 
-    private fun OnMileageChanged(newValue: Int) {
+    private fun onMileageChanged(newValue: Int) {
         _uiState.update {
             it.copy(
                 mileage = newValue.toString()
@@ -152,34 +142,22 @@ class AddMaintenanceViewModel constructor(private val cacheManagerRepository: Ca
         }
     }
 
-    private fun OnDateChanged(newDate: Date) {
+    private fun onDateChanged(newDate: Date) {
         _uiState.update {
             it.copy(
                 date = newDate
             )
         }
     }
-
-
-    fun onInternetLost(bool: Boolean) {
-        _uiState.update {
-            it.copy(
-                onInternetLost = bool
-            )
-        }
-    }
-
 }
 
 sealed interface OnMaintenanceEvent {
     object OnClickAddMaintenanceButton : OnMaintenanceEvent
     data class OnDateChanged(val newDate: String) : OnMaintenanceEvent
-    data class OnMileageChanged(val newValue: Int) : OnMaintenanceEvent
-    data class OnPriceChanged(val newValue: Int) : OnMaintenanceEvent
-    data class OnMaintenanceSelectedChanged(val newValue: MaintenanceServiceType) :
-        OnMaintenanceEvent
-
-    data class OnCarSelectedChanged(val newValue: CarLocal) : OnMaintenanceEvent
+    data class OnMileageChanged(val newMileage: Int) : OnMaintenanceEvent
+    data class OnPriceChanged(val newPrice: Int) : OnMaintenanceEvent
+    data class OnMaintenanceSelectedChanged(val newMaintenanceServiceType: MaintenanceServiceType) : OnMaintenanceEvent
+    data class OnCarSelectedChanged(val newCarSelected: CarLocal) : OnMaintenanceEvent
 
 }
 

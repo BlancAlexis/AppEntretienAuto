@@ -1,16 +1,15 @@
 package com.example.manageyourcar.UIlayer.viewmodel
 
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.UIlayer.UIState.SignInUiState
 import com.example.manageyourcar.UIlayer.UIUtil
 import com.example.manageyourcar.domainLayer.useCaseRoom.user.AddUserRoomUseCase
 import com.example.manageyourcar.domainLayer.utils.UserEntryChecker
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,7 +20,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 
-class AddUserViewModel constructor ( private val uiUtil: UIUtil): ViewModel(), KoinComponent {
+class AddUserViewModel constructor(private val uiUtil: UIUtil) : ViewModel(), KoinComponent {
     private val addUserRoomUseCase by inject<AddUserRoomUseCase>()
     private lateinit var navController: NavController
 
@@ -29,14 +28,16 @@ class AddUserViewModel constructor ( private val uiUtil: UIUtil): ViewModel(), K
     private val _uiState = MutableStateFlow(SignInUiState())
     val uiState = _uiState.asStateFlow()
 
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+
     fun setNavController(view: View) {
         navController = Navigation.findNavController(view)
     }
 
     fun onEvent(event: UserSubscriptionEvent) {
         when (event) {
-            is UserSubscriptionEvent.OnClickSendButton -> onCheckFields()
-            is UserSubscriptionEvent.OnLoginChanged -> onLoginChanged(event)
+            is UserSubscriptionEvent.OnClickSendButton -> addUserLocalStorage()
+            is UserSubscriptionEvent.OnIdentifiantChanged -> onLoginChanged(event)
             is UserSubscriptionEvent.OnPasswordChanged -> onPasswordChanged(event)
             is UserSubscriptionEvent.OnFirstnameChanged -> onFirstnameChanged(event)
             is UserSubscriptionEvent.OnLastNameChanged -> onLastNameChanged(event)
@@ -50,10 +51,9 @@ class AddUserViewModel constructor ( private val uiUtil: UIUtil): ViewModel(), K
         _uiState.update {
             it.copy(
                 userValidatePasswordError = UserEntryChecker.areTwoFieldPasswordTheSame(
-                    uiState.value.userPassword,
-                    event.newValue
-                ), //Pas fou
-                userValidatePassword = event.newValue
+                    uiState.value.userPassword, event.newConfirmePassword
+                ),
+                userValidatePassword = event.newConfirmePassword
             )
         }
     }
@@ -61,8 +61,8 @@ class AddUserViewModel constructor ( private val uiUtil: UIUtil): ViewModel(), K
     private fun onLastNameChanged(event: UserSubscriptionEvent.OnLastNameChanged) {
         _uiState.update {
             it.copy(
-                userLastNameError = UserEntryChecker.validateLastName(event.newValue), //Pas fou
-                userLastName = event.newValue
+                userLastNameError = UserEntryChecker.validateLastName(event.newLastname),
+                userLastName = event.newLastname
             )
         }
     }
@@ -70,22 +70,16 @@ class AddUserViewModel constructor ( private val uiUtil: UIUtil): ViewModel(), K
     private fun onFirstnameChanged(event: UserSubscriptionEvent.OnFirstnameChanged) {
         _uiState.update {
             it.copy(
-                userFirstNameError = UserEntryChecker.validateFirstName(event.newValue),
-                userFirstName = event.newValue
+                userFirstNameError = UserEntryChecker.validateFirstName(event.newFirstname),
+                userFirstName = event.newFirstname
             )
         }
     }
 
-    private fun onCheckFields() {
-        //SmsSender.sendSMS("dd","e")
-        viewModelScope.launch(Dispatchers.IO) {
+    private fun addUserLocalStorage() {
+        viewModelScope.launch(ioDispatcher) {
             if ((uiState.value.userPassword == uiState.value.userValidatePassword) && uiState.value.userPassword != "" && uiState.value.userLogin != "" && uiState.value.userFirstName != "" && uiState.value.userLastName != "") {
-                addUserRoomUseCase.invoke(
-                    uiState.value.userLogin,
-                    uiState.value.userPassword,
-                    uiState.value.userFirstName,
-                    uiState.value.userLastName
-                )
+                addUserRoomUseCase.invoke(uiState.value.userLogin, uiState.value.userPassword, uiState.value.userFirstName, uiState.value.userLastName)
                 withContext(Dispatchers.Main) {
                     navController.popBackStack()
                 }
@@ -98,10 +92,10 @@ class AddUserViewModel constructor ( private val uiUtil: UIUtil): ViewModel(), K
 
     }
 
-    private fun onLoginChanged(event: UserSubscriptionEvent.OnLoginChanged) {
+    private fun onLoginChanged(event: UserSubscriptionEvent.OnIdentifiantChanged) {
         _uiState.update {
             it.copy(
-                userLogin = event.newValue
+                userLogin = event.newIdentifiant
             )
         }
     }
@@ -109,30 +103,20 @@ class AddUserViewModel constructor ( private val uiUtil: UIUtil): ViewModel(), K
     private fun onPasswordChanged(event: UserSubscriptionEvent.OnPasswordChanged) {
         _uiState.update {
             it.copy(
-                userPasswordError = UserEntryChecker.validatePassword(event.newValue),
-                userPassword = event.newValue
+                userPasswordError = UserEntryChecker.validatePassword(event.newPassword),
+                userPassword = event.newPassword
             )
         }
     }
-
-
-    fun onInternetLost(bool: Boolean) {
-        _uiState.update {
-            it.copy(
-                onInternetLost = bool
-            )
-        }
-    }
-
 }
 
 
 sealed interface UserSubscriptionEvent {
     object OnBackIconClicked : UserSubscriptionEvent
     object OnClickSendButton : UserSubscriptionEvent
-    data class OnLoginChanged(val newValue: String) : UserSubscriptionEvent
-    data class OnPasswordChanged(val newValue: String) : UserSubscriptionEvent
-    data class OnFirstnameChanged(val newValue: String) : UserSubscriptionEvent
-    data class OnLastNameChanged(val newValue: String) : UserSubscriptionEvent
-    data class OnConfirmPasswordChanged(val newValue: String) : UserSubscriptionEvent
+    data class OnIdentifiantChanged(val newIdentifiant: String) : UserSubscriptionEvent
+    data class OnPasswordChanged(val newPassword: String) : UserSubscriptionEvent
+    data class OnFirstnameChanged(val newFirstname: String) : UserSubscriptionEvent
+    data class OnLastNameChanged(val newLastname: String) : UserSubscriptionEvent
+    data class OnConfirmPasswordChanged(val newConfirmePassword: String) : UserSubscriptionEvent
 }

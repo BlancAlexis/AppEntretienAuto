@@ -12,7 +12,5 @@ data class SignInUiState(
     val userFirstNameError: String = "",
     val userLastNameError: String = "",
     val userValidatePasswordError: String = "",
-
-    val onInternetLost: Boolean = false
-)
+    )
 

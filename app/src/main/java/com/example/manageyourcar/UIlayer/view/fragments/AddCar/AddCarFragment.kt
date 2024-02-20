@@ -1,6 +1,5 @@
 package com.example.manageyourcar.UIlayer.view.fragments.AddCar
 
-import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,18 +12,15 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
 import com.example.manageyourcar.UIlayer.viewmodel.AddCarViewModel
-import com.example.manageyourcar.dataLayer.GlobalEvent
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.KoinComponent
 
 
-class AddCarFragment : Fragment(), KoinComponent, GlobalEvent {
-
+class AddCarFragment : Fragment(), KoinComponent {
     val addCarViewModel: AddCarViewModel by viewModel()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
@@ -34,21 +30,13 @@ class AddCarFragment : Fragment(), KoinComponent, GlobalEvent {
                     val addCarUiState by addCarViewModel.uiState.collectAsState()
                     ManageYourCarTheme {
                         AddCarView(
-                            uiState = addCarUiState,
-                            onEvent = addCarViewModel::onEvent
+                            uiState = addCarUiState, onEvent = addCarViewModel::onEvent
                         )
                     }
                 }
             }
         }
     }
-
-    companion object {
-        fun newInstance(): AddCarFragment {
-            return AddCarFragment()
-        }
-    }
-
 
     override fun onResume() {
         super.onResume()
@@ -59,15 +47,9 @@ class AddCarFragment : Fragment(), KoinComponent, GlobalEvent {
         }
     }
 
-    override fun onInternetConnectionLost() {
-        TODO("Not yet implemented")
-    }
-
-    override fun onInternetConnectionAvailable() {
-        TODO("Not yet implemented")
-    }
-
-    override fun onLocationChanged(location: Location) {
-        TODO("Not yet implemented")
+    companion object {
+        fun newInstance(): AddCarFragment {
+            return AddCarFragment()
+        }
     }
 }

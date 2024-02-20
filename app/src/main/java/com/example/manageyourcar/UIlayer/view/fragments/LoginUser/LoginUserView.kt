@@ -54,9 +54,6 @@ fun LoginUserView(
     val juraFamily = FontFamily(
         Font(R.font.jura, FontWeight.Medium)
     )
-    if (uiState.onInternetLost) {
-        CustomDialog(title = stringResource(id =R.string.connection_lost) )
-    } else {
         var displayPopup by remember { mutableStateOf(false) }
 
         if (displayPopup) {
@@ -183,7 +180,6 @@ fun LoginUserView(
 
         }
     }
-}
 
 @Preview(showBackground = true)
 @Composable

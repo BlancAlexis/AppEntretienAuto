@@ -17,12 +17,11 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.KoinComponent
 
 
-class AddUserFragment : Fragment(), KoinComponent, GlobalEvent {
+class AddUserFragment : Fragment(), KoinComponent{
     private val addUserViewModel: AddUserViewModel by viewModel()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
@@ -32,8 +31,7 @@ class AddUserFragment : Fragment(), KoinComponent, GlobalEvent {
                     val addUserUiState by addUserViewModel.uiState.collectAsState()
                     ManageYourCarTheme {
                         AddUserView(
-                            uiState = addUserUiState,
-                            onEvent = addUserViewModel::onEvent
+                            uiState = addUserUiState, onEvent = addUserViewModel::onEvent
                         )
                     }
                 }
@@ -52,17 +50,5 @@ class AddUserFragment : Fragment(), KoinComponent, GlobalEvent {
             return AddUserFragment()
         }
 
-    }
-
-    override fun onInternetConnectionLost() {
-        TODO("Not yet implemented")
-    }
-
-    override fun onInternetConnectionAvailable() {
-        TODO("Not yet implemented")
-    }
-
-    override fun onLocationChanged(location: Location) {
-        TODO("Not yet implemented")
     }
 }

@@ -1,6 +1,5 @@
 package com.example.manageyourcar.UIlayer.viewmodel
 
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,6 +13,7 @@ import com.example.manageyourcar.UIlayer.UIUtil
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
 import com.example.manageyourcar.domainLayer.useCaseBusiness.LoginUserUseCase
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -31,16 +31,15 @@ class LoginUserViewModel constructor(private val uiUtil: UIUtil) : ViewModel(), 
     private val _uiState = MutableStateFlow(LoginUiState())
     val uiState = _uiState.asStateFlow()
 
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+
     init {
         onTryLog(true)
     }
 
     fun onEvent(event: UserLoginEvent) {
         when (event) {
-            is UserLoginEvent.OnClickSendButton -> {
-                onTryLog()
-            }
-
+            is UserLoginEvent.OnClickSendButton -> { onTryLog() }
             is UserLoginEvent.OnLoginChanged -> onLoginChanged(event)
             is UserLoginEvent.OnPasswordChanged -> onPasswordChanged(event)
             is UserLoginEvent.OnSignInButton -> {
@@ -55,47 +54,43 @@ class LoginUserViewModel constructor(private val uiUtil: UIUtil) : ViewModel(), 
     }
 
     private fun onTryLog(autoConnect: Boolean = false) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(ioDispatcher) {
             if (autoConnect) {
-                when (val result =
-                    cacheManagerRepository.getUserId(AppApplication.instance.applicationContext)) {
+                when (val result = cacheManagerRepository.getUserId(AppApplication.instance.applicationContext)) {
                     is Ressource.Success -> isConnected.postValue(true)
                     is Ressource.Error -> uiUtil.displayToastSuspend(result.error?.localizedMessage ?: "erreur")
                     else -> null
                 }
             } else {
-                when (val result = logUseCase.loginUser(
-                    _uiState.value.userLogin!!,
-                    _uiState.value.userPassword!!,
-                    AppApplication.instance.applicationContext
-                )) {
-                    is Ressource.Success -> {
-                        cacheManagerRepository.putUserId(
-                            AppApplication.instance.applicationContext,
-                            result.data!!
-                        )
-                        isConnected.postValue(true)
-                    }
+                logUserLocalStorage()
+            }
+        }
+    }
 
-                    is Ressource.Error -> {
-                        _uiState.update {
-                            it.copy(
-                                userLoginError = "Un champs ne correspond pas",
-                                userPasswordError = "Un champs ne correspond pas"
-                            )
-                        }
-                    }
-
-                    else -> {}
+    private suspend fun logUserLocalStorage() {
+        when (val result = logUseCase.loginUser(_uiState.value.userLogin!!, _uiState.value.userPassword!!, AppApplication.instance.applicationContext)) {
+            is Ressource.Success -> {
+                cacheManagerRepository.putUserId(
+                    AppApplication.instance.applicationContext, result.data!!
+                )
+                isConnected.postValue(true)
+            }
+            is Ressource.Error -> {
+                _uiState.update {
+                    it.copy(
+                        userLoginError = "Un champs ne correspond pas",
+                        userPasswordError = "Un champs ne correspond pas"
+                    )
                 }
             }
+            else -> {}
         }
     }
 
     private fun onLoginChanged(event: UserLoginEvent.OnLoginChanged) {
         _uiState.update {
             it.copy(
-                userLogin = event.newValue
+                userLogin = event.newIdentifiant
             )
         }
     }
@@ -103,24 +98,15 @@ class LoginUserViewModel constructor(private val uiUtil: UIUtil) : ViewModel(), 
     private fun onPasswordChanged(event: UserLoginEvent.OnPasswordChanged) {
         _uiState.update {
             it.copy(
-                userPassword = event.newValue
+                userPassword = event.newPassword
             )
         }
-    }
-
-    fun onInternetLost(bool: Boolean) {
-        _uiState.update {
-            it.copy(
-                onInternetLost = bool
-            )
-        }
-
     }
 }
 
 sealed interface UserLoginEvent {
     object OnClickSendButton : UserLoginEvent
     object OnSignInButton : UserLoginEvent
-    data class OnLoginChanged(val newValue: String) : UserLoginEvent
-    data class OnPasswordChanged(val newValue: String) : UserLoginEvent
+    data class OnLoginChanged(val newIdentifiant: String) : UserLoginEvent
+    data class OnPasswordChanged(val newPassword: String) : UserLoginEvent
 }
