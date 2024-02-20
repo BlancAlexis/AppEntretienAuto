@@ -83,7 +83,7 @@ val utils = module {
     single<UIUtil> { UIUtil(androidApplication()) }
     factory<GlobalEvent> { ViewCarDetailsFragment() }
     single { SmsSender }
-    factory<BluetoothController> { AndroidBluetoothController(AppApplication.instance) }
+    factory<BluetoothController> { AndroidBluetoothController( get(),AppApplication.instance) }
 }
 
 val mappersModule = module {
