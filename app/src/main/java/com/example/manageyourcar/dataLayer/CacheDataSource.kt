@@ -6,7 +6,7 @@ import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.dataLayer.model.CarLocal
 
 
-class CacheDataSource {
+class CacheDataSource(private val context: Context) {
     private var userCarList: List<CarLocal> = emptyList()
     fun getUserCarList(): Ressource<List<CarLocal>> {
         try {
@@ -21,7 +21,7 @@ class CacheDataSource {
 
     }
 
-    fun getUserId(context: Context): Ressource<Int> {
+    fun getUserId(): Ressource<Int> {
         return try {
             val sharedPref = context.getSharedPreferences(
                 context.getString(R.string.user_id),
@@ -37,7 +37,7 @@ class CacheDataSource {
         }
     }
 
-    fun putUserId(context: Context, userId: Int): Ressource<Boolean> {
+    fun putUserId(userId: Int): Ressource<Boolean> {
         return try {
             val sharedPref = context.getSharedPreferences(
                 context.getString(R.string.user_id),
@@ -54,7 +54,7 @@ class CacheDataSource {
 
     }
 
-    fun resetCurrentUserId(context: Context): Ressource<Boolean> {
+    fun resetCurrentUserId(): Ressource<Boolean> {
         return try {
             context.getSharedPreferences(context.getString(R.string.user_id), Context.MODE_PRIVATE)
                 .edit().clear().apply()

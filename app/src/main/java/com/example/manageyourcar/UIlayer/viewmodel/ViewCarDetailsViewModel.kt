@@ -43,7 +43,7 @@ class ViewCarDetailsViewModel(
             getUserCarsUseCase.invoke().collect { result ->
                 when (result) {
                     is Ressource.Error -> uiUtil.displayToastSuspend(
-                        result.error?.localizedMessage ?: "erreur"
+                        result.error?.localizedMessage ?: "Erreur lors de la récupération de vos voitures"
                     )
 
                     is Ressource.Success -> result.data?.let {

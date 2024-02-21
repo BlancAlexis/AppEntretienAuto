@@ -17,7 +17,7 @@ class GetAllUserMaintenanceUseCase : KoinComponent {
 
     suspend fun invoke(): Flow<Ressource<List<MaintenanceWithCarEntity>>> {
         return try {
-            when (val result = cacheManagerRepository.getUserId(AppApplication.instance)) {
+            when (val result = cacheManagerRepository.getUserId()) {
                 is Ressource.Success -> roomRepository.getMaintenceActWithCar(result.data!!)
                     .map { Ressource.Success(it) }
 

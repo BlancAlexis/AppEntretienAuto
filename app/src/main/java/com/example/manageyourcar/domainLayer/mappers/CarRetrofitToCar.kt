@@ -22,7 +22,7 @@ object CarRetrofitToCar : KoinComponent {
             torque = this.engine.torque,
             maxSpeed = 0,
             mileage = listOf(0),
-            ownerID = cacheManager.getUserId(context = AppApplication.instance.applicationContext).data
+            ownerID = cacheManager.getUserId().data
         )
     }
 }

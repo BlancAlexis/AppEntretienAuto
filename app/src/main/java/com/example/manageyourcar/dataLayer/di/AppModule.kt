@@ -109,7 +109,7 @@ val repositoryModule = module {
     single<CarRepository> { CarRepositoryImpl(get()) }
     single<UserRepository> { UserRepositoryImpl(get()) }
     single<ServicingRepository> { ServicingRepositoryImpl(get()) }
-    single<CacheDataSource> { CacheDataSource() }
+    single<CacheDataSource> { CacheDataSource(androidContext()) }
 }
 
 val useCaseModule = module {

@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import timber.log.Timber
 
 class LoginUserViewModel constructor(private val uiUtil: UIUtil) : ViewModel(), KoinComponent {
 
@@ -56,9 +57,9 @@ class LoginUserViewModel constructor(private val uiUtil: UIUtil) : ViewModel(), 
     private fun onTryLog(autoConnect: Boolean = false) {
         viewModelScope.launch(ioDispatcher) {
             if (autoConnect) {
-                when (val result = cacheManagerRepository.getUserId(AppApplication.instance.applicationContext)) {
+                when (val result = cacheManagerRepository.getUserId()) {
                     is Ressource.Success -> isConnected.postValue(true)
-                    is Ressource.Error -> uiUtil.displayToastSuspend(result.error?.localizedMessage ?: "erreur")
+                    is Ressource.Error -> Timber.e(result.error?.localizedMessage)
                     else -> null
                 }
             } else {
@@ -68,10 +69,10 @@ class LoginUserViewModel constructor(private val uiUtil: UIUtil) : ViewModel(), 
     }
 
     private suspend fun logUserLocalStorage() {
-        when (val result = logUseCase.loginUser(_uiState.value.userLogin!!, _uiState.value.userPassword!!, AppApplication.instance.applicationContext)) {
+        when (val result = logUseCase.loginUser(_uiState.value.userLogin!!, _uiState.value.userPassword!!)) {
             is Ressource.Success -> {
                 cacheManagerRepository.putUserId(
-                    AppApplication.instance.applicationContext, result.data!!
+                    result.data!!
                 )
                 isConnected.postValue(true)
             }

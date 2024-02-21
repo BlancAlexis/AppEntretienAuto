@@ -15,7 +15,7 @@ class AddCarRoomUseCase : KoinComponent {
 
     suspend fun addCarToRoom(carLocal: CarLocal): Ressource<Unit> {
         return try {
-            when (val result = cacheManagerRepository.getUserId(AppApplication.instance)) {
+            when (val result = cacheManagerRepository.getUserId()) {
                 is Ressource.Error -> Ressource.Error(result.error)
                 is Ressource.Loading -> Ressource.Error()
                 is Ressource.Success -> {

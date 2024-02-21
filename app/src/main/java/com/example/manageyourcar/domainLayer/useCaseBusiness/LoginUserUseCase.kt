@@ -10,9 +10,9 @@ import org.koin.core.component.inject
 class LoginUserUseCase : KoinComponent {
     private val user by inject<UserRepository>()
     private val cacheManager by inject<CacheManagerRepository>()
-    suspend fun loginUser(login: String, password: String, context: Context): Ressource<Int> {
+    suspend fun loginUser(login: String, password: String): Ressource<Int> {
         return try {
-            when (val resultWhen = cacheManager.getUserId(context)) {
+            when (val resultWhen = cacheManager.getUserId()) {
                 is Ressource.Success -> Ressource.Success(resultWhen.data)
                 is Ressource.Error -> {
                     val result = user.logUser(login, password)
