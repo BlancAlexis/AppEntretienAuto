@@ -29,6 +29,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import org.koin.core.component.KoinComponent
+import timber.log.Timber
 
 class MapsFragment : Fragment(), KoinComponent {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -51,7 +52,7 @@ class MapsFragment : Fragment(), KoinComponent {
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            Log.e("MapsFragment", "getLocationUpdates: permission not granted")
+            Timber.e("getLocationUpdates: permission not granted")
             return
         }
 
@@ -65,10 +66,7 @@ class MapsFragment : Fragment(), KoinComponent {
                 location
 
                 if (location.locations.isNotEmpty()) {
-                    Log.i(
-                        "TAG",
-                        "onLocationResult: ${location.locations[0].latitude} ${location.locations[0].longitude}"
-                    )
+                    Timber.i("onLocationResult: ${location.locations[0].latitude} ${location.locations[0].longitude}")
                     val currentPosition =
                         LatLng(location.locations[0].latitude, location.locations[0].longitude)
                     googleMap.addMarker(
@@ -140,10 +138,7 @@ class MapsFragment : Fragment(), KoinComponent {
             if (!allPermissionsGranted(permissions.toMutableMap())) {
                 // Handle denied permissions
                 Toast.makeText(
-                    requireContext(),
-                    "Location permissions required for maps",
-                    Toast.LENGTH_SHORT
-                ).show()
+                    requireContext(), "Location permissions required for maps", Toast.LENGTH_SHORT).show()
             } else {
                 // Proceed with map functionality
                 // ...

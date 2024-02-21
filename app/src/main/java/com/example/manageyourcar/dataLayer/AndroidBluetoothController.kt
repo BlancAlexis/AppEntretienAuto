@@ -22,6 +22,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.io.IOException
 import java.util.*
 
@@ -88,7 +89,7 @@ class AndroidBluetoothController(
 
     override fun startDiscovery() {
         if (!hasPermission(Manifest.permission.BLUETOOTH_SCAN)) {
-            Log.w("AndroidBluetoothController", "No BLUETOOTH_SCAN permission")
+            Timber.w("AndroidBluetoothController", "No BLUETOOTH_SCAN permission")
             return
         }
 
@@ -104,7 +105,7 @@ class AndroidBluetoothController(
 
     override fun stopDiscovery() {
         if (!hasPermission(Manifest.permission.BLUETOOTH_SCAN)) {
-            Log.w("AndroidBluetoothController", "No BLUETOOTH_SCAN permission")
+            Timber.w("AndroidBluetoothController", "No BLUETOOTH_SCAN permission")
             return
         }
 
@@ -114,7 +115,7 @@ class AndroidBluetoothController(
     override fun connectToDevice(device: BluetoothDeviceDomain): Flow<ConnectionResult> {
         return flow {
             if (!hasPermission(Manifest.permission.BLUETOOTH_CONNECT)) {
-                println("No BLUETOOTH_CONNECT permission")
+                Timber.e("No BLUETOOTH_CONNECT permission")
                 throw SecurityException("No BLUETOOTH_CONNECT permission")
             }
 

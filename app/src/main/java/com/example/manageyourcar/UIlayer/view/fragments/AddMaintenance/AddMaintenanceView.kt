@@ -53,7 +53,10 @@ import com.example.manageyourcar.UIlayer.view.common.OutlinedSpinner
 import com.example.manageyourcar.UIlayer.viewmodel.OnMaintenanceEvent
 import java.text.SimpleDateFormat
 import java.time.Instant
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Date
+import java.util.Locale
 import kotlin.math.absoluteValue
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -74,7 +77,7 @@ fun AddMaintenanceView(
         if (showCalendar.value) {
             CalendarView(
                 onDateSelected = { date ->
-                    selectedDate.value = SimpleDateFormat("dd/MM/yyyy").parse(date)
+                    selectedDate.value = SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE).parse(date)
                     OnMaintenanceEvent.OnDateChanged(date)
                     showCalendar.value = false
                     checked = false
@@ -162,7 +165,7 @@ fun AddMaintenanceView(
                 onValueChange = {
                     onEvent(OnMaintenanceEvent.OnPriceChanged(it.toInt()))
                 },
-                textFieldValue = uiState.price.toString(),
+                textFieldValue = uiState.price,
                 label = stringResource(R.string.price),
                 modifier = Modifier
                     .fillMaxWidth(0.9f)
@@ -173,7 +176,7 @@ fun AddMaintenanceView(
                 onValueChange = {
                     onEvent(OnMaintenanceEvent.OnMileageChanged(it.toInt()))
                 },
-                textFieldValue = uiState.mileage.toString(),
+                textFieldValue = uiState.mileage,
                 label = stringResource(R.string.mileage),
                 modifier = Modifier.fillMaxWidth(0.9f)
             )

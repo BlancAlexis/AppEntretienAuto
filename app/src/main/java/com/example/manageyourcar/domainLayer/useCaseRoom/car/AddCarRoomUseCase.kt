@@ -7,6 +7,7 @@ import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
 import com.example.manageyourcar.domainLayer.repository.room.CarRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import timber.log.Timber
 
 class AddCarRoomUseCase : KoinComponent {
     private val roomRepository by inject<CarRepository>()
@@ -27,7 +28,7 @@ class AddCarRoomUseCase : KoinComponent {
                 }
             }
         } catch (e: Exception) {
-            Log.e("AddCarRoomUseCase", e.localizedMessage)
+            Timber.e("AddCarRoomUseCase", e.localizedMessage)
             Ressource.Error(exception = e)
         }
     }

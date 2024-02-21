@@ -50,6 +50,7 @@ import com.example.manageyourcar.UIlayer.UIState.ViewCarDetailsState
 import com.example.manageyourcar.UIlayer.view.common.InformationRow
 import com.example.manageyourcar.UIlayer.viewmodel.ViewCarDetailsEvent
 import com.example.manageyourcar.dataLayer.model.CarLocal
+import timber.log.Timber
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -155,7 +156,7 @@ fun ViewCarDetailsView(
                 } else {
                     LaunchedEffect(pagerState) {
                         snapshotFlow { pagerState.currentPage }.collect { page ->
-                            Log.d("Page change", "Page changed to $page")
+                            Timber.i("Page change", "Page changed to $page")
                         }
                     }
 
