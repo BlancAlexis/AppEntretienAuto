@@ -102,9 +102,6 @@ dependencies {
     implementation("com.google.firebase:firebase-crashlytics")
     implementation("com.google.firebase:firebase-analytics")
 
-    //API OBD2
-    implementation("com.github.eltonvs:kotlin-obd-api:1.3.0")
-
     //Injection de dépendance koin
     implementation("io.insert-koin:koin-android:3.2.0-beta-1")
     implementation("io.insert-koin:koin-androidx-navigation:3.2.0-beta-1")
@@ -117,10 +114,8 @@ dependencies {
     //Firebase
     implementation("com.google.firebase:firebase-database:20.3.0")
 
-    //Graphique
-    implementation("com.github.AAChartModel:AAChartCore-Kotlin:7.1.0")
-
-    implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    //Lifecycle
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
 
@@ -130,6 +125,12 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
     implementation("androidx.navigation:navigation-compose:$nav_version")
 
+    //Room
+    val room_version = "2.5.0"
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
 
     //Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
@@ -142,28 +143,16 @@ dependencies {
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-util")
     implementation("androidx.compose.ui:ui-graphics")
-    implementation("androidx.compose.ui:ui-util")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
-    implementation("androidx.compose.ui:ui-graphics-android:1.5.4")
-    implementation("androidx.compose.ui:ui-text-android:1.5.4")
+    implementation("androidx.compose.ui:ui-text")
     implementation("androidx.compose.foundation:foundation-android:1.5.4")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
-    //Room
-    val room_version = "2.5.0"
-    implementation("androidx.room:room-runtime:$room_version")
-    annotationProcessor("androidx.room:room-compiler:$room_version")
-    kapt("androidx.room:room-compiler:$room_version")
-    implementation("androidx.room:room-ktx:$room_version")
 
-    implementation("androidx.navigation:navigation-fragment-ktx:2.7.4")
+
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
