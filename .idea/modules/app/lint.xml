@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="IconDuplicates">
+        <ignore path="C:/Users/narut/AndroidStudioProjects/AppEntretienAutoGithub/app/src/main/res/mipmap-hdpi/ic_launcher_background.webp" />
+        <ignore path="C:/Users/narut/AndroidStudioProjects/AppEntretienAutoGithub/app/src/main/res/mipmap-hdpi/ic_launcher_foreground.webp" />
+        <ignore path="C:/Users/narut/AndroidStudioProjects/AppEntretienAutoGithub/app/src/main/res/mipmap-mdpi/ic_launcher_background.webp" />
+        <ignore path="C:/Users/narut/AndroidStudioProjects/AppEntretienAutoGithub/app/src/main/res/mipmap-mdpi/ic_launcher_foreground.webp" />
+        <ignore path="C:/Users/narut/AndroidStudioProjects/AppEntretienAutoGithub/app/src/main/res/mipmap-xhdpi/ic_launcher_background.webp" />
+        <ignore path="C:/Users/narut/AndroidStudioProjects/AppEntretienAutoGithub/app/src/main/res/mipmap-xhdpi/ic_launcher_foreground.webp" />
+        <ignore path="C:/Users/narut/AndroidStudioProjects/AppEntretienAutoGithub/app/src/main/res/mipmap-xxhdpi/ic_launcher_background.webp" />
+        <ignore path="C:/Users/narut/AndroidStudioProjects/AppEntretienAutoGithub/app/src/main/res/mipmap-xxhdpi/ic_launcher_foreground.webp" />
+        <ignore path="C:/Users/narut/AndroidStudioProjects/AppEntretienAutoGithub/app/src/main/res/mipmap-xxxhdpi/ic_launcher_background.webp" />
+        <ignore path="C:/Users/narut/AndroidStudioProjects/AppEntretienAutoGithub/app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.webp" />
+    </issue>
+</lint>

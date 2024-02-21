@@ -99,7 +99,7 @@ class ConnectObdViewModel : ViewModel(), KoinComponent {
                     ConnectedBluetoothDevice.inputStream = result.inputStream
                     ConnectedBluetoothDevice.bluetoothDevice = result.device
                     ConnectedBluetoothDevice.outputStream = result.outputStream
-                    navController.navigate(R.id.action_connectObdFragment_to_OBDFragment)
+                   // navController.navigate(R.id.action_connectObdFragment_to_OBDFragment)
 
                     /*  _state.update {
                           it.copy(

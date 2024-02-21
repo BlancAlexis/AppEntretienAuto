@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/navigation_main"
     xmlns:tools="http://schemas.android.com/tools"
     app:startDestination="@id/viewCarDetailsFragment">
 
@@ -48,15 +47,8 @@
         android:name="com.example.manageyourcar.UIlayer.view.fragments.ConnectOBD.ConnectObdFragment"
         android:label="fragment_connect_obd"
       >
-        <action
-            android:id="@+id/action_connectObdFragment_to_OBDFragment"
-            app:destination="@id/OBDFragment" />
+
     </fragment>
-    <fragment
-        android:id="@+id/OBDFragment"
-        android:name="com.example.manageyourcar.UIlayer.view.fragments.OBD.OBDFragment"
-        android:label="fragment_obd"
-        tools:layout="@layout/fragment_obd" />
     <fragment
         android:id="@+id/viewCarDetailsFragment"
         android:name="com.example.manageyourcar.UIlayer.view.fragments.ViewCarDetails.ViewCarDetailsFragment"
