@@ -9,7 +9,6 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.example.manageyourcar.R
-import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.databinding.ActivityMainBinding
 import com.example.manageyourcar.domainLayer.useCaseBusiness.LogoutUserUseCase

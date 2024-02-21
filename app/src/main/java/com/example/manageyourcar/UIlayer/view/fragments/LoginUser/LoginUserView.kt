@@ -54,132 +54,132 @@ fun LoginUserView(
     val juraFamily = FontFamily(
         Font(R.font.jura, FontWeight.Medium)
     )
-        var displayPopup by remember { mutableStateOf(false) }
+    var displayPopup by remember { mutableStateOf(false) }
 
-        if (displayPopup) {
-            CustomDialog(
-                onDismiss = {
-                    displayPopup = false
-                },
-                title = stringResource(R.string.password_forgot),
-                content = stringResource(R.string.password_forgot_text)
+    if (displayPopup) {
+        CustomDialog(
+            onDismiss = {
+                displayPopup = false
+            },
+            title = stringResource(R.string.password_forgot),
+            content = stringResource(R.string.password_forgot_text)
+        )
+    }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .fillMaxWidth()
+            .background(colorScheme.primary),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Text(
+            textAlign = TextAlign.Center,
+            text = stringResource(R.string.connection),
+            fontSize = 32.sp,
+            fontFamily = juraFamily,
+            fontWeight = FontWeight.Bold,
+            color = Color.White,
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+        uiState.userLogin?.let {
+            CustomTextField(
+                textStyle = TextStyle(
+                    background = Color.Transparent,
+                    color = Color.White,
+                    fontSize = 18.sp,
+                ),
+                error = uiState.userLoginError ?: "",
+                modifier = Modifier
+                    .fillMaxWidth(0.95f)
+                    .background(Color.Transparent),
+                textFieldValue = it,
+                placeholder = stringResource(id = R.string.id),
+                readOnly = false,
+                keyboardType = KeyboardType.Text,
+                onValueChange = {
+                    onEvent(UserLoginEvent.OnLoginChanged(it))
+                }
             )
         }
-        Column(
+        uiState.userPassword?.let {
+            CustomTextField(
+                textStyle = TextStyle(
+                    background = Color.Transparent,
+                    color = Color.White,
+                    fontSize = 18.sp,
+                ), visualTransformation = PasswordVisualTransformation(),
+                error = uiState.userPasswordError ?: "",
+                modifier = Modifier
+                    .fillMaxWidth(0.95f),
+                placeholder = stringResource(id = R.string.password),
+                textFieldValue = it,
+                readOnly = false,
+                keyboardType = KeyboardType.Password,
+                onValueChange = {
+                    onEvent(UserLoginEvent.OnPasswordChanged(it))
+                }
+            )
+        }
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Button(
+            onClick = { onEvent(UserLoginEvent.OnClickSendButton) },
             modifier = Modifier
-                .fillMaxSize()
-                .fillMaxWidth()
-                .background(colorScheme.primary),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
+                .width(208.dp),
+            colors = ButtonDefaults.buttonColors(colorScheme.onSecondary)
         ) {
             Text(
-                textAlign = TextAlign.Center,
-                text = stringResource(R.string.connection),
-                fontSize = 32.sp,
+                text = stringResource(id = R.string.connection),
+                fontFamily = juraFamily,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+            )
+        }
+        val text = buildAnnotatedString {
+            withStyle(
+                style = SpanStyle(
+                    textDecoration = TextDecoration.Underline,
+                    color = Color.Blue
+                )
+            ) {
+                append(stringResource(R.string.forgot_your_password))
+            }
+        }
+        ClickableText(
+            text = text,
+            style = TextStyle(
                 fontFamily = juraFamily,
                 fontWeight = FontWeight.Bold,
+                fontSize = 16.sp,
+            ),
+            modifier = Modifier.padding(8.dp),
+            onClick = {
+                displayPopup = true
+            }
+        )
+        Spacer(modifier = Modifier.height(100.dp))
+        OutlinedButton(
+            border = BorderStroke(5.dp, Color(209, 228, 255)),
+            shape = CircleShape,
+            onClick = {
+                onEvent(UserLoginEvent.OnSignInButton)
+            },
+            modifier = Modifier
+                .width(245.dp)
+        ) {
+            Text(
+                text = stringResource(R.string.create_account),
                 color = Color.White,
+                fontFamily = juraFamily,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(bottom = 3.dp)
             )
-            Spacer(modifier = Modifier.height(20.dp))
-            uiState.userLogin?.let {
-                CustomTextField(
-                    textStyle = TextStyle(
-                        background = Color.Transparent,
-                        color = Color.White,
-                        fontSize = 18.sp,
-                    ),
-                    error = uiState.userLoginError ?: "",
-                    modifier = Modifier
-                        .fillMaxWidth(0.95f)
-                        .background(Color.Transparent),
-                    textFieldValue = it,
-                    placeholder = stringResource(id = R.string.id),
-                    readOnly = false,
-                    keyboardType = KeyboardType.Text,
-                    onValueChange = {
-                        onEvent(UserLoginEvent.OnLoginChanged(it))
-                    }
-                )
-            }
-            uiState.userPassword?.let {
-                CustomTextField(
-                    textStyle = TextStyle(
-                        background = Color.Transparent,
-                        color = Color.White,
-                        fontSize = 18.sp,
-                    ), visualTransformation = PasswordVisualTransformation(),
-                    error = uiState.userPasswordError ?: "",
-                    modifier = Modifier
-                        .fillMaxWidth(0.95f),
-                    placeholder = stringResource(id = R.string.password),
-                    textFieldValue = it,
-                    readOnly = false,
-                    keyboardType = KeyboardType.Password,
-                    onValueChange = {
-                        onEvent(UserLoginEvent.OnPasswordChanged(it))
-                    }
-                )
-            }
-            Spacer(modifier = Modifier.height(20.dp))
-
-            Button(
-                onClick = { onEvent(UserLoginEvent.OnClickSendButton) },
-                modifier = Modifier
-                    .width(208.dp),
-                colors = ButtonDefaults.buttonColors(colorScheme.onSecondary)
-            ) {
-                Text(
-                    text = stringResource(id = R.string.connection),
-                    fontFamily = juraFamily,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                )
-            }
-            val text = buildAnnotatedString {
-                withStyle(
-                    style = SpanStyle(
-                        textDecoration = TextDecoration.Underline,
-                        color = Color.Blue
-                    )
-                ) {
-                    append(stringResource(R.string.forgot_your_password))
-                }
-            }
-            ClickableText(
-                text = text,
-                style = TextStyle(
-                    fontFamily = juraFamily,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 16.sp,
-                ),
-                modifier = Modifier.padding(8.dp),
-                onClick = {
-                    displayPopup = true
-                }
-            )
-            Spacer(modifier = Modifier.height(100.dp))
-            OutlinedButton(
-                border = BorderStroke(5.dp, Color(209, 228, 255)),
-                shape = CircleShape,
-                onClick = {
-                    onEvent(UserLoginEvent.OnSignInButton)
-                },
-                modifier = Modifier
-                    .width(245.dp)
-            ) {
-                Text(
-                    text = stringResource(R.string.create_account),
-                    color = Color.White,
-                    fontFamily = juraFamily,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(bottom = 3.dp)
-                )
-            }
-
         }
+
     }
+}
 
 @Preview(showBackground = true)
 @Composable

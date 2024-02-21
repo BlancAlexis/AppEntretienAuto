@@ -47,70 +47,70 @@ fun AddCarView(
             onApprove = { onEvent(OnCarRequest.OnClickAddCarButton) },
             onDismiss = { onEvent(OnCarRequest.OnDismissAddCarFragment) })
     }
-        var openDialog by remember { mutableStateOf(false) }
-        if (openDialog) {
-            CustomDialog(
-                title = stringResource(id = R.string.VIN_number),
-                content = stringResource(id = R.string.VIN_number_description),
-                onDismiss = { openDialog = false }
+    var openDialog by remember { mutableStateOf(false) }
+    if (openDialog) {
+        CustomDialog(
+            title = stringResource(id = R.string.VIN_number),
+            content = stringResource(id = R.string.VIN_number_description),
+            onDismiss = { openDialog = false }
+        )
+    }
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
+            IconButton(
+                onClick = { onEvent(OnCarRequest.OnDismissAddCarFragment) }
+            ) {
+                Icon(imageVector = Icons.Filled.Close, contentDescription = "Close")
+            }
+        }
+
+        Text(text = stringResource(R.string.enter_your_immat))
+        CustomPlaqueImmat(
+            registration = uiState.inputImmat,
+            onImmatEvent = { onEvent(OnCarRequest.OnRegistrationNumberChanged(it ?: "")) }
+        )
+        Button(onClick = { onEvent(OnCarRequest.OnClickSearchCarByRegistrationNumberButton) }) {
+            Text(
+                text = stringResource(R.string.find), fontSize = 20.sp
             )
         }
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
+
+        Box(
+            modifier = Modifier.fillMaxWidth(1f)
         ) {
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
-                IconButton(
-                    onClick = { onEvent(OnCarRequest.OnDismissAddCarFragment) }
-                ) {
-                    Icon(imageVector = Icons.Filled.Close, contentDescription = "Close")
-                }
-            }
-
-            Text(text = stringResource(R.string.enter_your_immat))
-            CustomPlaqueImmat(
-                registration = uiState.inputImmat,
-                onImmatEvent = { onEvent(OnCarRequest.OnRegistrationNumberChanged(it ?: "")) }
-            )
-            Button(onClick = { onEvent(OnCarRequest.OnClickSearchCarByRegistrationNumberButton) }) {
-                Text(
-                    text = stringResource(R.string.find), fontSize = 20.sp
-                )
-            }
-
-            Box(
-                modifier = Modifier.fillMaxWidth(1f)
+            IconButton(
+                onClick = { openDialog = true },
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(bottom = 40.dp)
             ) {
-                IconButton(
-                    onClick = { openDialog = true },
-                    modifier = Modifier
-                        .align(Alignment.TopEnd)
-                        .padding(bottom = 40.dp)
-                ) {
-                    Icon(imageVector = Icons.Filled.Info, contentDescription = "Close")
-                }
-                CustomTextField(
-                    onValueChange = { onEvent(OnCarRequest.OnVINNumberChanged(it)) },
-                    textFieldValue = uiState.inputVIN ?: "",
-                    label = stringResource(R.string.find_by_VIN),
-                    readOnly = false,
-                    keyboardType = KeyboardType.Text,
-                    labelTextStyle = TextStyle(
-                        color = Color.Black,
-                    ),
-                    modifier = Modifier.align(Alignment.BottomCenter)
-                )
-
-
+                Icon(imageVector = Icons.Filled.Info, contentDescription = "Close")
             }
+            CustomTextField(
+                onValueChange = { onEvent(OnCarRequest.OnVINNumberChanged(it)) },
+                textFieldValue = uiState.inputVIN ?: "",
+                label = stringResource(R.string.find_by_VIN),
+                readOnly = false,
+                keyboardType = KeyboardType.Text,
+                labelTextStyle = TextStyle(
+                    color = Color.Black,
+                ),
+                modifier = Modifier.align(Alignment.BottomCenter)
+            )
 
-            Button(onClick = { onEvent(OnCarRequest.OnClickSearchCarWithSIVButton) }) {
-                Text(
-                    text = "Rechercher", fontSize = 20.sp
-                )
-            }
+
+        }
+
+        Button(onClick = { onEvent(OnCarRequest.OnClickSearchCarWithSIVButton) }) {
+            Text(
+                text = "Rechercher", fontSize = 20.sp
+            )
         }
     }
+}
 
 @Preview(showBackground = true)
 @Composable

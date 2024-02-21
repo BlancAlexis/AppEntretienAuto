@@ -63,33 +63,50 @@ class AddMaintenanceViewModel constructor(
 
     private fun addMaintenanceLocalStorage() {
         viewModelScope.launch(ioDispatcher) {
-            when (addCarMaintenanceUseCase.addMaintenanceOperation(Entretien(userID = null, carID = selectedCarLocal.carID, mileage = uiState.value.mileage.toInt(), price = uiState.value.price.toInt(), date = uiState.value.date ?: Date(), service = selectedMaintenance.toMaintenanceService()))) {
+            when (addCarMaintenanceUseCase.addMaintenanceOperation(
+                Entretien(
+                    userID = null,
+                    carID = selectedCarLocal.carID,
+                    mileage = uiState.value.mileage.toInt(),
+                    price = uiState.value.price.toInt(),
+                    date = uiState.value.date ?: Date(),
+                    service = selectedMaintenance.toMaintenanceService()
+                )
+            )) {
                 is Ressource.Error -> uiUtil.displayToastSuspend("échec de l'ajout")
-                is Ressource.Success -> { isMaintenanceAdd.postValue(true) }
+                is Ressource.Success -> {
+                    isMaintenanceAdd.postValue(true)
+                }
+
                 else -> {}
             }
         }
     }
+
     private fun checkCars(cars: List<CarLocal>) {
-            if (cars.isEmpty()) {
-                isMaintenanceAdd.postValue(true)
-            }
-            updateListCar(cars)
-            if (cars.isNotEmpty()) {
-                selectedCarLocal = cars[0]
-            }
-            _uiState.update {
-                it.copy(
-                    listMaintenance = MaintenanceServiceType.values().toList()
-                )
-            }
-            selectedMaintenance = MaintenanceServiceType.values()[0]
+        if (cars.isEmpty()) {
+            isMaintenanceAdd.postValue(true)
+        }
+        updateListCar(cars)
+        if (cars.isNotEmpty()) {
+            selectedCarLocal = cars[0]
+        }
+        _uiState.update {
+            it.copy(
+                listMaintenance = MaintenanceServiceType.values().toList()
+            )
+        }
+        selectedMaintenance = MaintenanceServiceType.values()[0]
     }
+
     private fun getUserCarsLocalStorage() {
         viewModelScope.launch(Dispatchers.IO) {
             getUserCarsUseCase.invoke().collect { result ->
                 when (result) {
-                    is Ressource.Error -> uiUtil.displayToastSuspend(result.error?.localizedMessage ?: "erreur")
+                    is Ressource.Error -> uiUtil.displayToastSuspend(
+                        result.error?.localizedMessage ?: "erreur"
+                    )
+
                     is Ressource.Success -> checkCars(result.data ?: emptyList())
                     else -> {}
                 }
@@ -111,7 +128,10 @@ class AddMaintenanceViewModel constructor(
             is OnMaintenanceEvent.OnMaintenanceSelectedChanged -> onMaintenanceChanged(event.newMaintenanceServiceType)
             is OnMaintenanceEvent.OnMileageChanged -> onMileageChanged(event.newMileage)
             is OnMaintenanceEvent.OnDateChanged -> onDateChanged(Date(event.newDate))
-            OnMaintenanceEvent.OnClickAddMaintenanceButton -> { addMaintenanceLocalStorage() }
+            OnMaintenanceEvent.OnClickAddMaintenanceButton -> {
+                addMaintenanceLocalStorage()
+            }
+
             is OnMaintenanceEvent.OnPriceChanged -> onPriceChanged(event.newPrice)
         }
 
@@ -156,7 +176,9 @@ sealed interface OnMaintenanceEvent {
     data class OnDateChanged(val newDate: String) : OnMaintenanceEvent
     data class OnMileageChanged(val newMileage: Int) : OnMaintenanceEvent
     data class OnPriceChanged(val newPrice: Int) : OnMaintenanceEvent
-    data class OnMaintenanceSelectedChanged(val newMaintenanceServiceType: MaintenanceServiceType) : OnMaintenanceEvent
+    data class OnMaintenanceSelectedChanged(val newMaintenanceServiceType: MaintenanceServiceType) :
+        OnMaintenanceEvent
+
     data class OnCarSelectedChanged(val newCarSelected: CarLocal) : OnMaintenanceEvent
 
 }

@@ -1,6 +1,5 @@
 package com.example.manageyourcar.domainLayer.useCaseRoom.servicing
 
-import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.dataLayer.dataLayerRoom.dao.MaintenanceWithCarEntity
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository

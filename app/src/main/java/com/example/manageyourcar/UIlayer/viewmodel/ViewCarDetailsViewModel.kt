@@ -43,7 +43,8 @@ class ViewCarDetailsViewModel(
             getUserCarsUseCase.invoke().collect { result ->
                 when (result) {
                     is Ressource.Error -> uiUtil.displayToastSuspend(
-                        result.error?.localizedMessage ?: "Erreur lors de la récupération de vos voitures"
+                        result.error?.localizedMessage
+                            ?: "Erreur lors de la récupération de vos voitures"
                     )
 
                     is Ressource.Success -> result.data?.let {
@@ -65,30 +66,37 @@ class ViewCarDetailsViewModel(
 
             is ViewCarDetailsEvent.OnUpdateMileage -> {
                 when (val result = cacheManagerRepository.getUserCarList()) {
-                    is Ressource.Error -> { uiUtil.displayToast("Erreur lors de la récupération des voitures")
+                    is Ressource.Error -> {
+                        uiUtil.displayToast("Erreur lors de la récupération des voitures")
                         return
                     }
+
                     is Ressource.Loading -> {
                         uiUtil.displayToast("Chargement des voitures")
                         return
                     }
+
                     is Ressource.Success -> {
                         if (result.data.isNullOrEmpty()) {
                             uiUtil.displayToast("Vous n'avez encore aucune voiture")
                             return
                         }
-                        val action = ViewCarDetailsFragmentDirections.actionViewCarDetailsFragmentToUpdateCarMileage(myArg = result.data[event.position])
+                        val action =
+                            ViewCarDetailsFragmentDirections.actionViewCarDetailsFragmentToUpdateCarMileage(
+                                myArg = result.data[event.position]
+                            )
                         navController.navigate(action)
                     }
                 }
 
             }
 
-            is ViewCarDetailsEvent.OnDeleteCar -> getCachedUserCars(event) }
+            is ViewCarDetailsEvent.OnDeleteCar -> getCachedUserCars(event)
+        }
     }
 
     private fun getCachedUserCars(
-        event : ViewCarDetailsEvent.OnDeleteCar
+        event: ViewCarDetailsEvent.OnDeleteCar
     ) {
         viewModelScope.launch(ioDispatcher) {
             when (val result = cacheManagerRepository.getUserCarList()) {

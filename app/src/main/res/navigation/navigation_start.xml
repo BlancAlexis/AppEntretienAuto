@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     app:startDestination="@id/LoginUserFragment">
 
     <fragment
         android:id="@+id/AddUserFragment"
         android:name="com.example.manageyourcar.UIlayer.view.fragments.AddUser.AddUserFragment"
-        android:label="MainActivity"/>
+        android:label="MainActivity" />
     <fragment
         android:id="@+id/LoginUserFragment"
         android:name="com.example.manageyourcar.UIlayer.view.fragments.LoginUser.LoginUserFragment"
@@ -15,10 +14,10 @@
         <action
             android:id="@+id/action_LoginUserFragment_to_AddUserFragment"
             app:destination="@id/AddUserFragment"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"/>
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
 

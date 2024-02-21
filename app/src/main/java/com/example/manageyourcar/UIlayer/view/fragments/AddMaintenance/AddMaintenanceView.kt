@@ -48,7 +48,6 @@ import androidx.compose.ui.util.lerp
 import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.UIState.AddVehiculeMaintenanceUiState
 import com.example.manageyourcar.UIlayer.view.common.CalendarView
-import com.example.manageyourcar.UIlayer.view.common.CustomDialog
 import com.example.manageyourcar.UIlayer.view.common.CustomTextField
 import com.example.manageyourcar.UIlayer.view.common.OutlinedSpinner
 import com.example.manageyourcar.UIlayer.viewmodel.OnMaintenanceEvent
@@ -69,135 +68,139 @@ fun AddMaintenanceView(
         modifier = Modifier.fillMaxSize()
     ) {
         var checked by remember { mutableStateOf(false) }
-            val showCalendar = remember { mutableStateOf(false) }
-            val selectedDate = remember { mutableStateOf(Date.from(Instant.now())) }
+        val showCalendar = remember { mutableStateOf(false) }
+        val selectedDate = remember { mutableStateOf(Date.from(Instant.now())) }
 
-            if (showCalendar.value) {
-                CalendarView(
-                    onDateSelected = { date ->
-                        selectedDate.value = SimpleDateFormat("dd/MM/yyyy").parse(date)
-                        OnMaintenanceEvent.OnDateChanged(date)
-                        showCalendar.value = false
-                        checked = false
-                    }
-                )
-            }
-            Column(
-                verticalArrangement = Arrangement.Top,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                val pagerState = rememberPagerState(pageCount = { uiState.listMaintenance.size })
-                LaunchedEffect(pagerState) {
-                    snapshotFlow { pagerState.currentPage }.collect { page ->
-                        OnMaintenanceEvent.OnMaintenanceSelectedChanged(uiState.listMaintenance[page])
-                    }
+        if (showCalendar.value) {
+            CalendarView(
+                onDateSelected = { date ->
+                    selectedDate.value = SimpleDateFormat("dd/MM/yyyy").parse(date)
+                    OnMaintenanceEvent.OnDateChanged(date)
+                    showCalendar.value = false
+                    checked = false
                 }
+            )
+        }
+        Column(
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            val pagerState = rememberPagerState(pageCount = { uiState.listMaintenance.size })
+            LaunchedEffect(pagerState) {
+                snapshotFlow { pagerState.currentPage }.collect { page ->
+                    OnMaintenanceEvent.OnMaintenanceSelectedChanged(uiState.listMaintenance[page])
+                }
+            }
 
-                Text(text = stringResource(R.string.add_an_operation), fontSize = 25.sp, fontWeight = FontWeight.Bold)
-                HorizontalPager(state = pagerState) { page ->
+            Text(
+                text = stringResource(R.string.add_an_operation),
+                fontSize = 25.sp,
+                fontWeight = FontWeight.Bold
+            )
+            HorizontalPager(state = pagerState) { page ->
+                Box(
+                    modifier = Modifier
+                        .wrapContentSize()
+                        .graphicsLayer {
+                            val pageOffset = (
+                                    (pagerState.currentPage - page) + pagerState
+                                        .currentPageOffsetFraction
+                                    ).absoluteValue
+
+                            alpha = lerp(
+                                start = 0.5f,
+                                stop = 1f,
+                                fraction = 1f - pageOffset.coerceIn(0f, 1f)
+                            )
+                        },
+                ) {
+                    Image(
+                        modifier = Modifier.padding(start = 15.dp),
+                        painter = painterResource(id = uiState.listMaintenance[page].image),
+                        contentDescription = ""
+                    )
+                    Text(
+                        text = uiState.listMaintenance[page].name,
+                        fontSize = 25.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White,
+                        modifier = Modifier.padding(start = 25.dp, top = 200.dp)
+                    )
+                }
+            }
+            Row(
+                Modifier
+                    .wrapContentHeight()
+                    .fillMaxWidth()
+                    .align(Alignment.CenterHorizontally),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                repeat(pagerState.pageCount) { iteration ->
+                    val color =
+                        if (pagerState.currentPage == iteration) Color.DarkGray else Color.LightGray
                     Box(
                         modifier = Modifier
-                            .wrapContentSize()
-                            .graphicsLayer {
-                                val pageOffset = (
-                                        (pagerState.currentPage - page) + pagerState
-                                            .currentPageOffsetFraction
-                                        ).absoluteValue
+                            .padding(bottom = 20.dp, top = 5.dp, start = 3.dp, end = 3.dp)
+                            .clip(CircleShape)
+                            .background(color)
+                            .size(6.dp)
+                    )
+                }
+            }
+            OutlinedSpinner(
+                listMaintenanceName = uiState.listCarLocals.map { it.model },
+                textLabel = stringResource(R.string.your_car),
+                onItemSelect = { nomCar ->
+                    uiState.listCarLocals.find { it.model == nomCar }
+                        ?.let { it1 -> onEvent(OnMaintenanceEvent.OnCarSelectedChanged(it1)) }
+                })
 
-                                alpha = lerp(
-                                    start = 0.5f,
-                                    stop = 1f,
-                                    fraction = 1f - pageOffset.coerceIn(0f, 1f)
-                                )
-                            },
-                    ) {
-                        Image(
-                            modifier = Modifier.padding(start = 15.dp),
-                            painter = painterResource(id = uiState.listMaintenance[page].image),
-                            contentDescription = ""
-                        )
-                        Text(
-                            text = uiState.listMaintenance[page].name,
-                            fontSize = 25.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.White,
-                            modifier = Modifier.padding(start = 25.dp, top = 200.dp)
-                        )
+            CustomTextField(
+                keyboardType = KeyboardType.Number,
+                onValueChange = {
+                    onEvent(OnMaintenanceEvent.OnPriceChanged(it.toInt()))
+                },
+                textFieldValue = uiState.price.toString(),
+                label = stringResource(R.string.price),
+                modifier = Modifier
+                    .fillMaxWidth(0.9f)
+                    .padding(bottom = 20.dp)
+            )
+            CustomTextField(
+                keyboardType = KeyboardType.Number,
+                onValueChange = {
+                    onEvent(OnMaintenanceEvent.OnMileageChanged(it.toInt()))
+                },
+                textFieldValue = uiState.mileage.toString(),
+                label = stringResource(R.string.mileage),
+                modifier = Modifier.fillMaxWidth(0.9f)
+            )
+            Row {
+                Checkbox(checked = checked, onCheckedChange = { isChecked ->
+                    checked = isChecked
+                    if (checked) {
+                        selectedDate.value = Date.from(Instant.now())
                     }
+                })
+                IconButton(onClick = {
+                    showCalendar.value = true
+                }) {
+                    Icon(imageVector = Icons.Outlined.DateRange, contentDescription = "")
                 }
-                Row(
-                    Modifier
-                        .wrapContentHeight()
-                        .fillMaxWidth()
-                        .align(Alignment.CenterHorizontally),
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    repeat(pagerState.pageCount) { iteration ->
-                        val color =
-                            if (pagerState.currentPage == iteration) Color.DarkGray else Color.LightGray
-                        Box(
-                            modifier = Modifier
-                                .padding(bottom = 20.dp, top = 5.dp, start = 3.dp, end = 3.dp)
-                                .clip(CircleShape)
-                                .background(color)
-                                .size(6.dp)
-                        )
-                    }
-                }
-                OutlinedSpinner(
-                    listMaintenanceName = uiState.listCarLocals.map { it.model },
-                    textLabel = stringResource(R.string.your_car),
-                    onItemSelect = { nomCar ->
-                        uiState.listCarLocals.find { it.model == nomCar }
-                            ?.let { it1 -> onEvent(OnMaintenanceEvent.OnCarSelectedChanged(it1)) }
-                    })
-
-                CustomTextField(
-                    keyboardType = KeyboardType.Number,
-                    onValueChange = {
-                        onEvent(OnMaintenanceEvent.OnPriceChanged(it.toInt()))
-                    },
-                    textFieldValue = uiState.price.toString(),
-                    label = stringResource(R.string.price),
-                    modifier = Modifier
-                        .fillMaxWidth(0.9f)
-                        .padding(bottom = 20.dp)
-                )
-                CustomTextField(
-                    keyboardType = KeyboardType.Number,
-                    onValueChange = {
-                        onEvent(OnMaintenanceEvent.OnMileageChanged(it.toInt()))
-                    },
-                    textFieldValue = uiState.mileage.toString(),
-                    label = stringResource(R.string.mileage),
-                    modifier = Modifier.fillMaxWidth(0.9f)
-                )
-                Row {
-                    Checkbox(checked = checked, onCheckedChange = { isChecked ->
-                        checked = isChecked
-                        if (checked) {
-                            selectedDate.value = Date.from(Instant.now())
-                        }
-                    })
-                    IconButton(onClick = {
-                        showCalendar.value = true
-                    }) {
-                        Icon(imageVector = Icons.Outlined.DateRange, contentDescription = "")
-                    }
-                }
-                Text(text = "Date : ${selectedDate.value}")
-                Button(
-                    colors = ButtonDefaults.buttonColors(colorResource(id = R.color.primaryColor)),
-                    onClick = {
-                        onEvent(OnMaintenanceEvent.OnClickAddMaintenanceButton)
-                    }) {
-                    Text(text = stringResource(R.string.add))
-                }
+            }
+            Text(text = "Date : ${selectedDate.value}")
+            Button(
+                colors = ButtonDefaults.buttonColors(colorResource(id = R.color.primaryColor)),
+                onClick = {
+                    onEvent(OnMaintenanceEvent.OnClickAddMaintenanceButton)
+                }) {
+                Text(text = stringResource(R.string.add))
             }
         }
     }
+}
 
 @Preview(showBackground = true)
 @Composable

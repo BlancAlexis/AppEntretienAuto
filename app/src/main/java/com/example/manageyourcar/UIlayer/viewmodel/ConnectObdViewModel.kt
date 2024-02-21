@@ -4,7 +4,6 @@ package com.example.manageyourcar.UIlayer.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.UIState.BluetoothUiState
 import com.example.manageyourcar.domainLayer.ConnectionResult
 import com.example.manageyourcar.domainLayer.bluetooth.BluetoothController
@@ -99,7 +98,7 @@ class ConnectObdViewModel : ViewModel(), KoinComponent {
                     ConnectedBluetoothDevice.inputStream = result.inputStream
                     ConnectedBluetoothDevice.bluetoothDevice = result.device
                     ConnectedBluetoothDevice.outputStream = result.outputStream
-                   // navController.navigate(R.id.action_connectObdFragment_to_OBDFragment)
+                    // navController.navigate(R.id.action_connectObdFragment_to_OBDFragment)
 
                     /*  _state.update {
                           it.copy(

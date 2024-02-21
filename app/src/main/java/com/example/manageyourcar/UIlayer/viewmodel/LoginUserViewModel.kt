@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.manageyourcar.R
-import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.UIlayer.UIState.LoginUiState
 import com.example.manageyourcar.UIlayer.UIUtil
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
@@ -40,7 +39,10 @@ class LoginUserViewModel constructor(private val uiUtil: UIUtil) : ViewModel(), 
 
     fun onEvent(event: UserLoginEvent) {
         when (event) {
-            is UserLoginEvent.OnClickSendButton -> { onTryLog() }
+            is UserLoginEvent.OnClickSendButton -> {
+                onTryLog()
+            }
+
             is UserLoginEvent.OnLoginChanged -> onLoginChanged(event)
             is UserLoginEvent.OnPasswordChanged -> onPasswordChanged(event)
             is UserLoginEvent.OnSignInButton -> {
@@ -69,13 +71,15 @@ class LoginUserViewModel constructor(private val uiUtil: UIUtil) : ViewModel(), 
     }
 
     private suspend fun logUserLocalStorage() {
-        when (val result = logUseCase.loginUser(_uiState.value.userLogin!!, _uiState.value.userPassword!!)) {
+        when (val result =
+            logUseCase.loginUser(_uiState.value.userLogin!!, _uiState.value.userPassword!!)) {
             is Ressource.Success -> {
                 cacheManagerRepository.putUserId(
                     result.data!!
                 )
                 isConnected.postValue(true)
             }
+
             is Ressource.Error -> {
                 _uiState.update {
                     it.copy(
@@ -84,6 +88,7 @@ class LoginUserViewModel constructor(private val uiUtil: UIUtil) : ViewModel(), 
                     )
                 }
             }
+
             else -> {}
         }
     }

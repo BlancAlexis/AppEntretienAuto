@@ -48,6 +48,7 @@ import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.DeleteMainten
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.GetAllUserMaintenanceUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.user.AddUserRoomUseCase
 import okhttp3.OkHttpClient
+import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.context.loadKoinModules
@@ -75,8 +76,8 @@ private val loadFeature by lazy {
 
 val utils = module {
     single<UIUtil> { UIUtil(androidContext()) }
-    single { ListenerInternet(get()) }
-    factory<BluetoothController> { AndroidBluetoothController( get(), androidContext()) }
+    single { ListenerInternet(get(), androidApplication()) }
+    factory<BluetoothController> { AndroidBluetoothController(get(), androidContext()) }
 }
 
 val mappersModule = module {

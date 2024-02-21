@@ -26,7 +26,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.io.IOException
 import java.util.*
 
@@ -133,25 +132,30 @@ class AndroidBluetoothController(
             currentClientSocket?.let { socket ->
                 try {
                     socket.connect()
-                        val obdConnection =
-                            ObdDeviceConnection(socket.inputStream, socket.outputStream)
-                        println(
-                            " vitesse  ${obdConnection.run(SpeedCommand())} vin ${
-                                obdConnection.run(
-                                    VINCommand()
-                                )
-                            }  rpm ${obdConnection.run(RPMCommand())}"
+                    val obdConnection =
+                        ObdDeviceConnection(socket.inputStream, socket.outputStream)
+                    println(
+                        " vitesse  ${obdConnection.run(SpeedCommand())} vin ${
+                            obdConnection.run(
+                                VINCommand()
+                            )
+                        }  rpm ${obdConnection.run(RPMCommand())}"
+                    )
+
+                    emit(
+                        ConnectionResult.ConnectionEstablished(
+                            device,
+                            socket.inputStream,
+                            socket.outputStream
                         )
-                    
-                    emit(ConnectionResult.ConnectionEstablished(device, socket.inputStream, socket.outputStream)
                     )
                 } catch (e: IOException) {
                     println("passe dans catch ${e.localizedMessage}")
                     uiUtil.displayToastSuspend("passe dans catch ${e.localizedMessage}")
-                 /*   socket.close()
-                    Log.e("AndroidBluetoothController", "Error while connecting to device", e)
-                    currentClientSocket = null
-                    emit(ConnectionResult.Error("Connection was interrupted"))*/
+                    /*   socket.close()
+                       Log.e("AndroidBluetoothController", "Error while connecting to device", e)
+                       currentClientSocket = null
+                       emit(ConnectionResult.Error("Connection was interrupted"))*/
                 }
             }
         }.onCompletion {

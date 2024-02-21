@@ -1,6 +1,5 @@
 package com.example.manageyourcar.domainLayer.mappers
 
-import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.model.Car
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
 import org.koin.core.component.KoinComponent

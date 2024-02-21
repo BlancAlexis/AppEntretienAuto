@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.manageyourcar.R
-import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.UIlayer.UIState.MaintenanceListUiState
 import com.example.manageyourcar.UIlayer.UIState.ServicingUIState
 import com.example.manageyourcar.UIlayer.UIState.SortType

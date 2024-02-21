@@ -1,7 +1,6 @@
 package com.example.manageyourcar.domainLayer.useCaseRoom.car
 
 import android.util.Log
-import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.dataLayer.model.CarLocal
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository

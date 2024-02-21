@@ -87,7 +87,7 @@ class ConnectObdFragment : Fragment(), KoinComponent, GlobalEvent {
                 )
             }
         }
-        val c=arrayOf(
+        val c = arrayOf(
             Manifest.permission.BLUETOOTH_SCAN,
             Manifest.permission.BLUETOOTH_CONNECT,
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -100,9 +100,14 @@ class ConnectObdFragment : Fragment(), KoinComponent, GlobalEvent {
             )
         }
     }
+
     private fun hasPermissions(permissions: Array<String>): Boolean {
         for (permission in permissions) {
-            if (ContextCompat.checkSelfPermission(requireContext(), permission) != PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    permission
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
                 return false
             }
         }
