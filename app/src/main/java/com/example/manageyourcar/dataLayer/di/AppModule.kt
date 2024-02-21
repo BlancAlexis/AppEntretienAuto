@@ -50,7 +50,6 @@ import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.AddCarMainten
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.DeleteMaintenanceRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.GetAllUserMaintenanceUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.user.AddUserRoomUseCase
-import com.example.manageyourcar.domainLayer.utils.SmsSender
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModelOf
@@ -79,8 +78,6 @@ private val loadFeature by lazy {
 
 val utils = module {
     single<UIUtil> { UIUtil(androidApplication()) }
-    factory<GlobalEvent> { ViewCarDetailsFragment() }
-    single { SmsSender }
     factory<BluetoothController> { AndroidBluetoothController( get(),AppApplication.instance) }
 }
 
