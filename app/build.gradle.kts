@@ -49,6 +49,10 @@ android {
             dimension = "environnement"
             versionNameSuffix = "-prod"
         }
+        create("recette") {
+            dimension = "environnement"
+            versionNameSuffix = "-recette"
+        }
     }
     buildTypes {
         release {

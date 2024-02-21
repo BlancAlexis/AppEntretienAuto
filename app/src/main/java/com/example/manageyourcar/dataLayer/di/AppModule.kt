@@ -1,9 +1,7 @@
 package com.example.manageyourcar.dataLayer.di
 
 import androidx.room.Room
-import com.example.manageyourcar.UIlayer.AppApplication
 import com.example.manageyourcar.UIlayer.UIUtil
-import com.example.manageyourcar.UIlayer.view.fragments.ViewCarDetails.ViewCarDetailsFragment
 import com.example.manageyourcar.UIlayer.viewmodel.AddCarViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.AddMaintenanceViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.AddUserViewModel
@@ -15,7 +13,6 @@ import com.example.manageyourcar.UIlayer.viewmodel.ViewCarDetailsViewModel
 import com.example.manageyourcar.dataLayer.AndroidBluetoothController
 import com.example.manageyourcar.dataLayer.CacheDataSource
 import com.example.manageyourcar.dataLayer.CacheManagerRepositoryImpl
-import com.example.manageyourcar.dataLayer.GlobalEvent
 import com.example.manageyourcar.dataLayer.ListenerInternet
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.RequestApiImmat
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.RequestApiSIV
@@ -51,7 +48,7 @@ import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.DeleteMainten
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.GetAllUserMaintenanceUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.user.AddUserRoomUseCase
 import okhttp3.OkHttpClient
-import org.koin.android.ext.koin.androidApplication
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
@@ -77,8 +74,9 @@ private val loadFeature by lazy {
 }
 
 val utils = module {
-    single<UIUtil> { UIUtil(androidApplication()) }
-    factory<BluetoothController> { AndroidBluetoothController( get(),AppApplication.instance) }
+    single<UIUtil> { UIUtil(androidContext()) }
+    single { ListenerInternet(get()) }
+    factory<BluetoothController> { AndroidBluetoothController( get(), androidContext()) }
 }
 
 val mappersModule = module {
@@ -107,16 +105,14 @@ val databaseModule = module {
 }
 
 val repositoryModule = module {
-
     single<CacheManagerRepository> { CacheManagerRepositoryImpl(get()) }
-    single { CacheDataSource() }
     single<CarRepository> { CarRepositoryImpl(get()) }
     single<UserRepository> { UserRepositoryImpl(get()) }
     single<ServicingRepository> { ServicingRepositoryImpl(get()) }
+    single<CacheDataSource> { CacheDataSource() }
 }
 
 val useCaseModule = module {
-    single { ListenerInternet(get()) }
     factory { AddCarMaintenanceUseCase() }
     factory { AddCarRoomUseCase() }
 
