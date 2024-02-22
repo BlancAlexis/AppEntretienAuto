@@ -2,13 +2,16 @@ package com.example.manageyourcar.domainLayer.mappers
 
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.model.Car
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 object CarRetrofitToCar : KoinComponent {
     private val cacheManager by inject<CacheManagerRepository>()
 
-    fun Car.toCarGlobal(ownerId: Int): com.example.manageyourcar.dataLayer.model.CarLocal {
+    fun Car.toCarGlobal(): com.example.manageyourcar.dataLayer.model.CarLocal {
+
         return com.example.manageyourcar.dataLayer.model.CarLocal(
             carID = null,
             brand = this.make.name,
@@ -21,7 +24,9 @@ object CarRetrofitToCar : KoinComponent {
             torque = this.engine.torque,
             maxSpeed = 0,
             mileage = listOf(0),
-            ownerID = cacheManager.getUserId().data
+            ownerID = GlobalScope.launch {
+                cacheManager.getUserId().data
+            } as Int
         )
     }
 }

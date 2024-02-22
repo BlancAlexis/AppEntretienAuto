@@ -17,15 +17,15 @@ class CacheManagerRepositoryImpl(private val dataSource: CacheDataSource) : Cach
     }
 
 
-    override fun putUserId(userId: Int): Ressource<Boolean> {
+    override suspend fun putUserId(userId: Int): Ressource<Boolean> {
         return dataSource.putUserId(userId)
     }
 
-    override fun getUserId(): Ressource<Int> {
+    override suspend fun getUserId(): Ressource<Int> {
         return dataSource.getUserId()
     }
 
-    override fun resetUserId(): Ressource<Boolean> {
+    override suspend fun resetUserId(): Ressource<Boolean> {
         return dataSource.resetCurrentUserId()
     }
 }

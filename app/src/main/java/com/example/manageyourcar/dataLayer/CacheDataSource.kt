@@ -14,10 +14,11 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
 
-class CacheDataSource {
-    val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user_prefs")
+class CacheDataSource(private val context: Context) {
+    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user_prefs")
+  //  private val carDataStore = context.createDataStore("car_preferences", CarPreferencesSerializer)
 
-    val USER_ID_KEY = intPreferencesKey("user_id")
+    private val USER_ID_KEY = intPreferencesKey("user_id")
 
     private var userCarList: List<CarLocal> = emptyList()
     fun getUserCarList(): Ressource<List<CarLocal>> {
@@ -30,10 +31,9 @@ class CacheDataSource {
 
     fun setUserCarList(local: List<CarLocal>) {
         userCarList = local
-
     }
 
-    fun getUserId(): Ressource<Int> {
+    suspend fun getUserId(): Ressource<Int> {
         return try {
             val userIdFlow: Flow<Int> = context.dataStore.data.map { preferences ->
                 preferences[USER_ID_KEY] ?: -1
@@ -49,7 +49,7 @@ class CacheDataSource {
         }
     }
 
-    fun putUserId(userId: Int): Ressource<Boolean> {
+    suspend fun putUserId(userId: Int): Ressource<Boolean> {
         return try {
             context.dataStore.edit { preferences ->
                 preferences[USER_ID_KEY] = userId
@@ -60,7 +60,7 @@ class CacheDataSource {
         }
     }
 
-    suspend fun resetCurrentUserId(context: Context): Ressource<Boolean> {
+    suspend fun resetCurrentUserId(): Ressource<Boolean> {
         return try {
             context.dataStore.edit { preferences ->
                 preferences.clear()
