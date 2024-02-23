@@ -14,6 +14,9 @@ import com.example.manageyourcar.dataLayer.AndroidBluetoothController
 import com.example.manageyourcar.dataLayer.CacheDataSource
 import com.example.manageyourcar.dataLayer.CacheManagerRepositoryImpl
 import com.example.manageyourcar.dataLayer.ListenerInternet
+import com.example.manageyourcar.dataLayer.dataLayerFirebase.carRemoteDataFirebaseSourceImpl
+import com.example.manageyourcar.dataLayer.dataLayerFirebase.maintenanceRemoteDateFirebaseSourceImpl
+import com.example.manageyourcar.dataLayer.dataLayerFirebase.userRemoteDataFirebaseImpl
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.RequestApiImmat
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.RequestApiSIV
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.dataSource.RemoteDataSource
@@ -190,6 +193,9 @@ val retrofitModule = module {
 
 val firebaseModule = module {
     single<FirebaseFirestore> { Firebase.firestore }
+    factory<userRemoteDataFirebaseImpl> { userRemoteDataFirebaseImpl(get()) }
+    factory<carRemoteDataFirebaseSourceImpl> { carRemoteDataFirebaseSourceImpl(get()) }
+    factory<maintenanceRemoteDateFirebaseSourceImpl> { maintenanceRemoteDateFirebaseSourceImpl(get()) }
 }
 
 val viewModelModule = module {
