@@ -99,7 +99,8 @@ android {
 
 
 dependencies {
-
+    //Firestore
+    implementation("com.google.firebase:firebase-firestore:24.10.2")
     //Datastore
     implementation("androidx.datastore:datastore:1.0.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")

@@ -1,5 +1,6 @@
 package com.example.manageyourcar.dataLayer.dataLayerRoom.repositoryImpl
 
+import com.example.manageyourcar.dataLayer.dataLayerFirebase.remoteDataFirebaseSource
 import com.example.manageyourcar.dataLayer.dataLayerRoom.dao.CarDao
 import com.example.manageyourcar.dataLayer.model.CarLocal
 import com.example.manageyourcar.domainLayer.mappers.CarMappers.toCar
@@ -9,11 +10,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
 
-class CarRepositoryImpl(private val carDao: CarDao) : CarRepository, KoinComponent {
+class CarRepositoryImpl(private val remoteDataFirebaseSource: remoteDataFirebaseSource) : CarRepository, KoinComponent {
 
 
     override fun addNewCar(carLocal: CarLocal) {
-        carDao.addNewCar(carLocal.toCarEntity())
+        remoteDataFirebaseSource.addNewCar(carLocal.toCarEntity())
     }
 
     override fun getCars(idUser: Int): Flow<List<CarLocal>> {

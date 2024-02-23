@@ -47,6 +47,9 @@ import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.AddCarMainten
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.DeleteMaintenanceRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.GetAllUserMaintenanceUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.user.AddUserRoomUseCase
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
@@ -70,6 +73,7 @@ private val loadFeature by lazy {
             retrofitModule,
             mappersModule,
             utils,
+            firebaseModule
         )
     )
 }
@@ -182,6 +186,10 @@ val retrofitModule = module {
     }
 
     factory<ApiCarImmatRepository> { ApiCarImmatRepositoryImpl() }
+}
+
+val firebaseModule = module {
+    single<FirebaseFirestore> { Firebase.firestore }
 }
 
 val viewModelModule = module {
