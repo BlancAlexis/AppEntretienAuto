@@ -3,7 +3,7 @@ package com.example.manageyourcar.dataLayer.model
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-
+@kotlinx.serialization.Serializable
 data class CarLocal(
     val carID: Int? = null,
     @SerializedName("marque")

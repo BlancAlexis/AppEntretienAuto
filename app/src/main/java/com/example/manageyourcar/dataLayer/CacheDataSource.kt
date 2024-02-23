@@ -2,11 +2,11 @@ package com.example.manageyourcar.dataLayer
 
 import android.content.Context
 import androidx.datastore.core.DataStore
+import androidx.datastore.dataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import com.example.manageyourcar.R
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.dataLayer.model.CarLocal
 import kotlinx.coroutines.flow.Flow
@@ -16,22 +16,33 @@ import kotlinx.coroutines.flow.map
 
 class CacheDataSource(private val context: Context) {
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user_prefs")
-  //  private val carDataStore = context.createDataStore("car_preferences", CarPreferencesSerializer)
+    private val Context.carDataStore by dataStore("car_prefs.json", CarPreferencesSerializer)
 
     private val USER_ID_KEY = intPreferencesKey("user_id")
 
-    private var userCarList: List<CarLocal> = emptyList()
-    fun getUserCarList(): Ressource<List<CarLocal>> {
+    suspend fun saveUserCarList(carList: List<CarLocal>) {
         try {
-            return Ressource.Success(userCarList)
+            context.carDataStore.updateData { preferences ->
+                preferences.copy(carCached = carList)
+            }
         } catch (e: Exception) {
-            return Ressource.Error(message = "Erreur lors de la récupération de la liste de voiture")
+            e.printStackTrace()
+
         }
     }
 
-    fun setUserCarList(local: List<CarLocal>) {
-        userCarList = local
+    suspend fun getUserCarList(): Ressource<List<CarLocal>> {
+        try {
+            val carListFlow: Flow<List<CarLocal>> = context.carDataStore.data.map { preferences ->
+                preferences.carCached.toList()
+            }
+            return Ressource.Success(carListFlow.first())
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return Ressource.Error(message = "Error retrieving car list: $e")
+        }
     }
+
 
     suspend fun getUserId(): Ressource<Int> {
         return try {

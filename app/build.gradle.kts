@@ -1,8 +1,5 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
-import com.android.build.gradle.internal.dsl.JavaCompileOptions
-import com.google.protobuf.gradle.generateProtoTasks
-import com.google.protobuf.gradle.protobuf
-import com.google.protobuf.gradle.protoc
+
 
 plugins {
     id("com.android.application")
@@ -12,18 +9,18 @@ plugins {
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
     id("androidx.navigation.safeargs.kotlin")
-    id("com.google.protobuf")
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 
 
 android {
     namespace = "com.example.manageyourcar"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.manageyourcar"
         minSdk = 29
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -104,45 +101,33 @@ android {
 dependencies {
 
     //Datastore
-    //protobuf(files("app/src/main/proto/carproto.proto"))
     implementation("androidx.datastore:datastore:1.0.0")
-    implementation ("androidx.datastore:datastore-core:1.0.0")
-    implementation("androidx.datastore:datastore-preferences:1.0.0")
-    implementation("com.google.protobuf:protobuf-javalite:3.19.4")
-
-    implementation("androidx.datastore:datastore:1.0.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
-//Timber
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+    //Timber
     implementation("com.jakewharton.timber:timber:5.0.1")
     //Crashanalytics
     implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
     implementation("com.google.firebase:firebase-crashlytics")
     implementation("com.google.firebase:firebase-analytics")
-
     //Injection de dépendance koin
     implementation("io.insert-koin:koin-android:3.2.0-beta-1")
     implementation("io.insert-koin:koin-androidx-navigation:3.2.0-beta-1")
-
     //API Places et Maps Google
     implementation("com.google.android.gms:play-services-maps:18.1.0")
     implementation("com.google.android.libraries.places:places:3.2.0")
     implementation("com.google.maps.android:places-ktx:2.0.0")
-
     //Firebase
     implementation("com.google.firebase:firebase-database:20.3.0")
-
     //Lifecycle
     implementation("androidx.lifecycle:lifecycle-runtime-ktx")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
-
     //Navigation graph
     val nav_version = "2.5.3"
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
     implementation("androidx.navigation:navigation-compose:$nav_version")
-
     //Room
     val room_version = "2.5.0"
     implementation("androidx.room:room-runtime:$room_version")
@@ -174,18 +159,4 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-}
-protobuf {
-    protoc {
-        artifact = "com.google.protobuf:protoc:3.14.0"
-    }
-    generateProtoTasks {
-        all().forEach { task ->
-            task.plugins {
-                create("java") {
-                    option("lite")
-                }
-            }
-        }
-    }
 }

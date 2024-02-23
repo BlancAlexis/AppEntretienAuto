@@ -129,23 +129,24 @@ class ListMaintenanceViewModel(
     fun onEvent(event: OnMaintenanceListEvent) {
         when (event) {
             is OnMaintenanceListEvent.OnButtonAddMaintenancePush -> {
-                when (val result = cacheManagerRepository.getUserCarList()) {
-                    is Ressource.Error -> uiUtil.displayToast(
-                        result.error?.localizedMessage ?: "erreur"
-                    )
+                viewModelScope.launch() {
+                    when (val result = cacheManagerRepository.getUserCarList()) {
+                        is Ressource.Error -> uiUtil.displayToast(
+                            result.error?.localizedMessage ?: "erreur"
+                        )
 
-                    is Ressource.Success -> {
-                        if (result.data.isNullOrEmpty()) {
-                            uiUtil.displayToast("Ajouter une voiture d'abord")
-                            return
+                        is Ressource.Success -> {
+                            if (result.data.isNullOrEmpty()) {
+                                uiUtil.displayToast("Ajouter une voiture d'abord")
+                                return@launch
+                            }
+                            navController.navigate(R.id.addMaintenanceFragment)
                         }
-                        navController.navigate(R.id.addMaintenanceFragment)
-                    }
 
-                    else -> {}
+                        else -> {}
+                    }
                 }
             }
-
             is OnMaintenanceListEvent.OnSortMethodChanged -> changeSortMethod(event)
         }
     }

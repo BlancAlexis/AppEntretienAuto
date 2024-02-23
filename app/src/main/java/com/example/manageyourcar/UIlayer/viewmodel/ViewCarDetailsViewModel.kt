@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import timber.log.Timber
 
 class ViewCarDetailsViewModel(
     val cacheManagerRepository: CacheManagerRepository, private val uiUtil: UIUtil
@@ -65,30 +66,33 @@ class ViewCarDetailsViewModel(
             }
 
             is ViewCarDetailsEvent.OnUpdateMileage -> {
-                when (val result = cacheManagerRepository.getUserCarList()) {
-                    is Ressource.Error -> {
-                        uiUtil.displayToast("Erreur lors de la récupération des voitures")
-                        return
-                    }
-
-                    is Ressource.Loading -> {
-                        uiUtil.displayToast("Chargement des voitures")
-                        return
-                    }
-
-                    is Ressource.Success -> {
-                        if (result.data.isNullOrEmpty()) {
-                            uiUtil.displayToast("Vous n'avez encore aucune voiture")
-                            return
+                viewModelScope.launch() {
+                    when (val result = cacheManagerRepository.getUserCarList()) {
+                        is Ressource.Error -> {
+                            uiUtil.displayToastSuspend("Erreur lors de la récupération des voitures")
+                            return@launch
                         }
-                        val action =
-                            ViewCarDetailsFragmentDirections.actionViewCarDetailsFragmentToUpdateCarMileage(
-                                myArg = result.data[event.position]
-                            )
-                        navController.navigate(action)
-                    }
-                }
 
+                        is Ressource.Loading -> {
+                            uiUtil.displayToastSuspend("Chargement des voitures")
+                            return@launch
+                        }
+
+                        is Ressource.Success -> {
+                            if (result.data.isNullOrEmpty()) {
+                                uiUtil.displayToastSuspend("Vous n'avez encore aucune voiture")
+                                return@launch
+                            }
+                            Timber.i("Car to update: result.data[event.position] ${result.data.size}")
+                            val action =
+                                ViewCarDetailsFragmentDirections.actionViewCarDetailsFragmentToUpdateCarMileage(
+                                    myArg = result.data[event.position]
+                                )
+                            navController.navigate(action)
+                        }
+                    }
+
+                }
             }
 
             is ViewCarDetailsEvent.OnDeleteCar -> getCachedUserCars(event)

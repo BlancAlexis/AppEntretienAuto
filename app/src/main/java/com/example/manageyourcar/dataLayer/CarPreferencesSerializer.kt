@@ -1,35 +1,37 @@
 
 package com.example.manageyourcar.dataLayer
 
-import android.content.Context
-import androidx.datastore.core.CorruptionException
-import androidx.datastore.core.DataStore
 import androidx.datastore.core.Serializer
-import androidx.datastore.dataStore
-import androidx.datastore.preferences.protobuf.InvalidProtocolBufferException
-import com.example.manageyourcar.dataLayer.model.CarLocal
+import kotlinx.serialization.SerializationException
+import kotlinx.serialization.json.Json
 import java.io.InputStream
 import java.io.OutputStream
 
-object SettingsSerializer : Serializer<Proto> {
-    override val defaultValue: Settings = carproto.getDefaultInstance()
 
-    override suspend fun readFrom(input: InputStream): Settings {
-        try {
-            return Settings.parseFrom(input)
-        } catch (exception: InvalidProtocolBufferException) {
-            throw CorruptionException("Cannot read proto.", exception)
+object CarPreferencesSerializer : Serializer<CarCache> {
+    override val defaultValue: CarCache
+        get() = CarCache()
+
+    override suspend fun readFrom(input: InputStream): CarCache {
+        return try {
+            Json.decodeFromString(
+                deserializer = CarCache.serializer(),
+                string = input.readBytes().decodeToString()
+            )
+        } catch (e: SerializationException) {
+            e.printStackTrace()
+            defaultValue
         }
     }
 
-    override suspend fun writeTo(
-        t: Settings,
-        output: OutputStream
-    ) = t.writeTo(output)
+    override suspend fun writeTo(t: CarCache, output: OutputStream) {
+        output.write(
+            Json.encodeToString(
+                serializer = CarCache.serializer(),
+                value = t
+            ).encodeToByteArray()
+        )
+    }
 }
 
-val Context.settingsDataStore: DataStore<Settings> by dataStore(
-    fileName = "settings.pb",
-    serializer = SettingsSerializer
-)
 

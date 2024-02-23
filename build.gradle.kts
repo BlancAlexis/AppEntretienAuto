@@ -4,6 +4,9 @@ buildscript {
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.5.3")
 
     }
+    dependencies {
+        classpath("org.jetbrains.kotlin:kotlin-serialization:1.6.10")
+    }
 }
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
@@ -13,7 +16,6 @@ plugins {
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin") version "2.0.1" apply false
     id("com.google.firebase.crashlytics") version "2.9.9" apply false
     id("androidx.navigation.safeargs.kotlin") version "2.5.3" apply false
-    id("com.google.protobuf") version "0.8.17" apply false
 
 
 }
