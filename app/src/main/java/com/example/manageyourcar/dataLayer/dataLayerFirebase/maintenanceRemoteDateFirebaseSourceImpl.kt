@@ -61,6 +61,14 @@ class MaintenanceRemoteDateFirebaseSourceImpl(private val firestoreInstance: Fir
         awaitClose { listenerRegistration.remove() }
     }
 
+    override fun getServicing(idServicing: Int): Flow<Ressource<Entretien>> {
+        TODO("Not yet implemented")
+    }
+
+    override fun updateServicing(entretien: Entretien): Ressource<Unit> {
+        TODO("Not yet implemented")
+    }
+
 
     /*
         override fun updateServicing(entretien: Entretien) : Ressource<Unit> {
@@ -82,32 +90,36 @@ class MaintenanceRemoteDateFirebaseSourceImpl(private val firestoreInstance: Fir
         }
     }
 
+    override fun getMaintenceActWithCar(userId: Int): Flow<Ressource<List<MaintenanceWithCarEntity>>> {
+        TODO("Not yet implemented")
+    }
 
-/*    override fun getMaintenceActWithCar(userId: Int): Flow<Ressource<List<MaintenanceWithCarEntity>>> =
-        callbackFlow {
-            trySend(Ressource.Loading())
 
-            val listenerRegistration = firestoreInstance.collection("maintenance")
-                .whereEqualTo("user_id", userId)
-                .addSnapshotListener { snapshot, error ->
-                    if (error != null) {
-                        // Handle error
-                    } else {
-                        val maintenanceWithCarEntities = snapshot?.documents?.mapNotNull { doc ->
-                            val maintenance = doc.toObject(Entretien::class.java)
-                            val car = firestoreInstance.collection("cars")
-                                .document(maintenance.car_id.toString()).get()
-                                .addOnSuccessListener { result ->
-                                    val carEntity = result.toObject(CarEntity::class.java)
-                                    MaintenanceWithCarEntity(maintenance, carEntity)
-                                }
-                                .result // Assuming extension function to await result
-                            car
+    /*    override fun getMaintenceActWithCar(userId: Int): Flow<Ressource<List<MaintenanceWithCarEntity>>> =
+            callbackFlow {
+                trySend(Ressource.Loading())
+
+                val listenerRegistration = firestoreInstance.collection("maintenance")
+                    .whereEqualTo("user_id", userId)
+                    .addSnapshotListener { snapshot, error ->
+                        if (error != null) {
+                            // Handle error
+                        } else {
+                            val maintenanceWithCarEntities = snapshot?.documents?.mapNotNull { doc ->
+                                val maintenance = doc.toObject(Entretien::class.java)
+                                val car = firestoreInstance.collection("cars")
+                                    .document(maintenance.car_id.toString()).get()
+                                    .addOnSuccessListener { result ->
+                                        val carEntity = result.toObject(CarEntity::class.java)
+                                        MaintenanceWithCarEntity(maintenance, carEntity)
+                                    }
+                                    .result // Assuming extension function to await result
+                                car
+                            }
+                            trySend(Ressource.Success(maintenanceWithCarEntities))
                         }
-                        trySend(Ressource.Success(maintenanceWithCarEntities))
                     }
-                }
 
-            awaitClose { listenerRegistration.remove() }
-        }*/
+                awaitClose { listenerRegistration.remove() }
+            }*/
 }

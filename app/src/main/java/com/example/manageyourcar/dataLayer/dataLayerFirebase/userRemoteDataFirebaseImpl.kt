@@ -6,7 +6,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class userRemoteDataFirebaseImpl(private val firestoreInstance : FirebaseFirestore) : UserRepository {
     override suspend fun logUser(email: String, password: String): User {
-            firestoreInstance.collection("users").whereEqualTo("email", email).whereEqualTo("password", password).get()
+        return User(0, "test    ", "test", "test", "test")
+        /*    firestoreInstance.collection("users").whereEqualTo("email", email).whereEqualTo("password", password).get()
                 .addOnSuccessListener { result ->
                     for (document in result) {
                         return@addOnSuccessListener document.toObject(User::class.java)
@@ -14,7 +15,7 @@ class userRemoteDataFirebaseImpl(private val firestoreInstance : FirebaseFiresto
                 }
                 .addOnFailureListener { exception ->
                     // Erreur lors de la récupération des documents
-                }
+                }*/
      }
 
     override suspend fun addNewUser(user: User) {
@@ -22,27 +23,29 @@ class userRemoteDataFirebaseImpl(private val firestoreInstance : FirebaseFiresto
     }
 
     override suspend fun getUser(idUser: Int): User {
-        firestoreInstance.collection("users").document(idUser.toString()).get()
+        return User(0, "test   ", "test", "test", "test")
+/*        firestoreInstance.collection("users").document(idUser.toString()).get()
             .addOnSuccessListener { result ->
                 return@addOnSuccessListener result.toObject(User::class.java)
             }
             .addOnFailureListener { exception ->
                 // Erreur lors de la récupération des documents
-            }
+            }*/
     }
 
     override suspend fun getUsers(): List<User> {
-        firestoreInstance.collection("users").get()
-            .addOnSuccessListener { result ->
-                return@addOnSuccessListener result.toObjects(User::class.java)
-            }
-            .addOnFailureListener { exception ->
-                // Erreur lors de la récupération des documents
-            }
+        return listOf(User(0, "test   ", "test", "test", "test"))
+//        firestoreInstance.collection("users").get()
+//            .addOnSuccessListener { result ->
+//                return@addOnSuccessListener result.toObjects(User::class.java)
+//            }
+//            .addOnFailureListener { exception ->
+//                // Erreur lors de la récupération des documents
+//            }
     }
 
     override suspend fun updateUser(user: User) {
-        firestoreInstance.collection("users").document(user.userID.toString()).set(user)
+        /*firestoreInstance.collection("users").document(user.userID.toString()).set(user)*/
     }
 
     override suspend fun deleteUser(idUser: Int) {

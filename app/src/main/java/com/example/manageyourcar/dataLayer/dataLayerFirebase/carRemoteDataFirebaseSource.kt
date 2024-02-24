@@ -69,7 +69,7 @@ class carRemoteDataFirebaseSourceImpl(private val firestoreInstance : FirebaseFi
                 trySend(Ressource.Success(Unit))
             }
             .addOnFailureListener { exception ->
-                trySend(Ressource.Error(exception)) 
+                trySend(Ressource.Error(exception))
                 cancel(CancellationException("Firestore error", exception))
             }
     }

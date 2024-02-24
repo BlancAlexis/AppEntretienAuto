@@ -15,7 +15,6 @@ import com.example.manageyourcar.dataLayer.CacheDataSource
 import com.example.manageyourcar.dataLayer.CacheManagerRepositoryImpl
 import com.example.manageyourcar.dataLayer.ListenerInternet
 import com.example.manageyourcar.dataLayer.dataLayerFirebase.carRemoteDataFirebaseSourceImpl
-import com.example.manageyourcar.dataLayer.dataLayerFirebase.maintenanceRemoteDateFirebaseSourceImpl
 import com.example.manageyourcar.dataLayer.dataLayerFirebase.userRemoteDataFirebaseImpl
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.RequestApiImmat
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.RequestApiSIV
@@ -195,7 +194,7 @@ val firebaseModule = module {
     single<FirebaseFirestore> { Firebase.firestore }
     factory<userRemoteDataFirebaseImpl> { userRemoteDataFirebaseImpl(get()) }
     factory<carRemoteDataFirebaseSourceImpl> { carRemoteDataFirebaseSourceImpl(get()) }
-    factory<maintenanceRemoteDateFirebaseSourceImpl> { maintenanceRemoteDateFirebaseSourceImpl(get()) }
+    //factory<maintenanceRemoteDateFirebaseSourceImpl> { maintenanceRemoteDateFirebaseSourceImpl(get()) }
 }
 
 val viewModelModule = module {
