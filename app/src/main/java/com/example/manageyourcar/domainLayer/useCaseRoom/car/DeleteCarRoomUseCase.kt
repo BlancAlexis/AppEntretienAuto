@@ -11,8 +11,9 @@ class DeleteCarRoomUseCase : KoinComponent {
 
     suspend fun deleteCar(car: CarLocal): Ressource<Int> {
         return try {
-            roomRepository.deleteCar(car)
-            Ressource.Success(car.carID)
+           /* roomRepository.deleteCar(car)*/
+            Ressource.Success(1)
+
         } catch (e: Exception) {
             Ressource.Error(exception = e)
         }

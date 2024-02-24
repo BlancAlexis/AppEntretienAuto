@@ -1,18 +1,19 @@
 package com.example.manageyourcar.dataLayer.dataLayerFirebase
 
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
-import com.example.manageyourcar.dataLayer.dataLayerRoom.entities.CarEntity
+import com.example.manageyourcar.dataLayer.model.CarLocal
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import java.util.UUID
 import kotlin.coroutines.cancellation.CancellationException
 
 class carRemoteDataFirebaseSourceImpl(private val firestoreInstance : FirebaseFirestore) : remoteDataFirebaseSource {
-    override fun addNewCar(carEntity: CarEntity) : Ressource<Unit> {
+    override fun addNewCar(carEntity: CarLocal) : Ressource<Unit> {
         return try {
-            firestoreInstance.collection("cars").add(carEntity)
+            firestoreInstance.collection(CARS_COLLECTION).document(carEntity.carID!!)
             Ressource.Success(Unit)
         } catch (e: Exception) {
             Ressource.Error(e)
@@ -21,17 +22,17 @@ class carRemoteDataFirebaseSourceImpl(private val firestoreInstance : FirebaseFi
     }
 
 
-    override fun getCars(idUser: Int) :  Flow<Ressource<List<CarEntity>>> = callbackFlow {
+    override fun getCars(idUser: Int) :  Flow<Ressource<List<CarLocal>>> = callbackFlow {
         trySend(Ressource.Loading())
-
-        val listenerRegistration = firestoreInstance.collection("cars")
-            .whereEqualTo("owner_id", idUser)
+        println("jpasse")
+        val listenerRegistration = firestoreInstance.collection(CARS_COLLECTION)
+            .whereEqualTo("ownerID", idUser)
             .addSnapshotListener { snapshot, error ->
                 if (error != null) {
                     trySend(Ressource.Error(error))
                     cancel(CancellationException("Firestore error", error))
                 } else {
-                    val cars = snapshot?.toObjects(CarEntity::class.java) ?: emptyList()
+                    val cars = snapshot?.toObjects(CarLocal::class.java) ?: emptyList()
                     trySend(Ressource.Success(cars))
                 }
             }
@@ -39,16 +40,16 @@ class carRemoteDataFirebaseSourceImpl(private val firestoreInstance : FirebaseFi
         awaitClose { listenerRegistration.remove() }
     }
 
-    override fun getCar(idCar: Int) :  Flow<Ressource<CarEntity>> = callbackFlow {
+    override fun getCar(idCar: Int) :  Flow<Ressource<CarLocal>> = callbackFlow {
         trySend(Ressource.Loading())
 
-        val listenerRegistration = firestoreInstance.collection("cars").document(idCar.toString())
+        val listenerRegistration = firestoreInstance.collection(CARS_COLLECTION).document(idCar.toString())
             .addSnapshotListener { snapshot, error ->
                 if (error != null) {
                     trySend(Ressource.Error(error))
                     cancel(CancellationException("Firestore error", error))
                 } else {
-                    val car = snapshot?.toObject(CarEntity::class.java)
+                    val car = snapshot?.toObject(CarLocal::class.java)
                     if (car != null) {
                         trySend(Ressource.Success(car))
                     } else {
@@ -60,10 +61,10 @@ class carRemoteDataFirebaseSourceImpl(private val firestoreInstance : FirebaseFi
         awaitClose { listenerRegistration.remove() }
     }
 
-    override fun updateCar(carEntity: CarEntity): Flow<Ressource<Unit>> = callbackFlow {
+    override fun updateCar(carEntity: CarLocal): Flow<Ressource<Unit>> = callbackFlow {
         trySend(Ressource.Loading())
 
-        firestoreInstance.collection("cars").document(carEntity.carID.toString())
+        firestoreInstance.collection(CARS_COLLECTION).document(carEntity.carID.toString())
             .set(carEntity)
             .addOnSuccessListener {
                 trySend(Ressource.Success(Unit))
@@ -77,7 +78,7 @@ class carRemoteDataFirebaseSourceImpl(private val firestoreInstance : FirebaseFi
     override fun updateCarMileage(listMileages: List<Int>, idCar: Int): Flow<Ressource<Unit>> = callbackFlow {
         trySend(Ressource.Loading())
 
-        firestoreInstance.collection("cars").document(idCar.toString())
+        firestoreInstance.collection(CARS_COLLECTION).document(idCar.toString())
             .update("mileage", listMileages)
             .addOnSuccessListener {
                 trySend(Ressource.Success(Unit))
@@ -87,10 +88,10 @@ class carRemoteDataFirebaseSourceImpl(private val firestoreInstance : FirebaseFi
                 cancel(CancellationException("Firestore error", exception))
             }
     }
-    override fun deleteCar(car: CarEntity): Flow<Ressource<Unit>> = callbackFlow {
+    override fun deleteCar(car: CarLocal): Flow<Ressource<Unit>> = callbackFlow {
         trySend(Ressource.Loading())
 
-        firestoreInstance.collection("cars").document(car.carID.toString())
+        firestoreInstance.collection(CARS_COLLECTION).document(car.carID.toString())
             .delete()
             .addOnSuccessListener {
                 trySend(Ressource.Success(Unit))
@@ -100,18 +101,21 @@ class carRemoteDataFirebaseSourceImpl(private val firestoreInstance : FirebaseFi
                 cancel(CancellationException("Firestore error", exception))
             }
     }
+    companion object{
+        const val CARS_COLLECTION = "cars"
+    }
 }
 
 interface remoteDataFirebaseSource {
-    fun addNewCar(carEntity: CarEntity) : Ressource<Unit>
+    fun addNewCar(carEntity: CarLocal) : Ressource<Unit>
 
-    fun getCars(idUser: Int): Flow<Ressource<List<CarEntity>>>
+    fun getCars(idUser: Int): Flow<Ressource<List<CarLocal>>>
 
-    fun getCar(idCar: Int): Flow<Ressource<CarEntity>>
+    fun getCar(idCar: Int): Flow<Ressource<CarLocal>>
 
-    fun updateCar(carEntity: CarEntity) : Flow<Ressource<Unit>>
+    fun updateCar(carEntity: CarLocal) : Flow<Ressource<Unit>>
 
     fun updateCarMileage(listMileages: List<Int>, idCar: Int) : Flow<Ressource<Unit>>
 
-    fun deleteCar(car: CarEntity) : Flow<Ressource<Unit>>
+    fun deleteCar(car: CarLocal) : Flow<Ressource<Unit>>
 }

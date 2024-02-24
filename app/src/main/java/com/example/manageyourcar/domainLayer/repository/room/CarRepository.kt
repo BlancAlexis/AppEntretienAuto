@@ -1,7 +1,6 @@
 package com.example.manageyourcar.domainLayer.repository.room
 
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
-import com.example.manageyourcar.dataLayer.dataLayerRoom.entities.CarEntity
 import com.example.manageyourcar.dataLayer.model.CarLocal
 import kotlinx.coroutines.flow.Flow
 

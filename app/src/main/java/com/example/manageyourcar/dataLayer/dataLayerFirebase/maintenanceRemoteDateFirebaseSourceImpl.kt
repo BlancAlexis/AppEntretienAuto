@@ -1,8 +1,7 @@
 package com.example.manageyourcar.dataLayer.dataLayerFirebase
 
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
-import com.example.manageyourcar.dataLayer.dataLayerRoom.dao.MaintenanceWithCarEntity
-import com.example.manageyourcar.dataLayer.dataLayerRoom.entities.CarEntity
+
 import com.example.manageyourcar.dataLayer.model.Entretien
 import com.example.manageyourcar.domainLayer.repository.room.ServicingRepository
 import com.google.firebase.firestore.FirebaseFirestore
@@ -90,9 +89,6 @@ class MaintenanceRemoteDateFirebaseSourceImpl(private val firestoreInstance: Fir
         }
     }
 
-    override fun getMaintenceActWithCar(userId: Int): Flow<Ressource<List<MaintenanceWithCarEntity>>> {
-        TODO("Not yet implemented")
-    }
 
 
     /*    override fun getMaintenceActWithCar(userId: Int): Flow<Ressource<List<MaintenanceWithCarEntity>>> =

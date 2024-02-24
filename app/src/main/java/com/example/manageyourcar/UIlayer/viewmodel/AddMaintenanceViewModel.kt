@@ -66,7 +66,7 @@ class AddMaintenanceViewModel constructor(
             when (addCarMaintenanceUseCase.addMaintenanceOperation(
                 Entretien(
                     userID = null,
-                    carID = selectedCarLocal.carID,
+                    carID = 1,
                     mileage = uiState.value.mileage.toInt(),
                     price = uiState.value.price.toInt(),
                     date = uiState.value.date ?: Date(),

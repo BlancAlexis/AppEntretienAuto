@@ -11,11 +11,9 @@ import com.example.manageyourcar.UIlayer.UIState.ServicingUIState
 import com.example.manageyourcar.UIlayer.UIState.SortType
 import com.example.manageyourcar.UIlayer.UIUtil
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
-import com.example.manageyourcar.dataLayer.dataLayerRoom.dao.MaintenanceWithCarEntity
 import com.example.manageyourcar.dataLayer.model.MaintenanceService
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
 import com.example.manageyourcar.domainLayer.useCaseBusiness.LogoutUserUseCase
-import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.GetAllUserMaintenanceUseCase
 import com.example.manageyourcar.domainLayer.utils.MaintenanceActScheddule
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -33,27 +31,26 @@ class ListMaintenanceViewModel(
     val uiState = _uiState.asStateFlow()
 
     private lateinit var navController: NavController
-    private val getAllUserMaintenanceUseCase by inject<GetAllUserMaintenanceUseCase>()
     private val logoutUserUseCase by inject<LogoutUserUseCase>()
 
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 
 
     init {
-        getUserMaintenanceLocalStorage()
+/*        getUserMaintenanceLocalStorage()*/
     }
 
-    private fun getUserMaintenanceLocalStorage() {
+/*    private fun getUserMaintenanceLocalStorage() {
         viewModelScope.launch(ioDispatcher) {
             getAllUserMaintenanceUseCase.invoke().collect { result ->
                 when (result) {
                     is Ressource.Error -> uiUtil.displayToastSuspend("erreur dans le chargement des entretiens")
-                    is Ressource.Success -> result.data?.let { listLoading(it) }
+                    is Ressource.Success -> result.data?.let { *//*listLoading(it)*//* }
                     else -> {}
                 }
             }
         }
-    }
+    }*/
 
 
     fun onBackPressed() {
@@ -74,7 +71,7 @@ class ListMaintenanceViewModel(
         navController = Navigation.findNavController(view)
     }
 
-    private fun listLoading(newData: List<MaintenanceWithCarEntity>) {
+/*    private fun listLoading(newData: List<MaintenanceWithCarEntity>) {
         _uiState.update {
             it.copy(isLoading = false, listUiState = newData.map { entretien ->
                 var progressIndicator = 0.0f
@@ -114,7 +111,7 @@ class ListMaintenanceViewModel(
             })
         }
 
-    }
+    }*/
 
 
     private fun listLoad() {
