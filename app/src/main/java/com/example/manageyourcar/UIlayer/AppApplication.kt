@@ -29,18 +29,17 @@ class AppApplication() : Application(), KoinComponent {
         GlobalScope.launch {
             addCar.addCarToRoom(
                 CarLocal(
-                    "",
-                    "bmw",
-                    "série 3",
-                    Date().toString(),
-                    "essence",
-                    "3",
-                    "W16",
-                    125,
-                    340,
-                    200,
-                    listOf(0),
-                    1
+                    brand ="bmw",
+                    model ="série 3",
+                    releaseDate = Date().toString(),
+                    fuel ="essence",
+                    transmission ="3",
+                    motorization = "W16",
+                    power = 125,
+                    torque = 340,
+                    maxSpeed = 200,
+                    mileage = listOf(0),
+                    ownerID = 1
                 )
             )
 

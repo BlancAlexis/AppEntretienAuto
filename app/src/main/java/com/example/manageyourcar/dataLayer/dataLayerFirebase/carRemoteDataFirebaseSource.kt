@@ -13,7 +13,7 @@ import kotlin.coroutines.cancellation.CancellationException
 class carRemoteDataFirebaseSourceImpl(private val firestoreInstance : FirebaseFirestore) : remoteDataFirebaseSource {
     override fun addNewCar(carEntity: CarLocal) : Ressource<Unit> {
         return try {
-            firestoreInstance.collection(CARS_COLLECTION).document(carEntity.carID!!)
+            firestoreInstance.collection(CARS_COLLECTION).document(carEntity.carID).set(carEntity)
             Ressource.Success(Unit)
         } catch (e: Exception) {
             Ressource.Error(e)
@@ -64,8 +64,7 @@ class carRemoteDataFirebaseSourceImpl(private val firestoreInstance : FirebaseFi
     override fun updateCar(carEntity: CarLocal): Flow<Ressource<Unit>> = callbackFlow {
         trySend(Ressource.Loading())
 
-        firestoreInstance.collection(CARS_COLLECTION).document(carEntity.carID.toString())
-            .set(carEntity)
+        firestoreInstance.collection(CARS_COLLECTION).document(carEntity.carID).update("mileage", carEntity.mileage)
             .addOnSuccessListener {
                 trySend(Ressource.Success(Unit))
             }

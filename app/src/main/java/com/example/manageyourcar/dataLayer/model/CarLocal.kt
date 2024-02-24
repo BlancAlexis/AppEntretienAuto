@@ -6,7 +6,7 @@ import java.util.UUID
 
 @kotlinx.serialization.Serializable
 data class CarLocal(
-    val carID: String? = UUID.randomUUID().toString(),
+    val carID: String = UUID.randomUUID().toString(),
     @SerializedName("marque")
     val brand: String,
     @SerializedName("modele")
@@ -27,5 +27,5 @@ data class CarLocal(
     val mileage: List<Int>,
     val ownerID: Int? = null
 ) : Serializable {
-    constructor() : this(null, "", "", "", "", "", "", 0, 0, 0, emptyList(), null)
+    constructor() : this(brand = "", model = "", releaseDate = "", fuel = "", transmission ="", motorization = "", power = 0, torque = 0, maxSpeed = 0, mileage = listOf(), ownerID = 0)
 }
