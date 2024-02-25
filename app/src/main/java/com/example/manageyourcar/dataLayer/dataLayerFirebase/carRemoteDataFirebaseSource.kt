@@ -61,17 +61,11 @@ class carRemoteDataFirebaseSourceImpl(private val firestoreInstance : FirebaseFi
         awaitClose { listenerRegistration.remove() }
     }
 
-    override fun updateCar(carEntity: CarLocal): Flow<Ressource<Unit>> = callbackFlow {
-        trySend(Ressource.Loading())
-
+    override fun updateCar(carEntity: CarLocal): Ressource<Unit> = try {
         firestoreInstance.collection(CARS_COLLECTION).document(carEntity.carID).update("mileage", carEntity.mileage)
-            .addOnSuccessListener {
-                trySend(Ressource.Success(Unit))
-            }
-            .addOnFailureListener { exception ->
-                trySend(Ressource.Error(exception))
-                cancel(CancellationException("Firestore error", exception))
-            }
+        Ressource.Success(Unit)
+    } catch (e: Exception) {
+        Ressource.Error(e)
     }
 
     override fun updateCarMileage(listMileages: List<Int>, idCar: Int): Flow<Ressource<Unit>> = callbackFlow {
@@ -87,18 +81,11 @@ class carRemoteDataFirebaseSourceImpl(private val firestoreInstance : FirebaseFi
                 cancel(CancellationException("Firestore error", exception))
             }
     }
-    override fun deleteCar(car: CarLocal): Flow<Ressource<Unit>> = callbackFlow {
-        trySend(Ressource.Loading())
-
-        firestoreInstance.collection(CARS_COLLECTION).document(car.carID.toString())
-            .delete()
-            .addOnSuccessListener {
-                trySend(Ressource.Success(Unit))
-            }
-            .addOnFailureListener { exception ->
-                trySend(Ressource.Error(exception))
-                cancel(CancellationException("Firestore error", exception))
-            }
+    override fun deleteCar(car: CarLocal): Ressource<Unit> = try {
+        firestoreInstance.collection(CARS_COLLECTION).document(car.carID.trim()).delete()
+        Ressource.Success(Unit)
+    } catch (e: Exception) {
+        Ressource.Error(e)
     }
     companion object{
         const val CARS_COLLECTION = "cars"
@@ -112,9 +99,9 @@ interface remoteDataFirebaseSource {
 
     fun getCar(idCar: Int): Flow<Ressource<CarLocal>>
 
-    fun updateCar(carEntity: CarLocal) : Flow<Ressource<Unit>>
+    fun updateCar(carEntity: CarLocal) : Ressource<Unit>
 
     fun updateCarMileage(listMileages: List<Int>, idCar: Int) : Flow<Ressource<Unit>>
 
-    fun deleteCar(car: CarLocal) : Flow<Ressource<Unit>>
+    fun deleteCar(car: CarLocal) : Ressource<Unit>
 }
