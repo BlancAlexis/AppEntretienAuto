@@ -6,10 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface ServicingRepository {
     fun addNewServicing(entretien: Entretien): Ressource<Unit>
-    fun getAllServicing(): Flow<Ressource<List<Entretien>>>
     fun getAllUserMaintenance(): Flow<Ressource<List<Entretien>>>
-    fun getServicing(idServicing: Int): Flow<Ressource<Entretien>>
-    fun updateServicing(entretien: Entretien): Ressource<Unit>
     fun deleteServicing(idServicing: Int): Ressource<Unit>
 
 }

@@ -3,12 +3,16 @@ package com.example.manageyourcar.UIlayer
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.viewModelScope
+import com.example.manageyourcar.dataLayer.dataLayerFirebase.MaintenanceRemoteDateFirebaseSourceImpl
 import com.example.manageyourcar.dataLayer.dataLayerFirebase.carRemoteDataFirebaseSourceImpl
 import com.example.manageyourcar.dataLayer.dataLayerFirebase.remoteDataFirebaseSource
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.dataLayer.di.injectFeature
 import com.example.manageyourcar.dataLayer.model.CarLocal
+import com.example.manageyourcar.dataLayer.model.Entretien
+import com.example.manageyourcar.dataLayer.model.MaintenanceService
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
+import com.example.manageyourcar.domainLayer.repository.room.ServicingRepository
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.AddCarRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.DeleteCarRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.GetUserCarsUseCase
@@ -54,6 +58,17 @@ val cacheManagerRepository = get<CacheManagerRepository> ()
 
                 else -> {}
             }
+        }
+        GlobalScope.launch(Dispatchers.IO) {
+            val dataSource = get<ServicingRepository>()
+            dataSource.addNewServicing(
+                Entretien(
+                    date = Date(),
+                    mileage = 12332,
+                    service = MaintenanceService.Freins(),
+                    price = 1223
+                )
+            )
         }
         val addCar: AddCarRoomUseCase = AddCarRoomUseCase()
         GlobalScope.launch {

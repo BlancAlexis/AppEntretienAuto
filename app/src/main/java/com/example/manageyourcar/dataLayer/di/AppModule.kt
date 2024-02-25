@@ -13,6 +13,7 @@ import com.example.manageyourcar.dataLayer.AndroidBluetoothController
 import com.example.manageyourcar.dataLayer.CacheDataSource
 import com.example.manageyourcar.dataLayer.CacheManagerRepositoryImpl
 import com.example.manageyourcar.dataLayer.ListenerInternet
+import com.example.manageyourcar.dataLayer.dataLayerFirebase.MaintenanceRemoteDateFirebaseSourceImpl
 import com.example.manageyourcar.dataLayer.dataLayerFirebase.carRemoteDataFirebaseSourceImpl
 import com.example.manageyourcar.dataLayer.dataLayerFirebase.remoteDataFirebaseSource
 import com.example.manageyourcar.dataLayer.dataLayerFirebase.userRemoteDataFirebaseImpl
@@ -88,6 +89,7 @@ val mappersModule = module {
 val repositoryModule = module {
     single<CacheManagerRepository> { CacheManagerRepositoryImpl(get()) }
     single<CacheDataSource> { CacheDataSource(androidContext()) }
+
 }
 
 val useCaseModule = module {
@@ -164,7 +166,7 @@ val firebaseModule = module {
     single<FirebaseFirestore> { Firebase.firestore }
    // factory<user> { userRemoteDataFirebaseImpl(get()) }
     factory<remoteDataFirebaseSource> { carRemoteDataFirebaseSourceImpl(get()) }
-    //factory<maintenanceRemoteDateFirebaseSourceImpl> { maintenanceRemoteDateFirebaseSourceImpl(get()) }
+    single<ServicingRepository> { MaintenanceRemoteDateFirebaseSourceImpl(get()) }
 }
 
 val viewModelModule = module {

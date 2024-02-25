@@ -17,32 +17,24 @@ class MaintenanceRemoteDateFirebaseSourceImpl(private val firestoreInstance: Fir
     ServicingRepository {
     override fun addNewServicing(entretien: Entretien): Ressource<Unit> {
         return try {
-            firestoreInstance.collection("maintenance").add(entretien)
+            firestoreInstance.collection(MAINTENANCES_COLLECTION).add(entretien)
             Ressource.Success(Unit)
         } catch (e: java.lang.Exception) {
             Ressource.Error(e)
         }
     }
-
-    override fun getAllServicing(): Flow<Ressource<List<Entretien>>> = callbackFlow {
-        trySend(Ressource.Loading())
-
-        val listenerRegistration = firestoreInstance.collection("maintenance").get()
-            .addOnSuccessListener { result ->
-                trySend(Ressource.Success(result.toObjects(Entretien::class.java)))
-            }
-            .addOnFailureListener { exception ->
-                trySend(Ressource.Error(exception))
-                cancel(CancellationException("Firestore error", exception))
-            } as ListenerRegistration
-
-        awaitClose { listenerRegistration.remove() } // chai pas
+    override fun deleteServicing(idServicing: Int): Ressource<Unit> {
+        return try {
+            firestoreInstance.collection(MAINTENANCES_COLLECTION).document(idServicing.toString()).delete()
+            Ressource.Success(Unit)
+        } catch (e: java.lang.Exception) {
+            Ressource.Error(e)
+        }
     }
-
     override fun getAllUserMaintenance(): Flow<Ressource<List<Entretien>>> = callbackFlow {
         trySend(Ressource.Loading())
 
-        val listenerRegistration = firestoreInstance.collection("maintenance")
+        val listenerRegistration = firestoreInstance.collection(MAINTENANCES_COLLECTION)
             .addSnapshotListener { snapshot, error ->
                 if (error != null) {
                     trySend(Ressource.Error(error))
@@ -60,62 +52,7 @@ class MaintenanceRemoteDateFirebaseSourceImpl(private val firestoreInstance: Fir
         awaitClose { listenerRegistration.remove() }
     }
 
-    override fun getServicing(idServicing: Int): Flow<Ressource<Entretien>> {
-        TODO("Not yet implemented")
+    companion object{
+        const val MAINTENANCES_COLLECTION = "maintenances"
     }
-
-    override fun updateServicing(entretien: Entretien): Ressource<Unit> {
-        TODO("Not yet implemented")
-    }
-
-
-    /*
-        override fun updateServicing(entretien: Entretien) : Ressource<Unit> {
-           return try {
-            firestoreInstance.collection("maintenance").document(entretien.id.toString()).set(entretien)
-           Ressource.Success(Unit)}
-            catch (e : java.lang.Exception){
-                Ressource.Error(e)
-            }
-        } pas utilisée
-    */
-
-    override fun deleteServicing(idServicing: Int): Ressource<Unit> {
-        return try {
-            firestoreInstance.collection("maintenance").document(idServicing.toString()).delete()
-            Ressource.Success(Unit)
-        } catch (e: java.lang.Exception) {
-            Ressource.Error(e)
-        }
-    }
-
-
-
-    /*    override fun getMaintenceActWithCar(userId: Int): Flow<Ressource<List<MaintenanceWithCarEntity>>> =
-            callbackFlow {
-                trySend(Ressource.Loading())
-
-                val listenerRegistration = firestoreInstance.collection("maintenance")
-                    .whereEqualTo("user_id", userId)
-                    .addSnapshotListener { snapshot, error ->
-                        if (error != null) {
-                            // Handle error
-                        } else {
-                            val maintenanceWithCarEntities = snapshot?.documents?.mapNotNull { doc ->
-                                val maintenance = doc.toObject(Entretien::class.java)
-                                val car = firestoreInstance.collection("cars")
-                                    .document(maintenance.car_id.toString()).get()
-                                    .addOnSuccessListener { result ->
-                                        val carEntity = result.toObject(CarEntity::class.java)
-                                        MaintenanceWithCarEntity(maintenance, carEntity)
-                                    }
-                                    .result // Assuming extension function to await result
-                                car
-                            }
-                            trySend(Ressource.Success(maintenanceWithCarEntities))
-                        }
-                    }
-
-                awaitClose { listenerRegistration.remove() }
-            }*/
 }
