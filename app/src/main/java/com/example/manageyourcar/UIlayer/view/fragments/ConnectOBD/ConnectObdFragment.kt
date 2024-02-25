@@ -23,9 +23,9 @@ import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarT
 import com.example.manageyourcar.UIlayer.viewmodel.ConnectObdViewModel
 import com.example.manageyourcar.dataLayer.GlobalEvent
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.component.KoinComponent
 
-class ConnectObdFragment : Fragment(), KoinComponent, GlobalEvent {
+
+class ConnectObdFragment : Fragment(), GlobalEvent {
     val connectObdViewModel: ConnectObdViewModel by viewModel()
 
 

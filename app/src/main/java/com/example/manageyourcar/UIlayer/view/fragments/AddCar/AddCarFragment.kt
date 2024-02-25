@@ -13,10 +13,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
 import com.example.manageyourcar.UIlayer.viewmodel.AddCarViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.component.KoinComponent
 
 
-class AddCarFragment : Fragment(), KoinComponent {
+class AddCarFragment : Fragment() {
     val addCarViewModel: AddCarViewModel by viewModel()
 
     override fun onCreateView(

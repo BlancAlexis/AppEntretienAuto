@@ -13,9 +13,9 @@ import androidx.fragment.app.Fragment
 import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
 import com.example.manageyourcar.UIlayer.viewmodel.ListMaintenanceViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.component.KoinComponent
 
-class ViewListMaintenanceFragment : Fragment(), KoinComponent {
+
+class ViewListMaintenanceFragment : Fragment() {
     private val listMaintenanceViewModel: ListMaintenanceViewModel by viewModel()
 
     override fun onCreateView(

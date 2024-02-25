@@ -14,9 +14,9 @@ import com.example.manageyourcar.UIlayer.view.common.CustomDialogKM
 import com.example.manageyourcar.UIlayer.viewmodel.UpdateCarMileageViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.component.KoinComponent
 
-class UpdateCarMileageFragment : BottomSheetDialogFragment(), KoinComponent {
+
+class UpdateCarMileageFragment : BottomSheetDialogFragment(){
     private val updateCarMileageViewModel: UpdateCarMileageViewModel by viewModel()
     private val args: UpdateCarMileageFragmentArgs by navArgs()
 

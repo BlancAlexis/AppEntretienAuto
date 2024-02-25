@@ -14,9 +14,9 @@ import com.example.manageyourcar.UIlayer.view.activities.MainActivity
 import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarTheme
 import com.example.manageyourcar.UIlayer.viewmodel.LoginUserViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.component.KoinComponent
 
-class LoginUserFragment : Fragment(), KoinComponent {
+
+class LoginUserFragment : Fragment(){
     private val logUserViewModel: LoginUserViewModel by viewModel()
 
     override fun onCreateView(

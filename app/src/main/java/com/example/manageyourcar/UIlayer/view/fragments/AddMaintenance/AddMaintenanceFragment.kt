@@ -12,9 +12,8 @@ import com.example.manageyourcar.UIlayer.view.activities.ui.theme.ManageYourCarT
 import com.example.manageyourcar.UIlayer.viewmodel.AddMaintenanceViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.component.KoinComponent
 
-class AddMaintenanceFragment : BottomSheetDialogFragment(), KoinComponent {
+class AddMaintenanceFragment : BottomSheetDialogFragment(){
     val addMaintenanceViewModel: AddMaintenanceViewModel by viewModel()
 
     override fun onCreateView(

@@ -7,8 +7,7 @@ import android.net.Network
 import android.util.Log
 import org.koin.core.component.KoinComponent
 
-class ListenerInternet(private val globalEvent: GlobalEvent, private val application: Application) :
-    KoinComponent {
+class ListenerInternet(private val globalEvent: GlobalEvent, private val application: Application) {
     init {
         registerInternetListener()
     }
