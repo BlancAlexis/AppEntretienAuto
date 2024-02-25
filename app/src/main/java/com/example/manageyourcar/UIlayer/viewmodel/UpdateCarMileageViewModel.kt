@@ -61,7 +61,7 @@ class UpdateCarMileageViewModel constructor(
             if (car != null) {
                 val updatedCar =
                     car.copy(mileage = car.mileage + (uiState.value.newMileage?.toInt() ?: 0))
-                when (upsertCarMileageUseCase.updateCarMileage(updatedCar)) {
+                when (upsertCarMileageUseCase.invoke(updatedCar)) {
                     is Ressource.Error -> {
                         uiUtil.displayToastSuspend("Erreur lors de la mise à jour du kilométrage")
                         navController.popBackStack()

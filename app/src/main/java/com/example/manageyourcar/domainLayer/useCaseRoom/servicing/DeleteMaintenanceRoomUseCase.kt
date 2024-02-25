@@ -8,7 +8,7 @@ import org.koin.core.component.inject
 class DeleteMaintenanceRoomUseCase : KoinComponent {
     val roomRepository by inject<ServicingRepository>()
 
-    suspend fun deleteServicingToRoom(idServicing: Int): Ressource<Unit> {
+    suspend operator fun invoke(idServicing: Int): Ressource<Unit> {
         return try {
             roomRepository.deleteServicing(idServicing)
             Ressource.Success(Unit)

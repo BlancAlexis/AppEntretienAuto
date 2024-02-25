@@ -25,7 +25,7 @@ import org.koin.core.component.inject
 import timber.log.Timber
 
 class ViewCarDetailsViewModel(
-    val cacheManagerRepository: CacheManagerRepository, private val uiUtil: UIUtil
+    private val cacheManagerRepository: CacheManagerRepository, private val uiUtil: UIUtil
 ) : ViewModel(), KoinComponent {
     private val getUserCarsUseCase by inject<GetUserCarsUseCase>()
     private val deleteCarRoomUseCase by inject<DeleteCarRoomUseCase>()
@@ -113,7 +113,7 @@ class ViewCarDetailsViewModel(
                         uiUtil.displayToastSuspend("Vous n'avez encore aucune voiture")
                         return@launch
                     } else {
-                        deleteCarRoomUseCase.deleteCar(result.data[event.position])
+                        deleteCarRoomUseCase.invoke(result.data[event.position])
                     }
                 }
 

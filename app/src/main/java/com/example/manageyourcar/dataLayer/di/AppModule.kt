@@ -16,7 +16,6 @@ import com.example.manageyourcar.dataLayer.ListenerInternet
 import com.example.manageyourcar.dataLayer.dataLayerFirebase.MaintenanceRemoteDateFirebaseSourceImpl
 import com.example.manageyourcar.dataLayer.dataLayerFirebase.carRemoteDataFirebaseSourceImpl
 import com.example.manageyourcar.dataLayer.dataLayerFirebase.remoteDataFirebaseSource
-import com.example.manageyourcar.dataLayer.dataLayerFirebase.userRemoteDataFirebaseImpl
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.RequestApiImmat
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.RequestApiSIV
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.dataSource.RemoteDataSource
@@ -30,15 +29,13 @@ import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
 import com.example.manageyourcar.domainLayer.repository.retrofit.ApiCarImmatRepository
 import com.example.manageyourcar.domainLayer.repository.retrofit.ApiCarSIVRepository
 import com.example.manageyourcar.domainLayer.repository.retrofit.PlacesApiRepository
-import com.example.manageyourcar.domainLayer.repository.room.CarRepository
 import com.example.manageyourcar.domainLayer.repository.room.ServicingRepository
-import com.example.manageyourcar.domainLayer.repository.room.UserRepository
 import com.example.manageyourcar.domainLayer.useCaseBusiness.LoginUserUseCase
 import com.example.manageyourcar.domainLayer.useCaseBusiness.LogoutUserUseCase
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetCarRepairShopUseCase
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkImmatUseCase
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkUseCase
-import com.example.manageyourcar.domainLayer.useCaseRoom.car.AddCarRoomUseCase
+import com.example.manageyourcar.domainLayer.useCaseRoom.car.StoreUserCarUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.DeleteCarRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.GetUserCarsUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.UpsertCarMileageUseCase
@@ -94,7 +91,7 @@ val repositoryModule = module {
 
 val useCaseModule = module {
     factory { AddCarMaintenanceUseCase() }
-    factory { AddCarRoomUseCase() }
+    factory { StoreUserCarUseCase() }
 
     factory { GetUserCarsUseCase() }
     factory { LoginUserUseCase() }
@@ -164,7 +161,6 @@ val retrofitModule = module {
 
 val firebaseModule = module {
     single<FirebaseFirestore> { Firebase.firestore }
-   // factory<user> { userRemoteDataFirebaseImpl(get()) }
     factory<remoteDataFirebaseSource> { carRemoteDataFirebaseSourceImpl(get()) }
     single<ServicingRepository> { MaintenanceRemoteDateFirebaseSourceImpl(get()) }
 }

@@ -11,7 +11,7 @@ import com.example.manageyourcar.domainLayer.mappers.CarRetrofitToCar.toCarGloba
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkImmatUseCase
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkUseCase
-import com.example.manageyourcar.domainLayer.useCaseRoom.car.AddCarRoomUseCase
+import com.example.manageyourcar.domainLayer.useCaseRoom.car.StoreUserCarUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,8 +21,8 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class AddCarViewModel constructor(private val cacheManager : CacheManagerRepository): ViewModel(), KoinComponent {
-    private val addCarRoomUseCase by inject<AddCarRoomUseCase>()
+class AddCarViewModel: ViewModel(), KoinComponent {
+    private val storeUserCarUseCase by inject<StoreUserCarUseCase>()
     private val getVehiculeBySivNetworkUseCase by inject<GetVehiculeByNetworkUseCase>()
     private val getVehiculeByImmatNetworkUseCase by inject<GetVehiculeByNetworkImmatUseCase>()
     private val uIUtil by inject<UIUtil>()
@@ -133,7 +133,7 @@ class AddCarViewModel constructor(private val cacheManager : CacheManagerReposit
     private fun addCarLocalStorage() {
         viewModelScope.launch(ioDispatcher) {
             uiState.value.carLocalFind?.let { car ->
-                when (addCarRoomUseCase.addCarToRoom(car)) {
+                when (storeUserCarUseCase.invoke(car)) {
                     is Ressource.Success -> {
                         uIUtil.displayToastSuspend("Voiture ajoutée avec succès")
                         dismissFragment.postValue(true)

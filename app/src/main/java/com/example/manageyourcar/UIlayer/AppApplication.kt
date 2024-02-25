@@ -2,9 +2,6 @@ package com.example.manageyourcar.UIlayer
 
 import android.app.Application
 import android.util.Log
-import androidx.lifecycle.viewModelScope
-import com.example.manageyourcar.dataLayer.dataLayerFirebase.MaintenanceRemoteDateFirebaseSourceImpl
-import com.example.manageyourcar.dataLayer.dataLayerFirebase.carRemoteDataFirebaseSourceImpl
 import com.example.manageyourcar.dataLayer.dataLayerFirebase.remoteDataFirebaseSource
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.dataLayer.di.injectFeature
@@ -13,12 +10,11 @@ import com.example.manageyourcar.dataLayer.model.Entretien
 import com.example.manageyourcar.dataLayer.model.MaintenanceService
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
 import com.example.manageyourcar.domainLayer.repository.room.ServicingRepository
-import com.example.manageyourcar.domainLayer.useCaseRoom.car.AddCarRoomUseCase
+import com.example.manageyourcar.domainLayer.useCaseRoom.car.StoreUserCarUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.DeleteCarRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.GetUserCarsUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.flow.forEach
 import kotlinx.coroutines.launch
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.component.KoinComponent
@@ -70,9 +66,9 @@ val cacheManagerRepository = get<CacheManagerRepository> ()
                 )
             )
         }
-        val addCar: AddCarRoomUseCase = AddCarRoomUseCase()
+        val addCar: StoreUserCarUseCase = StoreUserCarUseCase()
         GlobalScope.launch {
-            addCar.addCarToRoom(
+            addCar.invoke(
                 CarLocal(
                     brand ="bmw",
                     model ="série 3",

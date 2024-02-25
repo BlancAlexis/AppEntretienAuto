@@ -7,14 +7,11 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.UIState.MaintenanceListUiState
-import com.example.manageyourcar.UIlayer.UIState.ServicingUIState
 import com.example.manageyourcar.UIlayer.UIState.SortType
 import com.example.manageyourcar.UIlayer.UIUtil
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
-import com.example.manageyourcar.dataLayer.model.MaintenanceService
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
 import com.example.manageyourcar.domainLayer.useCaseBusiness.LogoutUserUseCase
-import com.example.manageyourcar.domainLayer.utils.MaintenanceActScheddule
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

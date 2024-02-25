@@ -5,30 +5,26 @@ import com.example.manageyourcar.dataLayer.dataLayerFirebase.remoteDataFirebaseS
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.dataLayer.model.CarLocal
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
-import com.example.manageyourcar.domainLayer.repository.room.CarRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class AddCarRoomUseCase : KoinComponent {
+class StoreUserCarUseCase : KoinComponent {
     private val roomRepository by inject<remoteDataFirebaseSource>()
     private val cacheManagerRepository by inject<CacheManagerRepository>()
 
-    suspend fun addCarToRoom(carLocal: CarLocal): Ressource<Unit> {
+    suspend operator fun invoke(carLocal: CarLocal): Ressource<Unit> {
         return try {
-            roomRepository.addNewCar(carLocal)
-
-         /*   when (val result = cacheManagerRepository.getUserId()) {
+             when (val result = cacheManagerRepository.getUserId()) {
                 is Ressource.Error -> Ressource.Error(result.error)
                 is Ressource.Loading -> Ressource.Error()
                 is Ressource.Success -> {
                     val carLocalWithOwnerID: CarLocal = carLocal.copy(
                         ownerID = result.data,
-                        mileage = listOf(0)
                     )
                     roomRepository.addNewCar(carLocalWithOwnerID)
                     Ressource.Success(Unit)
                 }
-            }*/
+            }
         } catch (e: Exception) {
             Log.e("AddCarRoomUseCase", e.localizedMessage)
             Ressource.Error(exception = e)
