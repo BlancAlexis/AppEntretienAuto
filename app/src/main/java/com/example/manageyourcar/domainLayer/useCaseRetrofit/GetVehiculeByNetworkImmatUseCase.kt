@@ -10,7 +10,7 @@ import org.koin.core.component.inject
 class GetVehiculeByNetworkImmatUseCase : KoinComponent {
     val api by inject<ApiCarImmatRepository>()
 
-    suspend fun getVehiculeByImmat(immat: String): Flow<Ressource<CarLocal>> {
+    suspend fun invoke(immat: String): Flow<Ressource<CarLocal>> {
         return api.getVehiculeByImmat(immat)
     }
 

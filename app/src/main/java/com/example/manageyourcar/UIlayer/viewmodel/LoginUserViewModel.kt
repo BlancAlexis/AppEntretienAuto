@@ -35,6 +35,7 @@ class LoginUserViewModel constructor(private val uiUtil: UIUtil) : ViewModel(), 
 
     init {
         onTryLog(true)
+
     }
 
     fun onEvent(event: UserLoginEvent) {
@@ -72,7 +73,7 @@ class LoginUserViewModel constructor(private val uiUtil: UIUtil) : ViewModel(), 
 
     private suspend fun logUserLocalStorage() {
         when (val result =
-            logUseCase.loginUser(_uiState.value.userLogin!!, _uiState.value.userPassword!!)) {
+            logUseCase.invoke(_uiState.value.userLogin!!, _uiState.value.userPassword!!)) {
             is Ressource.Success -> {
                 cacheManagerRepository.putUserId(
                     result.data!!

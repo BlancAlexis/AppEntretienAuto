@@ -8,7 +8,6 @@ import com.example.manageyourcar.UIlayer.UIUtil
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.dataLayer.model.CarLocal
 import com.example.manageyourcar.domainLayer.mappers.CarRetrofitToCar.toCarGlobal
-import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkImmatUseCase
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.StoreUserCarUseCase
@@ -86,7 +85,7 @@ class AddCarViewModel: ViewModel(), KoinComponent {
 
     private fun getCarBySIVNumber(sivNumber: String) {
         viewModelScope.launch(ioDispatcher) {
-            getVehiculeBySivNetworkUseCase.getVehiculeBySiv(sivNumber).collect { result ->
+            getVehiculeBySivNetworkUseCase.invoke(sivNumber).collect { result ->
                 when (result) {
                     is Ressource.Error -> {
                         uIUtil.displayToastSuspend("Erreur lors de la requête ${result.message}")
@@ -112,7 +111,7 @@ class AddCarViewModel: ViewModel(), KoinComponent {
 
     private fun getCarByRegistrationNumber(registrationNumber: String) {
         viewModelScope.launch(ioDispatcher) {
-            getVehiculeByImmatNetworkUseCase.getVehiculeByImmat(registrationNumber)
+            getVehiculeByImmatNetworkUseCase.invoke(registrationNumber)
                 .collect { result ->
                     when (result) {
                         is Ressource.Error -> {

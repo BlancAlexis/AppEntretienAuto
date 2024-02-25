@@ -53,7 +53,7 @@ class ListMaintenanceViewModel(
     fun onBackPressed() {
         viewModelScope.launch {
             when (val result =
-                logoutUserUseCase.logoutUser()) {
+                logoutUserUseCase.invoke()) {
                 is Ressource.Error -> uiUtil.displayToastSuspend(
                     result.error?.localizedMessage ?: "erreur"
                 )

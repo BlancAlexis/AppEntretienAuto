@@ -10,7 +10,7 @@ import org.koin.core.component.inject
 class GetVehiculeByNetworkUseCase : KoinComponent {
     val api by inject<ApiCarSIVRepository>()
 
-    suspend fun getVehiculeBySiv(siv: String): Flow<Ressource<Car>> {
+    suspend fun invoke(siv: String): Flow<Ressource<Car>> {
         return api.getVehiculeBySiv(siv)
     }
 

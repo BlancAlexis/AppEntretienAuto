@@ -12,6 +12,8 @@ class UIUtil constructor(
         Toast.makeText(appContext, message, Toast.LENGTH_SHORT).show()
     }
 
+    fun String.dislayToast() = Toast.makeText(appContext, this, Toast.LENGTH_SHORT).show()
+
     suspend fun displayToastSuspend(message: String) {
         withContext(Dispatchers.Main) {
             Toast.makeText(appContext, message, Toast.LENGTH_SHORT).show()

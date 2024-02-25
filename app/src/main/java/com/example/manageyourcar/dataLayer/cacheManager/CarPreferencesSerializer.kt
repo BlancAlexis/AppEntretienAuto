@@ -1,5 +1,5 @@
 
-package com.example.manageyourcar.dataLayer
+package com.example.manageyourcar.dataLayer.cacheManager
 
 import androidx.datastore.core.Serializer
 import kotlinx.serialization.SerializationException
@@ -8,14 +8,14 @@ import java.io.InputStream
 import java.io.OutputStream
 
 
-object CarPreferencesSerializer : Serializer<CarCache> {
-    override val defaultValue: CarCache
-        get() = CarCache()
+object CarPreferencesSerializer : Serializer<CarSerializableDatastoreClass> {
+    override val defaultValue: CarSerializableDatastoreClass
+        get() = CarSerializableDatastoreClass()
 
-    override suspend fun readFrom(input: InputStream): CarCache {
+    override suspend fun readFrom(input: InputStream): CarSerializableDatastoreClass {
         return try {
             Json.decodeFromString(
-                deserializer = CarCache.serializer(),
+                deserializer = CarSerializableDatastoreClass.serializer(),
                 string = input.readBytes().decodeToString()
             )
         } catch (e: SerializationException) {
@@ -24,10 +24,10 @@ object CarPreferencesSerializer : Serializer<CarCache> {
         }
     }
 
-    override suspend fun writeTo(t: CarCache, output: OutputStream) {
+    override suspend fun writeTo(t: CarSerializableDatastoreClass, output: OutputStream) {
         output.write(
             Json.encodeToString(
-                serializer = CarCache.serializer(),
+                serializer = CarSerializableDatastoreClass.serializer(),
                 value = t
             ).encodeToByteArray()
         )

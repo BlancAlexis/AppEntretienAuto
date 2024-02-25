@@ -10,12 +10,18 @@ import com.example.manageyourcar.UIlayer.viewmodel.LoginUserViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.UpdateCarMileageViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.ViewCarDetailsViewModel
 import com.example.manageyourcar.dataLayer.AndroidBluetoothController
-import com.example.manageyourcar.dataLayer.CacheDataSource
-import com.example.manageyourcar.dataLayer.CacheManagerRepositoryImpl
+import com.example.manageyourcar.dataLayer.cacheManager.CacheDataSource
+import com.example.manageyourcar.dataLayer.cacheManager.CacheManagerRepositoryImpl
 import com.example.manageyourcar.dataLayer.ListenerInternet
-import com.example.manageyourcar.dataLayer.dataLayerFirebase.MaintenanceRemoteDateFirebaseSourceImpl
-import com.example.manageyourcar.dataLayer.dataLayerFirebase.carRemoteDataFirebaseSourceImpl
-import com.example.manageyourcar.dataLayer.dataLayerFirebase.remoteDataFirebaseSource
+import com.example.manageyourcar.dataLayer.cacheManager.CacheDataSourceImpl
+import com.example.manageyourcar.dataLayer.dataLayerFirebase.MaintenanceFirestoreDataSourceImpl
+import com.example.manageyourcar.dataLayer.dataLayerFirebase.CarFirestoreDataSourceImpl
+import com.example.manageyourcar.dataLayer.dataLayerFirebase.CarFirestoreDataSource
+import com.example.manageyourcar.dataLayer.dataLayerFirebase.CarFirestoreRepository
+import com.example.manageyourcar.dataLayer.dataLayerFirebase.CarFirestoreRepositoryImpl
+import com.example.manageyourcar.dataLayer.dataLayerFirebase.MaintenanceFirestoreDataSource
+import com.example.manageyourcar.dataLayer.dataLayerFirebase.MaintenanceFirestoreRepository
+import com.example.manageyourcar.dataLayer.dataLayerFirebase.MaintenanceFirestoreRepositoryImpl
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.RequestApiImmat
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.RequestApiSIV
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.dataSource.RemoteDataSource
@@ -29,7 +35,6 @@ import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
 import com.example.manageyourcar.domainLayer.repository.retrofit.ApiCarImmatRepository
 import com.example.manageyourcar.domainLayer.repository.retrofit.ApiCarSIVRepository
 import com.example.manageyourcar.domainLayer.repository.retrofit.PlacesApiRepository
-import com.example.manageyourcar.domainLayer.repository.room.ServicingRepository
 import com.example.manageyourcar.domainLayer.useCaseBusiness.LoginUserUseCase
 import com.example.manageyourcar.domainLayer.useCaseBusiness.LogoutUserUseCase
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetCarRepairShopUseCase
@@ -85,7 +90,7 @@ val mappersModule = module {
 
 val repositoryModule = module {
     single<CacheManagerRepository> { CacheManagerRepositoryImpl(get()) }
-    single<CacheDataSource> { CacheDataSource(androidContext()) }
+    single<CacheDataSource> { CacheDataSourceImpl(androidContext()) }
 
 }
 
@@ -161,8 +166,11 @@ val retrofitModule = module {
 
 val firebaseModule = module {
     single<FirebaseFirestore> { Firebase.firestore }
-    factory<remoteDataFirebaseSource> { carRemoteDataFirebaseSourceImpl(get()) }
-    single<ServicingRepository> { MaintenanceRemoteDateFirebaseSourceImpl(get()) }
+    factory<CarFirestoreDataSource> { CarFirestoreDataSourceImpl(get()) }
+    single<CarFirestoreRepository> { CarFirestoreRepositoryImpl(get()) }
+
+    single<MaintenanceFirestoreRepository> { MaintenanceFirestoreRepositoryImpl(get()) }
+    single<MaintenanceFirestoreDataSource> { MaintenanceFirestoreDataSourceImpl(get()) }
 }
 
 val viewModelModule = module {

@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when (item.itemId) {
             R.id.nav_logout -> {
                 lifecycleScope.launch {
-                    when (logoutUserUseCase.logoutUser()) {
+                    when (logoutUserUseCase.invoke()) {
                         is Ressource.Error -> println("error")
                         is Ressource.Loading -> println("load")
                         is Ressource.Success -> finish() //Faire une chose qui bloque si fail?

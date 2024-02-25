@@ -63,7 +63,7 @@ class AddMaintenanceViewModel constructor(
 
     private fun addMaintenanceLocalStorage() {
         viewModelScope.launch(ioDispatcher) {
-            when (addCarMaintenanceUseCase.addMaintenanceOperation(
+            when (addCarMaintenanceUseCase.invoke(
                 Entretien(
                     userID = null,
                     carID = 1,

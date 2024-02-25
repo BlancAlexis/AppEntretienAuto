@@ -2,14 +2,14 @@ package com.example.manageyourcar.UIlayer
 
 import android.app.Application
 import android.util.Log
-import com.example.manageyourcar.dataLayer.dataLayerFirebase.remoteDataFirebaseSource
+import com.example.manageyourcar.dataLayer.dataLayerFirebase.CarFirestoreDataSource
+import com.example.manageyourcar.dataLayer.dataLayerFirebase.MaintenanceFirestoreRepository
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.dataLayer.di.injectFeature
 import com.example.manageyourcar.dataLayer.model.CarLocal
 import com.example.manageyourcar.dataLayer.model.Entretien
 import com.example.manageyourcar.dataLayer.model.MaintenanceService
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
-import com.example.manageyourcar.domainLayer.repository.room.ServicingRepository
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.StoreUserCarUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.DeleteCarRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.GetUserCarsUseCase
@@ -46,7 +46,7 @@ val cacheManagerRepository = get<CacheManagerRepository> ()
                         result.data.forEach {
                             Log.i("cacheCar", it.carID)
                         }
-                        val dataSource = get<remoteDataFirebaseSource> ()
+                        val dataSource = get<CarFirestoreDataSource> ()
                        // dataSource.deleteCar(result.data.last())
                         dataSource.updateCar(result.data.last().copy(mileage = listOf(0,10224)))
                     }
@@ -56,7 +56,7 @@ val cacheManagerRepository = get<CacheManagerRepository> ()
             }
         }
         GlobalScope.launch(Dispatchers.IO) {
-            val dataSource = get<ServicingRepository>()
+            val dataSource = get<MaintenanceFirestoreRepository>()
             dataSource.addNewServicing(
                 Entretien(
                     date = Date(),

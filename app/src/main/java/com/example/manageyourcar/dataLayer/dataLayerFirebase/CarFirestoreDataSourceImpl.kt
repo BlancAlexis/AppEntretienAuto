@@ -7,10 +7,9 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
-import java.util.UUID
 import kotlin.coroutines.cancellation.CancellationException
 
-class carRemoteDataFirebaseSourceImpl(private val firestoreInstance : FirebaseFirestore) : remoteDataFirebaseSource {
+class CarFirestoreDataSourceImpl(private val firestoreInstance : FirebaseFirestore) : CarFirestoreDataSource {
     override fun addNewCar(carEntity: CarLocal) : Ressource<Unit> {
         return try {
             firestoreInstance.collection(CARS_COLLECTION).document(carEntity.carID).set(carEntity)
@@ -92,7 +91,7 @@ class carRemoteDataFirebaseSourceImpl(private val firestoreInstance : FirebaseFi
     }
 }
 
-interface remoteDataFirebaseSource {
+interface CarFirestoreDataSource {
     fun addNewCar(carEntity: CarLocal) : Ressource<Unit>
 
     fun getCars(idUser: Int): Flow<Ressource<List<CarLocal>>>
@@ -104,4 +103,43 @@ interface remoteDataFirebaseSource {
     fun updateCarMileage(listMileages: List<Int>, idCar: String) : Flow<Ressource<Unit>>
 
     fun deleteCar(car: CarLocal) : Ressource<Unit>
+}
+interface CarFirestoreRepository {
+    fun addNewCar(carEntity: CarLocal) : Ressource<Unit>
+
+    fun getCars(idUser: Int): Flow<Ressource<List<CarLocal>>>
+
+    fun getCar(idCar: Int): Flow<Ressource<CarLocal>>
+
+    fun updateCar(carEntity: CarLocal) : Ressource<Unit>
+
+    fun updateCarMileage(listMileages: List<Int>, idCar: String) : Flow<Ressource<Unit>>
+
+    fun deleteCar(car: CarLocal) : Ressource<Unit>
+}
+class CarFirestoreRepositoryImpl(private val dataSource: CarFirestoreDataSource) : CarFirestoreRepository {
+    override fun addNewCar(carEntity: CarLocal) : Ressource<Unit>
+    {
+        return dataSource.addNewCar(carEntity)
+    }
+
+    override fun getCars(idUser: Int): Flow<Ressource<List<CarLocal>>> {
+        return dataSource.getCars(idUser)
+    }
+
+    override fun getCar(idCar: Int): Flow<Ressource<CarLocal>> {
+        return dataSource.getCar(idCar)
+    }
+
+    override fun updateCar(carEntity: CarLocal) : Ressource<Unit>{
+        return dataSource.updateCar(carEntity)
+    }
+
+    override fun updateCarMileage(listMileages: List<Int>, idCar: String) : Flow<Ressource<Unit>>{
+        return dataSource.updateCarMileage(listMileages, idCar)
+    }
+
+    override fun deleteCar(car: CarLocal) : Ressource<Unit>{
+        return dataSource.deleteCar(car)
+    }
 }

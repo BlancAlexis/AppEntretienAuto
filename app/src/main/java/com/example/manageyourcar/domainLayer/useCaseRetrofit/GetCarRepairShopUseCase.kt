@@ -10,7 +10,7 @@ import org.koin.core.component.inject
 class GetCarRepairShopUseCase : KoinComponent {
     val api by inject<PlacesApiRepository>()
 
-    suspend fun getVehiculeByImmat(
+    suspend fun invoke(
         longitude: Double,
         latitude: Double
     ): Flow<Ressource<List<Place>>> {

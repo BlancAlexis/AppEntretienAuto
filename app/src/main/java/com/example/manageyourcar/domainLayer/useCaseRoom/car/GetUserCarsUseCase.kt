@@ -1,6 +1,6 @@
 package com.example.manageyourcar.domainLayer.useCaseRoom.car
 
-import com.example.manageyourcar.dataLayer.dataLayerFirebase.remoteDataFirebaseSource
+import com.example.manageyourcar.dataLayer.dataLayerFirebase.CarFirestoreDataSource
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.dataLayer.model.CarLocal
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
@@ -10,7 +10,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class GetUserCarsUseCase : KoinComponent {
-    private val roomRepository by inject<remoteDataFirebaseSource>()
+    private val roomRepository by inject<CarFirestoreDataSource>()
     private val cacheManagerRepository by inject<CacheManagerRepository>()
 
     suspend operator fun invoke(): Flow<Ressource<List<CarLocal>>> {

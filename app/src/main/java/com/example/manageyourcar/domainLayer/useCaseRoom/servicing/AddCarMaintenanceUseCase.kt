@@ -1,17 +1,17 @@
 package com.example.manageyourcar.domainLayer.useCaseRoom.servicing
 
+import com.example.manageyourcar.dataLayer.dataLayerFirebase.MaintenanceFirestoreRepository
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.dataLayer.model.Entretien
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
-import com.example.manageyourcar.domainLayer.repository.room.ServicingRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class AddCarMaintenanceUseCase : KoinComponent {
-    private val roomRepository by inject<ServicingRepository>()
+    private val roomRepository by inject<MaintenanceFirestoreRepository>()
     private val cacheManagerRepository by inject<CacheManagerRepository>()
 
-    suspend fun addMaintenanceOperation(entretien: Entretien): Ressource<Unit> {
+    suspend operator fun invoke(entretien: Entretien): Ressource<Unit> {
         return try {
             when (val result = cacheManagerRepository.getUserId()) {
                 is Ressource.Error -> Ressource.Error(result.error)

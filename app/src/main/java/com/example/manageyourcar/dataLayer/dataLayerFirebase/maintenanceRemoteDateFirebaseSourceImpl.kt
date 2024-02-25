@@ -3,9 +3,7 @@ package com.example.manageyourcar.dataLayer.dataLayerFirebase
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 
 import com.example.manageyourcar.dataLayer.model.Entretien
-import com.example.manageyourcar.domainLayer.repository.room.ServicingRepository
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ListenerRegistration
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -13,8 +11,8 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlin.coroutines.cancellation.CancellationException
 
 
-class MaintenanceRemoteDateFirebaseSourceImpl(private val firestoreInstance: FirebaseFirestore) :
-    ServicingRepository {
+class MaintenanceFirestoreDataSourceImpl(private val firestoreInstance: FirebaseFirestore) :
+    MaintenanceFirestoreDataSource {
     override fun addNewServicing(entretien: Entretien): Ressource<Unit> {
         return try {
             firestoreInstance.collection(MAINTENANCES_COLLECTION).add(entretien)
@@ -55,4 +53,33 @@ class MaintenanceRemoteDateFirebaseSourceImpl(private val firestoreInstance: Fir
     companion object{
         const val MAINTENANCES_COLLECTION = "maintenances"
     }
+}
+
+interface MaintenanceFirestoreDataSource {
+    fun addNewServicing(entretien: Entretien): Ressource<Unit>
+    fun deleteServicing(idServicing: Int): Ressource<Unit>
+
+    fun getAllUserMaintenance(): Flow<Ressource<List<Entretien>>>
+}
+
+interface MaintenanceFirestoreRepository {
+    fun addNewServicing(entretien: Entretien): Ressource<Unit>
+    fun deleteServicing(idServicing: Int): Ressource<Unit>
+
+    fun getAllUserMaintenance(): Flow<Ressource<List<Entretien>>>
+}
+
+class MaintenanceFirestoreRepositoryImpl constructor(private val dataSource: MaintenanceFirestoreDataSource) : MaintenanceFirestoreRepository {
+    override fun addNewServicing(entretien: Entretien): Ressource<Unit> {
+        return dataSource.addNewServicing(entretien)
+    }
+
+    override fun deleteServicing(idServicing: Int): Ressource<Unit> {
+        return dataSource.deleteServicing(idServicing)
+    }
+
+    override fun getAllUserMaintenance(): Flow<Ressource<List<Entretien>>> {
+        return dataSource.getAllUserMaintenance()
+    }
+
 }
