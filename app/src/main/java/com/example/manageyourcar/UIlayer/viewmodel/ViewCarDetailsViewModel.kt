@@ -41,7 +41,7 @@ class ViewCarDetailsViewModel(
 
     private fun getCachedUser() {
         viewModelScope.launch(ioDispatcher) {
-            getUserCarsUseCase.invoke().collect { result ->
+          /*  getUserCarsUseCase.invoke().collect { result ->
                 when (result) {
                     is Ressource.Error -> uiUtil.displayToastSuspend(
                         result.error?.localizedMessage
@@ -55,7 +55,7 @@ class ViewCarDetailsViewModel(
 
                     else -> {}
                 }
-            }
+            }*/
         }
     }
 

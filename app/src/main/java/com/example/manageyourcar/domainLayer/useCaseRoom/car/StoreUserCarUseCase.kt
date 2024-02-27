@@ -5,16 +5,17 @@ import com.example.manageyourcar.dataLayer.dataLayerFirebase.CarFirestoreDataSou
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.dataLayer.model.CarLocal
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
+import com.example.manageyourcar.domainLayer.useCaseBusiness.autoLoginUseCase
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class StoreUserCarUseCase : KoinComponent {
     private val roomRepository by inject<CarFirestoreDataSource>()
-    private val cacheManagerRepository by inject<CacheManagerRepository>()
+    private val authRepository by inject<autoLoginUseCase>()
 
-    suspend operator fun invoke(carLocal: CarLocal): Ressource<Unit> {
-        return try {
-             when (val result = cacheManagerRepository.getUserId()) {
+/*    suspend operator fun invoke(carLocal: CarLocal): Ressource<Unit> {
+        *//*        return try {
+             when (val result = authRepository.()) {
                 is Ressource.Error -> Ressource.Error(result.error)
                 is Ressource.Loading -> Ressource.Error()
                 is Ressource.Success -> {
@@ -29,5 +30,6 @@ class StoreUserCarUseCase : KoinComponent {
             Log.e("AddCarRoomUseCase", e.localizedMessage)
             Ressource.Error(exception = e)
         }
-    }
+    }*//*
+    }*/
 }

@@ -42,55 +42,10 @@ class CacheDataSourceImpl(private val context: Context) : CacheDataSource{
             return Ressource.Error(message = "Error retrieving car list: $e")
         }
     }
-
-
-    override suspend fun getUserId(): Ressource<Int> {
-        return try {
-            val userIdFlow: Flow<Int> = context.dataStore.data.map { preferences ->
-                preferences[USER_ID_KEY] ?: -1
-            }
-            val userId = userIdFlow.first()
-            if (userId == -1) {
-                Ressource.Error(message = "Problem reading user ID")
-            } else {
-                Ressource.Success(userId)
-            }
-        } catch (e: Exception) {
-            Ressource.Error(message = "Error retrieving user ID: $e")
-        }
-    }
-
-    override suspend fun putUserId(userId: Int): Ressource<Boolean> {
-        return try {
-            context.dataStore.edit { preferences ->
-                preferences[USER_ID_KEY] = userId
-            }
-            Ressource.Success(true)
-        } catch (e: Exception) {
-            Ressource.Error(message = "Error storing user ID: $e")
-        }
-    }
-
-    override suspend fun resetCurrentUserId(): Ressource<Boolean> {
-        return try {
-            context.dataStore.edit { preferences ->
-                preferences.clear()
-            }
-            Ressource.Success(true)
-        } catch (e: Exception) {
-            Ressource.Error(message = "Error clearing user ID: $e")
-        }
-    }
 }
 
 interface CacheDataSource {
     suspend fun saveUserCarList(carList: List<CarLocal>)
 
     suspend fun getUserCarList(): Ressource<List<CarLocal>>
-
-    suspend fun getUserId(): Ressource<Int>
-
-    suspend fun putUserId(userId: Int): Ressource<Boolean>
-
-    suspend fun resetCurrentUserId(): Ressource<Boolean>
 }

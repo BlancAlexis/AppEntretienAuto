@@ -23,9 +23,9 @@ object CarRetrofitToCar : KoinComponent {
             torque = this.engine.torque,
             maxSpeed = 0,
             mileage = listOf(0),
-            ownerID = GlobalScope.launch {
+            ownerID = 1/* GlobalScope.launch {
                 cacheManager.getUserId().data
-            } as Int
+            } as Int*/
         )
     }
 }

@@ -11,7 +11,7 @@ class AddCarMaintenanceUseCase : KoinComponent {
     private val roomRepository by inject<MaintenanceFirestoreRepository>()
     private val cacheManagerRepository by inject<CacheManagerRepository>()
 
-    suspend operator fun invoke(entretien: Entretien): Ressource<Unit> {
+    /*suspend operator fun invoke(entretien: Entretien): Ressource<Unit> {
         return try {
             when (val result = cacheManagerRepository.getUserId()) {
                 is Ressource.Error -> Ressource.Error(result.error)
@@ -28,5 +28,5 @@ class AddCarMaintenanceUseCase : KoinComponent {
             println(e.localizedMessage)
             Ressource.Error(exception = e)
         }
-    }
+    }*/
 }

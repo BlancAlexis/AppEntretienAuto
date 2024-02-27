@@ -15,17 +15,4 @@ class CacheManagerRepositoryImpl(private val dataSource: CacheDataSource) : Cach
     override suspend fun saveUserCarList(local: List<CarLocal>) {
         dataSource.saveUserCarList(local)
     }
-
-
-    override suspend fun putUserId(userId: Int): Ressource<Boolean> {
-        return dataSource.putUserId(userId)
-    }
-
-    override suspend fun getUserId(): Ressource<Int> {
-        return dataSource.getUserId()
-    }
-
-    override suspend fun resetUserId(): Ressource<Boolean> {
-        return dataSource.resetCurrentUserId()
-    }
 }

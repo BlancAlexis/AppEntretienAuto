@@ -12,6 +12,7 @@ import com.example.manageyourcar.UIlayer.UIUtil
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
 import com.example.manageyourcar.domainLayer.useCaseBusiness.LoginUserUseCase
+import com.example.manageyourcar.domainLayer.useCaseBusiness.autoLoginUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,8 +25,9 @@ import timber.log.Timber
 
 class LoginUserViewModel constructor(private val uiUtil: UIUtil) : ViewModel(), KoinComponent {
 
+
     private val logUseCase by inject<LoginUserUseCase>()
-    private val cacheManagerRepository by inject<CacheManagerRepository>()
+    private val autoLoginUserUseCase by inject<autoLoginUseCase>()
     private lateinit var navController: NavController
     val isConnected: MutableLiveData<Boolean> = MutableLiveData(false)
     private val _uiState = MutableStateFlow(LoginUiState())
@@ -60,7 +62,7 @@ class LoginUserViewModel constructor(private val uiUtil: UIUtil) : ViewModel(), 
     private fun onTryLog(autoConnect: Boolean = false) {
         viewModelScope.launch(ioDispatcher) {
             if (autoConnect) {
-                when (val result = cacheManagerRepository.getUserId()) {
+                when (val result = autoLoginUserUseCase.invoke()) {
                     is Ressource.Success -> isConnected.postValue(true)
                     is Ressource.Error -> Timber.e(result.error?.localizedMessage)
                     else -> null
@@ -72,26 +74,17 @@ class LoginUserViewModel constructor(private val uiUtil: UIUtil) : ViewModel(), 
     }
 
     private suspend fun logUserLocalStorage() {
-        when (val result =
-            logUseCase.invoke(_uiState.value.userLogin!!, _uiState.value.userPassword!!)) {
-            is Ressource.Success -> {
-                cacheManagerRepository.putUserId(
-                    result.data!!
-                )
-                isConnected.postValue(true)
-            }
-
-            is Ressource.Error -> {
-                _uiState.update {
-                    it.copy(
-                        userLoginError = "Un champs ne correspond pas",
-                        userPasswordError = "Un champs ne correspond pas"
-                    )
+            logUseCase.invoke(_uiState.value.userLogin!!, _uiState.value.userPassword!!).collect{
+                when(it) {
+                    is Ressource.Error ->  _uiState.update {
+                        it.copy(userLoginError = "Un champs ne correspond pas", userPasswordError = "Un champs ne correspond pas")
+                    }
+                    is Ressource.Success -> {
+                        isConnected.postValue(true)
+                    }
+                    else -> null
                 }
             }
-
-            else -> {}
-        }
     }
 
     private fun onLoginChanged(event: UserLoginEvent.OnLoginChanged) {

@@ -7,6 +7,8 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.manageyourcar.UIlayer.UIState.SignInUiState
 import com.example.manageyourcar.UIlayer.UIUtil
+import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
+import com.example.manageyourcar.domainLayer.useCaseBusiness.creaUserUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.user.AddUserRoomUseCase
 import com.example.manageyourcar.domainLayer.utils.UserEntryChecker
 import kotlinx.coroutines.CoroutineDispatcher
@@ -21,7 +23,7 @@ import org.koin.core.component.inject
 
 
 class AddUserViewModel constructor(private val uiUtil: UIUtil) : ViewModel(), KoinComponent {
-    private val addUserRoomUseCase by inject<AddUserRoomUseCase>()
+    private val addUserRoomUseCase by inject<creaUserUseCase>()
     private lateinit var navController: NavController
 
 
@@ -79,10 +81,16 @@ class AddUserViewModel constructor(private val uiUtil: UIUtil) : ViewModel(), Ko
     private fun addUserLocalStorage() {
         viewModelScope.launch(ioDispatcher) {
             if ((uiState.value.userPassword == uiState.value.userValidatePassword) && uiState.value.userPassword != "" && uiState.value.userLogin != "" && uiState.value.userFirstName != "" && uiState.value.userLastName != "") {
-                addUserRoomUseCase.invoke(uiState.value.userLogin, uiState.value.userPassword, uiState.value.userFirstName, uiState.value.userLastName)
-                withContext(Dispatchers.Main) {
-                    navController.popBackStack()
+                addUserRoomUseCase.invoke(uiState.value.userLogin, uiState.value.userPassword).collect{
+                    when(it){
+                        is Ressource.Error -> "error"
+                        is Ressource.Success -> withContext(Dispatchers.Main) {
+                            navController.popBackStack()
+                        }
+                        else -> {}
+                    }
                 }
+
             } else {
                 withContext(Dispatchers.Main) {
                     uiUtil.displayToastSuspend("Le formulaire contient une erreur")

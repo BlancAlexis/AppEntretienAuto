@@ -10,6 +10,10 @@ import com.example.manageyourcar.UIlayer.viewmodel.LoginUserViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.UpdateCarMileageViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.ViewCarDetailsViewModel
 import com.example.manageyourcar.dataLayer.AndroidBluetoothController
+import com.example.manageyourcar.dataLayer.AuthDataSource
+import com.example.manageyourcar.dataLayer.AuthDataSourceImpl
+import com.example.manageyourcar.dataLayer.AuthRepository
+import com.example.manageyourcar.dataLayer.AuthRepositoryImpl
 import com.example.manageyourcar.dataLayer.cacheManager.CacheDataSource
 import com.example.manageyourcar.dataLayer.cacheManager.CacheManagerRepositoryImpl
 import com.example.manageyourcar.dataLayer.ListenerInternet
@@ -22,6 +26,10 @@ import com.example.manageyourcar.dataLayer.dataLayerFirebase.CarFirestoreReposit
 import com.example.manageyourcar.dataLayer.dataLayerFirebase.MaintenanceFirestoreDataSource
 import com.example.manageyourcar.dataLayer.dataLayerFirebase.MaintenanceFirestoreRepository
 import com.example.manageyourcar.dataLayer.dataLayerFirebase.MaintenanceFirestoreRepositoryImpl
+import com.example.manageyourcar.dataLayer.dataLayerFirebase.UserDataSource
+import com.example.manageyourcar.dataLayer.dataLayerFirebase.UserRepository
+import com.example.manageyourcar.dataLayer.dataLayerFirebase.UserRepositoryImpl
+import com.example.manageyourcar.dataLayer.dataLayerFirebase.userRemoteDataFirebaseImpl
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.RequestApiImmat
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.RequestApiSIV
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.dataSource.RemoteDataSource
@@ -37,6 +45,8 @@ import com.example.manageyourcar.domainLayer.repository.retrofit.ApiCarSIVReposi
 import com.example.manageyourcar.domainLayer.repository.retrofit.PlacesApiRepository
 import com.example.manageyourcar.domainLayer.useCaseBusiness.LoginUserUseCase
 import com.example.manageyourcar.domainLayer.useCaseBusiness.LogoutUserUseCase
+import com.example.manageyourcar.domainLayer.useCaseBusiness.autoLoginUseCase
+import com.example.manageyourcar.domainLayer.useCaseBusiness.creaUserUseCase
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetCarRepairShopUseCase
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkImmatUseCase
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkUseCase
@@ -47,6 +57,8 @@ import com.example.manageyourcar.domainLayer.useCaseRoom.car.UpsertCarMileageUse
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.AddCarMaintenanceUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.DeleteMaintenanceRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.user.AddUserRoomUseCase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -100,7 +112,7 @@ val useCaseModule = module {
 
     factory { GetUserCarsUseCase() }
     factory { LoginUserUseCase() }
-    factory { LogoutUserUseCase() }
+    factory { LogoutUserUseCase(get()) }
     factory { DeleteCarRoomUseCase() }
 
     factory { AddUserRoomUseCase() }
@@ -165,12 +177,21 @@ val retrofitModule = module {
 }
 
 val firebaseModule = module {
+    single<autoLoginUseCase> { autoLoginUseCase(get()) }
+    single<creaUserUseCase> { creaUserUseCase(get()) }
+    single<FirebaseAuth> { Firebase.auth }
+    single<AuthDataSource> { AuthDataSourceImpl(get()) }
+    single<AuthRepository> { AuthRepositoryImpl(get()) }
+
     single<FirebaseFirestore> { Firebase.firestore }
     factory<CarFirestoreDataSource> { CarFirestoreDataSourceImpl(get()) }
     single<CarFirestoreRepository> { CarFirestoreRepositoryImpl(get()) }
 
     single<MaintenanceFirestoreRepository> { MaintenanceFirestoreRepositoryImpl(get()) }
     single<MaintenanceFirestoreDataSource> { MaintenanceFirestoreDataSourceImpl(get()) }
+
+    single<UserRepository> { UserRepositoryImpl(get()) }
+    single<UserDataSource> { userRemoteDataFirebaseImpl(get()) }
 }
 
 val viewModelModule = module {

@@ -32,7 +32,7 @@ class AppApplication() : Application(), KoinComponent {
             injectFeature()
         }
 
-        val deleteCarRoomUseCase = DeleteCarRoomUseCase()
+    /*    val deleteCarRoomUseCase = DeleteCarRoomUseCase()
 val cacheManagerRepository = get<CacheManagerRepository> ()
         GlobalScope.launch(Dispatchers.IO) {
             when (val result = cacheManagerRepository.getUserCarList()) {
@@ -84,11 +84,11 @@ val cacheManagerRepository = get<CacheManagerRepository> ()
                 )
             )
 
-        }
+        }*/
         println("prout")
         val getCarRoomUseCase = GetUserCarsUseCase()
         GlobalScope.launch {
-            getCarRoomUseCase.invoke().collect { result ->
+        /*    getCarRoomUseCase.invoke().collect { result ->
                 when (result) {
                     is Ressource.Error -> {
                         println("lolerrror")
@@ -108,7 +108,7 @@ val cacheManagerRepository = get<CacheManagerRepository> ()
                 }
 
 
-        }
+        }*/
 
 
     }

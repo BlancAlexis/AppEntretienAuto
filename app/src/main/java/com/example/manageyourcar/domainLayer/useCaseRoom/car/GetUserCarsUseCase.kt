@@ -10,7 +10,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class GetUserCarsUseCase : KoinComponent {
-    private val roomRepository by inject<CarFirestoreDataSource>()
+/*    private val roomRepository by inject<CarFirestoreDataSource>()
     private val cacheManagerRepository by inject<CacheManagerRepository>()
 
     suspend operator fun invoke(): Flow<Ressource<List<CarLocal>>> {
@@ -23,5 +23,5 @@ class GetUserCarsUseCase : KoinComponent {
         } catch (e: Exception) {
             flowOf(Ressource.Error(exception = e))
         }
-    }
+    }*/
 }

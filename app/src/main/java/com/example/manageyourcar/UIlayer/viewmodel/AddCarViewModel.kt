@@ -131,7 +131,7 @@ class AddCarViewModel: ViewModel(), KoinComponent {
 
     private fun addCarLocalStorage() {
         viewModelScope.launch(ioDispatcher) {
-            uiState.value.carLocalFind?.let { car ->
+      /*      uiState.value.carLocalFind?.let { car ->
                 when (storeUserCarUseCase.invoke(car)) {
                     is Ressource.Success -> {
                         uIUtil.displayToastSuspend("Voiture ajoutée avec succès")
@@ -145,7 +145,7 @@ class AddCarViewModel: ViewModel(), KoinComponent {
 
                     else -> {}
                 }
-            }
+            }*/
         }
     }
 }

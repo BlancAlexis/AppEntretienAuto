@@ -49,11 +49,11 @@ class AddMaintenanceViewModel constructor(
         viewModelScope.launch(ioDispatcher) {
             when (val result = cacheManagerRepository.getUserCarList()) {
                 is Ressource.Error -> {
-                    getUserCarsLocalStorage()
+                 //   getUserCarsLocalStorage()
                 }
 
                 is Ressource.Success -> result.data?.let {
-                    checkCars(it)
+                   // checkCars(it)
                 }
 
                 else -> {}
@@ -63,7 +63,7 @@ class AddMaintenanceViewModel constructor(
 
     private fun addMaintenanceLocalStorage() {
         viewModelScope.launch(ioDispatcher) {
-            when (addCarMaintenanceUseCase.invoke(
+         /*   when (addCarMaintenanceUseCase.invoke(
                 Entretien(
                     userID = null,
                     carID = 1,
@@ -79,7 +79,7 @@ class AddMaintenanceViewModel constructor(
                 }
 
                 else -> {}
-            }
+            }*/
         }
     }
 
@@ -87,7 +87,7 @@ class AddMaintenanceViewModel constructor(
         if (cars.isEmpty()) {
             isMaintenanceAdd.postValue(true)
         }
-        updateListCar(cars)
+      //  updateListCar(cars)
         if (cars.isNotEmpty()) {
             selectedCarLocal = cars[0]
         }
@@ -101,7 +101,7 @@ class AddMaintenanceViewModel constructor(
 
     private fun getUserCarsLocalStorage() {
         viewModelScope.launch(Dispatchers.IO) {
-            getUserCarsUseCase.invoke().collect { result ->
+          /*  getUserCarsUseCase.invoke().collect { result ->
                 when (result) {
                     is Ressource.Error -> uiUtil.displayToastSuspend(
                         result.error?.localizedMessage ?: "erreur"
@@ -110,7 +110,7 @@ class AddMaintenanceViewModel constructor(
                     is Ressource.Success -> checkCars(result.data ?: emptyList())
                     else -> {}
                 }
-            }
+            }*/
         }
     }
 

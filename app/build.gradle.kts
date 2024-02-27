@@ -28,6 +28,9 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        val firebaseAuthID: String =
+            gradleLocalProperties(project.rootProject.projectDir).getProperty("FIREBASE_AUTH_ID") ?: ""
+        buildConfigField("String", "FIREBASE_AUTH_ID", "\"$firebaseAuthID\"")
         val mapsKey: String =
             gradleLocalProperties(project.rootProject.projectDir).getProperty("MAPS_API_KEY") ?: ""
         buildConfigField("String", "MAPS_API_KEY", "\"$mapsKey\"")
@@ -98,8 +101,11 @@ android {
 
 
 dependencies {
+    //Firebase auth
+    implementation("com.google.firebase:firebase-auth-ktx:22.3.1")
+    implementation("com.google.android.gms:play-services-auth:21.0.0")
     //Firestore
-    implementation("com.google.firebase:firebase-firestore:24.10.2")
+    implementation("com.google.firebase:firebase-firestore:24.10.3")
     //Datastore
     implementation("androidx.datastore:datastore:1.0.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
