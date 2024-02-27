@@ -16,7 +16,7 @@ class LoginUserUseCase : KoinComponent {
                 is Ressource.Error -> {
                     val result = user.logUser(login, password)
                     if (result.login == login && result.password == password) {
-                        Ressource.Success(result.id)
+                        Ressource.Success(result.uuid)
                     } else {
                         Ressource.Error(message = "Identifiant non valide")
                     }

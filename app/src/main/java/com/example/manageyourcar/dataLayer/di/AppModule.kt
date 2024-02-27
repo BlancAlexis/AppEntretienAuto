@@ -22,6 +22,10 @@ import com.example.manageyourcar.dataLayer.dataLayerFirebase.CarFirestoreReposit
 import com.example.manageyourcar.dataLayer.dataLayerFirebase.MaintenanceFirestoreDataSource
 import com.example.manageyourcar.dataLayer.dataLayerFirebase.MaintenanceFirestoreRepository
 import com.example.manageyourcar.dataLayer.dataLayerFirebase.MaintenanceFirestoreRepositoryImpl
+import com.example.manageyourcar.dataLayer.dataLayerFirebase.UserDataSource
+import com.example.manageyourcar.dataLayer.dataLayerFirebase.UserRepository
+import com.example.manageyourcar.dataLayer.dataLayerFirebase.UserRepositoryImpl
+import com.example.manageyourcar.dataLayer.dataLayerFirebase.userRemoteDataFirebaseImpl
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.RequestApiImmat
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.RequestApiSIV
 import com.example.manageyourcar.dataLayer.dataLayerRetrofit.dataSource.RemoteDataSource
@@ -171,6 +175,9 @@ val firebaseModule = module {
 
     single<MaintenanceFirestoreRepository> { MaintenanceFirestoreRepositoryImpl(get()) }
     single<MaintenanceFirestoreDataSource> { MaintenanceFirestoreDataSourceImpl(get()) }
+
+    single<UserRepository> { UserRepositoryImpl(get()) }
+    single<UserDataSource> { userRemoteDataFirebaseImpl(get()) }
 }
 
 val viewModelModule = module {
