@@ -1,10 +1,10 @@
 package com.example.manageyourcar.domainLayer.mappers
 
-import com.example.manageyourcar.dataLayer.dataLayerRoom.entities.MaintenanceEntity
-import com.example.manageyourcar.dataLayer.model.Entretien
+import com.example.manageyourcar.dataLayer.model.Maintenance
+import com.example.manageyourcar.dataLayer.room.entities.MaintenanceEntity
 
 object MaintenanceMappers {
-    fun Entretien.toMaintenanceEntity(): MaintenanceEntity {
+    fun Maintenance.toMaintenanceEntity(): MaintenanceEntity {
         return MaintenanceEntity(
             userID = this.userID,
             carID = this.carID,
@@ -15,8 +15,8 @@ object MaintenanceMappers {
         )
     }
 
-    fun MaintenanceEntity.toEntretien(): Entretien {
-        return Entretien(
+    fun MaintenanceEntity.toEntretien(): Maintenance {
+        return Maintenance(
             userID = this.userID,
             carID = this.carID,
             mileage = this.mileage,

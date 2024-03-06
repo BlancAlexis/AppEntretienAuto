@@ -4,9 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.manageyourcar.UIlayer.UIState.UpdateMileage
-import com.example.manageyourcar.UIlayer.UIUtil
-import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
-import com.example.manageyourcar.dataLayer.model.CarLocal
+import com.example.manageyourcar.UIlayer.viewEvent.UIUtil
+import com.example.manageyourcar.dataLayer.model.Car
+import com.example.manageyourcar.dataLayer.retrofit.util.Ressource
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.UpsertCarMileageUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -32,10 +32,10 @@ class UpdateCarMileageViewModel constructor(
     private val _uiState = MutableStateFlow(UpdateMileage())
     val uiState = _uiState.asStateFlow()
 
-    fun setUiStateCar(carLocal: CarLocal) {
+    fun setUiStateCar(car: Car) {
         _uiState.update {
             it.copy(
-                carLocal = carLocal
+                car = car
             )
         }
     }
@@ -57,7 +57,7 @@ class UpdateCarMileageViewModel constructor(
 
     private fun upsertCarMileage() {
         viewModelScope.launch(ioDispatcher) {
-            val car = _uiState.value.carLocal
+            val car = _uiState.value.car
             if (car != null) {
                 val updatedCar =
                     car.copy(mileage = car.mileage + (uiState.value.newMileage?.toInt() ?: 0))

@@ -40,10 +40,10 @@ fun AddCarView(
     uiState: AddCarUIState,
     onEvent: (OnCarRequest) -> Unit = {}
 ) {
-    uiState.carLocalFind?.let {
+    uiState.carFind?.let {
         CustomDialog(
             title = stringResource(id = R.string.if_your_car),
-            content = "${uiState.carLocalFind.model}",
+            content = "${uiState.carFind.model}",
             onApprove = { onEvent(OnCarRequest.OnClickAddCarButton) },
             onDismiss = { onEvent(OnCarRequest.OnDismissAddCarFragment) })
     }

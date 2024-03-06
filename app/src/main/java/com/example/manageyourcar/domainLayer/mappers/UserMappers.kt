@@ -1,7 +1,7 @@
 package com.example.manageyourcar.domainLayer.mappers
 
-import com.example.manageyourcar.dataLayer.dataLayerRoom.entities.UserEntity
 import com.example.manageyourcar.dataLayer.model.User
+import com.example.manageyourcar.dataLayer.room.entities.UserEntity
 
 object UserMappers {
 

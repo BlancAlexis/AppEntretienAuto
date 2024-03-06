@@ -1,7 +1,9 @@
 package com.example.manageyourcar.dataLayer.di
 
 import androidx.room.Room
-import com.example.manageyourcar.UIlayer.UIUtil
+import androidx.room.RoomDatabase
+import com.example.manageyourcar.UIlayer.viewEvent.ListenerInternet
+import com.example.manageyourcar.UIlayer.viewEvent.UIUtil
 import com.example.manageyourcar.UIlayer.viewmodel.AddCarViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.AddMaintenanceViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.AddUserViewModel
@@ -10,22 +12,21 @@ import com.example.manageyourcar.UIlayer.viewmodel.ListMaintenanceViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.LoginUserViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.UpdateCarMileageViewModel
 import com.example.manageyourcar.UIlayer.viewmodel.ViewCarDetailsViewModel
-import com.example.manageyourcar.dataLayer.AndroidBluetoothController
-import com.example.manageyourcar.dataLayer.CacheDataSource
-import com.example.manageyourcar.dataLayer.CacheManagerRepositoryImpl
-import com.example.manageyourcar.dataLayer.ListenerInternet
-import com.example.manageyourcar.dataLayer.dataLayerRetrofit.RequestApiImmat
-import com.example.manageyourcar.dataLayer.dataLayerRetrofit.RequestApiSIV
-import com.example.manageyourcar.dataLayer.dataLayerRetrofit.dataSource.RemoteDataSource
-import com.example.manageyourcar.dataLayer.dataLayerRetrofit.placesApi
-import com.example.manageyourcar.dataLayer.dataLayerRetrofit.repositoryImpl.ApiCarImmatRepositoryImpl
-import com.example.manageyourcar.dataLayer.dataLayerRetrofit.repositoryImpl.ApiCarSIVRepositoryImpl
-import com.example.manageyourcar.dataLayer.dataLayerRetrofit.repositoryImpl.PlacesApiRepositoryImpl
-import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.RequestLoggingInterceptor
-import com.example.manageyourcar.dataLayer.dataLayerRoom.database.Database
-import com.example.manageyourcar.dataLayer.dataLayerRoom.repositoryImpl.CarRepositoryImpl
-import com.example.manageyourcar.dataLayer.dataLayerRoom.repositoryImpl.ServicingRepositoryImpl
-import com.example.manageyourcar.dataLayer.dataLayerRoom.repositoryImpl.UserRepositoryImpl
+import com.example.manageyourcar.dataLayer.cache.CacheDataSource
+import com.example.manageyourcar.dataLayer.cache.CacheManagerRepositoryImpl
+import com.example.manageyourcar.dataLayer.retrofit.RequestApiImmat
+import com.example.manageyourcar.dataLayer.retrofit.RequestApiSIV
+import com.example.manageyourcar.dataLayer.retrofit.dataSource.RemoteDataSource
+import com.example.manageyourcar.dataLayer.retrofit.placesApi
+import com.example.manageyourcar.dataLayer.retrofit.repositoryImpl.ApiCarImmatRepositoryImpl
+import com.example.manageyourcar.dataLayer.retrofit.repositoryImpl.ApiCarSIVRepositoryImpl
+import com.example.manageyourcar.dataLayer.retrofit.repositoryImpl.PlacesApiRepositoryImpl
+import com.example.manageyourcar.dataLayer.retrofit.util.RequestLoggingInterceptor
+import com.example.manageyourcar.dataLayer.room.database.Database
+import com.example.manageyourcar.dataLayer.room.repositoryImpl.CarRepositoryImpl
+import com.example.manageyourcar.dataLayer.room.repositoryImpl.ServicingRepositoryImpl
+import com.example.manageyourcar.dataLayer.room.repositoryImpl.UserRepositoryImpl
+import com.example.manageyourcar.domainLayer.bluetooth.AndroidBluetoothController
 import com.example.manageyourcar.domainLayer.bluetooth.BluetoothController
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
 import com.example.manageyourcar.domainLayer.repository.retrofit.ApiCarImmatRepository
@@ -92,7 +93,8 @@ val databaseModule = module {
             get(),
             Database::class.java,
             "Database_Manage"
-        ).build()
+        ).fallbackToDestructiveMigration()
+            .build()
     }
     single {
         get<Database>().getCarDAO()

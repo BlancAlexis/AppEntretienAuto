@@ -1,10 +1,10 @@
 package com.example.manageyourcar.UIlayer.UIState
 
-import com.example.manageyourcar.dataLayer.model.CarLocal
+import com.example.manageyourcar.dataLayer.model.Car
 
 sealed class ViewCarDetailsState {
     object Loading : ViewCarDetailsState()
     data class ViewCarDetailsStateDetailsUIState(
-        val carLocals: List<CarLocal> = listOf()
+        val cars: List<Car> = listOf()
     ) : ViewCarDetailsState()
 }

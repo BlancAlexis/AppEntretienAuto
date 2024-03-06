@@ -2,9 +2,9 @@ package com.example.manageyourcar.UIlayer
 
 import android.app.Application
 import com.example.manageyourcar.BuildConfig
+import com.example.manageyourcar.UIlayer.viewEvent.UIUtil
 import com.example.manageyourcar.dataLayer.di.injectFeature
 import org.koin.android.ext.koin.androidContext
-import org.koin.core.component.KoinComponent
 import org.koin.core.context.GlobalContext.startKoin
 
 class AppApplication : Application() {
@@ -18,10 +18,11 @@ class AppApplication : Application() {
 
         // Test buildVariant
         when (BuildConfig.FLAVOR) {
-            "dev" -> println("dev")
-            "recette" -> println("recette")
+            "dev" -> UIUtil(applicationContext).displayToast("dev")
+            "recette" -> UIUtil(applicationContext).displayToast("recette")
         }
     }
+
     companion object {
 
     }

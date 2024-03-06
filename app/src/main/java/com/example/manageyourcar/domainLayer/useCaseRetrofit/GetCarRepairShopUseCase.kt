@@ -1,7 +1,7 @@
 package com.example.manageyourcar.domainLayer.useCaseRetrofit
 
-import com.example.manageyourcar.dataLayer.dataLayerRetrofit.model.Place
-import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
+import com.example.manageyourcar.dataLayer.retrofit.model.Place
+import com.example.manageyourcar.dataLayer.retrofit.util.Ressource
 import com.example.manageyourcar.domainLayer.repository.retrofit.PlacesApiRepository
 import kotlinx.coroutines.flow.Flow
 import org.koin.core.component.KoinComponent

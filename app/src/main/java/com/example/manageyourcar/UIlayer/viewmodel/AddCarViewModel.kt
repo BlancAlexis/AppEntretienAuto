@@ -4,9 +4,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.manageyourcar.UIlayer.UIState.AddCarUIState
-import com.example.manageyourcar.UIlayer.UIUtil
-import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
-import com.example.manageyourcar.dataLayer.model.CarLocal
+import com.example.manageyourcar.UIlayer.viewEvent.UIUtil
+import com.example.manageyourcar.dataLayer.model.Car
+import com.example.manageyourcar.dataLayer.retrofit.util.Ressource
 import com.example.manageyourcar.domainLayer.mappers.CarRetrofitToCar.toCarGlobal
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkImmatUseCase
@@ -21,7 +21,8 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class AddCarViewModel constructor(private val cacheManager : CacheManagerRepository): ViewModel(), KoinComponent {
+class AddCarViewModel constructor(private val cacheManager: CacheManagerRepository) : ViewModel(),
+    KoinComponent {
     private val addCarRoomUseCase by inject<AddCarRoomUseCase>()
     private val getVehiculeBySivNetworkUseCase by inject<GetVehiculeByNetworkUseCase>()
     private val getVehiculeByImmatNetworkUseCase by inject<GetVehiculeByNetworkImmatUseCase>()
@@ -91,6 +92,7 @@ class AddCarViewModel constructor(private val cacheManager : CacheManagerReposit
                     is Ressource.Error -> {
                         uIUtil.displayToastSuspend("Erreur lors de la requête ${result.message}")
                     }
+
                     is Ressource.Success -> {
                         result.data?.let { setCar(it.toCarGlobal()) }
                     }
@@ -102,10 +104,10 @@ class AddCarViewModel constructor(private val cacheManager : CacheManagerReposit
         //TODO: pas besoin de flow dans ce cas?
     }
 
-    private fun setCar(carLocal: CarLocal) {
+    private fun setCar(car: Car) {
         _uiState.update {
             it.copy(
-                carLocalFind = carLocal
+                carFind = car
             )
         }
     }
@@ -132,7 +134,7 @@ class AddCarViewModel constructor(private val cacheManager : CacheManagerReposit
 
     private fun addCarLocalStorage() {
         viewModelScope.launch(ioDispatcher) {
-            uiState.value.carLocalFind?.let { car ->
+            uiState.value.carFind?.let { car ->
                 when (addCarRoomUseCase.addCarToRoom(car)) {
                     is Ressource.Success -> {
                         uIUtil.displayToastSuspend("Voiture ajoutée avec succès")

@@ -1,11 +1,11 @@
 package com.example.manageyourcar.domainLayer.mappers
 
-import com.example.manageyourcar.dataLayer.dataLayerRoom.entities.CarEntity
-import com.example.manageyourcar.dataLayer.model.CarLocal
+import com.example.manageyourcar.dataLayer.model.Car
+import com.example.manageyourcar.dataLayer.room.entities.CarEntity
 import java.util.Date
 
 object CarMappers {
-    fun CarLocal.toCarEntity(): CarEntity {
+    fun Car.toCarEntity(): CarEntity {
         return CarEntity(
             carID = this.carID ?: 0,
             brand = this.brand,
@@ -22,8 +22,8 @@ object CarMappers {
         )
     }
 
-    fun CarEntity.toCar(): CarLocal {
-        return CarLocal(
+    fun CarEntity.toCar(): Car {
+        return Car(
             brand = this.brand,
             fuel = this.fuel,
             model = this.model,

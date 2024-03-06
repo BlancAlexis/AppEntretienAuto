@@ -9,10 +9,10 @@ import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.UIState.MaintenanceListUiState
 import com.example.manageyourcar.UIlayer.UIState.ServicingUIState
 import com.example.manageyourcar.UIlayer.UIState.SortType
-import com.example.manageyourcar.UIlayer.UIUtil
-import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
-import com.example.manageyourcar.dataLayer.dataLayerRoom.dao.MaintenanceWithCarEntity
+import com.example.manageyourcar.UIlayer.viewEvent.UIUtil
 import com.example.manageyourcar.dataLayer.model.MaintenanceService
+import com.example.manageyourcar.dataLayer.retrofit.util.Ressource
+import com.example.manageyourcar.dataLayer.room.dao.MaintenanceWithCarEntity
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
 import com.example.manageyourcar.domainLayer.useCaseBusiness.LogoutUserUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.servicing.GetAllUserMaintenanceUseCase
@@ -147,6 +147,7 @@ class ListMaintenanceViewModel(
                     }
                 }
             }
+
             is OnMaintenanceListEvent.OnSortMethodChanged -> changeSortMethod(event)
         }
     }

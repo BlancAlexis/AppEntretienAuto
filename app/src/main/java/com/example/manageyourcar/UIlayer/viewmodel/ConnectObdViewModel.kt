@@ -5,11 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.manageyourcar.UIlayer.UIState.BluetoothUiState
-import com.example.manageyourcar.domainLayer.ConnectionResult
 import com.example.manageyourcar.domainLayer.bluetooth.BluetoothController
 import com.example.manageyourcar.domainLayer.bluetooth.BluetoothDevice
 import com.example.manageyourcar.domainLayer.bluetooth.BluetoothDeviceDomain
 import com.example.manageyourcar.domainLayer.bluetooth.ConnectedBluetoothDevice
+import com.example.manageyourcar.domainLayer.bluetooth.ConnectionResult
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow

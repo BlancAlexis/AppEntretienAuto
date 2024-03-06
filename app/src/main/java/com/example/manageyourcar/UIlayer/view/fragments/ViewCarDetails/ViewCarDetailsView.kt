@@ -49,7 +49,7 @@ import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.UIState.ViewCarDetailsState
 import com.example.manageyourcar.UIlayer.view.common.InformationRow
 import com.example.manageyourcar.UIlayer.viewmodel.ViewCarDetailsEvent
-import com.example.manageyourcar.dataLayer.model.CarLocal
+import com.example.manageyourcar.dataLayer.model.Car
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -77,7 +77,7 @@ fun ViewCarDetailsView(
         AnimatedVisibility(visible = uiState is ViewCarDetailsState.ViewCarDetailsStateDetailsUIState) {
             uiState as ViewCarDetailsState.ViewCarDetailsStateDetailsUIState
 
-            val pagerState = rememberPagerState(pageCount = { uiState.carLocals.size })
+            val pagerState = rememberPagerState(pageCount = { uiState.cars.size })
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -140,7 +140,7 @@ fun ViewCarDetailsView(
                         )
                     }
                 }
-                if (uiState.carLocals.isEmpty()) {
+                if (uiState.cars.isEmpty()) {
                     Text(
                         text = stringResource(R.string.no_car),
                         modifier = Modifier
@@ -199,7 +199,7 @@ fun ViewCarDetailsView(
                                     horizontalAlignment = CenterHorizontally,
                                 ) {
                                     Text(
-                                        uiState.carLocals[pagerState.currentPage].brand + " " + uiState.carLocals[pagerState.currentPage].model,
+                                        uiState.cars[pagerState.currentPage].brand + " " + uiState.cars[pagerState.currentPage].model,
                                         modifier = Modifier
                                             .fillMaxWidth()
                                             .padding(top = 5.dp, bottom = 10.dp),
@@ -211,36 +211,36 @@ fun ViewCarDetailsView(
                                     )
                                     InformationRow(
                                         title1 = stringResource(R.string.parution),
-                                        content1 = uiState.carLocals[pagerState.currentPage].releaseDate,
+                                        content1 = uiState.cars[pagerState.currentPage].releaseDate,
                                         icon1 = painterResource(R.drawable.outline_calendar_month_24),
                                         title2 = stringResource(R.string.fuel),
-                                        content2 = uiState.carLocals[pagerState.currentPage].fuel,
+                                        content2 = uiState.cars[pagerState.currentPage].fuel,
                                         icon2 = painterResource(R.drawable.baseline_oil_barrel_24)
                                     )
                                     InformationRow(
                                         title1 = stringResource(R.string.transmission),
-                                        content1 = uiState.carLocals[pagerState.currentPage].transmission,
+                                        content1 = uiState.cars[pagerState.currentPage].transmission,
                                         icon1 = painterResource(R.drawable.auto_transmission),
                                         title2 = stringResource(R.string.engine),
-                                        content2 = uiState.carLocals[pagerState.currentPage].motorization,
+                                        content2 = uiState.cars[pagerState.currentPage].motorization,
                                         icon2 = painterResource(R.drawable.baseline_directions_car_24),
                                         modifier = Modifier.padding(top = 10.dp),
                                     )
                                     InformationRow(
                                         title1 = stringResource(R.string.horsepower),
-                                        content1 = uiState.carLocals[pagerState.currentPage].power.toString() + " ch",
+                                        content1 = uiState.cars[pagerState.currentPage].power.toString() + " ch",
                                         icon1 = painterResource(R.drawable.baseline_bolt_24),
                                         title2 = stringResource(R.string.torque),
-                                        content2 = uiState.carLocals[pagerState.currentPage].torque.toString() + " nm",
+                                        content2 = uiState.cars[pagerState.currentPage].torque.toString() + " nm",
                                         icon2 = painterResource(R.drawable.baseline_fast_forward_24),
                                         modifier = Modifier.padding(top = 10.dp),
                                     )
                                     InformationRow(
                                         title1 = stringResource(R.string.max_speed),
-                                        content1 = uiState.carLocals[pagerState.currentPage].maxSpeed.toString() + " km/h",
+                                        content1 = uiState.cars[pagerState.currentPage].maxSpeed.toString() + " km/h",
                                         icon1 = painterResource(R.drawable.outline_speed_24),
                                         title2 = stringResource(R.string.mileage),
-                                        content2 = uiState.carLocals[pagerState.currentPage].mileage.last()
+                                        content2 = uiState.cars[pagerState.currentPage].mileage.last()
                                             .toString() + " km",
                                         icon2 = painterResource(R.drawable.baseline_auto_graph_24),
                                         modifier = Modifier.padding(top = 10.dp, bottom = 10.dp),
@@ -262,7 +262,7 @@ fun ViewCarDetailsView(
                                                 )
                                             }
                                         }
-                                        if (pagerState.currentPage != uiState.carLocals.size - 1) {
+                                        if (pagerState.currentPage != uiState.cars.size - 1) {
                                             IconButton(onClick = { /* do something */ }) {
                                                 Icon(
                                                     painter = painterResource(R.drawable.baseline_arrow_forward_24),
@@ -288,8 +288,8 @@ fun ViewCarDetailsView(
 @Preview(showBackground = true)
 @Composable
 fun PreviewViewCarDetailsView() {
-    var carstest = listOf<CarLocal>()
-    carstest = carstest + CarLocal(
+    var carstest = listOf<Car>()
+    carstest = carstest + Car(
         brand = "Citroën",
         model = "C4 VTS",
         fuel = "Essence",
@@ -302,7 +302,7 @@ fun PreviewViewCarDetailsView() {
         transmission = "Manuelle",
     )
 
-    carstest = carstest + CarLocal(
+    carstest = carstest + Car(
         brand = "Citroën",
         model = "C3 VTS",
         fuel = "Essence",

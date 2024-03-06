@@ -1,7 +1,7 @@
 package com.example.manageyourcar.domainLayer.useCaseRoom.servicing
 
-import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
-import com.example.manageyourcar.dataLayer.dataLayerRoom.dao.MaintenanceWithCarEntity
+import com.example.manageyourcar.dataLayer.retrofit.util.Ressource
+import com.example.manageyourcar.dataLayer.room.dao.MaintenanceWithCarEntity
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
 import com.example.manageyourcar.domainLayer.repository.room.ServicingRepository
 import kotlinx.coroutines.flow.Flow

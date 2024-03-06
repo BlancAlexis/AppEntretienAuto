@@ -8,8 +8,8 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.UIState.LoginUiState
-import com.example.manageyourcar.UIlayer.UIUtil
-import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
+import com.example.manageyourcar.UIlayer.viewEvent.UIUtil
+import com.example.manageyourcar.dataLayer.retrofit.util.Ressource
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
 import com.example.manageyourcar.domainLayer.useCaseBusiness.LoginUserUseCase
 import kotlinx.coroutines.CoroutineDispatcher

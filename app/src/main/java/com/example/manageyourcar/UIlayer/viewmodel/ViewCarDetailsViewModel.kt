@@ -7,10 +7,10 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.UIState.ViewCarDetailsState
-import com.example.manageyourcar.UIlayer.UIUtil
 import com.example.manageyourcar.UIlayer.view.fragments.ViewCarDetails.ViewCarDetailsFragmentDirections
-import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
-import com.example.manageyourcar.dataLayer.model.CarLocal
+import com.example.manageyourcar.UIlayer.viewEvent.UIUtil
+import com.example.manageyourcar.dataLayer.model.Car
+import com.example.manageyourcar.dataLayer.retrofit.util.Ressource
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.DeleteCarRoomUseCase
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.GetUserCarsUseCase
@@ -126,10 +126,10 @@ class ViewCarDetailsViewModel(
         navController = Navigation.findNavController(view)
     }
 
-    private fun updateListCar(cars: List<CarLocal>) {
+    private fun updateListCar(cars: List<Car>) {
         _uiState.update {
             ViewCarDetailsState.ViewCarDetailsStateDetailsUIState(
-                carLocals = cars
+                cars = cars
             )
         }
     }

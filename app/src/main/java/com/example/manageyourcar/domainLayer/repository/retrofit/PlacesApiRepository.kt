@@ -1,7 +1,7 @@
 package com.example.manageyourcar.domainLayer.repository.retrofit
 
-import com.example.manageyourcar.dataLayer.dataLayerRetrofit.model.Place
-import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
+import com.example.manageyourcar.dataLayer.retrofit.model.Place
+import com.example.manageyourcar.dataLayer.retrofit.util.Ressource
 import kotlinx.coroutines.flow.Flow
 
 interface PlacesApiRepository {

@@ -4,11 +4,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.manageyourcar.UIlayer.UIState.AddVehiculeMaintenanceUiState
-import com.example.manageyourcar.UIlayer.UIUtil
-import com.example.manageyourcar.dataLayer.dataLayerRetrofit.util.Ressource
-import com.example.manageyourcar.dataLayer.model.CarLocal
-import com.example.manageyourcar.dataLayer.model.Entretien
+import com.example.manageyourcar.UIlayer.viewEvent.UIUtil
+import com.example.manageyourcar.dataLayer.model.Car
+import com.example.manageyourcar.dataLayer.model.Maintenance
 import com.example.manageyourcar.dataLayer.model.MaintenanceServiceType
+import com.example.manageyourcar.dataLayer.retrofit.util.Ressource
 import com.example.manageyourcar.domainLayer.mappers.MapperMaintenanceView.toMaintenanceService
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
 import com.example.manageyourcar.domainLayer.useCaseRoom.car.GetUserCarsUseCase
@@ -35,7 +35,7 @@ class AddMaintenanceViewModel constructor(
 
     private val addCarMaintenanceUseCase by inject<AddCarMaintenanceUseCase>()
 
-    private lateinit var selectedCarLocal: CarLocal
+    private lateinit var selectedCar: Car
     private lateinit var selectedMaintenance: MaintenanceServiceType
     //TODO: refactor
 
@@ -63,10 +63,13 @@ class AddMaintenanceViewModel constructor(
 
     private fun addMaintenanceLocalStorage() {
         viewModelScope.launch(ioDispatcher) {
+            if (selectedCar.carID == -1) {
+                return@launch
+            }
             when (addCarMaintenanceUseCase.addMaintenanceOperation(
-                Entretien(
+                Maintenance(
                     userID = null,
-                    carID = selectedCarLocal.carID,
+                    carID = selectedCar.carID,
                     mileage = uiState.value.mileage.toInt(),
                     price = uiState.value.price.toInt(),
                     date = uiState.value.date ?: Date(),
@@ -83,13 +86,13 @@ class AddMaintenanceViewModel constructor(
         }
     }
 
-    private fun checkCars(cars: List<CarLocal>) {
+    private fun checkCars(cars: List<Car>) {
         if (cars.isEmpty()) {
             isMaintenanceAdd.postValue(true)
         }
         updateListCar(cars)
         if (cars.isNotEmpty()) {
-            selectedCarLocal = cars[0]
+            selectedCar = cars[0]
         }
         _uiState.update {
             it.copy(
@@ -114,10 +117,10 @@ class AddMaintenanceViewModel constructor(
         }
     }
 
-    private fun updateListCar(data: List<CarLocal>) {
+    private fun updateListCar(data: List<Car>) {
         _uiState.update {
             it.copy(
-                listCarLocals = data
+                listCars = data
             )
         }
     }
@@ -137,8 +140,8 @@ class AddMaintenanceViewModel constructor(
 
     }
 
-    private fun onCarChanged(newValue: CarLocal) {
-        selectedCarLocal = newValue
+    private fun onCarChanged(newValue: Car) {
+        selectedCar = newValue
     }
 
     private fun onPriceChanged(newValue: Int) {
@@ -179,7 +182,7 @@ sealed interface OnMaintenanceEvent {
     data class OnMaintenanceSelectedChanged(val newMaintenanceServiceType: MaintenanceServiceType) :
         OnMaintenanceEvent
 
-    data class OnCarSelectedChanged(val newCarSelected: CarLocal) : OnMaintenanceEvent
+    data class OnCarSelectedChanged(val newCarSelected: Car) : OnMaintenanceEvent
 
 }
 

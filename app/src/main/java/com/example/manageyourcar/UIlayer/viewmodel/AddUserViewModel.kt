@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.manageyourcar.UIlayer.UIState.SignInUiState
-import com.example.manageyourcar.UIlayer.UIUtil
+import com.example.manageyourcar.UIlayer.viewEvent.UIUtil
 import com.example.manageyourcar.domainLayer.useCaseRoom.user.AddUserRoomUseCase
 import com.example.manageyourcar.domainLayer.utils.UserEntryChecker
 import kotlinx.coroutines.CoroutineDispatcher
@@ -79,7 +79,12 @@ class AddUserViewModel constructor(private val uiUtil: UIUtil) : ViewModel(), Ko
     private fun addUserLocalStorage() {
         viewModelScope.launch(ioDispatcher) {
             if ((uiState.value.userPassword == uiState.value.userValidatePassword) && uiState.value.userPassword != "" && uiState.value.userLogin != "" && uiState.value.userFirstName != "" && uiState.value.userLastName != "") {
-                addUserRoomUseCase.invoke(uiState.value.userLogin, uiState.value.userPassword, uiState.value.userFirstName, uiState.value.userLastName)
+                addUserRoomUseCase.invoke(
+                    uiState.value.userLogin,
+                    uiState.value.userPassword,
+                    uiState.value.userFirstName,
+                    uiState.value.userLastName
+                )
                 withContext(Dispatchers.Main) {
                     navController.popBackStack()
                 }
