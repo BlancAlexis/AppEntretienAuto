@@ -13,7 +13,6 @@ object CarRetrofitToCar : KoinComponent {
     fun CarRetrofit.toCarGlobal(): com.example.manageyourcar.dataLayer.model.Car {
 
         return com.example.manageyourcar.dataLayer.model.Car(
-            carID = null,
             brand = this.make.name,
             model = this.model.name,
             releaseDate = this.years[0].year.toString(),

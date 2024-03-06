@@ -67,7 +67,7 @@ fun ViewListMaintenanceView(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
                     contentColor = Color.Black
                 ),
-                modifier = Modifier.padding(bottom = 20.dp)
+                modifier = Modifier.padding(vertical = 20.dp)
             ) {
                 Text(
                     text = stringResource(R.string.add_entretien),

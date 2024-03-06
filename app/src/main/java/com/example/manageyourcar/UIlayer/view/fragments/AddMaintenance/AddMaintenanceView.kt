@@ -23,6 +23,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -65,7 +66,7 @@ fun AddMaintenanceView(
     Column(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.onPrimaryContainer)
     ) {
         var checked by remember { mutableStateOf(false) }
         val showCalendar = remember { mutableStateOf(false) }
@@ -97,7 +98,8 @@ fun AddMaintenanceView(
             Text(
                 text = stringResource(R.string.add_an_operation),
                 fontSize = 25.sp,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+
             )
             HorizontalPager(state = pagerState) { page ->
                 Box(
