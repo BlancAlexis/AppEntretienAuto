@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -24,6 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -33,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.UIState.SignInUiState
 import com.example.manageyourcar.UIlayer.view.common.CustomTextField
+import com.example.manageyourcar.UIlayer.viewmodel.UserLoginEvent
 import com.example.manageyourcar.UIlayer.viewmodel.UserSubscriptionEvent
 
 @Composable
@@ -82,6 +85,7 @@ fun AddUserView(
         ) {
             uiState.userLogin.let {
                 CustomTextField(
+                    imeAction = ImeAction.Next,
                     textFieldValue = it,
                     modifier = Modifier
                         .fillMaxWidth(0.95f)
@@ -98,6 +102,7 @@ fun AddUserView(
             }
             uiState.userFirstName.let {
                 CustomTextField(
+                    imeAction = ImeAction.Next,
                     textFieldValue = it,
                     modifier = Modifier
                         .fillMaxWidth(0.95f)
@@ -114,6 +119,7 @@ fun AddUserView(
             }
             uiState.userLastName.let {
                 CustomTextField(
+                    imeAction = ImeAction.Next,
                     textFieldValue = it,
                     modifier = Modifier
                         .fillMaxWidth(0.95f)
@@ -130,6 +136,7 @@ fun AddUserView(
             }
             uiState.userPassword.let {
                 CustomTextField(
+                    imeAction = ImeAction.Next,
                     visualTransformation = PasswordVisualTransformation(),
                     textFieldValue = it,
                     modifier = Modifier
@@ -147,6 +154,8 @@ fun AddUserView(
             }
             uiState.userValidatePassword.let {
                 CustomTextField(
+                    imeAction = ImeAction.Next,
+                    keyboardActions = KeyboardActions(onNext = {onEvent(UserSubscriptionEvent.OnClickSendButton)}),
                     visualTransformation = PasswordVisualTransformation(),
                     textFieldValue = it,
                     modifier = Modifier

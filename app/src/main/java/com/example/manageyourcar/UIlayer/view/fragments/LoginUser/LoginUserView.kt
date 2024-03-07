@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme.colorScheme
@@ -32,6 +33,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -89,6 +91,7 @@ fun LoginUserView(
                     color = Color.White,
                     fontSize = 18.sp,
                 ),
+                imeAction = ImeAction.Next,
                 error = uiState.userLoginError ?: "",
                 modifier = Modifier
                     .fillMaxWidth(0.95f)
@@ -110,6 +113,8 @@ fun LoginUserView(
                     fontSize = 18.sp,
                 ), visualTransformation = PasswordVisualTransformation(),
                 error = uiState.userPasswordError ?: "",
+                imeAction = ImeAction.Next,
+                keyboardActions = KeyboardActions(onNext = {onEvent(UserLoginEvent.OnClickSendButton)}),
                 modifier = Modifier
                     .fillMaxWidth(0.95f),
                 placeholder = stringResource(id = R.string.password),

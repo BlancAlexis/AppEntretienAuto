@@ -88,7 +88,7 @@ fun ViewCarDetailsView(
                 Text(
                     text = stringResource(R.string.your_cars),
                     modifier = Modifier
-                        .padding(vertical = 15.dp)
+                        .padding(vertical = 5.dp)
                         .fillMaxWidth(),
                     textAlign = TextAlign.Center,
                     fontFamily = juraFamily,
@@ -98,7 +98,7 @@ fun ViewCarDetailsView(
                 )
                 Row(
                     modifier = Modifier
-                        .padding(vertical = 10.dp)
+                        .padding(vertical = 5.dp)
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center,
                 ) {
