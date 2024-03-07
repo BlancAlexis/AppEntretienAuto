@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,12 +42,13 @@ fun CustomDialogKM(
             modifier = Modifier.padding(10.dp)
         )
 
-        TextField(
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            value = uiState.newMileage ?: "",
+        CustomTextField(
+            imeAction = ImeAction.Next,
+            keyboardType =  KeyboardType.Number,
+            textFieldValue = uiState.newMileage ?: "",
             onValueChange = { onEvent(UpdateCatEvent.newMileage(it)) },
-            label = { Text(text = "Kilométrage") },
-            placeholder = { Text(text = uiState.car?.mileage?.last().toString()) },
+            label = "Kilométrage",
+            placeholder =  uiState.car?.mileage?.last().toString(),
             modifier = Modifier.padding(10.dp)
         )
 

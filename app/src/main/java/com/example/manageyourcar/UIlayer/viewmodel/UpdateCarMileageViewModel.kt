@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -58,18 +59,30 @@ class UpdateCarMileageViewModel constructor(
     private fun upsertCarMileage() {
         viewModelScope.launch(ioDispatcher) {
             val car = _uiState.value.car
+            if (uiState.value.newMileage?.toInt()!! < (car?.mileage?.last() ?: 0)){
+                uiUtil.displayToastSuspend("Vous ne pouvez pas ajouter un kilométrage inférieur au précédent")
+                withContext(Dispatchers.Main) {
+                    navController.popBackStack()
+                }
+                return@launch
+            }
+
             if (car != null) {
                 val updatedCar =
                     car.copy(mileage = car.mileage + (uiState.value.newMileage?.toInt() ?: 0))
                 when (upsertCarMileageUseCase.updateCarMileage(updatedCar)) {
                     is Ressource.Error -> {
                         uiUtil.displayToastSuspend("Erreur lors de la mise à jour du kilométrage")
-                        navController.popBackStack()
+                        withContext(Dispatchers.Main) {
+                            navController.popBackStack()
+                        }
                     }
 
                     is Ressource.Success -> {
                         uiUtil.displayToastSuspend("Kilométrage mis à jour avec succès")
-                        navController.popBackStack()
+                        withContext(Dispatchers.Main) {
+                            navController.popBackStack()
+                        }
                     }
 
                     else -> {}

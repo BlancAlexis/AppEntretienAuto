@@ -7,6 +7,7 @@ import com.example.manageyourcar.UIlayer.UIState.AddCarUIState
 import com.example.manageyourcar.UIlayer.viewEvent.UIUtil
 import com.example.manageyourcar.dataLayer.model.Car
 import com.example.manageyourcar.dataLayer.retrofit.util.Ressource
+import com.example.manageyourcar.domainLayer.mappers.CarRetrofitToCar
 import com.example.manageyourcar.domainLayer.mappers.CarRetrofitToCar.toCarGlobal
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkImmatUseCase
@@ -94,14 +95,13 @@ class AddCarViewModel constructor(private val cacheManager: CacheManagerReposito
                     }
 
                     is Ressource.Success -> {
-                        result.data?.let { setCar(it.toCarGlobal()) }
+                        result.data?.let { setCar(it.toCarGlobal(cacheManager.getUserId().data!!)) }
                     }
 
                     else -> {}
                 }
             }
         }
-        //TODO: pas besoin de flow dans ce cas?
     }
 
     private fun setCar(car: Car) {
