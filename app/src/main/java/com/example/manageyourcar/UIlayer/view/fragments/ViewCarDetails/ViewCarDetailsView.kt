@@ -2,9 +2,6 @@ package com.example.manageyourcar.UIlayer.view.fragments.ViewCarDetails
 
 import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.LinearOutSlowInEasing
-import androidx.compose.animation.core.Transition
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -41,7 +38,6 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.StampedPathEffectStyle.Companion.Rotate
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
@@ -271,7 +267,10 @@ fun ViewCarDetailsView(
                                             content2 = uiState.cars[pagerState.currentPage].mileage.last()
                                                 .toString() + " km",
                                             icon2 = painterResource(R.drawable.baseline_auto_graph_24),
-                                            modifier = Modifier.padding(top = 10.dp, bottom = 10.dp),
+                                            modifier = Modifier.padding(
+                                                top = 10.dp,
+                                                bottom = 10.dp
+                                            ),
                                         )
                                         Row(
                                             Modifier
@@ -302,7 +301,8 @@ fun ViewCarDetailsView(
                                             }
                                         }
 
-                                    }}
+                                    }
+                                }
                             }
                         }
                     }
@@ -311,7 +311,6 @@ fun ViewCarDetailsView(
         }
     }
 }
-
 
 
 @Preview(showBackground = true)

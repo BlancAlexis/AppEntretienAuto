@@ -59,7 +59,7 @@ class UpdateCarMileageViewModel constructor(
     private fun upsertCarMileage() {
         viewModelScope.launch(ioDispatcher) {
             val car = _uiState.value.car
-            if (uiState.value.newMileage?.toInt()!! < (car?.mileage?.last() ?: 0)){
+            if (uiState.value.newMileage?.toInt()!! < (car?.mileage?.last() ?: 0)) {
                 uiUtil.displayToastSuspend("Vous ne pouvez pas ajouter un kilométrage inférieur au précédent")
                 withContext(Dispatchers.Main) {
                     navController.popBackStack()

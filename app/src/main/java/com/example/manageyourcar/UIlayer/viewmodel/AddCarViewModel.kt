@@ -7,7 +7,6 @@ import com.example.manageyourcar.UIlayer.UIState.AddCarUIState
 import com.example.manageyourcar.UIlayer.viewEvent.UIUtil
 import com.example.manageyourcar.dataLayer.model.Car
 import com.example.manageyourcar.dataLayer.retrofit.util.Ressource
-import com.example.manageyourcar.domainLayer.mappers.CarRetrofitToCar
 import com.example.manageyourcar.domainLayer.mappers.CarRetrofitToCar.toCarGlobal
 import com.example.manageyourcar.domainLayer.repository.CacheManagerRepository
 import com.example.manageyourcar.domainLayer.useCaseRetrofit.GetVehiculeByNetworkImmatUseCase
@@ -63,10 +62,8 @@ class AddCarViewModel constructor(private val cacheManager: CacheManagerReposito
             if (registrationNumber.matches(Regex("^([A-Z]{2})-([0-9]{3})-([A-Z]{2})$"))) {
                 getCarByRegistrationNumber(registrationNumber)
             } else {
-                uIUtil.displayToast("champs vide")
+                uIUtil.displayToast("error immat")
             }
-        } ?: run {
-            uIUtil.displayToast("error immat")
         }
     }
 
@@ -95,7 +92,13 @@ class AddCarViewModel constructor(private val cacheManager: CacheManagerReposito
                     }
 
                     is Ressource.Success -> {
-                        result.data?.let { setCar(it.toCarGlobal(cacheManager.getUserId().data!!)) }
+                        if (result.data?.model == null ){
+                            uIUtil.displayToastSuspend("Voiture introuvable")
+
+                        }
+                        else {
+                            result.data.let { setCar(it.toCarGlobal(cacheManager.getUserId().data!!)) }
+                        }
                     }
 
                     else -> {}
@@ -122,7 +125,15 @@ class AddCarViewModel constructor(private val cacheManager: CacheManagerReposito
                         }
 
                         is Ressource.Success -> {
-                            result.data?.let { setCar(it) }
+                            result.data?.let {
+                                if (it.model == null ){
+                                    uIUtil.displayToastSuspend("Voiture introuvable")
+
+                                }
+                                else {
+                                    setCar(it)
+                                }
+                            }
                         }
 
                         else -> {}

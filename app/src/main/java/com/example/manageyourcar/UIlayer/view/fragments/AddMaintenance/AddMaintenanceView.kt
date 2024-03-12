@@ -66,7 +66,9 @@ fun AddMaintenanceView(
     Column(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.onPrimaryContainer)
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.onPrimaryContainer)
     ) {
         var checked by remember { mutableStateOf(false) }
         val showCalendar = remember { mutableStateOf(false) }
@@ -100,7 +102,7 @@ fun AddMaintenanceView(
                 fontSize = 25.sp,
                 fontWeight = FontWeight.Bold,
 
-            )
+                )
             HorizontalPager(state = pagerState) { page ->
                 Box(
                     modifier = Modifier

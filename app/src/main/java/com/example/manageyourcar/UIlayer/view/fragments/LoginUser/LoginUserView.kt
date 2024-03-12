@@ -114,7 +114,7 @@ fun LoginUserView(
                 ), visualTransformation = PasswordVisualTransformation(),
                 error = uiState.userPasswordError ?: "",
                 imeAction = ImeAction.Next,
-                keyboardActions = KeyboardActions(onNext = {onEvent(UserLoginEvent.OnClickSendButton)}),
+                keyboardActions = KeyboardActions(onNext = { onEvent(UserLoginEvent.OnClickSendButton) }),
                 modifier = Modifier
                     .fillMaxWidth(0.95f),
                 placeholder = stringResource(id = R.string.password),

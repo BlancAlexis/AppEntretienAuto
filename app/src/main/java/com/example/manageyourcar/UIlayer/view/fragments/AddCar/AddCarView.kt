@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -78,7 +77,7 @@ fun AddCarView(
             Button(
                 onClick = { onEvent(OnCarRequest.OnClickSearchCarByRegistrationNumberButton) },
                 modifier = Modifier.padding(top = 10.dp),
-                colors =ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.onPrimaryContainer)
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.onPrimaryContainer)
             ) {
                 Text(
                     text = stringResource(R.string.find), fontSize = 20.sp
@@ -116,7 +115,11 @@ fun AddCarView(
 
             }
 
-            Button(onClick = { onEvent(OnCarRequest.OnClickSearchCarWithSIVButton) }, modifier = Modifier.padding(top = 10.dp), colors =ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.onPrimaryContainer)) {
+            Button(
+                onClick = { onEvent(OnCarRequest.OnClickSearchCarWithSIVButton) },
+                modifier = Modifier.padding(top = 10.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.onPrimaryContainer)
+            ) {
                 Text(
                     text = stringResource(R.string.find), fontSize = 20.sp
                 )

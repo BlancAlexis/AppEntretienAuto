@@ -35,7 +35,6 @@ import androidx.compose.ui.unit.sp
 import com.example.manageyourcar.R
 import com.example.manageyourcar.UIlayer.UIState.SignInUiState
 import com.example.manageyourcar.UIlayer.view.common.CustomTextField
-import com.example.manageyourcar.UIlayer.viewmodel.UserLoginEvent
 import com.example.manageyourcar.UIlayer.viewmodel.UserSubscriptionEvent
 
 @Composable
@@ -155,7 +154,7 @@ fun AddUserView(
             uiState.userValidatePassword.let {
                 CustomTextField(
                     imeAction = ImeAction.Next,
-                    keyboardActions = KeyboardActions(onNext = {onEvent(UserSubscriptionEvent.OnClickSendButton)}),
+                    keyboardActions = KeyboardActions(onNext = { onEvent(UserSubscriptionEvent.OnClickSendButton) }),
                     visualTransformation = PasswordVisualTransformation(),
                     textFieldValue = it,
                     modifier = Modifier
